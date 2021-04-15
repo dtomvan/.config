@@ -14,6 +14,16 @@ vim.cmd [[nnoremap <silent> gk :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>
 vim.cmd [[imap <C-k> <Plug>(neosnippet_expand_or_jump)]]
 vim.cmd [[smap <C-k> <Plug>(neosnippet_expand_or_jump)]]
 vim.cmd [[xmap <C-k> <Plug>(neosnippet_expand_target)]]
+map('',
+    '<Down>',
+    "j<C-e>",
+    {noremap = true, silent = false}
+)
+map('',
+    '<Up>',
+    "k<C-y>",
+    {noremap = true, silent = false}
+)
 map('n',
     '<Space><Space>',
     ":<up>",

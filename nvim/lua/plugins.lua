@@ -37,7 +37,6 @@ require('packer').startup(function()
     use 'tversteeg/registers.nvim'
     use 'rust-lang/rust.vim'
     use 'kana/vim-tabpagecd'
-    use 'mhinz/vim-startify'
     use 'oberblastmeister/termwrapper.nvim'
     use 'Th3Whit3Wolf/onebuddy'
     use 'Shougo/deoplete.nvim'
@@ -46,6 +45,9 @@ require('packer').startup(function()
     use 'Shougo/neosnippet.vim'
     use 'Shougo/neosnippet-snippets'
     use 'nvim-telescope/telescope-fzy-native.nvim'
+    use 'tjdevries/nlua.nvim'
+    use 'https://github.com/skanehira/badapple.vim.git'
+    use 'glepnir/dashboard-nvim'
 end)
 
 require('telescope').setup {
@@ -57,3 +59,13 @@ require('telescope').setup {
     }
 }
 require('telescope').load_extension('fzy_native')
+
+require('nlua.lsp.nvim').setup(require('lspconfig'), {
+  on_attach = custom_nvim_lspconfig_attach,
+
+  -- Include globals you want to tell the LSP are real :)
+  globals = {
+    -- Colorbuddy
+    "Color", "c", "Group", "g", "s", "use", "custom_nvim_lspconfig_attach",
+  }
+})

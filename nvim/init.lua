@@ -15,11 +15,11 @@ require('opts')
 require('keymaps')
 require('stuffthatiknowtodoinvimscriptbutnotinlua')
 require'lspconfig'.rust_analyzer.setup{}
--- require'lsp_extensions'.inlay_hints {
---     prefix = '',
---     highlight = "Comment",
---     enabled = {"TypeHint", "ChainingHint", "ParameterHint"}
--- }
+require'lsp_extensions'.inlay_hints {
+    prefix = '',
+    highlight = "Comment",
+    enabled = {"TypeHint", "ChainingHint", "ParameterHint"}
+}
 require"termwrapper".setup {
     open_autoinsert = true,
     toggle_autoinsert = true,
@@ -29,7 +29,3 @@ require"termwrapper".setup {
     open_new_toggle = true,
     log = 1, 
 }
-vim.cmd [[filetype plugin on]]
-vim.cmd [[syntax enable]]
-vim.cmd [[filetype plugin indent on]]
-vim.cmd [[syntax on]]

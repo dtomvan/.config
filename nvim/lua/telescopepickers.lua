@@ -9,7 +9,7 @@ function M.projects()
 pickers.new {
   results_title = 'Projects',
   finder = finders.new_oneshot_job({'fd', '--type', 'd'}),
-  sorter = sorters.get_fzy_sorter(),
+  sorter = sorters.get_fuzzy_file(),
   previewer = previewers.new_termopen_previewer {
     get_command = function(entry)
       return {'ls', entry.value}
@@ -26,7 +26,7 @@ function M.configs()
 pickers.new {
   results_title = 'Fd hidden',
   finder = finders.new_oneshot_job({'fd', '--type', 'd', '--hidden'}),
-  sorter = sorters.get_fzy_sorter(),
+  sorter = sorters.get_fuzzy_file(),
   previewer = previewers.new_termopen_previewer {
     get_command = function(entry)
       return {'ls', entry.value}
