@@ -42,8 +42,9 @@ end
 function M.buffers()
     builtin.buffers {
       attach_mappings = function(_, map)
-          map('n', 'd', require('telescopeactions').delete_buffer)
+          map('n', 'dd', require('telescopeactions').delete_buffer)
           map('i', '<C-d>', require('telescopeactions').delete_buffer)
+          map('i', '<M-d>', require('telescopeactions').delete_selected_buffers)
           return true
         end,
     }

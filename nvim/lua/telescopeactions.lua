@@ -14,6 +14,25 @@ end
 function actions.delete_buffer(prompt_bufnr)
     local buffer = tele_actions.get_selected_entry(prompt_bufnr).bufnr
     vim.fn.execute("bd " .. buffer)
+    tele_actions.remove_selection(prompt_bufnr)
+    tele_actions.close(prompt_bufnr)
+    require('telescopepickers').buffers()
+    vim.fn.execute("normal i")
+end
+
+function actions.delete_selected_buffers(prompt_bufnr)
+    local picker = tele_actions.get_current_picker(prompt_bufnr)
+
+    for _, entry in ipairs(picker:get_multi_selection()) do
+        vim.fn.execute("bd " .. entry.bufnr)
+    end
+    tele_actions.close(prompt_bufnr)
+    require('telescopepickers').buffers()
+    vim.fn.execute("normal i")
+end
+
+function actions.create_buffer(_)
+    vim.fn.execute("new | close")
 end
 
 return transform_mod(actions)
