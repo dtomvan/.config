@@ -11,6 +11,9 @@ map('n',
 )
 vim.cmd [[nnoremap <silent> gj :let _=&lazyredraw<CR>:set lazyredraw<CR>/\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>]]
 vim.cmd [[nnoremap <silent> gk :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>]]
+vim.cmd [[imap <C-k> <Plug>(neosnippet_expand_or_jump)]]
+vim.cmd [[smap <C-k> <Plug>(neosnippet_expand_or_jump)]]
+vim.cmd [[xmap <C-k> <Plug>(neosnippet_expand_target)]]
 map('n',
     '<Space><Space>',
     ":<up>",
@@ -18,12 +21,12 @@ map('n',
 )
 map('n',
     '<C-k>',
-    "<C-w><",
+    "<C-w>2<",
     {noremap = false, silent = true}
 )
 map('n',
     '<C-j>',
-    "<C-w>>",
+    "<C-w>2>",
     {noremap = false, silent = true}
 )
 map('n',
@@ -63,7 +66,7 @@ map('n',
 )
 map('n',
     '<Space>b',
-    "<cmd>lua require('telescope.builtin').buffers()<cr>",
+    "<cmd>lua require('telescopepickers').buffers()<cr>",
     {noremap = true, silent = true}
 )
 map('n',
@@ -74,6 +77,16 @@ map('n',
 map('n',
     '<Space>ch',
     "<cmd>lua require('telescope.builtin').command_history()<cr>",
+    {noremap = true, silent = true}
+)
+map('n',
+    '<Space>fp',
+    "<cmd>lua require('telescopepickers').projects()<cr>",
+    {noremap = true, silent = true}
+)
+map('n',
+    '<Space>fd',
+    "<cmd>lua require('telescopepickers').configs()<cr>",
     {noremap = true, silent = true}
 )
 map('n',
@@ -94,6 +107,21 @@ map('n',
 map('n',
     '<Space>ct',
     ":vs term://cargo t<CR>10<C-w>>",
+    {noremap = false, silent = false}
+)
+map('n',
+    '<Space>cso',
+    ":lua package.loaded.onebuddy = nil<cr>:lua require'colorbuddy'.colorscheme('onebuddy')<cr>",
+    {noremap = false, silent = false}
+)
+map('n',
+    '<Space>csg',
+    ":lua package.loaded.gruvbuddy = nil<cr>:lua require'colorbuddy'.colorscheme('gruvbuddy')<cr>",
+    {noremap = false, silent = false}
+)
+map('n',
+    '<Space>t',
+    ":Ttoggle<cr>",
     {noremap = false, silent = false}
 )
 map('n',
@@ -133,7 +161,7 @@ map('n',
 )
 map('n',
     '<C-p>',
-    "<cmd>lua require('telescope.builtin').live_grep()<cr>",
+    "<cmd>lua require('telescope.builtin').live_grep{}<cr>",
     {noremap = true, silent = true}
 )
 map('n',
@@ -142,28 +170,28 @@ map('n',
     {noremap = false, silent = true}
 )
 map('n',
-    '<C-cr>',
+    '<Space><CR>',
     "<C-w>w",
+    {noremap = true, silent = false}
+)
+map('n',
+    '<C-Left>',
+    ":vertical resize -2<CR>",
     {noremap = false, silent = true}
 )
 map('n',
-    '<silent>',
-    "<Left> :vertical resize -2<CR>",
+    '<C-Right>',
+    ":vertical resize +2<CR>",
     {noremap = false, silent = true}
 )
 map('n',
-    '<silent>',
-    "<Right> :vertical resize +2<CR>",
+    '<C-Up>',
+    ":resize -2<CR>",
     {noremap = false, silent = true}
 )
 map('n',
-    '<silent>',
-    "<Up> :resize -2<CR>",
-    {noremap = false, silent = true}
-)
-map('n',
-    '<silent>',
-    "<Down> :resize +2<CR>",
+    '<C-Down>',
+    ":resize +2<CR>",
     {noremap = false, silent = true}
 )
 map('i',
@@ -174,11 +202,6 @@ map('i',
 map('i',
     '<s-tab>',
     "<Plug>(completion_smart_s_tab)",
-    {noremap = false, silent = true}
-)
-map('i',
-    '<silent>',
-    "<c-p> <Plug>(completion_trigger)",
     {noremap = false, silent = true}
 )
 map('v',

@@ -133,6 +133,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
+  ["termwrapper.nvim"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/termwrapper.nvim"
+  },
   ["vim-be-good"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-be-good"
@@ -157,13 +161,17 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-matchup"
   },
-  ["vim-polyglot"] = {
+  ["vim-startify"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-polyglot"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-startify"
   },
   ["vim-surround"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-surround"
+  },
+  ["vim-tabpagecd"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-tabpagecd"
   },
   ["vim-toml"] = {
     loaded = true,
@@ -172,6 +180,10 @@ _G.packer_plugins = {
   ["vim-wombat-scheme"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-wombat-scheme"
+  },
+  vimagit = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vimagit"
   }
 }
 

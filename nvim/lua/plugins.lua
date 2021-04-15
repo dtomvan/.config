@@ -4,7 +4,6 @@ require('packer').startup(function()
     use 'editorconfig/editorconfig-vim'
     use 'junegunn/vim-easy-align'
     use 'tpope/vim-commentary'
-    use 'itchyny/lightline.vim'
     use 'sheerun/vim-wombat-scheme'
     use 'preservim/nerdtree'
     use 'tpope/vim-surround'
@@ -18,7 +17,6 @@ require('packer').startup(function()
     use 'RishabhRD/popfix'
     use 'RishabhRD/nvim-lsputils'
     use 'nvim-lua/completion-nvim'
-    -- use 'nvim-treesitter/nvim-treesitter'
     use 'TC72/telescope-tele-tabby.nvim'
     use 'kyazdani42/nvim-tree.lua'
     use 'andweeb/presence.nvim'
@@ -38,8 +36,24 @@ require('packer').startup(function()
     use 'nvim-lua/lsp_extensions.nvim'
     use 'tversteeg/registers.nvim'
     use 'rust-lang/rust.vim'
-    use 'jreybert/vimagit'
     use 'kana/vim-tabpagecd'
     use 'mhinz/vim-startify'
+    use 'oberblastmeister/termwrapper.nvim'
+    use 'Th3Whit3Wolf/onebuddy'
+    use 'Shougo/deoplete.nvim'
+    use 'roxma/nvim-yarp'
+    use 'roxma/vim-hug-neovim-rpc'
+    use 'Shougo/neosnippet.vim'
+    use 'Shougo/neosnippet-snippets'
+    use 'nvim-telescope/telescope-fzy-native.nvim'
 end)
 
+require('telescope').setup {
+    extensions = {
+        fzy_native = {
+            override_generic_sorter = false,
+            override_file_sorter = true,
+        }
+    }
+}
+require('telescope').load_extension('fzy_native')
