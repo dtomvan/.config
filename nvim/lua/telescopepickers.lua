@@ -33,7 +33,7 @@ pickers.new {
     end
   },
   attach_mappings = function(_, map)
-      map('i', '<CR>', actions.cd_into_dir)
+      map('i', '<CR>', require'telescopeactions'.cd_into_dir)
       return true
     end,
 }:find()
