@@ -31,8 +31,11 @@ function actions.delete_selected_buffers(prompt_bufnr)
     vim.fn.execute("normal i")
 end
 
-function actions.create_buffer(_)
+function actions.create_buffer(prompt_bufnr)
+    tele_actions.close(prompt_bufnr)
     vim.fn.execute("new | close")
+    require('telescopepickers').buffers()
+    vim.fn.execute("normal i")
 end
 
 return transform_mod(actions)
