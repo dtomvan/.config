@@ -9,13 +9,15 @@ alias .jc='just --justfile ~/Justfile --working-directory . --choose'
 
 alias doc='rustup docs';
 
-set PATH ~/.cargo/bin/ ~/.local/ $PATH
+set PATH ~/.cargo/bin/ ~/tetris-os/i386-elf-7.5.0-Linux-x86_64/bin ~/.local/ $PATH
 
 alias kv=keyvcli;
 alias get="keyvcli get";
 alias e=nvim;
 alias dir=broot;
-alias pr="cd ~/projects && cd (command ls -d */ | fzf)";
+alias pr="cd ~/projects && cd (command ls -d */ | sk)";
+abbr tovim "~/venv/bin/nvr -c \"cd \"(pwd)";
+abbr prvim "cd ~/projects && ~/venv/bin/nvr -c \"cd \"(command ls -d */ | sk)";
 abbr g git-client
 
 export EDITOR=nvim;

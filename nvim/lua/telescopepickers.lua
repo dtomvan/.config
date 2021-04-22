@@ -16,7 +16,7 @@ pickers.new {
     end
   },
   attach_mappings = function(_, map)
-      map('i', '<CR>', require('telescopeactions').cd_into_dir)
+      map('i', '<CR>', R('telescopeactions').cd_into_dir)
       return true
     end,
 }:find()
@@ -33,7 +33,7 @@ pickers.new {
     end
   },
   attach_mappings = function(_, map)
-      map('i', '<CR>', require'telescopeactions'.cd_into_dir)
+      map('i', '<CR>', R'telescopeactions'.cd_into_dir)
       return true
     end,
 }:find()
@@ -42,13 +42,42 @@ end
 function M.buffers()
     builtin.buffers {
       attach_mappings = function(_, map)
-          map('n', 'dd', require('telescopeactions').delete_buffer)
-          map('n', 'c', require('telescopeactions').create_buffer)
-          map('i', '<C-d>', require('telescopeactions').delete_buffer)
-          map('i', '<M-d>', require('telescopeactions').delete_selected_buffers)
-          map('i', '<M-n>', require('telescopeactions').create_buffer)
+          map('n', 'dd', R('telescopeactions').delete_buffer)
+          map('n', 'c', R('telescopeactions').create_buffer)
+          map('i', '<C-d>', R('telescopeactions').delete_buffer)
+          map('i', '<M-d>', R('telescopeactions').delete_selected_buffers)
+          map('i', '<M-n>', R('telescopeactions').create_buffer)
           return true
         end,
+    }
+end
+
+function M.dotfiles()
+    builtin.find_files {
+        cwd = "~/.config/nvim"
+    }
+end
+
+function M.gitclient()
+    builtin.find_files {
+        cwd = "~/projects/git-client"
+    }
+end
+
+function M.grep()
+    if LASTGREP == nil then
+        LASTGREP = ""
+    end
+    builtin.live_grep {
+      attach_mappings = function(_, map)
+          map('i', "<CR>", function(bufnr) 
+              LASTGREP = TelescopeGlobalState.global.current_line
+              require'telescope.actions'.select_default(bufnr)
+              require('telescope.actions').close(bufnr)
+          end)
+          map('i', "<M-g>", function(_) --[[ IDK HOW? ]] end)
+          return true
+      end,
     }
 end
 

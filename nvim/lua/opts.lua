@@ -33,3 +33,5 @@ ops.updatetime = 300
 ops.timeoutlen = 500
 ops.completeopt = { "menuone", "noinsert", "noselect" }
 ops.shortmess = "filnxtToOFc"
+vim.g.completion_enable_auto_popup = 1
+vim.g.wiki_root = '~/notes'

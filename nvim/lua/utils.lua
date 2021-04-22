@@ -1,3 +1,5 @@
+require('nvim-autopairs').setup()
+
 local M = {}
 
 function M.is_buffer_empty()

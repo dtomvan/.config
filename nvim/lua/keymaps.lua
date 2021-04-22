@@ -1,4 +1,5 @@
-local map = vim.api.nvim_set_keymap
+local map = API.nvim_set_keymap
+map('', '<Space>', "<Nop>", {noremap = true, silent = true})
 map('n',
     'k',
     "gk",
@@ -76,7 +77,7 @@ map('n',
 )
 map('n',
     '<Space>b',
-    "<cmd>lua require('telescopepickers').buffers()<cr>",
+    "<cmd>lua R('telescopepickers').buffers()<cr>",
     {noremap = true, silent = true}
 )
 map('n',
@@ -135,14 +136,19 @@ map('n',
     {noremap = false, silent = false}
 )
 map('n',
-    '<Space>d',
+    '<Space>q',
     "<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<cr>",
     {noremap = true, silent = true}
 )
 map('n',
-    '<Space>f',
-    ":RustFmt<CR>",
-    {noremap = false, silent = true}
+    '<Space>dd',
+    ":lua R('telescopepickers').dotfiles()<CR>",
+    {noremap = true, silent = true}
+)
+map('n',
+    '<Space>dg',
+    ":lua R('telescopepickers').gitclient()<CR>",
+    {noremap = true, silent = true}
 )
 map('n',
     '<Space>fh',
@@ -171,7 +177,7 @@ map('n',
 )
 map('n',
     '<C-p>',
-    "<cmd>lua require('telescope.builtin').live_grep{}<cr>",
+    "<cmd>lua R('telescopepickers').grep()<cr>",
     {noremap = true, silent = true}
 )
 map('n',
@@ -213,16 +219,6 @@ map('i',
     '<s-tab>',
     "<Plug>(completion_smart_s_tab)",
     {noremap = false, silent = true}
-)
-map('v',
-    '<A-c>',
-    "\"+y",
-    {noremap = true, silent = false}
-)
-map('n',
-    '<A-v>',
-    "\"+p",
-    {noremap = true, silent = false}
 )
 map(
     'n',
