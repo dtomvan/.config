@@ -49,7 +49,7 @@ require('packer').startup(function()
     use 'nvim-treesitter/nvim-treesitter'
     use 'https://github.com/tweekmonster/startuptime.vim.git'
     use 'tjdevries/train.nvim'
-    use 'lervag/wiki.vim'
     use 'liuchengxu/vim-clap'
     use 'windwp/nvim-autopairs'
+    use 'folke/lsp-trouble.nvim'
 end)

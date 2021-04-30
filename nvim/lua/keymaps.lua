@@ -137,7 +137,7 @@ map('n',
 )
 map('n',
     '<Space>q',
-    "<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<cr>",
+    ":LspTroubleToggle<cr>",
     {noremap = true, silent = true}
 )
 map('n',

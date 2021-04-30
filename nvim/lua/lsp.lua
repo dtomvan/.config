@@ -51,7 +51,7 @@ map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 map('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-map('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+-- map('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 map('n', '<space>f', ":lua vim.lsp.buf.formatting()<CR>", opts)
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -117,3 +117,4 @@ nvim_lsp.diagnosticls.setup {
 }
 
 R('lspkind').init()
+R("trouble", 'setup')
