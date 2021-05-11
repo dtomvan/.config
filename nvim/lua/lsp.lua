@@ -1,16 +1,7 @@
 local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
-  -- local function map(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) API.nvim_buf_set_option(bufnr, ...) end
-
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Set some keybinds conditional on server capabilities
-  -- if client.resolved_capabilities.document_formatting then
-  --   map("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  -- elseif client.resolved_capabilities.document_range_formatting then
-  --   map("n", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-  -- end
 
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
@@ -51,14 +42,13 @@ map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 map('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
--- map('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 map('n', '<space>f', ":lua vim.lsp.buf.formatting()<CR>", opts)
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     -- This will disable virtual text, like doing:
     -- let g:diagnostic_enable_virtual_text = 0
-    virtual_text = true,
+    virtual_text = false,
 
     -- This is similar to:
     -- let g:diagnostic_show_sign = 1
@@ -117,4 +107,3 @@ nvim_lsp.diagnosticls.setup {
 }
 
 R('lspkind').init()
-R("trouble", 'setup')

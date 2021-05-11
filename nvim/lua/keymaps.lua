@@ -61,11 +61,6 @@ map('n',
     {noremap = true, silent = true}
 )
 map('n',
-    '<C-n>',
-    ":NvimTreeToggle<CR>",
-    {noremap = true, silent = true}
-)
-map('n',
     '<F8>',
     ":TagbarToggle<CR>",
     {noremap = false, silent = true}
@@ -137,7 +132,7 @@ map('n',
 )
 map('n',
     '<Space>q',
-    ":LspTroubleToggle<cr>",
+    ":lua R('telescope.builtin').lsp_workspace_diagnostics()<cr>",
     {noremap = true, silent = true}
 )
 map('n',

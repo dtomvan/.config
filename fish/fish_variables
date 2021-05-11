@@ -142,6 +142,7 @@ SETUVAR _fish_abbr_gunignore:git\x20update\x2dindex\x20\x2d\x2dno\x2dassume\x2du
 SETUVAR _fish_abbr_gup:git\x20pull\x20\x2d\x2drebase
 SETUVAR _fish_abbr_gwch:git\x20whatchanged\x20\x2dp\x20\x2d\x2dabbrev\x2dcommit\x20\x2d\x2dpretty\x3dmedium
 SETUVAR _fish_abbr_prvim:cd\x20\x7e/projects\x20\x26\x26\x20\x7e/venv/bin/nvr\x20\x2dc\x20\x22cd\x20\x22\x28command\x20ls\x20\x2dd\x20\x2a/\x20\x7c\x20sk\x29
+SETUVAR _fish_abbr_t:tmux
 SETUVAR _fish_abbr_tovim:\x7e/venv/bin/nvr\x20\x2dc\x20\x22cd\x20\x22\x28pwd\x29
 SETUVAR _fisher_PatrickF1_2F_fzf_2E_fish_files:/home/tomvd/\x2econfig/fish/functions/__fzf_extract_var_info\x2efish\x1e/home/tomvd/\x2econfig/fish/functions/__fzf_preview_file\x2efish\x1e/home/tomvd/\x2econfig/fish/functions/__fzf_report_file_type\x2efish\x1e/home/tomvd/\x2econfig/fish/functions/__fzf_search_current_dir\x2efish\x1e/home/tomvd/\x2econfig/fish/functions/__fzf_search_git_log\x2efish\x1e/home/tomvd/\x2econfig/fish/functions/__fzf_search_git_status\x2efish\x1e/home/tomvd/\x2econfig/fish/functions/__fzf_search_history\x2efish\x1e/home/tomvd/\x2econfig/fish/functions/__fzf_search_shell_variables\x2efish\x1e/home/tomvd/\x2econfig/fish/conf\x2ed/fzf\x2efish
 SETUVAR _fisher_gazorby_2F_fish_2D_abbreviation_2D_tips_files:/home/tomvd/\x2econfig/fish/functions/__abbr_tips_bind_newline\x2efish\x1e/home/tomvd/\x2econfig/fish/functions/__abbr_tips_bind_space\x2efish\x1e/home/tomvd/\x2econfig/fish/functions/__abbr_tips_init\x2efish\x1e/home/tomvd/\x2econfig/fish/conf\x2ed/abbr_tips\x2efish

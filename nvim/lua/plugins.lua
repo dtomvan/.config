@@ -16,7 +16,6 @@ require('packer').startup(function()
     use 'RishabhRD/nvim-lsputils'
     use 'nvim-lua/completion-nvim'
     use 'TC72/telescope-tele-tabby.nvim'
-    use 'kyazdani42/nvim-tree.lua'
     use 'andweeb/presence.nvim'
     use 'tweekmonster/startuptime.vim'
     use 'tjdevries/colorbuddy.vim'
@@ -51,5 +50,4 @@ require('packer').startup(function()
     use 'tjdevries/train.nvim'
     use 'liuchengxu/vim-clap'
     use 'windwp/nvim-autopairs'
-    use 'folke/lsp-trouble.nvim'
 end)

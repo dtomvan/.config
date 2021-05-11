@@ -19,7 +19,14 @@ alias pr="cd ~/projects && cd (command ls -d */ | sk)";
 abbr tovim "~/venv/bin/nvr -c \"cd \"(pwd)";
 abbr prvim "cd ~/projects && ~/venv/bin/nvr -c \"cd \"(command ls -d */ | sk)";
 abbr g git-client
+abbr t tmux
 
 export EDITOR=nvim;
 zoxide init fish --cmd d | source
 bind \cr 'cargo r'
+
+if not set -q TMUX    
+	set -g TMUX tmux new-session -s base    
+    eval $TMUX    
+    tmux attach-session -t base
+end

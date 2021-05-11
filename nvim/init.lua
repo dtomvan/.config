@@ -11,7 +11,8 @@ R('lsp')
 R('opts')
 R('keymaps')
 R('stuffthatiknowtodoinvimscriptbutnotinlua')
-R('gitsigns').setup()
+R('gitsigns').setup{
+}
 R('telescope').setup {
     extensions = {
         fzy_native = {
@@ -31,11 +32,7 @@ R('nlua.lsp.nvim').setup(R('lspconfig'), {
     "Color", "c", "Group", "g", "s", "use", "custom_nvim_lspconfig_attach",
   }
 })
-R'lsp_extensions'.inlay_hints {
-    prefix = '',
-    highlight = "Comment",
-    enabled = {"TypeHint", "ChainingHint", "ParameterHint"}
-}
+R'lsp_extensions'.inlay_hints()
 R"termwrapper".setup {
     open_autoinsert = true,
     toggle_autoinsert = true,
