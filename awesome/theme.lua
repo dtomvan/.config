@@ -21,7 +21,7 @@ theme.fg_focus      = theme.fg_normal
 theme.fg_urgent     = theme.fg_normal
 theme.fg_minimize     = theme.fg_normal
 
-theme.useless_gap   = 4
+theme.useless_gap   = 2
 theme.border_width  = dpi(1)
 theme.border_normal = "#000000"
 theme.border_focus  = "#535d6c"
@@ -39,6 +39,7 @@ theme.border_marked = "#91231c"
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
+theme.taglist_font = "awesomewm-font 13"
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)

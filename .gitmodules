@@ -1,3 +1,6 @@
 [submodule "awesome/vicious"]
 	path = awesome/vicious
 	url = https://github.com/vicious-widgets/vicious.git
+[submodule "awesome/awesome-copycats"]
+	path = awesome/awesome-copycats
+	url = https://github.com/lcpz/awesome-copycats.git
