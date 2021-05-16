@@ -1,0 +1,3 @@
+[submodule "awesome/vicious"]
+	path = awesome/vicious
+	url = https://github.com/vicious-widgets/vicious.git
