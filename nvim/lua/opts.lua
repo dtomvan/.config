@@ -35,3 +35,4 @@ ops.completeopt = { "menuone", "noinsert", "noselect" }
 ops.shortmess = "filnxtToOFc"
 ops.ignorecase = true
 ops.smartcase = true
+ops.signcolumn = "yes"

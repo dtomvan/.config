@@ -24,3 +24,5 @@ abbr t tmux
 export EDITOR=nvim;
 zoxide init fish --cmd d | source
 bind \cr 'cargo r'
+
+set -gx PULSE_LATENCY_MSEC 30

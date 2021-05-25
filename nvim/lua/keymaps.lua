@@ -10,11 +10,6 @@ map('n',
     "gj",
     {noremap = true, silent = true}
 )
-vim.cmd [[nnoremap <silent> gj :let _=&lazyredraw<CR>:set lazyredraw<CR>/\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>]]
-vim.cmd [[nnoremap <silent> gk :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>]]
-vim.cmd [[imap <C-k> <Plug>(neosnippet_expand_or_jump)]]
-vim.cmd [[smap <C-k> <Plug>(neosnippet_expand_or_jump)]]
-vim.cmd [[xmap <C-k> <Plug>(neosnippet_expand_target)]]
 map('',
     '<Down>',
     "j<C-e>",
@@ -205,19 +200,15 @@ map('n',
     ":resize +2<CR>",
     {noremap = false, silent = true}
 )
-map('i',
-    '<tab>',
-    "<Plug>(completion_smart_tab)",
-    {noremap = false, silent = true}
-)
-map('i',
-    '<s-tab>',
-    "<Plug>(completion_smart_s_tab)",
-    {noremap = false, silent = true}
-)
 map(
     'n',
     '<C-q>',
     ":lua require'telescope'.extensions.project.project{}<CR>",
     {noremap = true, silent = false}
+)
+map(
+    'n',
+    'gh',
+    "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>",
+    {noremap = true, silent = true}
 )

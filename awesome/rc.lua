@@ -30,7 +30,7 @@ do
 end
 
 beautiful.init(gears.filesystem.get_configuration_dir() .. "theme.lua")
-terminal = "alacritty"
+terminal = "st"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
@@ -52,8 +52,8 @@ mymainmenu = awful.menu({ items = {{ "open terminal", terminal }}})
 -- {{{ Wibar
 mytextclock = wibox.widget.textbox()
 vicious.register(mytextclock, vicious.widgets.date, "%T", 1)
-mytextaudio = wibox.widget.textbox()
-vicious.register(mytextaudio, vicious.widgets.volume, "$1%", 10, "Master")
+-- mytextaudio = wibox.widget.textbox()
+-- vicious.register(mytextaudio, vicious.widgets.volume, "$1%", 10, "Master")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -112,13 +112,13 @@ local wibox_layout = wibox.layout.fixed.horizontal()
 
 awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
-    awful.tag({ "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
     s.mypromptbox = awful.widget.prompt()
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mytaglist = awful.widget.taglist {
         screen  = s,
-        filter  = awful.widget.taglist.filter.noempty,
-        buttons = taglist_buttons
+        filter  = awful.widget.taglist.filter.all,
+        buttons = taglist_buttons,
     }
 
     -- Create a tasklist widget
@@ -144,7 +144,7 @@ awful.screen.connect_for_each_screen(function(s)
             spacing = 10,
             wibox.widget.systray(),
             mytextclock,
-            mytextaudio,
+            -- mytextaudio,
             s.mylayoutbox,
         },
     }
@@ -336,3 +336,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 awful.spawn.once("picom --experimental-backends --backend glx --xrender-sync-fence")
 awful.spawn.once("discord")
 awful.spawn.once("clipmenud")
+awful.spawn.once("volumeicon")
