@@ -4,3 +4,6 @@
 [submodule "awesome/awesome-copycats"]
 	path = awesome/awesome-copycats
 	url = https://github.com/lcpz/awesome-copycats.git
+[submodule "awesome/themes/ayu"]
+	path = awesome/themes/ayu
+	url = https://github.com/MArpogaus/awesome-ayu.git
