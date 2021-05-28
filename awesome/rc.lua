@@ -29,7 +29,8 @@ do
     end)
 end
 
-beautiful.init(gears.filesystem.get_configuration_dir() .. "theme.lua")
+-- beautiful.init(gears.filesystem.get_configuration_dir() .. "theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/ayu/theme.lua")
 terminal = "st"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
@@ -50,8 +51,8 @@ awful.layout.layouts = {
 mymainmenu = awful.menu({ items = {{ "open terminal", terminal }}})
 
 -- {{{ Wibar
-mytextclock = wibox.widget.textbox()
-vicious.register(mytextclock, vicious.widgets.date, "%T", 1)
+-- mytextclock = wibox.widget.textbox()
+-- vicious.register(mytextclock, vicious.widgets.date, "%T %F", 1)
 -- mytextaudio = wibox.widget.textbox()
 -- vicious.register(mytextaudio, vicious.widgets.volume, "$1%", 10, "Master")
 
@@ -143,7 +144,7 @@ awful.screen.connect_for_each_screen(function(s)
             spacing_widget = wibox.widget.separator,
             spacing = 10,
             wibox.widget.systray(),
-            mytextclock,
+            -- mytextclock,
             -- mytextaudio,
             s.mylayoutbox,
         },

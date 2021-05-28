@@ -81,6 +81,12 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
 
+    awful.key({ modkey }, "n",
+              function ()
+                  awful.client.focus.minimized = true
+              end,
+              {description = "minimize current client", group = "client"}),
+
     awful.key({ modkey, "Control" }, "n",
               function ()
                   local c = awful.client.restore()
