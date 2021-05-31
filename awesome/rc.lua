@@ -51,8 +51,8 @@ awful.layout.layouts = {
 mymainmenu = awful.menu({ items = {{ "open terminal", terminal }}})
 
 -- {{{ Wibar
--- mytextclock = wibox.widget.textbox()
--- vicious.register(mytextclock, vicious.widgets.date, "%T %F", 1)
+mytextclock = wibox.widget.textbox()
+vicious.register(mytextclock, vicious.widgets.date, "%T %F", 1)
 -- mytextaudio = wibox.widget.textbox()
 -- vicious.register(mytextaudio, vicious.widgets.volume, "$1%", 10, "Master")
 
@@ -144,7 +144,7 @@ awful.screen.connect_for_each_screen(function(s)
             spacing_widget = wibox.widget.separator,
             spacing = 10,
             wibox.widget.systray(),
-            -- mytextclock,
+            mytextclock,
             -- mytextaudio,
             s.mylayoutbox,
         },
