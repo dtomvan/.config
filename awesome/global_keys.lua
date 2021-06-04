@@ -4,7 +4,7 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
 globalkeys = gears.table.join(
-    awful.key({ modkey, "Control" }, "l",      function () awful.spawn("i3lock") end,
+    awful.key({ modkey, "Control" }, "l",      function () awful.spawn("bash ~/bins/i3lock.sh") end,
               {description="lock the screen", group="awesome"}),
     awful.key({ modkey, "Shift" }, "v",      function () awful.spawn("clipmenu") end,
               {description="clipboard menu", group="awesome"}),
