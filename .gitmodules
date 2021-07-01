@@ -7,3 +7,6 @@
 [submodule "awesome/themes/ayu"]
 	path = awesome/themes/ayu
 	url = https://github.com/MArpogaus/awesome-ayu.git
+[submodule "xplr/plugins/fzf"]
+	path = xplr/plugins/fzf
+	url = https://github.com/sayanarijit/fzf.xplr.git

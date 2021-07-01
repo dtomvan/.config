@@ -162,7 +162,7 @@ map('n',
 )
 map('n',
     '<C-e>',
-    "<cmd>lua require('telescope.builtin').find_files()<cr>",
+    "<cmd>lua require('telescope.builtin').git_files()<cr>",
     {noremap = true, silent = true}
 )
 map('n',

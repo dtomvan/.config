@@ -31,7 +31,7 @@ end
 
 -- beautiful.init(gears.filesystem.get_configuration_dir() .. "theme.lua")
 beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/ayu/theme.lua")
-terminal = "st"
+terminal = "st -e fish"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
@@ -334,7 +334,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 -- Default programs on startup
-awful.spawn.once("picom --backend xrender --xrender-sync-fence")
+awful.spawn.once("picom --backend glx --xrender-sync-fence")
 awful.spawn.once("discord")
 awful.spawn.once("clipmenud")
 awful.spawn.once("volumeicon")

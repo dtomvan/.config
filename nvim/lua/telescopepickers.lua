@@ -53,13 +53,13 @@ function M.buffers()
 end
 
 function M.dotfiles()
-    builtin.find_files {
+    builtin.git_files {
         cwd = "~/.config/nvim"
     }
 end
 
 function M.gitclient()
-    builtin.find_files {
+    builtin.git_files {
         cwd = "~/projects/git-client"
     }
 end
