@@ -36,4 +36,7 @@ require('sort-mode')
 ------ Switch layout
 require('switch-layout-mode')
 ---- Custom
-xplr.config.modes.custom = {}
+xplr.config.modes.custom = {
+    ["git"] = require('git-mode').toplevel_mode,
+    ["git add"] = require('git-mode').add_mode
+}
