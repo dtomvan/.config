@@ -42,4 +42,5 @@ require('packer').startup(function()
     use 'hrsh7th/vim-vsnip'
     use 'hrsh7th/vim-vsnip-integ'
     use 'glepnir/lspsaga.nvim'
+    use 'https://github.com/sayanarijit/xplr.vim'
 end)

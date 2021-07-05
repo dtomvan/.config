@@ -2,17 +2,17 @@ local nvim_lsp = require('lspconfig')
 
 -- Use a loop to conveniently both setup defined servers 
 -- and map buffer local keybindings when the language server attaches
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    'documentation',
-    'detail',
-    'additionalTextEdits',
-  }
-}
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- capabilities.textDocument.completion.completionItem.resolveSupport = {
+--   properties = {
+--     'documentation',
+--     'detail',
+--     'additionalTextEdits',
+--   }
+-- }
 local lsp_opts = {
-    capabilities = capabilities,
+    -- capabilities = capabilities,
 };
 local servers = { "rust_analyzer" }
 for _, lsp in ipairs(servers) do
@@ -39,14 +39,6 @@ map('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', 
 map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 map('n', '<space>f', ":lua vim.lsp.buf.formatting()<CR>", opts)
-
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-    signs = true,
-    update_in_insert = false,
-  }
-)
 
 local rust_tools_opts = {
     tools = {

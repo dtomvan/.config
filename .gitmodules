@@ -10,3 +10,6 @@
 [submodule "xplr/plugins/fzf"]
 	path = xplr/plugins/fzf
 	url = https://github.com/sayanarijit/fzf.xplr.git
+[submodule "xplr/plugins/xargs"]
+	path = xplr/plugins/xargs
+	url = https://github.com/sayanarijit/xargs.xplr

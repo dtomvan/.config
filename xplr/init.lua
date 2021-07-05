@@ -2,6 +2,7 @@ version = "0.14.3"
 
 package.path = os.getenv("HOME") .. '/.config/xplr/plugins/?/src/init.lua'
 package.path = package.path .. ";" .. os.getenv("HOME") .. '/.config/xplr/?.lua'
+
 -- Config
 ---- General
 require('general')
@@ -11,7 +12,7 @@ require('layouts')
 require('modes')
 -- Function
 ---- Builtin
------- Formaters
+------ Formatters
 -------- Format index column
 xplr.fn.builtin.fmt_general_table_row_cols_0 = function(m)
   local r = ""
@@ -169,3 +170,4 @@ end
 ---- Custom
 xplr.fn.custom = {}
 require("fzf").setup()
+require("xargs").setup()

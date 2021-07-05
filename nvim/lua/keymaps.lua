@@ -1,15 +1,5 @@
 local map = vim.api.nvim_set_keymap
 map('', '<Space>', "<Nop>", {noremap = true, silent = true})
-map('n',
-    'k',
-    "gk",
-    {noremap = true, silent = true}
-)
-map('n',
-    'j',
-    "gj",
-    {noremap = true, silent = true}
-)
 map('',
     '<Down>',
     "j<C-e>",
@@ -162,7 +152,7 @@ map('n',
 )
 map('n',
     '<C-e>',
-    "<cmd>lua require('telescope.builtin').git_files()<cr>",
+    "<cmd>lua require('telescope.builtin').find_files()<cr>",
     {noremap = true, silent = true}
 )
 map('n',
