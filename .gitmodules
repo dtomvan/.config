@@ -9,4 +9,4 @@
 	url = https://github.com/sayanarijit/fzf.xplr.git
 [submodule "xplr/.config/xplr/plugins/xargs"]
 	path = xplr/.config/xplr/plugins/xargs
-	url = https://github.com/sayanarijit/xargs.xplr
+	url = https://github.com/sayanarijit/xargs.xplr.git
