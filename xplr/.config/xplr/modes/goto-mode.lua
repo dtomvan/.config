@@ -21,24 +21,13 @@ xplr.config.modes.builtin.go_to = {
                 messages = {"FocusFirst", "PopMode"}
             },
             ["x"] = {
-                help = "open in gui",
+                help = "open in vim",
                 messages = {
                     {
-                        BashExecSilently = [===[
-                        if [ -z "$OPENER" ]; then
-                            if command -v xdg-open; then
-                                OPENER=xdg-open
-                                elif command -v open; then
-                                OPENER=open
-                            else
-                                echo 'LogError: $OPENER not found' >> "${XPLR_PIPE_MSG_IN:?}"
-                                exit 1
-                                fi
-                                fi
-                                $OPENER "${XPLR_FOCUS_PATH:?}" > /dev/null 2>&1
+                        BashExec = [===[
+                                nvim "${XPLR_FOCUS_PATH:?}"
                                 ]===]
                             },
-                            "ClearScreen",
                             "PopMode",
                         }
                     }
