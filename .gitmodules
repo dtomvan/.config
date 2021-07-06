@@ -10,3 +10,6 @@
 [submodule "xplr/.config/xplr/plugins/xargs"]
 	path = xplr/.config/xplr/plugins/xargs
 	url = https://github.com/sayanarijit/xargs.xplr.git
+[submodule "p10k/zsh-theme-powerlevel10k"]
+	path = p10k/zsh-theme-powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git
