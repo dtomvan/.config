@@ -1,15 +1,15 @@
-[submodule "awesome/vicious"]
-	path = awesome/vicious
+[submodule "awesome/.config/awesome/vicious"]
+	path = awesome/.config/awesome/vicious
 	url = https://github.com/vicious-widgets/vicious.git
-[submodule "awesome/awesome-copycats"]
-	path = awesome/awesome-copycats
+[submodule "awesome/.config/awesome/awesome-copycats"]
+	path = awesome/.config/awesome/awesome-copycats
 	url = https://github.com/lcpz/awesome-copycats.git
-[submodule "awesome/themes/ayu"]
-	path = awesome/themes/ayu
+[submodule "awesome/.config/awesome/themes/ayu"]
+	path = awesome/.config/awesome/themes/ayu
 	url = https://github.com/MArpogaus/awesome-ayu.git
-[submodule "xplr/plugins/fzf"]
-	path = xplr/plugins/fzf
+[submodule "xplr/.config/xplr/plugins/fzf"]
+	path = xplr/.config/xplr/plugins/fzf
 	url = https://github.com/sayanarijit/fzf.xplr.git
-[submodule "xplr/plugins/xargs"]
-	path = xplr/plugins/xargs
+[submodule "xplr/.config/xplr/plugins/xargs"]
+	path = xplr/.config/xplr/plugins/xargs
 	url = https://github.com/sayanarijit/xargs.xplr
