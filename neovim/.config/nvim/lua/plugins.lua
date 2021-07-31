@@ -12,7 +12,6 @@ require('packer').startup(function()
     use 'andweeb/presence.nvim'
     use 'tweekmonster/startuptime.vim'
     use 'tjdevries/colorbuddy.vim'
-    use 'tjdevries/gruvbuddy.nvim'
     use {
       'glepnir/galaxyline.nvim',
         branch = 'main',
@@ -25,14 +24,8 @@ require('packer').startup(function()
     use 'rust-lang/rust.vim'
     use 'kana/vim-tabpagecd'
     use 'Th3Whit3Wolf/onebuddy'
-    use 'Shougo/deoplete.nvim'
-    use 'roxma/nvim-yarp'
-    use 'roxma/vim-hug-neovim-rpc'
     use 'tjdevries/nlua.nvim'
-    use 'glepnir/dashboard-nvim'
     use 'nvim-treesitter/nvim-treesitter'
-    use 'liuchengxu/vim-clap'
-    use 'lervag/wiki.vim'
     use 'rstacruz/vim-closer'
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
@@ -42,5 +35,8 @@ require('packer').startup(function()
     use 'hrsh7th/vim-vsnip'
     use 'hrsh7th/vim-vsnip-integ'
     use 'glepnir/lspsaga.nvim'
-    use 'https://github.com/sayanarijit/xplr.vim'
+    use 'ThePrimeagen/refactoring.nvim'
+    use 'gelguy/wilder.nvim'
+    use 'romgrk/fzy-lua-native'
+    use 'nixprime/cpsm'
 end)

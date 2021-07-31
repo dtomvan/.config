@@ -21,7 +21,6 @@ R('colorbuddy').colorscheme('onebuddy')
 R('lsp')
 R('opts')
 R('keymaps')
-R('stuffthatiknowtodoinvimscriptbutnotinlua')
 R('gitsigns').setup{}
 R('telescope').setup {}
 R('nlua.lsp.nvim').setup(R('lspconfig'), {
@@ -30,3 +29,4 @@ R('nlua.lsp.nvim').setup(R('lspconfig'), {
     "Color", "c", "Group", "g", "s", "use", "custom_nvim_lspconfig_attach",
   }
 })
+vim.cmd [[source ~/.config/nvim/autoload/vimscriptstuff.vim]]

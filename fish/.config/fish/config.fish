@@ -22,6 +22,5 @@ abbr g git-client
 abbr t tmux
 
 export EDITOR=nvim;
-bind \cr 'cargo r'
 
 set -gx PULSE_LATENCY_MSEC 30

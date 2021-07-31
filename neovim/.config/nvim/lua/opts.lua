@@ -1,4 +1,4 @@
-local ops = require("opt").opt;
+local ops = vim.opt
 
 ops.number = true
 ops.relativenumber = true
@@ -32,7 +32,8 @@ ops.shiftwidth = 4
 ops.updatetime = 300
 ops.timeoutlen = 500
 ops.completeopt = { "menuone", "noinsert", "noselect" }
-ops.shortmess = "filnxtToOFc"
+-- ops.shortmess = "filnxtToOFc"
+ops.shortmess = ops.shortmess + "a"
 ops.ignorecase = true
 ops.smartcase = true
 ops.signcolumn = "yes"

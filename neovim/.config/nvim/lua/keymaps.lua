@@ -101,16 +101,6 @@ map('n',
     {noremap = false, silent = false}
 )
 map('n',
-    '<Space>cso',
-    ":lua package.loaded.onebuddy = nil<cr>:lua require'colorbuddy'.colorscheme('onebuddy')<cr>",
-    {noremap = false, silent = false}
-)
-map('n',
-    '<Space>csg',
-    ":lua package.loaded.gruvbuddy = nil<cr>:lua require'colorbuddy'.colorscheme('gruvbuddy')<cr>",
-    {noremap = false, silent = false}
-)
-map('n',
     '<Space>t',
     ":Ttoggle<cr>",
     {noremap = false, silent = false}
@@ -152,8 +142,8 @@ map('n',
 )
 map('n',
     '<C-e>',
-    "<cmd>lua require('telescope.builtin').find_files()<cr>",
-    {noremap = true, silent = true}
+    ":e ",
+    {noremap = true, silent = false}
 )
 map('n',
     '<C-p>',
@@ -200,5 +190,33 @@ map(
     'n',
     'gh',
     "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>",
+    {noremap = true, silent = true}
+)
+-- Thanks prime (:
+local breakpoints = {',','!','.','?',';'}
+for _,point in ipairs(breakpoints) do
+    map(
+        'i',
+        point,
+        point .. "<c-g>u",
+        {noremap = true, silent = false}
+    )
+end
+map(
+    'n',
+    'n',
+    "nzzzv",
+    {noremap = true, silent = true}
+)
+map(
+    'n',
+    'N',
+    "Nzzzv",
+    {noremap = true, silent = true}
+)
+map(
+    'n',
+    'J',
+    "mzJ`zzzzv",
     {noremap = true, silent = true}
 )

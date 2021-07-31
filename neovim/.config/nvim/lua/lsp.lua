@@ -14,7 +14,7 @@ local nvim_lsp = require('lspconfig')
 local lsp_opts = {
     -- capabilities = capabilities,
 };
-local servers = { "rust_analyzer" }
+local servers = { "rust_analyzer", "pylsp" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { 
       lsp_opts
