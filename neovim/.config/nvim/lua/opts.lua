@@ -1,13 +1,13 @@
 local ops = vim.opt
 
+ops.mouse = "a"
 ops.number = true
 ops.relativenumber = true
 ops.completeopt = "menuone"
-ops.mouse = "a"
 ops.backup = false
+ops.writebackup = true
 ops.compatible = false
-ops.swapfile = false
-ops.writebackup = false
+ops.swapfile = true
 ops.rnu = true
 ops.title = true
 ops.wrap = true
@@ -25,7 +25,6 @@ ops.showtabline = 2
 ops.listchars = "trail:·"
 ops.background = "dark"
 ops.textwidth = 120
-ops.undodir = "~/.vim/undodir"
 ops.guifont = "Hack,FiraCode\\ Nerd\\ Font"
 ops.tabstop = 4
 ops.shiftwidth = 4

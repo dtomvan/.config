@@ -142,8 +142,8 @@ map('n',
 )
 map('n',
     '<C-e>',
-    ":e ",
-    {noremap = true, silent = false}
+    ":lua require'telescope.builtin'.find_files{find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' }}<cr>",
+    {noremap = true, silent = true}
 )
 map('n',
     '<C-p>',

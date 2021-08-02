@@ -26,3 +26,7 @@ call wilder#set_option('pipeline', [
       \   ),
       \ ])
 cnoreabbrev luf luafile
+autocmd BufReadPost *
+  \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+  \ |   exe "normal! g`\""
+  \ | endif

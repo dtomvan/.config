@@ -39,4 +39,5 @@ require('packer').startup(function()
     use 'gelguy/wilder.nvim'
     use 'romgrk/fzy-lua-native'
     use 'nixprime/cpsm'
+    use 'nvim-telescope/telescope-fzy-native.nvim'
 end)

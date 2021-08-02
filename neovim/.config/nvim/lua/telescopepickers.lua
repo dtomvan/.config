@@ -1,7 +1,6 @@
 local M = {}
 local previewers = require('telescope.previewers')
 local pickers = require('telescope.pickers')
-local sorters = require('telescope.sorters')
 local finders = require('telescope.finders')
 local builtin = require('telescope.builtin')
 
@@ -9,7 +8,6 @@ function M.projects()
 pickers.new {
   results_title = 'Projects',
   finder = finders.new_oneshot_job({'fd', '--type', 'd'}),
-  sorter = sorters.get_fuzzy_file(),
   previewer = previewers.new_termopen_previewer {
     get_command = function(entry)
       return {'ls', entry.value}
@@ -26,7 +24,6 @@ function M.configs()
 pickers.new {
   results_title = 'Fd hidden',
   finder = finders.new_oneshot_job({'fd', '--type', 'd', '--hidden'}),
-  sorter = sorters.get_fuzzy_file(),
   previewer = previewers.new_termopen_previewer {
     get_command = function(entry)
       return {'ls', entry.value}
