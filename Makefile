@@ -1,4 +1,4 @@
-dirs = awesome picom xplr fish zsh neovim editorconfig
+dirs = awesome picom xplr fish zsh neovim editorconfig git
 root-dirs = p10k
 
 all:

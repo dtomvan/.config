@@ -10,7 +10,7 @@ fi
 alias luamake=/home/tomvd/.cache/nvim/nlua/sumneko_lua/lua-language-server/3rd/luamake/luamake
 export PATH=~/.cargo/bin:$PATH
 if [[ "$(tty)" == "/dev/tty1" ]] ; then
-	[[ $XDG_VTNR -le 2 ]] && tbsm
+	tbsm
 fi
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile

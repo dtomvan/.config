@@ -1,0 +1,24 @@
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[user]
+	email = 18gatenmaker6@gmail.com
+	name = Tom van Dijk
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[init]
+	defaultBranch = main
+[advice]
+	detachedHead = false
+[alias]
+	cl = clone
+	ch = checkout
+	co = commit
+	pu = push
+	pul = pull
+	a = add
+	r = rm
+	res = restore
