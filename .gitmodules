@@ -13,3 +13,6 @@
 [submodule "p10k/zsh-theme-powerlevel10k"]
 	path = p10k/zsh-theme-powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
+[submodule "xmonad/.xmonad"]
+	path = xmonad/.xmonad
+	url = https://github.com/dtomvan/.xmonad

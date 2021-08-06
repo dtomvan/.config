@@ -1,5 +1,5 @@
-dirs = awesome picom xplr fish zsh neovim editorconfig git
-root-dirs = p10k
+dirs = awesome picom xplr fish zsh neovim editorconfig git xmonad
+root-dirs = p10k xmonad-root
 
 all:
 	stow $(dirs)

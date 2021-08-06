@@ -8,7 +8,7 @@ fi
 # Created by newuser for 5.8
 
 alias luamake=/home/tomvd/.cache/nvim/nlua/sumneko_lua/lua-language-server/3rd/luamake/luamake
-export PATH=~/.cargo/bin:$PATH
+export PATH=~/.cargo/bin:~/.local/bin:$PATH
 if [[ "$(tty)" == "/dev/tty1" ]] ; then
 	tbsm
 fi

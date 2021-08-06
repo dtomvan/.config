@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=XMonad
+Comment=This session starts xmonad
+Exec=/home/tomvd/.local/bin/xmonad
+Type=Application
