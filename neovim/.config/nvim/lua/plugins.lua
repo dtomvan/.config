@@ -36,7 +36,7 @@ require('packer').startup(function()
     use 'hrsh7th/vim-vsnip-integ'
     use 'glepnir/lspsaga.nvim'
     use 'ThePrimeagen/refactoring.nvim'
-    use 'gelguy/wilder.nvim'
+    -- use 'gelguy/wilder.nvim'
     use 'romgrk/fzy-lua-native'
     use 'nixprime/cpsm'
     use 'nvim-telescope/telescope-fzy-native.nvim'

@@ -1,17 +1,14 @@
-" Automatically generated packer.nvim plugin loader code
+-- Automatically generated packer.nvim plugin loader code
 
-if !has('nvim-0.5')
-  echohl WarningMsg
-  echom "Invalid Neovim version for packer.nvim!"
-  echohl None
-  finish
-endif
+if vim.api.nvim_call_function('has', {'nvim-0.5'}) ~= 1 then
+  vim.api.nvim_command('echohl WarningMsg | echom "Invalid Neovim version for packer.nvim! | echohl None"')
+  return
+end
 
-packadd packer.nvim
+vim.api.nvim_command('packadd packer.nvim')
 
-try
+local no_errors, error_msg = pcall(function()
 
-lua << END
   local time
   local profile_info
   local should_profile = false
@@ -76,13 +73,13 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/colorbuddy.vim"
   },
-  ["dashboard-nvim"] = {
+  cpsm = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/dashboard-nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/cpsm"
   },
-  ["deoplete.nvim"] = {
+  ["fzy-lua-native"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/deoplete.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/fzy-lua-native"
   },
   ["galaxyline.nvim"] = {
     config = { "\27LJ\1\2'\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\18my_statusline\6R\0" },
@@ -92,10 +89,6 @@ _G.packer_plugins = {
   ["gitsigns.nvim"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
-  },
-  ["gruvbuddy.nvim"] = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/gruvbuddy.nvim"
   },
   ["lsp_extensions.nvim"] = {
     loaded = true,
@@ -129,10 +122,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
   },
-  ["nvim-yarp"] = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-yarp"
-  },
   onebuddy = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/onebuddy"
@@ -153,6 +142,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/presence.nvim"
   },
+  ["refactoring.nvim"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/refactoring.nvim"
+  },
   ["registers.nvim"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/registers.nvim"
@@ -169,6 +162,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/startuptime.vim"
   },
+  ["telescope-fzy-native.nvim"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim"
+  },
   ["telescope-project.nvim"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/telescope-project.nvim"
@@ -176,10 +173,6 @@ _G.packer_plugins = {
   ["telescope.nvim"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/telescope.nvim"
-  },
-  ["vim-clap"] = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-clap"
   },
   ["vim-closer"] = {
     loaded = true,
@@ -196,10 +189,6 @@ _G.packer_plugins = {
   ["vim-easymotion"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-easymotion"
-  },
-  ["vim-hug-neovim-rpc"] = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-hug-neovim-rpc"
   },
   ["vim-matchup"] = {
     loaded = true,
@@ -224,14 +213,6 @@ _G.packer_plugins = {
   ["vim-vsnip-integ"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-vsnip-integ"
-  },
-  ["wiki.vim"] = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/wiki.vim"
-  },
-  ["xplr.vim"] = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/xplr.vim"
   }
 }
 
@@ -242,11 +223,8 @@ try_loadstring("\27LJ\1\2'\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\18my_stat
 time([[Config for galaxyline.nvim]], false)
 if should_profile then save_profiles() end
 
-END
+end)
 
-catch
-  echohl ErrorMsg
-  echom "Error in packer_compiled: " .. v:exception
-  echom "Please check your config for correctness"
-  echohl None
-endtry
+if not no_errors then
+  vim.api.nvim_command('echohl ErrorMsg | echom "Error in packer_compiled: '..error_msg..'" | echom "Please check your config for correctness" | echohl None')
+end
