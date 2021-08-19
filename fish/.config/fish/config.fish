@@ -9,7 +9,7 @@ alias .jc='just --justfile ~/Justfile --working-directory . --choose'
 
 alias doc='rustup docs';
 
-set PATH ~/.cargo/bin/ ~/tetris-os/i386-elf-7.5.0-Linux-x86_64/bin ~/.local/ $PATH
+set PATH ~/.cargo/bin/ ~/tetris-os/i386-elf-7.5.0-Linux-x86_64/bin ~/.local/bin $PATH
 
 alias kv=keyvcli;
 alias get="keyvcli get";
@@ -24,3 +24,4 @@ abbr t tmux
 export EDITOR=nvim;
 
 set -gx PULSE_LATENCY_MSEC 30
+gay -f || sudo pip install gay || sudo pacman -S python-pip
