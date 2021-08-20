@@ -335,5 +335,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Default programs on startup
 awful.spawn.once("picom --backend glx --xrender-sync-fence")
-awful.spawn.once("discord --no-sandbox")
 awful.spawn.once("clipmenud")
