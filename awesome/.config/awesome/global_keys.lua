@@ -4,7 +4,7 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
 globalkeys = gears.table.join(
-    awful.key({ modkey }, "l",      function () awful.spawn("slock") end,
+    awful.key({ modkey, "Control" }, "l",      function () awful.spawn("slock") end,
               {description="lock the screen", group="awesome"}),
     awful.key({ modkey }, "v",      function () awful.spawn("clipmenu") end,
               {description="clipboard menu", group="awesome"}),
@@ -126,16 +126,16 @@ globalkeys = gears.table.join(
                 end
             end,
               {description="toggle all titlebars", group="client"}),
-        awful.key({ }, "Print",
-                  function ()
-                      awful.util.spawn("fish -c screenshot")
-                  end,
-                  {description = "", group = ""}),
-        awful.key({ modkey, "Shift" }, "t",
-                  function ()
-                      awful.util.spawn("tdrop -a alacritty -e fish")
-                  end,
-                  {description = "", group = ""})
+    awful.key({ }, "Print",
+        function ()
+            awful.util.spawn("fish -c screenshot")
+        end,
+    {description = "", group = ""}),
+    awful.key({ modkey, "Shift" }, "t",
+        function ()
+            awful.util.spawn("tdrop -a alacritty -e fish")
+        end,
+    {description = "", group = ""})
 )
 
 for i = 1, 9 do
