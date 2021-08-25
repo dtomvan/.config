@@ -1,0 +1,87 @@
+/**
+ * @name deepbluetheme
+ * @description A simple deep blue theme for discord using atom's One Dark Ui palette.
+ * @author Onscreenproton#8179
+ * @version 1.0.0
+ * @source https://github.com/onscreenproton/deepbluetheme
+ * @updateUrl https://raw.githubusercontent.com/onscreenproton/deepbluetheme/Compiled_CSS/deepblue.theme.css
+*/
+
+/* Import raw */
+@import url(https://onscreenproton.github.io/deepbluetheme/Compiled_CSS/deepblueimport.css);
+
+/* font */
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap");
+::-webkit-input-placeholder, body, button, input, select, textarea {
+  font-family: "Fira Sans";
+}
+
+:root {
+  /* Change as you wish */
+  --primary: hsl(220, 24%, 20%);
+  /* default: hsl(220, 24%, 20%) */
+  --secondary: hsl(220, 24%, 12%);
+  /* default: hsl(220, 24%, 12%) */
+  --secondary-alpha: rgba(39, 47, 63, 0.9);
+  /* default: rgba(39, 47, 63, 0.9) */
+  --tertiary: hsl(220, 26%, 18%);
+  /* default: hsl(220, 26%, 18%) */
+  --tertiary-alpha: rgba(35, 43, 59, 0.6);
+  /* default: rgba(35, 43, 59, 0.6) */
+  --primary-light: hsl(220, 24%, 33%);
+  /* default: hsl(220, 24%, 33%) */
+  --accent: hsl(219, 79%, 66%);
+  /* default: hsl(219, 79%, 66%) */
+  --accent-alpha: rgba(100, 148, 237, 0.2);
+  /* default: rgba(100, 148, 237, 0.2) */
+  --accent-alpha-alt: rgba(100, 148, 237, 0.35);
+  /* default: rgba(100, 148, 237, 0.35) */
+  --accent-alpha-alt2: rgba(100, 148, 237, 0.5);
+  /* default: rgba(100, 148, 237, 0.5) */
+  --accent-dark: hsl(219, 79%, 33%);
+  /* default: hsl(219, 79%, 33%) */
+  --accent-light: hsl(219, 79%, 68%);
+  /* default: hsl(219, 79%, 68%) */
+  --mention-color: rgba(64, 106, 191, 0.2);
+  /* default: rgba(64, 106, 191, 0.2) */
+  --mention-color-alt: rgba(64, 106, 191, 0.4);
+  /* default: rgba(64, 106, 191, 0.4) */
+  --mention-color-alt2: rgba(64, 106, 191, 0.1);
+  /* default: rgba(64, 106, 191, 0.1) */
+  --ping-width: 30px;
+  /* default: 30px */
+  /* powercord */
+  --spotify-color: var(--accent) !important;
+  --toast-header: var(--secondary) !important;
+  --toast-background: var(--primary) !important;
+  --toast-border: var(--tertiary) !important;
+  --toast-contents: var(--secondary) !important;
+  /* discord vars */
+  --background-primary: var(--primary);
+  --background-secondary: var(--secondary);
+  --background-secondary-alt: var(--secondary);
+  --background-tertiary: var(--secondary);
+  --background-accent: var(--accent);
+  --background-message-hover: var(--tertiary-alpha);
+  --scrollbar-thumb: var(--primary-light);
+  --scrollbar-thin-thumb: var(--primary-light);
+  --scrollbar-auto-scrollbar-color-thumb: var(--primary-light);
+  --scrollbar-auto-track: var(--primary);
+  --scrollbar-auto-scrollbar-color-track: var(--primary);
+  --scrollbar-auto-thumb: var(--primary-light);
+  --text-link: var(--accent);
+  --focus-primary: var(--accent);
+  --background-modifier-accent: var(--tertiary);
+  --background-modifier-selected: var(--secondary);
+  --background-modifier-hover: var(--tertiary);
+  --background-modifier-active: var(--tertiary);
+  --header-primary: #fff;
+  --background-floating: var(--secondary);
+  --deprecated-text-input-border: var(--tertiary);
+  --deprecated-card-editable-bg: var(--secondary);
+  --deprecated-card-bg: var(--secondary);
+  --deprecated-text-input-bg: var(--secondary);
+  --deprecated-text-input-border: var(--tertiary);
+  --deprecated-quickswitcher-input-background: var(--primary);
+  --brand-experiment: var(--accent) !important;
+}

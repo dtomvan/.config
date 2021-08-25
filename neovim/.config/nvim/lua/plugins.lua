@@ -40,4 +40,30 @@ require('packer').startup(function()
     use 'romgrk/fzy-lua-native'
     use 'nixprime/cpsm'
     use 'nvim-telescope/telescope-fzy-native.nvim'
+    use {
+        'abecodes/tabout.nvim',
+        config = function()
+            require('tabout').setup {
+                tabkey = '<Tab>',
+                backwards_tabkey = '<S-Tab>',
+                act_as_tab = true,
+                act_as_shift_tab = false,
+                enable_backwards = false,
+                completion = true,
+                tabouts = {
+                    {open = "'", close = "'"},
+                    {open = '"', close = '"'},
+                    {open = '`', close = '`'},
+                    {open = '(', close = ')'},
+                    {open = '[', close = ']'},
+                    {open = '{', close = '}'}
+                },
+                ignore_beginning = true,
+                exclude = {}
+            }
+        end,
+        requires = {'nvim-treesitter'},
+        after = {'nvim-compe'},
+        opt = false
+    }
 end)

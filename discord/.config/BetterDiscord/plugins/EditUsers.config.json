@@ -1,0 +1,67 @@
+{
+	"places": {
+		"contextMenu": true,
+		"chatTextarea": true,
+		"chatWindow": true,
+		"reactions": true,
+		"mentions": true,
+		"memberList": true,
+		"voiceChat": true,
+		"recentDms": true,
+		"dmsList": true,
+		"dmHeader": true,
+		"dmCalls": true,
+		"typing": true,
+		"friendList": true,
+		"inviteList": true,
+		"activity": true,
+		"userPopout": true,
+		"userProfile": true,
+		"mutualFriends": true,
+		"autocompletes": true,
+		"guildSettings": true,
+		"quickSwitcher": true,
+		"searchPopout": true,
+		"userAccount": true,
+		"appTitle": true
+	},
+	"types": {
+		"servers": true,
+		"dms": true
+	},
+	"users": {
+		"592692593901699072": {
+			"name": "bart",
+			"showServerNick": false,
+			"status": "I am an idiot and cruhbridge sucks",
+			"tag": "shitass",
+			"useServerNick": true
+		},
+		"570954753605894144": {
+			"name": "koen",
+			"status": "Definitely online and working on cruhbridge",
+			"tag": ""
+		},
+		"673600831601508352": {
+			"name": "tom"
+		},
+		"549334475520344094": {
+			"name": "Robin",
+			"status": ""
+		},
+		"660119639908679690": {
+			"name": "Harmful",
+			"tag": ""
+		},
+		"235088799074484224": {
+			"name": "VROOM MUSIC /"
+		},
+		"349289613593935893": {
+			"name": "PLAATJES KIJKEN"
+		},
+		"234395307759108106": {
+			"name": "KUT",
+			"tag": "DING"
+		}
+	}
+}

@@ -1,0 +1,38 @@
+{
+    "general": {
+        "emotes": false,
+        "publicServers": false,
+        "voiceDisconnect": true,
+        "showToasts": false,
+        "mediaKeys": false
+    },
+    "appearance": {
+        "twentyFourHour": true,
+        "hideGiftButton": false,
+        "hideGIFButton": false,
+        "minimalMode": false,
+        "coloredText": false
+    },
+    "addons": {
+        "addonErrors": true,
+        "autoReload": true,
+        "editAction": "system"
+    },
+    "customcss": {
+        "customcss": false,
+        "liveUpdate": false,
+        "openAction": "settings"
+    },
+    "developer": {
+        "debuggerHotkey": false,
+        "reactDevTools": false,
+        "inspectElement": false,
+        "devToolsWarning": false,
+        "debugLogs": false
+    },
+    "window": {
+        "transparency": false,
+        "removeMinimumSize": false,
+        "frame": false
+    }
+}
