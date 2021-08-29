@@ -12,10 +12,23 @@ require('packer').startup(function()
     use 'andweeb/presence.nvim'
     use 'tweekmonster/startuptime.vim'
     use 'tjdevries/colorbuddy.vim'
+    -- use {
+    --   'glepnir/galaxyline.nvim',
+    --     branch = 'main',
+    --     config = function() R'my_statusline' end,
+    --     requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    -- }
+    use 'EdenEast/nightfox.nvim'
     use {
-      'glepnir/galaxyline.nvim',
-        branch = 'main',
-        config = function() R'my_statusline' end,
+        'hoob3rt/lualine.nvim',
+        config = function() 
+            R('nightfox').load()
+            R('lualine').setup {
+                options = {
+                    theme = "nightfox"
+                }
+            }
+        end,
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
     use 'lewis6991/gitsigns.nvim'
