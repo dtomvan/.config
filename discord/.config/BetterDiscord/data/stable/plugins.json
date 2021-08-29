@@ -13,7 +13,7 @@
     "GuildProfile": true,
     "ThemeRepo": true,
     "ThemeSettings": true,
-    "KeywordTracker": true,
+    "KeywordTracker": false,
     "SubtleDevicePrompt": true,
     "AssignBadges": true,
     "ChatAliases": true,

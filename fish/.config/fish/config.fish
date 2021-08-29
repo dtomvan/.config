@@ -25,3 +25,4 @@ export EDITOR=nvim;
 
 set -gx PULSE_LATENCY_MSEC 30
 gay -f || sudo pip install gay || sudo pacman -S python-pip
+starship init fish | source

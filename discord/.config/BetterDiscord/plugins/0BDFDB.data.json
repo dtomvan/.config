@@ -197,6 +197,7 @@
 			"ChannelTextAreaForm": {"class": "chatform"},
 			"ChannelWindow": {"class": "chatcontent"},
 			"ChatMessage": {"strings": ["childrenMessageContent", "childrenRepliedMessage", "message.id"]},
+			"CircleIconButton": {"class": "guildbuttoninner"},
 			"CustomStatusModal": {"class": "customstatusmodal"},
 			"DirectMessage": {"class": "guildouter"},
 			"EmojiPicker": {"strings": ["EMOJI_PICKER_TAB_PANEL_ID", "diversitySelector"]},
@@ -1300,7 +1301,7 @@
 		"PopoutActivity": {"props": ["ellipsis", "activityActivityFeed"]},
 		"QuickMessage": {"props": ["input"], "length": 1},
 		"QuickSelect": {"props": ["quickSelectArrow", "selected"]},
-		"QuickSwitch": {"props": ["resultFocused", "guildIconContainer"]},
+		"QuickSwitch": {"props": ["result", "guildIconContainer"]},
 		"QuickSwitchWrap": {"props": ["container", "miscContainer"]},
 		"RadioGroup": {"props": ["radioBar", "item"]},
 		"Reactions": {"props": ["reactionBtn", "reaction"]},
@@ -2722,7 +2723,6 @@
 		"quickselectwrapper": ["BDFDB", "quickSelectWrapper"],
 		"quickswitcher": ["QuickSwitchWrap", "quickswitcher"],
 		"quickswitchresult": ["QuickSwitch", "result"],
-		"quickswitchresultfocused": ["QuickSwitch", "resultFocused"],
 		"quickswitchresultguildicon": ["QuickSwitch", "guildIcon"],
 		"quickswitchresulticon": ["QuickSwitch", "icon"],
 		"quickswitchresulticoncontainer": ["QuickSwitch", "iconContainer"],
@@ -5030,6 +5030,7 @@
 		}
 	},
 	"BDFDB_Patrons": {
+		"824768928369606667": 	{"active": true,		"tier": "t2",		"text": "",					"color": "",			"id": "Kubox (HajJa)"},
 		"507464069100601363": 	{"active": true,		"tier": "t3",		"text": "",					"color": "",			"id": "MircoPortmann"},
 		"798499176220327966": 	{"active": true,		"tier": "t2",		"text": "",					"color": "",			"id": ".void (DsOp)"},
 		"89482511343702016": 	{"active": true,		"tier": "t3",		"text": "",					"color": "#0080ff",		"id": "AzukiPuddles"},

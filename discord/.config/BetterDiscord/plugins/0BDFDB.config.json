@@ -5,7 +5,7 @@
 		"CustomStatusPresets": "1.0.7",
 		"DisplayServersAsChannels": "1.5.0",
 		"EditUsers": "4.3.8",
-		"FriendNotifications": "1.7.7",
+		"FriendNotifications": "1.7.8",
 		"GameActivityToggle": "1.0.4",
 		"SplitLargeMessages": "1.7.0",
 		"ThemeSettings": "1.3.3"
@@ -19,7 +19,7 @@
 		"useChromium": false
 	},
 	"hashes": {
-		"0BDFDB.data.json": "446d78050b39ccce0923531fa4e939f1ed28b4c6",
-		"0BDFDB.raw.css": "30a50e58a729a55a102828c0a937e5b8bd609d81"
+		"0BDFDB.data.json": "01d1409279e6f5a46c0670d2dd8f893a5d204f85",
+		"0BDFDB.raw.css": "6bb82eb9f45d2d68a03ad2d3e21dcf35a5e2e3ee"
 	}
 }

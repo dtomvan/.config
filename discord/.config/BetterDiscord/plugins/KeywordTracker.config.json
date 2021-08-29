@@ -1,6 +1,6 @@
 {
     "currentVersionInfo": {
-        "version": "1.2.2",
+        "version": "1.2.3",
         "hasShownChangelog": true
     },
     "settings": {
@@ -1105,10 +1105,372 @@
                     "740560491776180326": true
                 },
                 "enabled": true
+            },
+            "878461145197977630": {
+                "channels": {
+                    "878464580819501086": true,
+                    "878469250233298976": true,
+                    "878461145634193420": true,
+                    "878469350540075078": true,
+                    "878469572934635540": true,
+                    "878681525342834689": true
+                },
+                "enabled": true
+            },
+            "482981665749336074": {
+                "channels": {
+                    "738105078183100476": true,
+                    "816215484239708180": true,
+                    "744393226676338819": true,
+                    "791428453756174376": true,
+                    "747136312024367166": true,
+                    "482982814254497813": true,
+                    "482982840682807318": true,
+                    "658821280618774538": true,
+                    "783005340642967582": true,
+                    "731951113892397196": true,
+                    "482983589584306176": true,
+                    "650948855872880640": true,
+                    "482981665749336076": true
+                },
+                "enabled": true
             }
         },
         "enabled": true,
-        "unreadMatches": {},
+        "unreadMatches": {
+            "881113105512411146": {
+                "guild_id": "482981665749336074",
+                "attachments": [],
+                "author": {
+                    "avatar": "edaf59de2ef204eeea78825bf63f68d9",
+                    "discriminator": "9416",
+                    "id": "232120341001011200",
+                    "username": "Μισάνθρωπος",
+                    "publicFlags": 0
+                },
+                "channel_id": "482982840682807318",
+                "components": [],
+                "content": "something to do with gay bottoms I think",
+                "edited_timestamp": {},
+                "embeds": [],
+                "flags": 0,
+                "id": "881113105512411146",
+                "member": {
+                    "avatar": {},
+                    "deaf": false,
+                    "hoisted_role": {},
+                    "is_pending": false,
+                    "joined_at": "2021-08-18T19:35:02.280557+00:00",
+                    "mute": false,
+                    "nick": {},
+                    "pending": false,
+                    "premium_since": {},
+                    "roles": []
+                },
+                "mention_everyone": false,
+                "mention_roles": [],
+                "mentions": [
+                    {
+                        "avatar": "b6ed78f4c897c3b8e1784b8bf485cc35",
+                        "discriminator": "8311",
+                        "id": "848926972364193802",
+                        "username": "Riddle Man",
+                        "publicFlags": 64
+                    }
+                ],
+                "message_reference": {
+                    "channel_id": "482982840682807318",
+                    "guild_id": "482981665749336074",
+                    "message_id": "881112649050488872"
+                },
+                "nonce": "881113108007878656",
+                "pinned": false,
+                "referenced_message": {
+                    "attachments": [],
+                    "author": {
+                        "avatar": "b6ed78f4c897c3b8e1784b8bf485cc35",
+                        "discriminator": "8311",
+                        "id": "848926972364193802",
+                        "public_flags": 64,
+                        "username": "Riddle Man"
+                    },
+                    "channel_id": "482982840682807318",
+                    "components": [],
+                    "content": "tf is submissive and breedable",
+                    "edited_timestamp": {},
+                    "embeds": [],
+                    "flags": 0,
+                    "id": "881112649050488872",
+                    "mention_everyone": false,
+                    "mention_roles": [],
+                    "mentions": [],
+                    "pinned": false,
+                    "timestamp": "2021-08-28T09:47:05.815000+00:00",
+                    "tts": false,
+                    "type": 0
+                },
+                "timestamp": "2021-08-28T09:48:54.644000+00:00",
+                "tts": false,
+                "type": 19,
+                "_match": "/tom/"
+            },
+            "881118787330519040": {
+                "guild_id": "482981665749336074",
+                "attachments": [],
+                "author": {
+                    "avatar": "a3ef716b497496353b9f9445d29911ca",
+                    "discriminator": "5254",
+                    "id": "735898758721830953",
+                    "username": "TeleportBread",
+                    "publicFlags": 0
+                },
+                "channel_id": "482982840682807318",
+                "components": [],
+                "content": "imagine you're not chad enough to get a real minecraft girlfriend and have to use a mod to get one, couldn't be me",
+                "edited_timestamp": {},
+                "embeds": [],
+                "flags": 0,
+                "id": "881118787330519040",
+                "member": {
+                    "avatar": {},
+                    "deaf": false,
+                    "hoisted_role": {},
+                    "is_pending": false,
+                    "joined_at": "2020-11-10T20:28:55.927000+00:00",
+                    "mute": false,
+                    "nick": {},
+                    "pending": false,
+                    "premium_since": {},
+                    "roles": []
+                },
+                "mention_everyone": false,
+                "mention_roles": [],
+                "mentions": [
+                    {
+                        "avatar": "d0735fdfd130769b5b1ac22c3a163f6a",
+                        "discriminator": "3493",
+                        "id": "528675980823232512",
+                        "username": "ItsLazyCreeper",
+                        "publicFlags": 0
+                    }
+                ],
+                "message_reference": {
+                    "channel_id": "482982840682807318",
+                    "guild_id": "482981665749336074",
+                    "message_id": "881118507524317184"
+                },
+                "nonce": "881118786428600320",
+                "pinned": false,
+                "referenced_message": {
+                    "attachments": [
+                        {
+                            "content_type": "video/mp4",
+                            "ephemeral": false,
+                            "filename": "video0.mp4",
+                            "height": 720,
+                            "id": "881118503300628510",
+                            "proxy_url": "https://media.discordapp.net/attachments/482982840682807318/881118503300628510/video0.mp4",
+                            "size": 2039620,
+                            "url": "https://cdn.discordapp.com/attachments/482982840682807318/881118503300628510/video0.mp4",
+                            "width": 1280
+                        }
+                    ],
+                    "author": {
+                        "avatar": "d0735fdfd130769b5b1ac22c3a163f6a",
+                        "discriminator": "3493",
+                        "id": "528675980823232512",
+                        "public_flags": 0,
+                        "username": "ItsLazyCreeper"
+                    },
+                    "channel_id": "482982840682807318",
+                    "components": [],
+                    "content": "",
+                    "edited_timestamp": {},
+                    "embeds": [],
+                    "flags": 0,
+                    "id": "881118507524317184",
+                    "mention_everyone": false,
+                    "mention_roles": [],
+                    "mentions": [],
+                    "pinned": false,
+                    "timestamp": "2021-08-28T10:10:22.584000+00:00",
+                    "tts": false,
+                    "type": 0
+                },
+                "timestamp": "2021-08-28T10:11:29.295000+00:00",
+                "tts": false,
+                "type": 19,
+                "_match": "/minecraft/"
+            },
+            "881134531338453045": {
+                "guild_id": "482981665749336074",
+                "attachments": [],
+                "author": {
+                    "avatar": "5ab89f2450e9c20ad7223d658d7e774f",
+                    "discriminator": "1882",
+                    "id": "696758157828948008",
+                    "username": "Thinkies",
+                    "publicFlags": 0
+                },
+                "channel_id": "482982840682807318",
+                "components": [],
+                "content": "I thought its a minecraft mod when I first heard it",
+                "edited_timestamp": {},
+                "embeds": [],
+                "flags": 0,
+                "id": "881134531338453045",
+                "member": {
+                    "avatar": {},
+                    "deaf": false,
+                    "hoisted_role": "544620232116011020",
+                    "is_pending": false,
+                    "joined_at": "2021-08-23T17:07:30.586214+00:00",
+                    "mute": false,
+                    "nick": {},
+                    "pending": false,
+                    "premium_since": {},
+                    "roles": [
+                        "717857034325721169",
+                        "544620232116011020"
+                    ]
+                },
+                "mention_everyone": false,
+                "mention_roles": [],
+                "mentions": [],
+                "message_reference": {
+                    "channel_id": "482982840682807318",
+                    "guild_id": "482981665749336074",
+                    "message_id": "881134385678651442"
+                },
+                "nonce": "887305311562498048",
+                "pinned": false,
+                "referenced_message": {
+                    "attachments": [],
+                    "author": {
+                        "avatar": {},
+                        "discriminator": "1701",
+                        "id": "615552152072487066",
+                        "public_flags": 0,
+                        "username": "BT_Plays"
+                    },
+                    "channel_id": "482982840682807318",
+                    "components": [],
+                    "content": "oh i thought it was a variant or something",
+                    "edited_timestamp": {},
+                    "embeds": [],
+                    "flags": 0,
+                    "id": "881134385678651442",
+                    "mention_everyone": false,
+                    "mention_roles": [],
+                    "mentions": [
+                        {
+                            "avatar": "5ab89f2450e9c20ad7223d658d7e774f",
+                            "discriminator": "1882",
+                            "id": "696758157828948008",
+                            "public_flags": 0,
+                            "username": "Thinkies"
+                        }
+                    ],
+                    "message_reference": {
+                        "channel_id": "482982840682807318",
+                        "guild_id": "482981665749336074",
+                        "message_id": "881134154488619059"
+                    },
+                    "pinned": false,
+                    "timestamp": "2021-08-28T11:13:28.231000+00:00",
+                    "tts": false,
+                    "type": 19
+                },
+                "timestamp": "2021-08-28T11:14:02.959000+00:00",
+                "tts": false,
+                "type": 19,
+                "_match": "/minecraft/"
+            },
+            "881148585222234173": {
+                "guild_id": "482981665749336074",
+                "attachments": [],
+                "author": {
+                    "avatar": "5ab89f2450e9c20ad7223d658d7e774f",
+                    "discriminator": "1882",
+                    "id": "696758157828948008",
+                    "username": "Thinkies",
+                    "publicFlags": 0
+                },
+                "channel_id": "482982840682807318",
+                "components": [],
+                "content": "Idkitjustcameintomymind",
+                "edited_timestamp": null,
+                "embeds": [],
+                "flags": 0,
+                "id": "881148585222234173",
+                "member": {
+                    "avatar": null,
+                    "deaf": false,
+                    "hoisted_role": "544620232116011020",
+                    "is_pending": false,
+                    "joined_at": "2021-08-23T17:07:30.586214+00:00",
+                    "mute": false,
+                    "nick": null,
+                    "pending": false,
+                    "premium_since": null,
+                    "roles": [
+                        "717857034325721169",
+                        "544620232116011020"
+                    ]
+                },
+                "mention_everyone": false,
+                "mention_roles": [],
+                "mentions": [],
+                "message_reference": {
+                    "channel_id": "482982840682807318",
+                    "guild_id": "482981665749336074",
+                    "message_id": "881148505014562827"
+                },
+                "nonce": "887319366117359616",
+                "pinned": false,
+                "referenced_message": {
+                    "attachments": [],
+                    "author": {
+                        "avatar": "acbc844f5dc4c14aeb1b91b8ee3286b0",
+                        "discriminator": "7328",
+                        "id": "684334544488497195",
+                        "public_flags": 0,
+                        "username": "NarutoRunner"
+                    },
+                    "channel_id": "482982840682807318",
+                    "components": [],
+                    "content": "thatsfinebutwhythefuckdidyouneedtodothatrandomlylikebruhwhatsthepoint",
+                    "edited_timestamp": null,
+                    "embeds": [],
+                    "flags": 0,
+                    "id": "881148505014562827",
+                    "mention_everyone": false,
+                    "mention_roles": [],
+                    "mentions": [
+                        {
+                            "avatar": "5ab89f2450e9c20ad7223d658d7e774f",
+                            "discriminator": "1882",
+                            "id": "696758157828948008",
+                            "public_flags": 0,
+                            "username": "Thinkies"
+                        }
+                    ],
+                    "message_reference": {
+                        "channel_id": "482982840682807318",
+                        "guild_id": "482981665749336074",
+                        "message_id": "881148416263090206"
+                    },
+                    "pinned": false,
+                    "timestamp": "2021-08-28T12:09:34.543000+00:00",
+                    "tts": false,
+                    "type": 19
+                },
+                "timestamp": "2021-08-28T12:09:53.666000+00:00",
+                "tts": false,
+                "type": 19,
+                "_match": "/tom/"
+            }
+        },
         "notifications": true
     }
 }
