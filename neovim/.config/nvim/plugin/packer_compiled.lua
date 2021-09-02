@@ -69,17 +69,13 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  ["colorbuddy.vim"] = {
+  ["coq.artifacts"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/colorbuddy.vim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/coq.artifacts"
   },
-  cpsm = {
+  coq_nvim = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/cpsm"
-  },
-  ["fzy-lua-native"] = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/fzy-lua-native"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/coq_nvim"
   },
   ["gitsigns.nvim"] = {
     loaded = true,
@@ -102,6 +98,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lualine.nvim"
   },
+  ["neuron.nvim"] = {
+    config = { "\27LJ\1\0024\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\vneuron\frequire\0" },
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/neuron.nvim"
+  },
   ["nightfox.nvim"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nightfox.nvim"
@@ -109,10 +110,6 @@ _G.packer_plugins = {
   ["nlua.nvim"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nlua.nvim"
-  },
-  ["nvim-compe"] = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-compe"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -125,10 +122,6 @@ _G.packer_plugins = {
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
-  },
-  onebuddy = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/onebuddy"
   },
   ["packer.nvim"] = {
     loaded = true,
@@ -165,12 +158,6 @@ _G.packer_plugins = {
   ["startuptime.vim"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/startuptime.vim"
-  },
-  ["tabout.nvim"] = {
-    config = { "\27LJ\1\2ë\2\0\0\4\0\f\0\0234\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0002\2\a\0003\3\4\0;\3\1\0023\3\5\0;\3\2\0023\3\6\0;\3\3\0023\3\a\0;\3\4\0023\3\b\0;\3\5\0023\3\t\0;\3\6\2:\2\n\0012\2\0\0:\2\v\1>\0\2\1G\0\1\0\fexclude\ftabouts\1\0\2\topen\6{\nclose\6}\1\0\2\topen\6[\nclose\6]\1\0\2\topen\6(\nclose\6)\1\0\2\topen\6`\nclose\6`\1\0\2\topen\6\"\nclose\6\"\1\0\2\topen\6'\nclose\6'\1\0\a\21ignore_beginning\2\15act_as_tab\2\21act_as_shift_tab\1\15completion\2\21enable_backwards\1\21backwards_tabkey\f<S-Tab>\vtabkey\n<Tab>\nsetup\vtabout\frequire\0" },
-    loaded = true,
-    needs_bufread = false,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/opt/tabout.nvim"
   },
   ["telescope-fzy-native.nvim"] = {
     loaded = true,
@@ -216,13 +203,9 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-toml"
   },
-  ["vim-vsnip"] = {
+  vimwiki = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-vsnip"
-  },
-  ["vim-vsnip-integ"] = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-vsnip-integ"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vimwiki"
   }
 }
 
@@ -231,6 +214,10 @@ time([[Defining packer_plugins]], false)
 time([[Config for lualine.nvim]], true)
 try_loadstring("\27LJ\1\2z\0\0\3\0\b\0\0144\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\0\0%\1\3\0>\0\2\0027\0\4\0003\1\6\0003\2\5\0:\2\a\1>\0\2\1G\0\1\0\foptions\1\0\0\1\0\1\ntheme\rnightfox\nsetup\flualine\tload\rnightfox\6R\0", "config", "lualine.nvim")
 time([[Config for lualine.nvim]], false)
+-- Config for: neuron.nvim
+time([[Config for neuron.nvim]], true)
+try_loadstring("\27LJ\1\0024\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\vneuron\frequire\0", "config", "neuron.nvim")
+time([[Config for neuron.nvim]], false)
 if should_profile then save_profiles() end
 
 end)

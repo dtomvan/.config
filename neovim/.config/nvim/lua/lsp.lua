@@ -1,25 +1,30 @@
 local nvim_lsp = require('lspconfig')
 
--- Use a loop to conveniently both setup defined servers 
--- and map buffer local keybindings when the language server attaches
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
--- capabilities.textDocument.completion.completionItem.snippetSupport = true
--- capabilities.textDocument.completion.completionItem.resolveSupport = {
---   properties = {
---     'documentation',
---     'detail',
---     'additionalTextEdits',
---   }
--- }
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {
+    'documentation',
+    'detail',
+    'additionalTextEdits',
+  }
+}
 local lsp_opts = {
-    -- capabilities = capabilities,
+    capabilities = capabilities,
 };
 local servers = { "rust_analyzer", "pylsp" }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { 
-      lsp_opts
-  }
-end
+vim.schedule(function ()
+    require("packer").loader("coq_nvim coq.artifacts")
+    for _, lsp in ipairs(servers) do
+        nvim_lsp[lsp].setup { 
+            lsp_opts
+        }
+        -- nvim_lsp[lsp].setup()
+        vim.cmd [[COQnow -s]]
+        -- nvim_lsp[lsp].setup(require("coq")().lsp_ensure_capabilities())
+        -- nvim_lsp[lsp].setup(require("coq")().lsp_ensure_capabilities(lsp_opts))
+    end
+end)
 
 -- Mappings.
 local map = vim.api.nvim_set_keymap
@@ -48,7 +53,7 @@ local rust_tools_opts = {
             use_telescope = true
         },
         inlay_hints = {
-            show_parameter_hints = false,
+            show_parameter_hints = true,
             parameter_hints_prefix = "",
             other_hints_prefix = "",
         },
@@ -64,26 +69,26 @@ local rust_tools_opts = {
 
 require('rust-tools').setup(rust_tools_opts)
 
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  preselect = 'enable';
-  documentation = true;
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = false;
-    vsnip = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    spell = false;
-    tags = false;
-    snippets_nvim = false;
-  };
-}
-
-vim.cmd [[inoremap <silent><expr> <C-Space> compe#complete()]]
-vim.cmd [[inoremap <silent><expr> <C-l>      compe#confirm('<C-l>')]]
-vim.cmd [[inoremap <silent><expr> <C-e>     compe#close('<C-e>')]]
+-- local cmp = require 'cmp'
+-- cmp.setup {
+--   snippet = {
+--     expand = function(args)
+--       vim.fn["vsnip#anonymous"](args.body)
+--   end,
+--   },
+--   mapping = {
+--     ['<C-p>'] = cmp.mapping.select_prev_item(),
+--     ['<C-n>'] = cmp.mapping.select_next_item(),
+--     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+--     ['<C-f>'] = cmp.mapping.scroll_docs(4),
+--     ['<C-Space>'] = cmp.mapping.complete(),
+--     ['<C-e>'] = cmp.mapping.close(),
+--     ['<CR>'] = cmp.mapping.confirm {
+--       behavior = cmp.ConfirmBehavior.Replace,
+--       select = true,
+--     }
+--   },
+--   sources = {
+--     { name = 'nvim_lsp' },
+--   },
+-- }
