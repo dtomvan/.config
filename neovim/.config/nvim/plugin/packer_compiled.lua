@@ -69,6 +69,10 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["auto.pairs"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/auto.pairs"
+  },
   ["coq.artifacts"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/coq.artifacts"
@@ -97,11 +101,6 @@ _G.packer_plugins = {
     config = { "\27LJ\1\2z\0\0\3\0\b\0\0144\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\0\0%\1\3\0>\0\2\0027\0\4\0003\1\6\0003\2\5\0:\2\a\1>\0\2\1G\0\1\0\foptions\1\0\0\1\0\1\ntheme\rnightfox\nsetup\flualine\tload\rnightfox\6R\0" },
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lualine.nvim"
-  },
-  ["neuron.nvim"] = {
-    config = { "\27LJ\1\0024\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\vneuron\frequire\0" },
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/neuron.nvim"
   },
   ["nightfox.nvim"] = {
     loaded = true,
@@ -171,10 +170,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
-  ["vim-closer"] = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-closer"
-  },
   ["vim-commentary"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-commentary"
@@ -214,10 +209,6 @@ time([[Defining packer_plugins]], false)
 time([[Config for lualine.nvim]], true)
 try_loadstring("\27LJ\1\2z\0\0\3\0\b\0\0144\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\0\0%\1\3\0>\0\2\0027\0\4\0003\1\6\0003\2\5\0:\2\a\1>\0\2\1G\0\1\0\foptions\1\0\0\1\0\1\ntheme\rnightfox\nsetup\flualine\tload\rnightfox\6R\0", "config", "lualine.nvim")
 time([[Config for lualine.nvim]], false)
--- Config for: neuron.nvim
-time([[Config for neuron.nvim]], true)
-try_loadstring("\27LJ\1\0024\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\vneuron\frequire\0", "config", "neuron.nvim")
-time([[Config for neuron.nvim]], false)
 if should_profile then save_profiles() end
 
 end)

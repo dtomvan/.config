@@ -26,11 +26,12 @@ autocmd BufEnter *.rs nnoremap J :lua require'rust-tools.join_lines'.join_lines(
 "       \   ),
 "       \ ])
 cnoreabbrev luf luafile
+cnoreabbrev fcd cd %:p:h
 autocmd BufReadPost *
   \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
   \ |   exe "normal! g`\""
   \ | endif
-let g:coq_settings = { 'auto_start': 'shut-up', 'keymap.recommended': v:true }
+let g:coq_settings = { 'auto_start': 'shut-up', 'keymap.recommended': v:true, 'keymap.jump_to_mark': '<c-j>' }
 " ino <silent><expr> <Esc>   pumvisible() ? "\<C-e><Esc>" : "\<Esc>"
 " ino <silent><expr> <C-c>   pumvisible() ? "\<C-e><C-c>" : "\<C-c>"
 " ino <silent><expr> <BS>    pumvisible() ? "\<C-e><BS>"  : "\<BS>"

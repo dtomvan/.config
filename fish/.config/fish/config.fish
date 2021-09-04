@@ -20,6 +20,7 @@ abbr tovim "~/venv/bin/nvr -c \"cd \"(pwd)";
 abbr pf '~/venv/bin/nvr -c ":Clap filer"';
 abbr g git-client
 abbr t tmux
+abbr zel zellij
 
 export EDITOR=nvim;
 

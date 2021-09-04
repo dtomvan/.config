@@ -1,3 +1,8 @@
+---- Custom
+xplr.config.modes.custom = {
+    ["git"] = require('git-mode').toplevel_mode,
+    ["git add"] = require('git-mode').add_mode
+}
 ---- Builtin
 ------ Default
 require('default-mode')
@@ -35,8 +40,5 @@ require('relative-path-does-not-contain-mode')
 require('sort-mode')
 ------ Switch layout
 require('switch-layout-mode')
----- Custom
-xplr.config.modes.custom = {
-    ["git"] = require('git-mode').toplevel_mode,
-    ["git add"] = require('git-mode').add_mode
-}
+------ Goto path mode
+require('goto-path-mode')

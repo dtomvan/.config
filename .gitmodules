@@ -16,3 +16,15 @@
 [submodule "xmonad/.xmonad"]
 	path = xmonad/.xmonad
 	url = https://github.com/dtomvan/.xmonad
+[submodule "xplr/.config/xplr/plugins/command-mode"]
+	path = xplr/.config/xplr/plugins/command-mode
+	url = https://github.com/sayanarijit/command-mode.xplr.git
+[submodule "xplr/.config/xplr/plugins/zoxide"]
+	path = xplr/.config/xplr/plugins/zoxide
+	url = https://github.com/sayanarijit/zoxide.xplr
+[submodule "xplr/.config/xplr/plugins/type-to-nav"]
+	path = xplr/.config/xplr/plugins/type-to-nav
+	url = https://github.com/prncss-xyz/type-to-nav.xplr
+[submodule "xplr/.config/xplr/plugins/completion"]
+	path = xplr/.config/xplr/plugins/completion
+	url = https://github.com/sayanarijit/completion.xplr

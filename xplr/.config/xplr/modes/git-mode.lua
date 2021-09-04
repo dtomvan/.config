@@ -136,7 +136,7 @@ local add_mode = {
                 help = "stage file",
                 messages = {
                     {
-                        BashExec = [===[
+                        BashExecSilently = [===[
                         PTH="$XPLR_INPUT_BUFFER"
                         if [ "${PTH}" ]; then
                             git add "${PTH:?}" \

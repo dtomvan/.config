@@ -9,7 +9,7 @@
     "TypingIndicator": true,
     "BugReportHelper": true,
     "HideDisabledEmojis": true,
-    "FriendNotifications": true,
+    "FriendNotifications": false,
     "GuildProfile": true,
     "ThemeRepo": true,
     "ThemeSettings": true,
