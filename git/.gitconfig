@@ -23,3 +23,5 @@
 	a = add
 	r = rm
 	res = restore
+[commit]
+	gpgsign = true
