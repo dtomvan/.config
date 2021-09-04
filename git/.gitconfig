@@ -4,6 +4,7 @@
 [user]
 	email = 18gatenmaker6@gmail.com
 	name = Tom van Dijk
+	signingkey = 7A984C8207ADBA51
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
