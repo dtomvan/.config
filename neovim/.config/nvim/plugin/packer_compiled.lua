@@ -69,10 +69,6 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  ["auto.pairs"] = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/auto.pairs"
-  },
   ["coq.artifacts"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/coq.artifacts"
@@ -109,6 +105,10 @@ _G.packer_plugins = {
   ["nlua.nvim"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nlua.nvim"
+  },
+  ["nvim-autopairs"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-autopairs"
   },
   ["nvim-lspconfig"] = {
     loaded = true,

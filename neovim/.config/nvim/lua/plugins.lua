@@ -44,8 +44,9 @@ require('packer').startup(function()
 
     -- use 'saadparwaiz1/cmp_luasnip'
     -- use 'L3MON4D3/LuaSnip' -- Snippets plugin
-    use 'Krasjet/auto.pairs'
+    -- use 'Krasjet/auto.pairs'
     -- TODO: use when ms-jpq stabalizes the repo, its hella fast.
+    use 'windwp/nvim-autopairs'
     use { 'ms-jpq/coq_nvim', branch = 'coq'} -- main one
     use { 'ms-jpq/coq.artifacts', branch= 'artifacts'} -- 9000+ Snippets
     use 'nvim-lua/popup.nvim'
