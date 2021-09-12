@@ -7,6 +7,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
 local vicious = require("vicious")
+local awesome = awesome
 
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,

@@ -52,4 +52,5 @@ require('packer').startup(function()
     use 'nvim-lua/popup.nvim'
     use "nvim-lua/plenary.nvim"
     use "nvim-telescope/telescope.nvim"
+    use 'vim-scripts/mom.vim'
 end)

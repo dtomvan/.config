@@ -7,6 +7,7 @@ set clipboard=unnamedplus
 command! -nargs=* Ca !cargo <args>
 au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
 autocmd BufEnter *.rs nnoremap J :lua require'rust-tools.join_lines'.join_lines()<CR>
+autocmd BufEnter *.mom set ft=mom
 " call wilder#enable_cmdline_enter()
 " set wildcharm=<Tab>
 " cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"

@@ -98,6 +98,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lualine.nvim"
   },
+  ["mom.vim"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/mom.vim"
+  },
   ["nightfox.nvim"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nightfox.nvim"
