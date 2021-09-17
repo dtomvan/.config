@@ -110,6 +110,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nlua.nvim"
   },
+  ["nui.nvim"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nui.nvim"
+  },
   ["nvim-autopairs"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-autopairs"
@@ -205,6 +209,10 @@ _G.packer_plugins = {
   vimwiki = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vimwiki"
+  },
+  ["xplr.nvim"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/xplr.nvim"
   }
 }
 

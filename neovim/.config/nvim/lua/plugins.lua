@@ -53,4 +53,9 @@ require('packer').startup(function()
     use "nvim-lua/plenary.nvim"
     use "nvim-telescope/telescope.nvim"
     use 'vim-scripts/mom.vim'
+    use {
+        'fhill2/xplr.nvim',
+        run = function() require'xplr'.install({hide=true}) end,
+        requires = {{'nvim-lua/plenary.nvim'}, {'MunifTanjim/nui.nvim'}}
+    }
 end)

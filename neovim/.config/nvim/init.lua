@@ -17,6 +17,7 @@ end
 package.loaded.globals = nil
 require("globals")
 R("plugins")
+R("config-xplr")
 vim.cmd [[source ~/.config/nvim/autoload/vimscriptstuff.vim]]
 R('lsp')
 R('opts')
