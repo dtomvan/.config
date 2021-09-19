@@ -25,7 +25,6 @@ abbr zel zellij
 export EDITOR=nvim;
 
 set -gx PULSE_LATENCY_MSEC 30
-starship init fish | source
 zoxide init fish --cmd d | source
 fish_vi_key_bindings
 ~/.config/fish/gen-flatpak-aliases.sh 2> /dev/null | source

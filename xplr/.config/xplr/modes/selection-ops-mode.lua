@@ -17,7 +17,6 @@ xplr.config.modes.builtin.selection_ops = {
                             fi
                             done < "${XPLR_PIPE_SELECTION_OUT:?}")
                             echo ExplorePwdAsync >> "${XPLR_PIPE_MSG_IN:?}"
-                            echo ClearSelection >> "${XPLR_PIPE_MSG_IN:?}"
                             read -p "[enter to continue]"
                             ]===]
                         },
@@ -38,8 +37,13 @@ xplr.config.modes.builtin.selection_ops = {
                         {
                             BashExec = [===[
                             (while IFS= read -r line; do
-                            if mv -v -- "${line:?}" ./; then
+                            result=$(mv -v -- "${line:?}" ./)
+                            if [[ -n $result ]]; then
+                                echo $result
+                                filename=$(echo $result | awk -F" -> " '{ print $2 }' | sed "s/'//g")
+                                toselect="$PWD/$filename"
                                 echo LogSuccess: $line moved to $PWD >> "${XPLR_PIPE_MSG_IN:?}"
+                                echo SelectPath: $toselect >> "${XPLR_PIPE_MSG_IN:?}"
                             else
                                 echo LogError: Failed to move $line to $PWD >> "${XPLR_PIPE_MSG_IN:?}"
                                 fi
