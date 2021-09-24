@@ -154,6 +154,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/registers.nvim"
   },
+  ["ron.vim"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/ron.vim"
+  },
   ["rust-tools.nvim"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/rust-tools.nvim"
@@ -189,6 +193,14 @@ _G.packer_plugins = {
   ["vim-easymotion"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-easymotion"
+  },
+  ["vim-fugitive"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-fugitive"
+  },
+  ["vim-git"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-git"
   },
   ["vim-matchup"] = {
     loaded = true,

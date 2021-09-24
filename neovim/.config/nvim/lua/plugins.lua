@@ -58,4 +58,7 @@ require('packer').startup(function()
         run = function() require'xplr'.install({hide=true}) end,
         requires = {{'nvim-lua/plenary.nvim'}, {'MunifTanjim/nui.nvim'}}
     }
+    use 'tpope/vim-git'
+    use 'tpope/vim-fugitive'
+    use 'ron-rs/ron.vim'
 end)
