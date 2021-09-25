@@ -37,3 +37,6 @@
 [submodule "tmux/.tmux/plugins/tmux"]
 	path = tmux/.tmux/plugins/tmux
 	url = https://github.com/dracula/tmux
+[submodule "xplr/.config/xplr/plugins/dragon"]
+	path = xplr/.config/xplr/plugins/dragon
+	url = https://github.com/sayanarijit/dragon.xplr

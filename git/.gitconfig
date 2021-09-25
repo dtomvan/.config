@@ -1,27 +1,34 @@
 [credential "https://github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
+    helper = 
+    helper = !/usr/bin/gh auth git-credential
 [user]
-	email = 18gatenmaker6@gmail.com
-	name = Tom van Dijk
-	signingkey = 7A984C8207ADBA51
+    email = 18gatenmaker6@gmail.com
+    name = Tom van Dijk
+    signingkey = 7A984C8207ADBA51
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [advice]
-	detachedHead = false
+    detachedHead = false
 [alias]
-	cl = clone
-	ch = checkout
-	co = commit
-	pu = push
-	pul = pull
-	a = add
-	r = rm
-	res = restore
+    cl = clone
+    ch = checkout
+    co = commit
+    pu = push
+    pul = pull
+    a = add
+    r = rm
+    res = restore
 [commit]
-	gpgsign = true
+    gpgsign = true
+[sendemail]
+    smtpserver = smtp-mail.outlook.com
+    smtpuser = 129102@dr.nassaucollege.nl
+    smtpencryption = tls
+    smtpserverport = 587
+[diff]
+	tool = nvimdiff
