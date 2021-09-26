@@ -1,0 +1,60 @@
+#+TITLE: st-distrotube
+#+DESCRIPTION: My st (simple terminal) build
+#+AUTHOR: Derek Taylor
+
+* Table of Contents :toc:
+- [[#what-is-st][What is st?]]
+- [[#what-is-st-distrotube][What is st-distrotube]]
+- [[#installing-st-distrotube-on-arch-linux][Installing st-distrotube on Arch Linux]]
+- [[#installing-st-distrotube-on-other-linux-distributions][Installing st-distrotube on other Linux distributions]]
+
+* What is st?
+#+CAPTION: st-distrotube
+#+ATTR_HTML: :alt st-distrotube :title st-distrotube :align left
+[[https://gitlab.com/dwt1/dotfiles/-/raw/master/.screenshots/dotfiles11-thumb.png]]
+st is a simple terminal emulator for X which sucks less (st is created by the good folks at https://suckless.org).  The Suckless team created st as an alternative to traditional terminal emulators like xterm and rxvt, which have tens of thousands of lines of code and are quite bloated in comparison to the rather slim st.
+
+* What is st-distrotube
+st-distroube is my personal build of st that is very heavily patched to add more functionality and more customization options.  The patches that I used in this build include:
++ st-alpha -- adds transparency to the background (must have a compositor for this to work)
++ st-font2 -- adds the option to list multiple fonts; great for having a fallback font
++ st-ligatures -- ligature support; requires harfbuzz
++ st-scrollback -- adds scrollback with SHIFT+PageUp/PageDown
++ st-scrollback-mouse -- adds the ability to scroll with SHIFT+MouseWheel
++ st-scrollback-mouse-altscreen -- now you can scroll with just the MouseWhell (no SHIFT required)
++ st-vertcenter -- better vertical alignment of lineszz
+  st-workingdir -- adds option to open st at specific directory (ex: st -d /usr/bin)
+
+* Installing st-distrotube on Arch Linux
+All you need to do is to download the PKGBUILD from this repository.  Then run the following command:
+
+=makepkg -cf=
+
+This will create a file that ends in .pkg.tar.zst (for example, st-distrotube-git-6.2-1-x86_64.pkg.tar.zst).  Then run:
+
+=sudo pacman -U *.pkg.tar.zst=
+
+Alternatively, you could also install st-distrotube-git from my own personal Arch repository.  To do so, add the following to the end of /etc/pacman.conf :
+
+#+begin_example
+[dt-arch-repo]
+SigLevel = Optional DatabaseOptional
+Server = https://gitlab.com/dwt1/$repo/-/raw/master/$arch
+#+end_example
+
+Then, sync the repositories and update your system with:
+=sudo pacman -Syyu=
+
+And, then:
+=sudo pacman -S st-distrotube-git=
+
+=NOTE:= Installing st-distrotube-git conflicts with the standard st package.  If you already have st installed, you will be asked if you want to remove st and install st-distrotube-git instead.
+
+* Installing st-distrotube on other Linux distributions
+Download the source code from this repository or use a git clone:
+
++ git clone https://gitlab.com/dwt1/st-distrotube.git
++ cd st-distrotube
++ sudo make clean install
+
+=NOTE:= Installing st-distrotube will overwrite your existing st installation so make a backup of your current config if you need it.

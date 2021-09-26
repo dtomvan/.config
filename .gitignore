@@ -1,1 +1,3 @@
 gtk/.config/gtk-3.0/bookmarks
+**/*.o
+st/st

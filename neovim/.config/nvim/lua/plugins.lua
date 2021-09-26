@@ -61,4 +61,5 @@ require('packer').startup(function()
     use 'tpope/vim-git'
     use 'tpope/vim-fugitive'
     use 'ron-rs/ron.vim'
+    use 'Raimondi/vim-transpose-words'
 end)

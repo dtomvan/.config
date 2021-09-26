@@ -33,6 +33,14 @@ autocmd BufReadPost *
   \ |   exe "normal! g`\""
   \ | endif
 let g:coq_settings = { 'auto_start': 'shut-up', 'keymap.recommended': v:true, 'keymap.jump_to_mark': '<c-j>' }
+
+nnoremap <silent> <M-p> :call TransposeWords()<cr>
+
+" move line(s) up/down
+nnoremap <silent> <leader>k :m-2<CR>==
+nnoremap <silent> <leader>j :m+<CR>==
+vnoremap <silent> <leader>k :m-2<CR>gv=gv
+vnoremap <silent> <leader>j :m'>+<CR>gv=gv
 " ino <silent><expr> <Esc>   pumvisible() ? "\<C-e><Esc>" : "\<Esc>"
 " ino <silent><expr> <C-c>   pumvisible() ? "\<C-e><C-c>" : "\<C-c>"
 " ino <silent><expr> <BS>    pumvisible() ? "\<C-e><BS>"  : "\<BS>"

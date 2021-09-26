@@ -218,6 +218,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-toml"
   },
+  ["vim-transpose-words"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-transpose-words"
+  },
   vimwiki = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vimwiki"

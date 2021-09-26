@@ -32,7 +32,7 @@ end
 
 -- beautiful.init(gears.filesystem.get_configuration_dir() .. "theme.lua")
 beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/ayu/theme.lua")
-terminal = "st -e fish"
+terminal = "kitty -e fish"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
