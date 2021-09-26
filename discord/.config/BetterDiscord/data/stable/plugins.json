@@ -29,5 +29,6 @@
     "ClickableMentions": true,
     "GlobalReplies": true,
     "PinIcon": true,
-    "PersonalPins": true
+    "PersonalPins": true,
+    "undefined": false
 }
