@@ -42,7 +42,8 @@
 			"name": "koen",
 			"showServerNick": true,
 			"status": "Definitely online and working on cruhbridge",
-			"tag": ""
+			"tag": "",
+			"useServerNick": false
 		},
 		"673600831601508352": {
 			"name": "tom"

@@ -9,15 +9,23 @@ require('packer').startup(function()
     use 'andweeb/presence.nvim'
     use 'tweekmonster/startuptime.vim'
     use 'EdenEast/nightfox.nvim'
+    -- use {
+    --     'hoob3rt/lualine.nvim',
+    --     config = function() 
+    --         R('nightfox').load()
+    --         R('lualine').setup {
+    --             options = {
+    --                 theme = "nightfox"
+    --             }
+    --         }
+    --     end,
+    --     requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    -- }
     use {
-        'hoob3rt/lualine.nvim',
-        config = function() 
+        'famiu/feline.nvim',
+        config = function () 
             R('nightfox').load()
-            R('lualine').setup {
-                options = {
-                    theme = "nightfox"
-                }
-            }
+            R('feline').setup()
         end,
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
@@ -62,4 +70,8 @@ require('packer').startup(function()
     use 'tpope/vim-fugitive'
     use 'ron-rs/ron.vim'
     use 'Raimondi/vim-transpose-words'
+    use {
+        'glacambre/firenvim',
+        run = function() vim.fn['firenvim#install'](0) end 
+    }
 end)

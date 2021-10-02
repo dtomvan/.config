@@ -77,6 +77,15 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/coq_nvim"
   },
+  ["feline.nvim"] = {
+    config = { "\27LJ\1\2P\0\0\2\0\5\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\0\0%\1\3\0>\0\2\0027\0\4\0>\0\1\1G\0\1\0\nsetup\vfeline\tload\rnightfox\6R\0" },
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/feline.nvim"
+  },
+  firenvim = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/firenvim"
+  },
   ["gitsigns.nvim"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
@@ -92,11 +101,6 @@ _G.packer_plugins = {
   ["lspsaga.nvim"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lspsaga.nvim"
-  },
-  ["lualine.nvim"] = {
-    config = { "\27LJ\1\2z\0\0\3\0\b\0\0144\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\0\0%\1\3\0>\0\2\0027\0\4\0003\1\6\0003\2\5\0:\2\a\1>\0\2\1G\0\1\0\foptions\1\0\0\1\0\1\ntheme\rnightfox\nsetup\flualine\tload\rnightfox\6R\0" },
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lualine.nvim"
   },
   ["mom.vim"] = {
     loaded = true,
@@ -233,10 +237,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-try_loadstring("\27LJ\1\2z\0\0\3\0\b\0\0144\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\0\0%\1\3\0>\0\2\0027\0\4\0003\1\6\0003\2\5\0:\2\a\1>\0\2\1G\0\1\0\foptions\1\0\0\1\0\1\ntheme\rnightfox\nsetup\flualine\tload\rnightfox\6R\0", "config", "lualine.nvim")
-time([[Config for lualine.nvim]], false)
+-- Config for: feline.nvim
+time([[Config for feline.nvim]], true)
+try_loadstring("\27LJ\1\2P\0\0\2\0\5\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\0\0%\1\3\0>\0\2\0027\0\4\0>\0\1\1G\0\1\0\nsetup\vfeline\tload\rnightfox\6R\0", "config", "feline.nvim")
+time([[Config for feline.nvim]], false)
 if should_profile then save_profiles() end
 
 end)

@@ -56,3 +56,15 @@ vnoremap <silent> <leader>j :m'>+<CR>gv=gv
 " smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
 " imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 " smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+function! OnUIEnter(event)
+    let l:ui = nvim_get_chan_info(a:event.chan)
+    if has_key(l:ui, 'client') && has_key(l:ui.client, 'name')
+        if l:ui.client.name ==# 'Firenvim'
+            set guifont=monospace:h10
+            let fc = g:firenvim_config['localSettings']
+            let fc['https?://twitter.com/'] = { 'takeover': 'never', 'priority': 1 }
+            let fc['https?://twitch.tv/'] = { 'takeover': 'never', 'priority': 1 }
+        endif
+    endif
+endfunction
+autocmd UIEnter * call OnUIEnter(deepcopy(v:event))

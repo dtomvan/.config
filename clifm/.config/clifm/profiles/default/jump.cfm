@@ -1,0 +1,14 @@
+17:1632653636:1633166465:/home/tomvd
+4:1632653781:1633185027:/home/tomvd/projects
+1:1632653819:1632653819:/home/tomvd/DotFiles/p10k/zsh-theme-powerlevel10k
+1:1632653823:1632653823:/home/tomvd/DotFiles/p10k
+9:1632653824:1632668726:/home/tomvd/DotFiles
+1:1632653884:1632653884:/home/tomvd/column
+1:1632653914:1632653914:/home/tomvd/DotFiles/fish
+1:1632653918:1632653918:/home/tomvd/DotFiles/fish/.config/fish
+8:1632653951:1632654985:/
+1:1632656569:1632656569:/home/tomvd/projects/git-client
+1:1632659062:1632659062:/home/tomvd/.config/clifm/profiles/default
+4:1632668428:1632668725:/home/tomvd/DotFiles/git
+1:1633185036:1633185036:/home/tomvd/projects/zermelo
+@2567
