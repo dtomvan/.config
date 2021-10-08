@@ -36,6 +36,7 @@ fi
 # /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 export AWT_TOOLKIT=MToolkit
 wmname LG3D
+xbindkeys
 discord --no-sandbox &
 ckb-next -b &
 emacs --daemon &
