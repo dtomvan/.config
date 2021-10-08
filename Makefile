@@ -1,4 +1,4 @@
-dirs = awesome picom xplr fish zsh neovim editorconfig git xmonad gtk bins i3lock discord zellij tmux kitty clifm
+dirs = awesome bins clifm discord editorconfig fish git gtk i3lock kitty neovim picom tmux xmonad xorg xplr zellij zsh
 root-dirs = p10k xmonad-root
 
 all: $(dirs) $(root-dirs) st
