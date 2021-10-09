@@ -1,6 +1,6 @@
 -- Lsp trick
 xplr = xplr
-version = "0.14.3"
+version = "0.15.0"
 
 package.path = os.getenv("HOME") .. '/.config/xplr/plugins/?/src/init.lua'
 package.path = package.path .. ";" .. os.getenv("HOME") .. '/.config/xplr/?.lua'
@@ -22,7 +22,7 @@ require("command-mode").setup()
 require('commands')
 -- Plugins
 require("fzf").setup()
-require("xargs").setup()
+require("map").setup()
 require("completion").setup()
 require("type-to-nav").setup()
 require("zoxide").setup()

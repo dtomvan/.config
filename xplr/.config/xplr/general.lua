@@ -4,8 +4,8 @@ xplr.config.general.show_hidden = true
 ------ Read only
 xplr.config.general.read_only = false
 
------- Recover mode
-xplr.config.general.disable_recover_mode = true
+------ Recover mode (deprecated)
+-- xplr.config.general.disable_recover_mode = true
 
 ------ Start FIFO
 xplr.config.general.start_fifo = nil
