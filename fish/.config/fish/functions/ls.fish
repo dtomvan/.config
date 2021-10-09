@@ -1,3 +1,3 @@
 function ls
-    command exa -la $argv 
+    command exa --color=always -la $argv 
 end

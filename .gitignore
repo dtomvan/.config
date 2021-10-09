@@ -2,3 +2,9 @@ gtk/.config/gtk-3.0/bookmarks
 **/*.o
 st/st
 st/config.h
+emacs/.emacs.d/straight
+emacs/.emacs.d/elpa
+emacs/.emacs.d/auto-save-list
+emacs/.emacs.d/places
+emacs/.emacs.d/recentf
+emacs/.emacs.d/smex-items
