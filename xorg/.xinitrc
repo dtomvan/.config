@@ -41,4 +41,4 @@ discord --no-sandbox &
 ckb-next -b &
 emacs --daemon &
 volctl &
-exec awesome
+~/.local/bin/awesomewm-start

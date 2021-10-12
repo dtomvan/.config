@@ -30,5 +30,6 @@
     "GlobalReplies": true,
     "PinIcon": true,
     "PersonalPins": true,
-    "undefined": false
+    "undefined": false,
+    "EditRoles": true
 }

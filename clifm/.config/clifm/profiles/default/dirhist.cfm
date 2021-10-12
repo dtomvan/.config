@@ -52,3 +52,16 @@
 /home/tomvd
 /home/tomvd/projects
 /home/tomvd/projects/zermelo
+/home/tomvd
+/home/tomvd/.config/ckb-next
+/home/tomvd/.config
+/home/tomvd/.config/ckb-next
+/home/tomvd
+/home/tomvd/.config
+/home/tomvd/.config/tbsm
+/home/tomvd/.config
+/home/tomvd/DotFiles/xplr/.config/xplr
+/home/tomvd/DotFiles/xplr/.config/xplr/plugins
+/home/tomvd/DotFiles/xplr/.config/xplr/plugins/map
+/home/tomvd/DotFiles/xplr/.config/xplr/plugins/map/src
+/home/tomvd

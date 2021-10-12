@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sxhkd -c ~/.config/sxhkd/sxhkdrc.common ~/.config/sxhkd/sxhkdrc.bspwm &
+exec bspwm

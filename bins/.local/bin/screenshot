@@ -1,4 +1,9 @@
-#!/bin/sh -e
+#!/bin/bash
+
+set -euxo pipefail
 
 selection=$(slop)  # add hacksaw arguments inside as you wish
-shotgun -g "$selection" - | xclip -t 'image/png' -selection clipboard
+mkdir -p ~/screenshots
+filename="$HOME/screenshots/screenshot.$(date +%Y%m%d_%H%M%S).png"
+shotgun -g "$selection" "$filename"
+xclip -t 'image/png' -selection clipboard < "$filename"

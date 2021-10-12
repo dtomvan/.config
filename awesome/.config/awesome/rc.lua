@@ -49,8 +49,6 @@ awful.layout.layouts = {
     l.floating,
 }
 
-mymainmenu = awful.menu({ items = {{ "open terminal", terminal }}})
-
 -- {{{ Wibar
 mytextclock = wibox.widget.textbox()
 vicious.register(mytextclock, vicious.widgets.date, "%T %F", 1)

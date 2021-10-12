@@ -1,0 +1,21 @@
+super + ctrl + l
+ slock
+
+super + z
+ boomer
+
+super + v
+ clipmenu
+
+super + d
+ rofi -show
+
+# make sxhkd reload its configuration files:
+super + Escape
+ pkill -USR1 -x sxhkd
+
+super + Return
+ kitty
+
+Print
+ ~/.local/bin/screenshot

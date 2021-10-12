@@ -150,3 +150,20 @@ zermelo/
 ls
 x
 nvim
+.config/ckb-next/
+..
+ckb-next/
+ckb-next
+ckb-next.conf 
+../..
+cd .config/
+ls mpv
+ls xplr
+tbsm/
+..
+xplr/
+xplr
+x
+xplr
+Rolf\ Sanchez\ -\ Más\ Más\ Más\ \(Official\ Music\ Video\)-su5mSoREoso.mkv 
+open 61

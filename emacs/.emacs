@@ -15,14 +15,30 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (save-place-mode 1)
+(blink-cursor-mode 0)
 (column-number-mode 1)
-(set-frame-font "Jetbrains Mono")
+(global-hl-line-mode t)
+(add-to-list 'default-frame-alist '(font . "Jetbrains Mono"))
 (setq-default c-basic-offset 4
               tab-width 4
               indent-tabs-mode nil)
 (setq indicate-empty-lines t
       indicate-buffer-boundaries 'left)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+;; -- ISEARCH --
+(defadvice isearch-repeat (after isearch-no-fail activate)
+  (unless isearch-success
+    (ad-disable-advice 'isearch-repeat 'after 'isearch-no-fail)
+    (ad-activate 'isearch-repeat)
+    (isearch-repeat (if isearch-forward 'forward))
+    (ad-enable-advice 'isearch-repeat 'after 'isearch-no-fail)
+    (ad-activate 'isearch-repeat)))
+;; -- WINDMOVE --
+(global-set-key (kbd "<up>")    'windmove-up)   ; This works good as an anti arrows, and it
+(global-set-key (kbd "<down>")  'windmove-down) ; makes Emacs more productive
+(global-set-key (kbd "<left>")  'windmove-left)
+(global-set-key (kbd "<right>") 'windmove-right)
 
 ;; -- STRAIGHT.EL --
 (defvar bootstrap-version)
@@ -43,6 +59,24 @@
 (setq use-package-always-ensure t)
 
 ;; -- PACKAGES --
+;; --- SCROLL GOLDEN RATIO ---
+(use-package golden-ratio-scroll-screen)
+(global-set-key [remap scroll-down-command] 'golden-ratio-scroll-screen-down)
+(global-set-key [remap scroll-up-command] 'golden-ratio-scroll-screen-up)
+;; --- LUA ---
+(use-package lua-mode)
+;; --- SXHKD ---
+(straight-use-package
+ '(sxhkd-mode :type git :host github :repo "xFA25E/sxhkd-mode"))
+;; --- MULTIPLE CURSORS ---
+(use-package multiple-cursors
+  :config
+    (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+    (global-set-key (kbd "C->")         'mc/mark-next-like-this)
+    (global-set-key (kbd "C-<")         'mc/mark-previous-like-this)
+    (global-set-key (kbd "C-c C-<")     'mc/mark-all-like-this)
+    (global-set-key (kbd "C-\"")        'mc/skip-to-next-like-this)
+    (global-set-key (kbd "C-:")         'mc/skip-to-previous-like-this))
 ;; --- COLOR SCHEME ---
 (straight-use-package
  '(nano-emacs :type git :host github :repo "rougier/nano-emacs"))
@@ -53,26 +87,53 @@
 (require 'nano-faces)
 (nano-faces)
 (require 'nano-theme)
+;; DONT LOOK AT THIS IT SUCKS
+(defun nano-theme ()
+  "Derive many, many faces from the core nano faces."
+  ;; (nano-theme--mode-line)
+  (nano-theme--basics) (nano-theme--font-lock) (nano-theme--minibuffer) (nano-theme--buttons) (nano-theme--info) (nano-theme--bookmark) (nano-theme--speedbar) (nano-theme--message) (nano-theme--outline) (nano-theme--customize) (nano-theme--package) (nano-theme--flyspell) (nano-theme--ido) (nano-theme--diff) (nano-theme--term) (nano-theme--calendar) (nano-theme--agenda) (nano-theme--org) (nano-theme--mu4e) (nano-theme--elfeed) (nano-theme--deft) (nano-theme--rst) (nano-theme--markdown) (nano-theme--ivy) (nano-theme--helm) (nano-theme--helm-swoop) (nano-theme--helm-occur) (nano-theme--helm-ff) (nano-theme--helm-grep) (nano-theme--hl-line) (nano-theme--company))
 (nano-theme)
-(require 'nano-modeline)
-(nano-modeline)
-(require 'nano-help)
-(global-unset-key (kbd "M-h"))
-(require 'nano-defaults)
-(menu-bar-mode 0)
-(tool-bar-mode 0)
-(blink-cursor-mode 0)
+;; ---- GRUBER DARKER THEME ----
+(use-package gruber-darker-theme :init (load-theme 'gruber-darker t))
+;; (require 'nano-modeline)
+;; (nano-modeline)
 ;; --- IDO ---
 (require 'ido)
 (ido-mode t)
+;; --- MAGIT ---
+(use-package magit)
 ;; --- RUST ---
-(use-package rust-mode)
+(use-package flycheck
+  :hook (prog-mode . flycheck-mode))
+
+(use-package company
+  :hook (prog-mode . company-mode)
+  :config (setq company-tooltip-align-annotations t)
+          (setq company-minimum-prefix-length 1))
+
+(use-package lsp-mode
+  :commands lsp)
+
+(use-package lsp-ui)
+(use-package toml-mode)
+(use-package rust-mode
+  :hook (rust-mode . lsp))
+;; Add keybindings for interacting with Cargo
+(use-package cargo
+  :hook (rust-mode . cargo-minor-mode))
+(use-package flycheck-rust
+  :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 ;; --- DASHBOARD ---
 (use-package dashboard
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-startup-banner 'logo)
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*"))))
+;; --- UNDO TREE ---
+(use-package undo-tree)
+(global-undo-tree-mode)
+(setq undo-tree-auto-save-history t)
+(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 ;; --- IVY ---
 (use-package ivy
   :init
@@ -87,12 +148,8 @@
   )
 
 ;; --- COUNSEL ---
-(use-package smex
-  :init (global-set-key (kbd "M-x") 'smex))
-;; (use-package counsel
-;;   :init
-;;   (counsel-mode)
-;;   )
+(use-package smex)
+(use-package counsel :init (counsel-mode t))
 ;; --- HELPFUL ---
 (use-package helpful
   :after counsel
@@ -143,35 +200,24 @@
 ;; This will also show trailing characters as they are useful to spot.
 (setq whitespace-style '(face tabs tab-mark trailing))
 (custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(whitespace-tab ((t (:foreground "#636363")))))
-(setq whitespace-display-mappings
-      '((tab-mark 9 [124 9] [92 9]))) ; 124 is the ascii ID for '\|'
-(global-whitespace-mode) ; Enable whitespace mode everywhere
 
 ;; -- LINE NUMBERS --
-(global-linum-mode t)
-(require 'linum)
-(add-hook 'prog-mode-hook 'linum-mode)
-(defvar my-linum-format-string "%3d")
-
-(add-hook 'linum-before-numbering-hook 'my-linum-get-format-string)
-
-(defun my-linum-get-format-string ()
-  (let* ((width (1+ (length (number-to-string
-                             (count-lines (point-min) (point-max))))))
-         (format (concat "%d (%" (number-to-string width) "d)")))
-    (setq my-linum-format-string format)))
-
-(defvar my-linum-current-line-number 0)
-
-(setq linum-format 'my-linum-relative-line-numbers)
-
-(defun my-linum-relative-line-numbers (line-number)
-  (let ((offset (- line-number my-linum-current-line-number))
-        (current (line-number-at-pos)))
-    (propertize (format my-linum-format-string current offset) 'face 'linum)))
-
-(defadvice linum-update (around my-linum-update)
-  (let ((my-linum-current-line-number (line-number-at-pos)))
-    ad-do-it))
-(ad-activate 'linum-update)
+(global-display-line-numbers-mode t)
+(use-package restart-emacs)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("a454e493a390a749e6cd1345adb72aaf977eae564473bf5578472dd486afc43f" default))
+ '(display-line-numbers-type 'visual)
+ '(golden-ratio-scroll-highlight-delay '(0.15 . 0.1))
+ '(golden-ratio-scroll-highlight-flag nil)
+ '(sxhkd-mode-reload-config nil)
+ '(vc-follow-symlinks t nil nil "Otherwise it's gonna ask you e-ver-y-sin-gle-time"))

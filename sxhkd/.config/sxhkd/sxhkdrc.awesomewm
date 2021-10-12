@@ -1,0 +1,2 @@
+super + {_, shift +}{j,k}
+ awesome-client 'require("awful").client.{focus,swap}.byidx({1,-1})'

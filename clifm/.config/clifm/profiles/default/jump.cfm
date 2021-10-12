@@ -1,4 +1,4 @@
-17:1632653636:1633166465:/home/tomvd
+20:1632653636:1633860844:/home/tomvd
 4:1632653781:1633185027:/home/tomvd/projects
 1:1632653819:1632653819:/home/tomvd/DotFiles/p10k/zsh-theme-powerlevel10k
 1:1632653823:1632653823:/home/tomvd/DotFiles/p10k
@@ -11,4 +11,11 @@
 1:1632659062:1632659062:/home/tomvd/.config/clifm/profiles/default
 4:1632668428:1632668725:/home/tomvd/DotFiles/git
 1:1633185036:1633185036:/home/tomvd/projects/zermelo
-@2567
+2:1633804691:1633804693:/home/tomvd/.config/ckb-next
+3:1633804692:1633804781:/home/tomvd/.config
+1:1633804776:1633804776:/home/tomvd/.config/tbsm
+1:1633804809:1633804809:/home/tomvd/DotFiles/xplr/.config/xplr
+1:1633804851:1633804851:/home/tomvd/DotFiles/xplr/.config/xplr/plugins
+1:1633804855:1633804855:/home/tomvd/DotFiles/xplr/.config/xplr/plugins/map
+1:1633804856:1633804856:/home/tomvd/DotFiles/xplr/.config/xplr/plugins/map/src
+@3468
