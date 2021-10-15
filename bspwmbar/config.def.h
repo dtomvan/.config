@@ -18,7 +18,7 @@
 #define BAR_HEIGHT  24
 
 /* set font pattern for find fonts, see fonts-conf(5) */
-const char *fontname = "sans-serif:size=10";
+const char *fontname = "Jetbrains Mono:size=12";
 
 /*
  * color settings by index of color map
@@ -38,13 +38,6 @@ const char *fontname = "sans-serif:size=10";
 
 /* modules on the left */
 module_t left_modules[] = {
-	{
-		.text = {
-			.func = text,
-			.label = "BSPWM",
-			.fg = "#1793d1",
-		},
-	},
 	{ /* bspwm desktop state */
 		.desk = {
 			.func = desktops,
@@ -73,7 +66,7 @@ module_t right_modules[] = {
 	{ /* clock */
 		.date = {
 			.func = datetime,
-			.prefix = " ",
+			.prefix = "",
 			.format = "%H:%M:%S %F",
 		},
 	},
