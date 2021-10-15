@@ -35,10 +35,14 @@ fi
 ~/i3lock.sh &
 # /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 export AWT_TOOLKIT=MToolkit
+feh --bg-center ~/Pictures/bg.jpg
 wmname LG3D
+xsetroot -cursor_name left_ptr
 xbindkeys
 discord --no-sandbox &
 ckb-next -b &
 emacs --daemon &
 volctl &
-~/.local/bin/awesomewm-start
+picom --backend glx --xrender-sync-fence &
+clipmenud &
+~/.local/bin/bspwm-start
