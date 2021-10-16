@@ -5,6 +5,9 @@ usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
+[ -f /etc/xprofile ] && . /etc/xprofile
+[ -f ~/.xprofile ] && . ~/.xprofile
+
 # merge in defaults and keymaps
 
 if [ -f $sysresources ]; then
@@ -34,6 +37,7 @@ fi
 
 # /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 export AWT_TOOLKIT=MToolkit
+export QT_QPA_PLATFORMTHEME=qt5ct
 wmname LG3D
 xsetroot -cursor_name left_ptr
 xbindkeys

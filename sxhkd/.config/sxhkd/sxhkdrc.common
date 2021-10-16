@@ -1,4 +1,4 @@
-super + alt + l
+super + shift + Escape
  slock
 
 super + z
@@ -15,7 +15,7 @@ super + Escape
  pkill -USR1 -x sxhkd
 
 super + Return
- kitty
+ st -e fish
 
 Print
  ~/.local/bin/screenshot

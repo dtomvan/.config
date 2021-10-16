@@ -1,3 +1,8 @@
+;;; INIT -- Init file for emacs (https://github.com/dtomvan/.config)
+;;; Commentary:
+;;; Tom van Dijk's init.el file.
+;;; Code:
+
 ;; -- BARE METAL BOILERPLATE --
 (setq inhibit-compacting-font-caches t)
 (setq gc-cons-threshold 100000000)
@@ -28,6 +33,7 @@
 
 ;; -- ISEARCH --
 (defadvice isearch-repeat (after isearch-no-fail activate)
+  "Make isearch wrap."
   (unless isearch-success
     (ad-disable-advice 'isearch-repeat 'after 'isearch-no-fail)
     (ad-activate 'isearch-repeat)
@@ -59,6 +65,17 @@
 (setq use-package-always-ensure t)
 
 ;; -- PACKAGES --
+;; --- VTERM ---
+(use-package vterm)
+;; --- LISPY ---
+(use-package lispy)
+;; --- PORTH-MODE ---
+(straight-use-package '(porth-mode
+                        :type git
+                        :host gitlab
+                        :repo "tsoding/porth"
+                        :files ("editor/porth-mode.el")))
+(require 'porth-mode)
 ;; --- SCROLL GOLDEN RATIO ---
 (use-package golden-ratio-scroll-screen)
 (global-set-key [remap scroll-down-command] 'golden-ratio-scroll-screen-down)
@@ -78,25 +95,10 @@
     (global-set-key (kbd "C-\"")        'mc/skip-to-next-like-this)
     (global-set-key (kbd "C-:")         'mc/skip-to-previous-like-this))
 ;; --- COLOR SCHEME ---
-(straight-use-package
- '(nano-emacs :type git :host github :repo "rougier/nano-emacs"))
-(use-package mini-frame)
-(setq nano-font-size 10)
-(require 'nano-theme-dark)
-(require 'nano-base-colors)
-(require 'nano-faces)
-(nano-faces)
-(require 'nano-theme)
-;; DONT LOOK AT THIS IT SUCKS
-(defun nano-theme ()
-  "Derive many, many faces from the core nano faces."
-  ;; (nano-theme--mode-line)
-  (nano-theme--basics) (nano-theme--font-lock) (nano-theme--minibuffer) (nano-theme--buttons) (nano-theme--info) (nano-theme--bookmark) (nano-theme--speedbar) (nano-theme--message) (nano-theme--outline) (nano-theme--customize) (nano-theme--package) (nano-theme--flyspell) (nano-theme--ido) (nano-theme--diff) (nano-theme--term) (nano-theme--calendar) (nano-theme--agenda) (nano-theme--org) (nano-theme--mu4e) (nano-theme--elfeed) (nano-theme--deft) (nano-theme--rst) (nano-theme--markdown) (nano-theme--ivy) (nano-theme--helm) (nano-theme--helm-swoop) (nano-theme--helm-occur) (nano-theme--helm-ff) (nano-theme--helm-grep) (nano-theme--hl-line) (nano-theme--company))
-(nano-theme)
-;; ---- GRUBER DARKER THEME ----
-(use-package gruber-darker-theme :init (load-theme 'gruber-darker t))
-;; (require 'nano-modeline)
-;; (nano-modeline)
+(use-package darktooth-theme
+  :config
+  (load-theme 'darktooth t)
+  (darktooth-modeline))
 ;; --- IDO ---
 (require 'ido)
 (ido-mode t)
