@@ -1,16 +1,21 @@
-dirs = awesome bins bspwm clifm discord editorconfig emacs fish git gtk i3lock kitty neovim picom rofi sxhkd tmux xmonad xorg xplr zellij zsh
+dirs = awesome bins bspwm clifm discord editorconfig emacs fish git gtk i3lock kitty neovim picom rofi sxhkd tmux xorg xplr zellij zsh
 root-dirs = p10k xmonad-root
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 
-all: $(dirs) $(root-dirs) .st /usr/local/bin/bspwmbar .xmonad
-	stow $(dirs)
+all: $(dirs) $(root-dirs) st /usr/local/bin/bspwmbar xmonad
 	localectl set-x11-keymap us "" "" compose:ralt
-	sudo stow $(root-dirs) -t /usr/share
+
+$(dirs):
+	stow $@
+
+$(root-dirs):
+	sudo stow $@ -t /usr/share
 
 $(submodules):
 	git submodule update --recursive
 
-.xmonad: xmonad/.xmonad
+xmonad: xmonad/.xmonad
+	stow $@
 	cd xmonad/.xmonad && stack install
 
 /usr/local/bin/bspwmbar: bspwmbar
@@ -18,5 +23,7 @@ $(submodules):
 	cd bspwmbar && sudo make bspwmbar
 	@cd bspwmbar && sudo make install || echo "Could not copy bspwmbar, continueing"
 
-.st: st
+st: st/
 	cd st && sudo make install
+
+.PHONY: $(dirs) $(root-dirs)
