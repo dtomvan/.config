@@ -1,4 +1,6 @@
 #!/bin/sh
 
+~/i3lock.sh
+discord --no-sandbox &
 sxhkd -c ~/.config/sxhkd/sxhkdrc.common ~/.config/sxhkd/sxhkdrc.awesomewm &
 exec awesome

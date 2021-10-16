@@ -32,14 +32,11 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-~/i3lock.sh &
 # /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 export AWT_TOOLKIT=MToolkit
-feh --bg-center ~/Pictures/bg.png
 wmname LG3D
 xsetroot -cursor_name left_ptr
 xbindkeys
-discord --no-sandbox &
 ckb-next -b &
 emacs --daemon &
 volctl &
