@@ -1,43 +1,98 @@
 local nvim_lsp = require('lspconfig')
+vim.o.runtimepath = vim.o.runtimepath .. "," .. os.getenv("HOME") .. '/.local/share/nvim/site/pack/packer/start/friendly-snippets/'
+require("luasnip/loaders/from_vscode").load()
 
-local remap = vim.api.nvim_set_keymap
-local npairs = require('nvim-autopairs')
+-- THANKS TJ
+local lspkind = require "lspkind"
+lspkind.init()
 
-npairs.setup({ map_bs = false })
+vim.cmd [[
+  imap <silent><expr> <c-k> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<c-k>'
+  inoremap <silent> <c-j> <cmd>lua require('luasnip').jump(-1)<CR>
+  imap <silent><expr> <C-l> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-l>'
+  snoremap <silent> <c-k> <cmd>lua require('luasnip').jump(1)<CR>
+  snoremap <silent> <c-j> <cmd>lua require('luasnip').jump(-1)<CR>
+]]
 
-vim.g.coq_settings = { auto_start = "shut-up", keymap = { recommended = false, jump_to_mark = "<c-j>" } }
+local cmp = require "cmp"
 
--- these mappings are coq recommended mappings unrelated to nvim-autopairs
-remap('i', '<esc>', [[pumvisible() ? "<c-e><esc>" : "<esc>"]], { expr = true, noremap = true })
-remap('i', '<c-c>', [[pumvisible() ? "<c-e><c-c>" : "<c-c>"]], { expr = true, noremap = true })
-remap('i', '<tab>', [[pumvisible() ? "<c-n>" : "<tab>"]], { expr = true, noremap = true })
-remap('i', '<s-tab>', [[pumvisible() ? "<c-p>" : "<bs>"]], { expr = true, noremap = true })
+cmp.setup {
+    mapping = {
+        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-e>"] = cmp.mapping.close(),
+        ["<c-y>"] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Insert,
+            select = true,
+        },
 
--- skip it, if you use another global object
-_G.MUtils= {}
+        ["<c-space>"] = cmp.mapping.complete(),
 
-MUtils.CR = function()
-  if vim.fn.pumvisible() ~= 0 then
-    if vim.fn.complete_info({ 'selected' }).selected ~= -1 then
-      return npairs.esc('<c-y>')
-    else
-      -- you can change <c-g><c-g> to <c-e> if you don't use other i_CTRL-X modes
-      return npairs.esc('<c-g><c-g>') .. npairs.autopairs_cr()
-    end
-  else
-    return npairs.autopairs_cr()
-  end
-end
-remap('i', '<cr>', 'v:lua.MUtils.CR()', { expr = true, noremap = true })
+        ["<Tab>"] = function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            else
+                fallback()
+            end
+        end,
+        ["<S-Tab>"] = function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            else
+                fallback()
+            end
+        end,
+    },
 
-MUtils.BS = function()
-  if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info({ 'mode' }).mode == 'eval' then
-    return npairs.esc('<c-e>') .. npairs.autopairs_bs()
-  else
-    return npairs.autopairs_bs()
-  end
-end
-remap('i', '<bs>', 'v:lua.MUtils.BS()', { expr = true, noremap = true })
+  -- Youtube:
+  --    the order of your sources matter (by default). That gives them priority
+  --    you can configure:
+  --        keyword_length
+  --        priority
+  --        max_item_count
+  --        (more?)
+  sources = {
+    -- { name = "gh_issues" },
+
+    -- Youtube: Could enable this only for lua, but nvim_lua handles that already.
+    { name = "luasnip" },
+    { name = "nvim_lua" },
+    { name = "zsh" },
+    { name = "nvim_lsp" },
+    { name = "path" },
+    { name = "buffer", keyword_length = 5 },
+  },
+
+  -- Youtube: mention that you need a separate snippets plugin
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end,
+  },
+
+  formatting = {
+    -- Youtube: How to set up nice formatting for your sources.
+    format = lspkind.cmp_format {
+      with_text = true,
+      menu = {
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        nvim_lua = "[api]",
+        path = "[path]",
+        luasnip = "[snip]",
+        -- gh_issues = "[issues]",
+      },
+    },
+  },
+
+  experimental = {
+    -- I like the new menu better! Nice work hrsh7th
+    native_menu = false,
+
+    -- Let's play with this for a day or two
+    ghost_text = true,
+  },
+}
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -53,15 +108,10 @@ local lsp_opts = {
 };
 local servers = { "rust_analyzer", "pylsp" }
 vim.schedule(function ()
-    require("packer").loader("coq_nvim coq.artifacts")
     for _, lsp in ipairs(servers) do
         nvim_lsp[lsp].setup { 
             lsp_opts
         }
-        -- nvim_lsp[lsp].setup()
-        vim.cmd [[COQnow -s]]
-        -- nvim_lsp[lsp].setup(require("coq")().lsp_ensure_capabilities())
-        -- nvim_lsp[lsp].setup(require("coq")().lsp_ensure_capabilities(lsp_opts))
     end
 end)
 
@@ -107,27 +157,3 @@ local rust_tools_opts = {
 }
 
 require('rust-tools').setup(rust_tools_opts)
-
--- local cmp = require 'cmp'
--- cmp.setup {
---   snippet = {
---     expand = function(args)
---       vim.fn["vsnip#anonymous"](args.body)
---   end,
---   },
---   mapping = {
---     ['<C-p>'] = cmp.mapping.select_prev_item(),
---     ['<C-n>'] = cmp.mapping.select_next_item(),
---     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
---     ['<C-f>'] = cmp.mapping.scroll_docs(4),
---     ['<C-Space>'] = cmp.mapping.complete(),
---     ['<C-e>'] = cmp.mapping.close(),
---     ['<CR>'] = cmp.mapping.confirm {
---       behavior = cmp.ConfirmBehavior.Replace,
---       select = true,
---     }
---   },
---   sources = {
---     { name = 'nvim_lsp' },
---   },
--- }

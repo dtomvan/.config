@@ -69,22 +69,34 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  ["coq.artifacts"] = {
+  LuaSnip = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/coq.artifacts"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/LuaSnip"
   },
-  coq_nvim = {
+  ["auto.pairs"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/coq_nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/auto.pairs"
+  },
+  ["cmp-nvim-lsp"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp"
+  },
+  cmp_luasnip = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/cmp_luasnip"
   },
   ["feline.nvim"] = {
-    config = { "\27LJ\1\2P\0\0\2\0\5\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\0\0%\1\3\0>\0\2\0027\0\4\0>\0\1\1G\0\1\0\nsetup\vfeline\tload\rnightfox\6R\0" },
+    config = { "\27LJ\1\2m\0\0\2\0\a\0\f4\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\3\0%\1\4\0>\0\2\0027\0\5\0003\1\6\0>\0\2\1G\0\1\0\1\0\1\vpreset\vnoicon\nsetup\vfeline\frequire\tload\rnightfox\6R\0" },
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/feline.nvim"
   },
   firenvim = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/firenvim"
+  },
+  ["friendly-snippets"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/friendly-snippets"
   },
   ["gitsigns.nvim"] = {
     loaded = true,
@@ -118,9 +130,9 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nui.nvim"
   },
-  ["nvim-autopairs"] = {
+  ["nvim-cmp"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-autopairs"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-cmp"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -186,6 +198,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
+  ["vim-closer"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-closer"
+  },
   ["vim-commentary"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-commentary"
@@ -226,10 +242,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-transpose-words"
   },
-  vimwiki = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vimwiki"
-  },
   ["xplr.nvim"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/xplr.nvim"
@@ -239,7 +251,7 @@ _G.packer_plugins = {
 time([[Defining packer_plugins]], false)
 -- Config for: feline.nvim
 time([[Config for feline.nvim]], true)
-try_loadstring("\27LJ\1\2P\0\0\2\0\5\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\0\0%\1\3\0>\0\2\0027\0\4\0>\0\1\1G\0\1\0\nsetup\vfeline\tload\rnightfox\6R\0", "config", "feline.nvim")
+try_loadstring("\27LJ\1\2m\0\0\2\0\a\0\f4\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\3\0%\1\4\0>\0\2\0027\0\5\0003\1\6\0>\0\2\1G\0\1\0\1\0\1\vpreset\vnoicon\nsetup\vfeline\frequire\tload\rnightfox\6R\0", "config", "feline.nvim")
 time([[Config for feline.nvim]], false)
 if should_profile then save_profiles() end
 

@@ -22,7 +22,9 @@
 (save-place-mode 1)
 (blink-cursor-mode 0)
 (column-number-mode 1)
-(global-hl-line-mode t)
+(add-hook 'prog-mode-hook #'hl-line-mode)
+(add-hook 'text-mode-hook #'hl-line-mode)
+(add-hook 'dired-mode-hook #'hl-line-mode)
 (add-to-list 'default-frame-alist '(font . "Jetbrains Mono"))
 (setq-default c-basic-offset 4
               tab-width 4
@@ -30,7 +32,6 @@
 (setq indicate-empty-lines t
       indicate-buffer-boundaries 'left)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
 ;; -- ISEARCH --
 (defadvice isearch-repeat (after isearch-no-fail activate)
   "Make isearch wrap."
@@ -65,10 +66,37 @@
 (setq use-package-always-ensure t)
 
 ;; -- PACKAGES --
+;; --- MU ---
+(use-package mu4e
+  :straight ( :host github
+              :repo "djcb/mu"
+              :branch "master"
+              :files ("mu4e/*")
+              :pre-build (("./autogen.sh") ("make")))
+    )
 ;; --- VTERM ---
 (use-package vterm)
 ;; --- LISPY ---
 (use-package lispy)
+;; --- EMBARK ---
+(use-package marginalia
+  :ensure t
+  :config
+  (marginalia-mode))
+
+(use-package embark
+  :bind
+  (("C-." . embark-act)         ;; pick some comfortable binding
+   ("C-;" . embark-dwim)        ;; good alternative: M-.
+   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
 ;; --- PORTH-MODE ---
 (straight-use-package '(porth-mode
                         :type git
@@ -162,6 +190,10 @@
   :init
   (setq counsel-describe-function-function #'helpful-callable)
   (setq counsel-describe-variable-function #'helpful-variable))
+;; --- STRIPES ---
+(use-package stripes
+  :config
+  (setq stripes-unit 1))
 
 ;; -- TABS --
 ;; Create a variable for our preferred tab width
@@ -221,5 +253,6 @@
  '(display-line-numbers-type 'visual)
  '(golden-ratio-scroll-highlight-delay '(0.15 . 0.1))
  '(golden-ratio-scroll-highlight-flag nil)
+ '(stripes-unit 1)
  '(sxhkd-mode-reload-config nil)
  '(vc-follow-symlinks t nil nil "Otherwise it's gonna ask you e-ver-y-sin-gle-time"))

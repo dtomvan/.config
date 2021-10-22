@@ -2,7 +2,7 @@
  * @name BDFDB
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 1.9.2
+ * @version 1.9.4
  * @description Required Library for DevilBro's Plugins
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -19,16 +19,10 @@ module.exports = (_ => {
 		"info": {
 			"name": "BDFDB",
 			"author": "DevilBro",
-			"version": "1.9.2",
+			"version": "1.9.4",
 			"description": "Required Library for DevilBro's Plugins"
 		},
-		"rawUrl": `https://mwittrien.github.io/BetterDiscordAddons/Library/0BDFDB.plugin.js`,
-		"changeLog": {
-			"fixed": {
-				"Server Changes AGAIN": "Fixed Stuff for anything changing Servers",
-				"BD Browser": "Fixed compartibility issues"
-			}
-		}
+		"rawUrl": `https://mwittrien.github.io/BetterDiscordAddons/Library/0BDFDB.plugin.js`
 	};
 	
 	const DiscordObjects = {};
@@ -454,7 +448,8 @@ module.exports = (_ => {
 				return LibraryRequires.path.resolve(LibraryRequires.process.env.HOME, "Library/Preferences/BetterDiscord/plugins/");
 			default:
 				if (LibraryRequires.process.env.XDG_CONFIG_HOME) return LibraryRequires.path.resolve(LibraryRequires.process.env.XDG_CONFIG_HOME, "BetterDiscord/plugins/");
-				else return LibraryRequires.path.resolve(LibraryRequires.process.env.HOME, ".config/BetterDiscord/plugins/");
+				else if (LibraryRequires.process.env.HOME) return LibraryRequires.path.resolve(LibraryRequires.process.env.HOME, ".config/BetterDiscord/plugins/");
+				else return "";
 			}
 	};
 	BDFDB.BDUtils.getThemesFolder = function () {
@@ -468,7 +463,8 @@ module.exports = (_ => {
 				return LibraryRequires.path.resolve(LibraryRequires.process.env.HOME, "Library/Preferences/BetterDiscord/themes/");
 			default:
 				if (LibraryRequires.process.env.XDG_CONFIG_HOME) return LibraryRequires.path.resolve(LibraryRequires.process.env.XDG_CONFIG_HOME, "BetterDiscord/themes/");
-				else return LibraryRequires.path.resolve(LibraryRequires.process.env.HOME, ".config/BetterDiscord/themes/");
+				else if (LibraryRequires.process.env.HOME) return LibraryRequires.path.resolve(LibraryRequires.process.env.HOME, ".config/BetterDiscord/themes/");
+				else return "";
 			}
 	};
 	BDFDB.BDUtils.isPluginEnabled = function (pluginName) {
@@ -2136,6 +2132,7 @@ module.exports = (_ => {
 					subComponent: InternalData.ModuleUtilsConfig.Finder[unmappedType] && InternalData.ModuleUtilsConfig.Finder[unmappedType].subComponent,
 					forceObserve: InternalData.ModuleUtilsConfig.ForceObserve.includes(unmappedType),
 					exported: InternalData.ModuleUtilsConfig.Finder[unmappedType] && InternalData.ModuleUtilsConfig.Finder[unmappedType].exported || false,
+					path: InternalData.ModuleUtilsConfig.Finder[unmappedType] && InternalData.ModuleUtilsConfig.Finder[unmappedType].path,
 					mapped: InternalData.ModuleUtilsConfig.PatchMap[type]
 				};
 				config.nonRender = config.specialFilter || BDFDB.ObjectUtils.toArray(pluginData.patchTypes).flat(10).filter(n => n && !InternalData.ModuleUtilsConfig.InstanceFunctions.includes(n)).length > 0;
@@ -2154,6 +2151,7 @@ module.exports = (_ => {
 					let patchSpecial = (func, argument) => {
 						let module = BDFDB.ModuleUtils[func](argument, config.exported);
 						let exports = module && !config.exported && module.exports || module;
+						exports = config.path && BDFDB.ObjectUtils.get(exports, config.path) || exports;
 						exports && InternalBDFDB.patchComponent(pluginData, InternalBDFDB.isMemoOrForwardRef(exports) ? exports.default : exports, mappedType, config);
 					};
 					if (config.classNames.length) InternalBDFDB.checkForInstance(pluginData, mappedType, config);
@@ -2167,11 +2165,9 @@ module.exports = (_ => {
 		InternalBDFDB.patchComponent = function (pluginDataObjs, instance, type, config) {
 			pluginDataObjs = [pluginDataObjs].flat(10).filter(n => n);
 			if (pluginDataObjs.length && instance) {
-				let name = type.split(" _ _ ")[0];
 				instance = instance[BDFDB.ReactUtils.instanceKey] && instance[BDFDB.ReactUtils.instanceKey].type ? instance[BDFDB.ReactUtils.instanceKey].type : instance;
-				instance = config.nonPrototype || BDFDB.ReactUtils.isCorrectInstance(instance, name) || InternalData.ModuleUtilsConfig.LoadedInComponents[type] ? instance : (BDFDB.ReactUtils.findConstructor(instance, name) || BDFDB.ReactUtils.findConstructor(instance, name, {up: true}));
 				if (instance) {
-					instance = instance[BDFDB.ReactUtils.instanceKey] && instance[BDFDB.ReactUtils.instanceKey].type ? instance[BDFDB.ReactUtils.instanceKey].type : instance;
+					let name = type.split(" _ _ ")[0];
 					let toBePatched = config.nonPrototype || !instance.prototype ? instance : instance.prototype;
 					toBePatched = toBePatched && toBePatched.type && typeof toBePatched.type.render == "function" ? toBePatched.type : toBePatched;
 					if (config.subComponent) {
@@ -2214,7 +2210,6 @@ module.exports = (_ => {
 		};
 		InternalBDFDB.checkEle = function (pluginDataObjs, ele, type, config) {
 			pluginDataObjs = [pluginDataObjs].flat(10).filter(n => n);
-			let unmappedType = type.split(" _ _ ")[1] || type;
 			let ins = BDFDB.ReactUtils.getInstance(ele);
 			if (typeof config.specialFilter == "function") {
 				let component = config.specialFilter(ins);
@@ -2228,7 +2223,9 @@ module.exports = (_ => {
 					return true;
 				}
 			}
-			else if (InternalBDFDB.isCorrectPatchInstance(ins, type)) {
+			else {
+				let unmappedType = type.split(" _ _ ")[1] || type;
+				ins = BDFDB.ReactUtils.findConstructor(ins, unmappedType) || BDFDB.ReactUtils.findConstructor(ins, unmappedType, {up: true}) || ins;
 				InternalBDFDB.patchComponent(pluginDataObjs, ins, type, config);
 				BDFDB.PatchUtils.forceAllUpdates(pluginDataObjs.map(n => n.plugin), type);
 				return true;
@@ -2236,16 +2233,12 @@ module.exports = (_ => {
 			return false;
 		};
 		InternalBDFDB.checkForInstance = function (pluginData, type, config) {
-			const app = document.querySelector(BDFDB.dotCN.app), bdSettings = document.querySelector("#bd-settingspane-container .scroller");
 			let instanceFound = false;
 			if (!config.forceObserve) {
+				const app = document.querySelector(BDFDB.dotCN.app);
 				if (app) {
 					let appIns = BDFDB.ReactUtils.findConstructor(app, type, {unlimited: true}) || BDFDB.ReactUtils.findConstructor(app, type, {unlimited: true, up: true});
 					if (appIns && (instanceFound = true)) InternalBDFDB.patchComponent(pluginData, appIns, type, config);
-				}
-				if (!instanceFound && bdSettings) {
-					let bdSettingsIns = BDFDB.ReactUtils.findConstructor(bdSettings, type, {unlimited: true});
-					if (bdSettingsIns && (instanceFound = true)) InternalBDFDB.patchComponent(pluginData, bdSettingsIns, type, config);
 				}
 			}
 			if (!instanceFound) {
@@ -2258,7 +2251,7 @@ module.exports = (_ => {
 					if (!InternalBDFDB.patchObserverData.observer) {
 						let appMount = document.querySelector(BDFDB.dotCN.appmount);
 						if (appMount) {
-							InternalBDFDB.patchObserverData.observer = new MutationObserver(cs => {cs.forEach(c => {c.addedNodes.forEach(n => {
+							InternalBDFDB.patchObserverData.observer = new MutationObserver(cs => cs.forEach(c => c.addedNodes.forEach(n => {
 								if (!n || !n.tagName) return;
 								for (let type in InternalBDFDB.patchObserverData.data) if (!InternalBDFDB.patchObserverData.data[type].found) {
 									let ele = null;
@@ -2273,7 +2266,7 @@ module.exports = (_ => {
 										}
 									}
 								}
-							});});});
+							})));
 							InternalBDFDB.patchObserverData.observer.observe(appMount, {childList: true, subtree: true});
 						}
 					}
@@ -2281,13 +2274,6 @@ module.exports = (_ => {
 					InternalBDFDB.patchObserverData.data[type].plugins.push(pluginData);
 				}
 			}
-		};
-		
-		InternalBDFDB.isCorrectPatchInstance = function (instance, name) {
-			if (!instance) return false;
-			instance = instance[BDFDB.ReactUtils.instanceKey] && instance[BDFDB.ReactUtils.instanceKey].type ? instance[BDFDB.ReactUtils.instanceKey].type : instance;
-			instance = BDFDB.ReactUtils.isCorrectInstance(instance, name) ? instance : (BDFDB.ReactUtils.findConstructor(instance, name) || BDFDB.ReactUtils.findConstructor(instance, name, {up: true}));
-			return !!instance;
 		};
 		
 		BDFDB.PatchUtils = {};
@@ -2899,7 +2885,7 @@ module.exports = (_ => {
 				}
 			}
 			function check (instance) {
-				if (!instance) return false;
+				if (!instance || instance == parent) return false;
 				let props = instance.stateNode ? instance.stateNode.props : instance.props;
 				return instance.type && config.name && config.name.some(name => BDFDB.ReactUtils.isCorrectInstance(instance, name)) || config.key && config.key.some(key => instance.key == key) || props && config.props && config.props[config.someProps ? "some" : "every"](prop => BDFDB.ArrayUtils.is(prop) ? (BDFDB.ArrayUtils.is(prop[1]) ? prop[1].some(checkValue => propCheck(props, prop[0], checkValue)) : propCheck(props, prop[0], prop[1])) : props[prop] !== undefined) || config.filter && config.filter(instance);
 			}

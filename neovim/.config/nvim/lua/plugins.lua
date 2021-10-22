@@ -25,7 +25,9 @@ require('packer').startup(function()
         'famiu/feline.nvim',
         config = function () 
             R('nightfox').load()
-            R('feline').setup()
+            require('feline').setup({
+                preset = 'noicon'
+            })
         end,
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
@@ -36,7 +38,6 @@ require('packer').startup(function()
     use 'kana/vim-tabpagecd'
     use 'tjdevries/nlua.nvim'
     use 'nvim-treesitter/nvim-treesitter'
-    -- use 'rstacruz/vim-closer'
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
     use 'nvim-lua/lsp_extensions.nvim'
@@ -45,18 +46,18 @@ require('packer').startup(function()
     use 'ThePrimeagen/refactoring.nvim'
     use 'nvim-telescope/telescope-fzy-native.nvim'
 
-    -- use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
-    -- use 'hrsh7th/cmp-nvim-lsp'
-    -- use "rafamadriz/friendly-snippets"
-    use 'vimwiki/vimwiki'
-
-    -- use 'saadparwaiz1/cmp_luasnip'
-    -- use 'L3MON4D3/LuaSnip' -- Snippets plugin
-    -- use 'Krasjet/auto.pairs'
-    -- TODO: use when ms-jpq stabalizes the repo, its hella fast.
-    use 'windwp/nvim-autopairs'
-    use { 'ms-jpq/coq_nvim', branch = 'coq'} -- main one
-    use { 'ms-jpq/coq.artifacts', branch= 'artifacts'} -- 9000+ Snippets
+    -- Autocompletion
+    use 'hrsh7th/nvim-cmp'
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'saadparwaiz1/cmp_luasnip'
+    use 'L3MON4D3/LuaSnip'
+    use "rafamadriz/friendly-snippets"
+    use 'rstacruz/vim-closer'
+    use 'Krasjet/auto.pairs'
+    -- use 'windwp/nvim-autopairs'
+    -- use 'vimwiki/vimwiki'
+    -- use { 'ms-jpq/coq_nvim', branch = 'coq'} -- main one
+    -- use { 'ms-jpq/coq.artifacts', branch= 'artifacts'} -- 9000+ Snippets
     use 'nvim-lua/popup.nvim'
     use "nvim-lua/plenary.nvim"
     use "nvim-telescope/telescope.nvim"

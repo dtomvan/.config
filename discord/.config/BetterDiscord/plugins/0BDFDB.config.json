@@ -5,7 +5,7 @@
 		"CustomStatusPresets": "1.0.7",
 		"DisplayServersAsChannels": "1.5.0",
 		"EditRoles": "1.0.8",
-		"EditUsers": "4.3.8",
+		"EditUsers": "4.3.9",
 		"FriendNotifications": "1.7.8",
 		"GameActivityToggle": "1.0.4",
 		"SplitLargeMessages": "1.7.0",
@@ -20,7 +20,7 @@
 		"useChromium": false
 	},
 	"hashes": {
-		"0BDFDB.data.json": "a6cdce1d5f9ca06100bb8f28822af6869f7cf046",
+		"0BDFDB.data.json": "da25e203e8024332c897b3dbc3204286302faa55",
 		"0BDFDB.raw.css": "6bb82eb9f45d2d68a03ad2d3e21dcf35a5e2e3ee"
 	}
 }
