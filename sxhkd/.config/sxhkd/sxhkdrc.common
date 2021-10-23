@@ -1,5 +1,5 @@
 super + shift + Escape
- slock
+ xautolock -locknow
 
 super + z
  boomer

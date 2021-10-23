@@ -2,7 +2,7 @@ dirs = awesome bins bspwm clifm discord editorconfig emacs fish git gtk i3lock k
 root-dirs = p10k xmonad-root
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 
-all: $(dirs) $(root-dirs) st /usr/local/bin/bspwmbar xmonad
+all: $(dirs) $(root-dirs) discord_arch_electron st /usr/local/bin/bspwmbar xmonad
 	localectl set-x11-keymap us "" "" compose:ralt
 
 $(dirs):
@@ -13,6 +13,9 @@ $(root-dirs):
 
 $(submodules):
 	git submodule update --recursive
+
+discord_arch_electron:
+	cd $@ && makepkg -si
 
 xmonad: xmonad/.xmonad
 	stow $@
@@ -26,4 +29,4 @@ xmonad: xmonad/.xmonad
 st: st/
 	cd st && sudo make install
 
-.PHONY: $(dirs) $(root-dirs)
+.PHONY: $(dirs) $(root-dirs) discord_arch_electron
