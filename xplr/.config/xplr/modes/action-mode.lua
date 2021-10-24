@@ -49,6 +49,17 @@ xplr.config.modes.builtin.action = {
                     "PopMode",
                 }
             },
+            ["x"] = {
+                help = "open in gui",
+                messages = {
+                    {
+                        BashExec = [===[
+                        xdg-open "${XPLR_FOCUS_PATH:?}"
+                        ]===]
+                    },
+                    "PopMode",
+                }
+            },
             esc = {
                 help = "cancel",
                 messages = {"PopMode"}

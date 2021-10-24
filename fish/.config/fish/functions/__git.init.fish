@@ -6,7 +6,7 @@ function __git.init
     set -a __git_plugin_abbreviations $name
   end
 
-  set -q __git_plugin_initialized; and exit 0
+  set -q __git_plugin_initialized; and return 0
 
   set -U __git_plugin_abbreviations
 
@@ -55,6 +55,7 @@ function __git.init
   __git.create_abbr gdsc       git diff --stat --cached
   __git.create_abbr gdw        git diff --word-diff
   __git.create_abbr gdwc       git diff --word-diff --cached
+  __git.create_abbr gdto       git difftool
   __git.create_abbr gignore    git update-index --assume-unchanged
   __git.create_abbr gf         git fetch
   __git.create_abbr gfa        git fetch --all --prune
@@ -91,12 +92,13 @@ function __git.init
   __git.create_abbr grbmi      git rebase \(__git.default_branch\) --interactive
   __git.create_abbr grbmia     git rebase \(__git.default_branch\) --interactive --autosquash
   __git.create_abbr grbd       git rebase develop
-  __git.create_abbr grbdi      git rebase \(__git.default_branch\) --interactive
-  __git.create_abbr grbdia     git rebase \(__git.default_branch\) --interactive --autosquash
+  __git.create_abbr grbdi      git rebase develop --interactive
+  __git.create_abbr grbdia     git rebase develop --interactive --autosquash
   __git.create_abbr grbs       git rebase --skip
   __git.create_abbr grev       git revert
   __git.create_abbr grh        git reset
   __git.create_abbr grhh       git reset --hard
+  __git.create_abbr grhpa      git reset --patch
   __git.create_abbr grm        git rm
   __git.create_abbr grmc       git rm --cached
   __git.create_abbr grmv       git remote rename
@@ -124,6 +126,9 @@ function __git.init
   __git.create_abbr gswc       git switch --create
   __git.create_abbr gunignore  git update-index --no-assume-unchanged
   __git.create_abbr gup        git pull --rebase
+  __git.create_abbr gupv       git pull --rebase -v
+  __git.create_abbr gupa       git pull --rebase --autostash
+  __git.create_abbr gupav      git pull --rebase --autostash -v
   __git.create_abbr gwch       git whatchanged -p --abbrev-commit --pretty=medium
 
   # git checkout abbreviations

@@ -1,18 +1,3 @@
------- Show hidden
-xplr.config.general.show_hidden = true
-
------- Read only
-xplr.config.general.read_only = false
-
------- Recover mode (deprecated)
--- xplr.config.general.disable_recover_mode = true
-
------- Start FIFO
-xplr.config.general.start_fifo = nil
-
------- Prompt
-xplr.config.general.prompt.format = "❯ "
-
 ------ Cursor
 xplr.config.general.cursor.format = "|"
 
@@ -27,23 +12,6 @@ xplr.config.general.initial_sorting = {
     { sorter = "ByCanonicalIsDir", reverse = true },
     { sorter = "ByIRelativePath", reverse = false },
 }
-
------- Logs
--------- Error
-xplr.config.general.logs.error.format = "ERROR"
-xplr.config.general.logs.error.style.fg = "Red"
-
--------- Info
-xplr.config.general.logs.info.format = "INFO"
-xplr.config.general.logs.info.style.fg = "LightBlue"
-
--------- Success
-xplr.config.general.logs.success.format = "SUCCESS"
-xplr.config.general.logs.success.style.fg = "Green"
-
--------- Warning
-xplr.config.general.logs.warning.format = "WARNING"
-xplr.config.general.logs.warning.style.fg = "Yellow"
 
 ------ Default UI
 xplr.config.general.default_ui.prefix = "  "
@@ -101,12 +69,3 @@ xplr.config.node_types.file.meta.icon = ""
 xplr.config.node_types.symlink.meta.icon = "§"
 xplr.config.node_types.symlink.style.add_modifiers = { "Italic" }
 xplr.config.node_types.symlink.style.fg = "Magenta"
-
------- Mime essence
-xplr.config.node_types.mime_essence = {}
-
------- Extension
-xplr.config.node_types.extension = {}
-
------- Special
-xplr.config.node_types.special = {}

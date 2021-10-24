@@ -8,12 +8,6 @@ W='#bf616aee'  # wrong
 V='#5e81acbb'  # verifying
 L='#4c566aaa'  # inside
 
-revert() {
-  xset dpms 0 0 0
-}
-trap revert HUP INT TERM
-xset +dpms dpms 10 10 10
-
 i3lock \
 -n \
 --redraw-thread \
@@ -54,5 +48,3 @@ i3lock \
 --pass-screen-keys \
 --pass-volume-keys \
 --pass-media-keys
-
-revert

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+files=""
+while read -r line
+do
+    files="$files
+$line"
+done
+
+echo "$files" |\
+sed -E "s/(.*)/\"SelectPath: \1\"/g" |\
+xargs xplr --on-load
