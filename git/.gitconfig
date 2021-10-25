@@ -4,7 +4,6 @@
 [user]
     email = 18gatenmaker6@gmail.com
     name = Tom van Dijk
-    signingkey = 7A984C8207ADBA51
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
@@ -23,8 +22,6 @@
     a = add
     r = rm
     res = restore
-[commit]
-    gpgsign = true
 [sendemail]
     smtpserver = smtp-mail.outlook.com
     smtpuser = 129102@dr.nassaucollege.nl

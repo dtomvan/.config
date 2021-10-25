@@ -26,6 +26,6 @@ bspc desktop='^1' --focus
 
 bspwmbar &
 dunst &
-feh --bg-center ~/Pictures/bg.png &
+feh --bg-fill ~/Pictures/bg.jpg &
 ~/i3lock.sh
 discord --no-sandbox &
