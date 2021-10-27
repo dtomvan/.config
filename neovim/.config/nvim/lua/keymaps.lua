@@ -220,12 +220,12 @@ map(
     "mzJ`zzzzv",
     {noremap = true, silent = true}
 )
-map(
-    "n",
-    'K',
-    '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>',
-    {noremap = true, silent = true}
-)
+-- map(
+--     "n",
+--     'K',
+--     '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>',
+--     {noremap = true, silent = true}
+-- )
 map(
     "n",
     '<C-f>',

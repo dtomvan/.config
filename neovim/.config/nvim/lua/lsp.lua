@@ -94,23 +94,10 @@ cmp.setup {
   },
 }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    'documentation',
-    'detail',
-    'additionalTextEdits',
-  }
-}
-local lsp_opts = {
-    capabilities = capabilities,
-};
 local servers = { "rust_analyzer", "pylsp" }
 vim.schedule(function ()
     for _, lsp in ipairs(servers) do
         nvim_lsp[lsp].setup { 
-            lsp_opts
         }
     end
 end)
