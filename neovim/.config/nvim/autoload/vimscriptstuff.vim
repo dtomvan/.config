@@ -33,3 +33,5 @@ function! OnUIEnter(event)
     endif
 endfunction
 autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
+" prime in twitch thx
+nnoremap J mzJ`z

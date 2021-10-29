@@ -66,6 +66,21 @@
 (setq use-package-always-ensure t)
 
 ;; -- PACKAGES --
+;; --- EVIL MODE ---
+;; (setq evil-want-keybinding nil)
+;; (setq evil-want-C-u-scroll t)
+;; (use-package evil
+;;   :config
+;;   (evil-mode 1))
+;; (use-package evil-collection)
+;; (use-package evil-commentary
+;;   :config
+;;   (evil-commentary-mode 1))
+;; (use-package evil-numbers)
+;; (global-set-key (kbd "C-c +") 'evil-numbers/inc-at-pt)
+;; (global-set-key (kbd "C-c -") 'evil-numbers/dec-at-pt)
+;; (global-set-key (kbd "C-c C-+") 'evil-numbers/inc-at-pt-incremental)
+;; (global-set-key (kbd "C-c C--") 'evil-numbers/dec-at-pt-incremental)
 ;; --- MU ---
 (use-package mu4e
   :straight ( :host github
