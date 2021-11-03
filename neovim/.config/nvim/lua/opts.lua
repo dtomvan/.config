@@ -36,3 +36,4 @@ ops.shortmess = ops.shortmess + "a"
 ops.ignorecase = true
 ops.smartcase = true
 ops.signcolumn = "yes"
+ops.lazyredraw = true

@@ -180,7 +180,12 @@ xplr.config.modes.builtin.default = {
             }
         },
         on_special_character = nil,
-        default = nil
+        default = {
+            messages = {
+                "PopMode",
+                { SwitchModeBuiltin = "recover" },
+            }
+        }
     }
 }
 

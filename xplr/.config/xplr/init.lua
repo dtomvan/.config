@@ -27,3 +27,7 @@ require("completion").setup()
 require("type-to-nav").setup()
 require("zoxide").setup()
 require("dragon").setup()
+require("term").setup()
+require("xclip").setup()
+package.path = package.path .. ";" .. os.getenv("HOME") .. "/projects/?.xplr/src/init.lua"
+require("ouch").setup()

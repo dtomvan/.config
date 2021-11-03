@@ -71,180 +71,229 @@ time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
   LuaSnip = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/LuaSnip"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/LuaSnip",
+    url = "https://github.com/L3MON4D3/LuaSnip"
   },
   ["auto.pairs"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/auto.pairs"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/auto.pairs",
+    url = "https://github.com/Krasjet/auto.pairs"
   },
   ["cmp-nvim-lsp"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
+    url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
   cmp_luasnip = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/cmp_luasnip"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
+    url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
   ["feline.nvim"] = {
     config = { "\27LJ\1\2m\0\0\2\0\a\0\f4\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\3\0%\1\4\0>\0\2\0027\0\5\0003\1\6\0>\0\2\1G\0\1\0\1\0\1\vpreset\vnoicon\nsetup\vfeline\frequire\tload\rnightfox\6R\0" },
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/feline.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/feline.nvim",
+    url = "https://github.com/famiu/feline.nvim"
   },
   firenvim = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/firenvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/firenvim",
+    url = "https://github.com/glacambre/firenvim"
   },
   ["friendly-snippets"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/friendly-snippets"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/friendly-snippets",
+    url = "https://github.com/rafamadriz/friendly-snippets"
   },
   ["gitsigns.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
+    url = "https://github.com/lewis6991/gitsigns.nvim"
+  },
+  harpoon = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/harpoon",
+    url = "https://github.com/ThePrimeagen/harpoon"
   },
   ["lsp_extensions.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lsp_extensions.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lsp_extensions.nvim",
+    url = "https://github.com/nvim-lua/lsp_extensions.nvim"
   },
   ["lspkind-nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lspkind-nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lspkind-nvim",
+    url = "https://github.com/onsails/lspkind-nvim"
   },
   ["lspsaga.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lspsaga.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lspsaga.nvim",
+    url = "https://github.com/glepnir/lspsaga.nvim"
   },
   ["mom.vim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/mom.vim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/mom.vim",
+    url = "https://github.com/vim-scripts/mom.vim"
   },
   ["nightfox.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nightfox.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nightfox.nvim",
+    url = "https://github.com/EdenEast/nightfox.nvim"
   },
   ["nlua.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nlua.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nlua.nvim",
+    url = "https://github.com/tjdevries/nlua.nvim"
   },
   ["nui.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nui.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nui.nvim",
+    url = "https://github.com/MunifTanjim/nui.nvim"
   },
   ["nvim-cmp"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-cmp"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-cmp",
+    url = "https://github.com/hrsh7th/nvim-cmp"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
+    url = "https://github.com/neovim/nvim-lspconfig"
   },
   ["nvim-treesitter"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
+    url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
   ["packer.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/packer.nvim",
+    url = "https://github.com/wbthomason/packer.nvim"
   },
   ["plenary.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/plenary.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/plenary.nvim",
+    url = "https://github.com/nvim-lua/plenary.nvim"
   },
   ["popup.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/popup.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/popup.nvim",
+    url = "https://github.com/nvim-lua/popup.nvim"
   },
   ["presence.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/presence.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/presence.nvim",
+    url = "https://github.com/andweeb/presence.nvim"
+  },
+  ["quickfix-reflector.vim"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/quickfix-reflector.vim",
+    url = "https://github.com/stefandtw/quickfix-reflector.vim"
   },
   ["refactoring.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/refactoring.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/refactoring.nvim",
+    url = "https://github.com/ThePrimeagen/refactoring.nvim"
   },
   ["registers.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/registers.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/registers.nvim",
+    url = "https://github.com/tversteeg/registers.nvim"
   },
   ["ron.vim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/ron.vim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/ron.vim",
+    url = "https://github.com/ron-rs/ron.vim"
   },
   ["rust-tools.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/rust-tools.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
+    url = "https://github.com/simrat39/rust-tools.nvim"
   },
   ["rust.vim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/rust.vim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/rust.vim",
+    url = "https://github.com/rust-lang/rust.vim"
   },
   ["startuptime.vim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/startuptime.vim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/startuptime.vim",
+    url = "https://github.com/tweekmonster/startuptime.vim"
   },
   ["telescope-fzy-native.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim",
+    url = "https://github.com/nvim-telescope/telescope-fzy-native.nvim"
   },
   ["telescope-project.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/telescope-project.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/telescope-project.nvim",
+    url = "https://github.com/nvim-telescope/telescope-project.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/telescope.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+    url = "https://github.com/nvim-telescope/telescope.nvim"
   },
   ["vim-closer"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-closer"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-closer",
+    url = "https://github.com/rstacruz/vim-closer"
   },
   ["vim-commentary"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-commentary"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-commentary",
+    url = "https://github.com/tpope/vim-commentary"
   },
   ["vim-easy-align"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-easy-align"
-  },
-  ["vim-easymotion"] = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-easymotion"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-easy-align",
+    url = "https://github.com/junegunn/vim-easy-align"
   },
   ["vim-fugitive"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-fugitive"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    url = "https://github.com/tpope/vim-fugitive"
   },
   ["vim-git"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-git"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-git",
+    url = "https://github.com/tpope/vim-git"
   },
   ["vim-matchup"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-matchup"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-matchup",
+    url = "https://github.com/andymass/vim-matchup"
   },
   ["vim-surround"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-surround"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-surround",
+    url = "https://github.com/tpope/vim-surround"
   },
   ["vim-tabpagecd"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-tabpagecd"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-tabpagecd",
+    url = "https://github.com/kana/vim-tabpagecd"
   },
   ["vim-toml"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-toml"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-toml",
+    url = "https://github.com/cespare/vim-toml"
   },
   ["vim-transpose-words"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-transpose-words"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/vim-transpose-words",
+    url = "https://github.com/Raimondi/vim-transpose-words"
   },
   ["xplr.nvim"] = {
     loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/xplr.nvim"
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/xplr.nvim",
+    url = "https://github.com/fhill2/xplr.nvim"
   }
 }
 

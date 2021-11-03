@@ -33,5 +33,28 @@ function! OnUIEnter(event)
     endif
 endfunction
 autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
-" prime in twitch thx
+
 nnoremap J mzJ`z
+nnoremap <silent> <leader>j :cnext<CR>zz
+nnoremap <silent> <leader>k :cprev<CR>zz
+" nnoremap <silent> <leader>j :lnext<CR>zz
+" nnoremap <silent> <leader>k :lprev<CR>zz
+nnoremap <silent> \a :lua require("harpoon.mark").add_file()<CR>
+nnoremap <silent> <F1> :lua require("harpoon.ui").toggle_quick_menu()<CR>
+nnoremap <silent> <C-Space> :lua require("harpoon.ui").nav_file(1)<CR>
+nnoremap <silent> <C-c> :lua require("harpoon.ui").nav_file(2)<CR>
+nnoremap <silent> <C-y> :lua require("harpoon.ui").nav_file(3)<CR>
+nnoremap <silent> <C-h> :lua require("harpoon.ui").nav_file(4)<CR>
+nnoremap <leader>x :silent !chmod +x %<CR>
+nnoremap <silent> <leader>n :noh<cr>
+nnoremap <leader>s :so %<cr>
+
+vnoremap <silent> J :m '>+1<CR>gv=gv
+vnoremap <silent> K :m '<-2<CR>gv=gv
+
+nnoremap Y yg$
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
+nnoremap { {zzzv
+nnoremap } }zzzv

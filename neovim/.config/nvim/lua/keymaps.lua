@@ -92,7 +92,7 @@ map('n',
 )
 map('n',
     '<Space>cc',
-    ":vs term://cargo check<CR>10<C-w>>",
+    ":vs term://cargo clippy<CR>10<C-w>>",
     {noremap = false, silent = false}
 )
 map('n',
@@ -149,11 +149,6 @@ map('n',
     '<C-p>',
     "<cmd>lua R('telescopepickers').grep()<cr>",
     {noremap = true, silent = true}
-)
-map('n',
-    '\\',
-    "<Plug>(easymotion-prefix)",
-    {noremap = false, silent = true}
 )
 map('n',
     '<Space><CR>',

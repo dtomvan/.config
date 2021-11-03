@@ -21,20 +21,20 @@ xplr.config.modes.builtin.go_to = {
                 messages = {"FocusFirst", "PopMode"}
             },
             ["x"] = {
-                help = "open in vim",
+                help = "open in gui",
                 messages = {
                     {
                         BashExec = [===[
-                                nvim "${XPLR_FOCUS_PATH:?}"
-                                ]===]
-                            },
-                            "PopMode",
-                        }
-                    }
-                },
-                on_alphabet = nil,
-                on_number = nil,
-                on_special_character = nil,
-                default = nil
-            }
-        }
+                        devour xdg-open "${XPLR_FOCUS_PATH:?}" || xdg-open "${XPLR_FOCUS_PATH:?}"
+                        ]===]
+                    },
+                    "PopMode",
+                }
+            },
+        },
+        on_alphabet = nil,
+        on_number = nil,
+        on_special_character = nil,
+        default = nil
+    }
+}

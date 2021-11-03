@@ -32,3 +32,5 @@
     smtpserverport = 587
 [diff]
 	tool = nvimdiff
+[format]
+	pretty = fuller
