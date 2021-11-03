@@ -2,7 +2,7 @@
  * @name BDFDB
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 1.9.4
+ * @version 1.9.7
  * @description Required Library for DevilBro's Plugins
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -19,7 +19,7 @@ module.exports = (_ => {
 		"info": {
 			"name": "BDFDB",
 			"author": "DevilBro",
-			"version": "1.9.4",
+			"version": "1.9.7",
 			"description": "Required Library for DevilBro's Plugins"
 		},
 		"rawUrl": `https://mwittrien.github.io/BetterDiscordAddons/Library/0BDFDB.plugin.js`
@@ -2100,13 +2100,19 @@ module.exports = (_ => {
 				if (typeof plugin[`process${type}`] == "function") {
 					if (typeof e.methodname == "string" && (e.methodname.indexOf("componentDid") == 0 || e.methodname.indexOf("componentWill") == 0)) {
 						e.node = BDFDB.ReactUtils.findDOMNode(e.instance);
-						if (e.node) return plugin[`process${type}`](e);
+						if (e.node) {
+							let tempReturn = plugin[`process${type}`](e);
+							return tempReturn !== undefined ? tempReturn : e.returnvalue;
+						}
 						else BDFDB.TimeUtils.timeout(_ => {
 							e.node = BDFDB.ReactUtils.findDOMNode(e.instance);
-							if (e.node) return plugin[`process${type}`](e);
+							if (e.node) plugin[`process${type}`](e);
 						});
 					}
-					else if (e.returnvalue || e.patchtypes.includes("before")) return plugin[`process${type}`](e);
+					else if (e.returnvalue || e.patchtypes.includes("before")) {
+						let tempReturn = plugin[`process${type}`](e);
+						return tempReturn !== undefined ? tempReturn : e.returnvalue;
+					}
 				}
 			}
 		};
@@ -2225,10 +2231,12 @@ module.exports = (_ => {
 			}
 			else {
 				let unmappedType = type.split(" _ _ ")[1] || type;
-				ins = BDFDB.ReactUtils.findConstructor(ins, unmappedType) || BDFDB.ReactUtils.findConstructor(ins, unmappedType, {up: true}) || ins;
-				InternalBDFDB.patchComponent(pluginDataObjs, ins, type, config);
-				BDFDB.PatchUtils.forceAllUpdates(pluginDataObjs.map(n => n.plugin), type);
-				return true;
+				let constructor = BDFDB.ReactUtils.findConstructor(ins, unmappedType) || BDFDB.ReactUtils.findConstructor(ins, unmappedType, {up: true});
+				if (constructor) {
+					InternalBDFDB.patchComponent(pluginDataObjs, constructor, type, config);
+					BDFDB.PatchUtils.forceAllUpdates(pluginDataObjs.map(n => n.plugin), type);
+					return true;
+				}
 			}
 			return false;
 		};
@@ -2489,6 +2497,9 @@ module.exports = (_ => {
 		if (LibraryModules.KeyCodeUtils) LibraryModules.KeyCodeUtils.getString = function (keyArray) {
 			return LibraryModules.KeyCodeUtils.toString([keyArray].flat(10).filter(n => n).map(keyCode => [BDFDB.DiscordConstants.KeyboardDeviceTypes.KEYBOARD_KEY, LibraryModules.KeyCodeUtils.keyToCode((Object.entries(LibraryModules.KeyEvents.codes).find(n => n[1] == keyCode && LibraryModules.KeyCodeUtils.keyToCode(n[0], null)) || [])[0], null) || keyCode]), true);
 		};
+		
+		LibraryModules.LanguageStore = BDFDB.ModuleUtils.find(m => m.Messages && m.Messages.IMAGE && m);
+		
 		BDFDB.LibraryModules = Object.assign({}, LibraryModules);
 		
 		LibraryModules.React = BDFDB.ModuleUtils.findByProperties("createElement", "cloneElement");
@@ -6163,7 +6174,7 @@ module.exports = (_ => {
 			}
 			componentDidMount() {
 				let node = BDFDB.ReactUtils.findDOMNode(this);
-				if (node) for (let child of node.querySelectorAll("a")) child.setAttribute("draggable", false);
+				if (node && node.nodeType != Node.TEXT_NODE) for (let child of node.querySelectorAll("a")) child.setAttribute("draggable", false);
 			}
 			render() {
 				if (!this.props.guild) return null;
@@ -6196,7 +6207,7 @@ module.exports = (_ => {
 					className: BDFDB.disCN.guildcontainer,
 					children: BDFDB.ReactUtils.createElement(InternalComponents.LibraryComponents.GuildComponents.BlobMask, {
 						selected: this.state.isDropHovering || this.props.selected || this.state.hovered,
-						upperBadge: this.props.unavailable ? LibraryModules.GuildBadgeUtils.renderUnavailableBadge() : LibraryModules.GuildBadgeUtils.renderIconBadge(BDFDB.ObjectUtils.extract(this.props, "audio", "video", "screenshare", "liveStage", "hasLiveVoiceChannel", "participating", "participatingInStage")),
+						upperBadge: this.props.unavailable ? LibraryModules.GuildBadgeUtils.renderUnavailableBadge() : LibraryModules.GuildBadgeUtils.renderMediaBadge(BDFDB.ObjectUtils.extract(this.props, "audio", "video", "screenshare", "liveStage", "hasLiveVoiceChannel", "participating", "participatingInStage")),
 						lowerBadge: this.props.badge > 0 ? LibraryModules.GuildBadgeUtils.renderMentionBadge(this.props.badge) : null,
 						lowerBadgeWidth: InternalComponents.LibraryComponents.Badges.getBadgeWidthForValue(this.props.badge),
 						children: BDFDB.ReactUtils.createElement(InternalComponents.LibraryComponents.NavItem, {
@@ -6222,8 +6233,6 @@ module.exports = (_ => {
 						})
 					})
 				});
-					
-				if (this.props.draggable && typeof this.props.connectDragSource == "function") guild = this.props.connectDragSource(guild);
 				
 				let children = [
 					this.props.list || this.props.pill ? BDFDB.ReactUtils.createElement(InternalComponents.LibraryComponents.GuildComponents.Pill, {
@@ -7885,6 +7894,7 @@ module.exports = (_ => {
 		
 		InternalBDFDB.patchedModules = {
 			before: {
+				EmojiPicker: "type",
 				EmojiPickerListRow: "default"
 			},
 			after: {
@@ -8031,6 +8041,9 @@ module.exports = (_ => {
 		};
 		InternalBDFDB.processDiscordTag = function (e) {
 			if (e.instance && e.instance.props && e.returnvalue && e.instance.props.user) e.returnvalue.props.user = e.instance.props.user;
+		};
+		InternalBDFDB.processEmojiPicker = function (e) {
+			if (BDFDB.ObjectUtils.toArray(PluginStores.loaded).filter(p => p.started).some(p => p.onSystemMessageOptionContextMenu || p.onSystemMessageOptionToolbar || p.onMessageOptionContextMenu || p.onMessageOptionToolbar)) e.instance.props.persistSearch = true;
 		};
 		InternalBDFDB.processEmojiPickerListRow = function (e) {
 			if (e.instance.props.emojiDescriptors && InternalComponents.LibraryComponents.EmojiPickerButton.current && InternalComponents.LibraryComponents.EmojiPickerButton.current.props && InternalComponents.LibraryComponents.EmojiPickerButton.current.props.allowManagedEmojisUsage) for (let i in e.instance.props.emojiDescriptors) e.instance.props.emojiDescriptors[i] = Object.assign({}, e.instance.props.emojiDescriptors[i], {isDisabled: false});

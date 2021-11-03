@@ -9,4 +9,4 @@ done
 
 echo "$files" |\
 sed -E "s/(.*)/\"SelectPath: \1\"/g" |\
-xargs xplr --on-load
+xargs xplr $@ --on-load

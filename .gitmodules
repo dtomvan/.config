@@ -40,3 +40,9 @@
 [submodule "xplr/.config/xplr/plugins/map"]
 	path = xplr/.config/xplr/plugins/map
 	url = https://github.com/sayanarijit/map.xplr
+[submodule "xplr/.config/xplr/plugins/term"]
+	path = xplr/.config/xplr/plugins/term
+	url = https://github.com/igorepst/term.xplr
+[submodule "xplr/.config/xplr/plugins/xclip"]
+	path = xplr/.config/xplr/plugins/xclip
+	url = https://github.com/sayanarijit/xclip.xplr

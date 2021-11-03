@@ -5,8 +5,8 @@ require('packer').startup(function()
     use 'tpope/vim-commentary'
     use 'tpope/vim-surround'
     use 'andymass/vim-matchup'
-    use 'easymotion/vim-easymotion'
     use 'andweeb/presence.nvim'
+    use 'stefandtw/quickfix-reflector.vim'
     use 'tweekmonster/startuptime.vim'
     use 'EdenEast/nightfox.nvim'
     -- use {
@@ -75,4 +75,5 @@ require('packer').startup(function()
         'glacambre/firenvim',
         run = function() vim.fn['firenvim#install'](0) end 
     }
+    use 'ThePrimeagen/harpoon'
 end)

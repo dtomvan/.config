@@ -15,7 +15,7 @@
     "ThemeSettings": true,
     "KeywordTracker": false,
     "SubtleDevicePrompt": true,
-    "AssignBadges": true,
+    "AssignBadges": false,
     "ChatAliases": true,
     "ChannelTabs": false,
     "CollapsibleUI": false,
@@ -31,5 +31,6 @@
     "PinIcon": true,
     "PersonalPins": true,
     "undefined": false,
-    "EditRoles": true
+    "EditRoles": true,
+    "AccountDetailsPlus": true
 }

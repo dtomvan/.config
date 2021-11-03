@@ -45,6 +45,7 @@ xautolock -locker ./i3lock.sh -nowlocker ./i3lock.sh &
 ckb-next -b &
 emacs --daemon &
 volctl &
+keynav &
 picom --backend glx --xrender-sync-fence &
 clipmenud &
 ~/.local/bin/bspwm-start
