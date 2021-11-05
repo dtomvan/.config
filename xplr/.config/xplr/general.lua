@@ -1,5 +1,6 @@
 ------ Cursor
-xplr.config.general.cursor.format = "|"
+-- Deprecated :(
+-- xplr.config.general.cursor.format = "|"
 
 ------ Initial layout
 xplr.config.general.initial_layout = "default"
