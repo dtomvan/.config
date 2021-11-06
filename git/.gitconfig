@@ -25,6 +25,7 @@
     res = restore
 [commit]
     gpgsign = true
+    template = ~/.gitmessage
 [sendemail]
     smtpserver = smtp-mail.outlook.com
     smtpuser = 129102@dr.nassaucollege.nl
