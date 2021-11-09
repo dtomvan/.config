@@ -36,17 +36,20 @@
 			"status": "I am an idiot and cruhbridge sucks",
 			"tag": "shitass",
 			"url": "https://i.kym-cdn.com/entries/icons/original/000/036/252/WideHardo_Banner.jpg",
-			"useServerNick": true
+			"useServerNick": false
 		},
 		"570954753605894144": {
 			"name": "koen",
-			"showServerNick": true,
+			"showServerNick": false,
 			"status": "Definitely online and working on cruhbridge",
 			"tag": "",
-			"useServerNick": false
+			"useServerNick": true
 		},
 		"673600831601508352": {
-			"name": "tom"
+			"name": "tom",
+			"showAccountName": false,
+			"showServerNick": false,
+			"useServerNick": true
 		},
 		"549334475520344094": {
 			"name": "Robin",
@@ -65,6 +68,15 @@
 		"234395307759108106": {
 			"name": "KUT",
 			"tag": "DING"
+		},
+		"689118714750435388": {
+			"name": "jepser"
+		},
+		"282859044593598464": {
+			"name": "kutbot"
+		},
+		"557105752607555594": {
+			"name": "wiebe"
 		}
 	}
 }

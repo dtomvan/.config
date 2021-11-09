@@ -29,18 +29,10 @@ bspc desktop='^1' --focus
 BORDER_WIDTH=$(bspc config border_width)
 FLOATING_BORDER_WIDTH=0
 
-bspc subscribe node_state | while read msg monitor desktop wid state value ; do
-if [ $state = "floating" ] ; then
-    if [ $value = "on" ] ; then
-        bspc config -n $wid border_width $FLOATING_BORDER_WIDTH
-    else
-        bspc config -n $wid border_width $BORDER_WIDTH 
-    fi
-fi
-done
+~/.config/bspwm/bspfloatborder.sh &
 
-~/i3lock.sh &
+feh --bg-center ~/Pictures/bg.png
+~/i3lock.sh
 bspwmbar &
 dunst &
-feh --bg-center ~/Pictures/bg.png &
 discord --no-sandbox &
