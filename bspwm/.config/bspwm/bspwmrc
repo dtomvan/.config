@@ -36,3 +36,4 @@ feh --bg-center ~/Pictures/bg.png
 bspwmbar &
 dunst &
 discord --no-sandbox &
+volctl &

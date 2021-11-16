@@ -2,7 +2,7 @@
  * @name EditUsers
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 4.4.2
+ * @version 4.4.4
  * @description Allows you to locally edit Users
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -17,14 +17,8 @@ module.exports = (_ => {
 		"info": {
 			"name": "EditUsers",
 			"author": "DevilBro",
-			"version": "4.4.2",
+			"version": "4.4.4",
 			"description": "Allows you to locally edit Users"
-		},
-		"changeLog": {
-			"added": {
-				"Show Accountname": "Similar to 'Show Nickname' you can now enable 'Show Name' which will always show the account name of a user in '()', 'Show Nickname' has a higher priority than 'Show Name'",
-				"Stream Preview": "Participants are also affected now"
-			}
 		}
 	};
 
@@ -116,6 +110,7 @@ module.exports = (_ => {
 						HeaderBarContainer: "render",
 						ChannelEditorContainer: "render",
 						AutocompleteUserResult: "render",
+						UserBanner: "default",
 						UserPopoutInfo: "UserPopoutInfo",
 						UserProfileModal: "default",
 						UserProfileModalHeader: "default",
@@ -274,6 +269,15 @@ module.exports = (_ => {
 					if (user) {
 						if (user.id == "278543574059057154") return user.banner;
 						let data = changedUsers[user.id];
+						if (data && data.banner && !data.removeBanner) return data.banner;
+					}
+					return e.callOriginalMethod();
+				}});
+				
+				BDFDB.PatchUtils.patch(this, BDFDB.LibraryModules.BannerUtils, "getUserBannerURLForContext", {instead: e => {
+					if (e.methodArguments[0].user) {
+						if (e.methodArguments[0].user.id == "278543574059057154") return e.methodArguments[0].user.banner;
+						let data = changedUsers[e.methodArguments[0].user.id];
 						if (data && data.banner && !data.removeBanner) return data.banner;
 					}
 					return e.callOriginalMethod();
@@ -537,7 +541,7 @@ module.exports = (_ => {
 			processUserPopoutContainer (e) {
 				if (e.returnvalue.props.user && this.settings.places.userPopout && changedUsers[e.returnvalue.props.user.id]) e.returnvalue.props.user = this.getUserData(e.returnvalue.props.user.id, true, true);
 			}
-
+			
 			processUserPopoutInfo (e) {
 				if (e.instance.props.user && this.settings.places.userPopout) {
 					let data = changedUsers[e.instance.props.user.id];
@@ -1063,7 +1067,7 @@ module.exports = (_ => {
 					}
 				}
 			}
-
+			
 			processPrivateChannel (e) {
 				if (e.instance.props.user && this.settings.places.dmsList && changedUsers[e.instance.props.user.id]) {
 					if (!e.returnvalue) {
@@ -1075,13 +1079,25 @@ module.exports = (_ => {
 						}
 					}
 					else {
-						e.returnvalue.props.name = BDFDB.ReactUtils.createElement("span", {children: this.getUserData(e.instance.props.user.id).username});
-						this.changeUserColor(e.returnvalue.props.name, e.instance.props.user.id, {modify: BDFDB.ObjectUtils.extract(Object.assign({}, e.instance.props, e.instance.state), "hovered", "selected", "hasUnreadMessages", "muted")});
-						e.returnvalue.props.avatar.props.src = this.getUserAvatar(e.instance.props.user.id);
-						e.returnvalue.props.decorators = [e.returnvalue.props.decorators].flat(10);
-						this.injectBadge(e.returnvalue.props.decorators, e.instance.props.user.id, null, 1);
+						if (typeof e.returnvalue.props.children == "function") {
+							let childrenRender = e.returnvalue.props.children;
+							e.returnvalue.props.children = BDFDB.TimeUtils.suppress((...args) => {
+								let children = childrenRender(...args);
+								this._processPrivateChannel(e.instance, children);
+								return children;
+							}, "", this);
+						}
+						else this._processPrivateChannel(e.instance, e.returnvalue);
 					}
 				}
+			}
+
+			_processPrivateChannel (instance, returnvalue) {
+				returnvalue.props.name = BDFDB.ReactUtils.createElement("span", {children: this.getUserData(instance.props.user.id).username});
+				this.changeUserColor(returnvalue.props.name, instance.props.user.id, {modify: BDFDB.ObjectUtils.extract(Object.assign({}, instance.props, instance.state), "hovered", "selected", "hasUnreadMessages", "muted")});
+				returnvalue.props.avatar.props.src = this.getUserAvatar(instance.props.user.id);
+				returnvalue.props.decorators = [returnvalue.props.decorators].flat(10);
+				this.injectBadge(returnvalue.props.decorators, instance.props.user.id, null, 1);
 			}
 
 			processQuickSwitchUserResult (e) {
@@ -1284,23 +1300,27 @@ module.exports = (_ => {
 					if (data.removeIcon) {
 						newUserObject.avatar = null;
 						newUserObject.avatarURL = null;
+						newUserObject.getAvatarSource = _ => null;
 						newUserObject.getAvatarURL = _ => null;
 						newUserObject.guildMemberAvatars = {};
 					}
 					else if (data.url) {
 						newUserObject.avatar = data.url;
 						newUserObject.avatarURL = data.url;
+						newUserObject.getAvatarSource = _ => data.url;
 						newUserObject.getAvatarURL = _ => data.url;
 						newUserObject.guildMemberAvatars = {};
 					}
 					if (data.removeBanner) {
 						newUserObject.banner = null;
 						newUserObject.bannerURL = null;
+						newUserObject.getBannerSource = _ => null;
 						newUserObject.getBannerURL = _ => null;
 					}
 					else if (data.banner) {
 						newUserObject.banner = data.banner;
 						newUserObject.bannerURL = data.banner;
+						newUserObject.getBannerSource = _ => data.banner;
 						newUserObject.getBannerURL = _ => data.banner;
 					}
 					return newUserObject;

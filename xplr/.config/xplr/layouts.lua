@@ -3,7 +3,7 @@
 xplr.config.layouts.builtin.default = {
     Horizontal = {
         config = {
-            margin = nil,
+            margin = 0,
             horizontal_margin = 0,
             vertical_margin = 0,
             constraints = {

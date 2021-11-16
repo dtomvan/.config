@@ -46,3 +46,6 @@
 [submodule "xplr/.config/xplr/plugins/xclip"]
 	path = xplr/.config/xplr/plugins/xclip
 	url = https://github.com/sayanarijit/xclip.xplr
+[submodule "xplr/.config/xplr/plugins/context-switch"]
+	path = xplr/.config/xplr/plugins/context-switch
+	url = https://github.com/igorepst/context-switch.xplr

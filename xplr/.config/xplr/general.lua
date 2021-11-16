@@ -8,6 +8,9 @@ xplr.config.general.initial_layout = "default"
 ------ Initial mode
 xplr.config.general.initial_mode = "default"
 
+------ Hide remaps in help menu
+xplr.config.general.help_hide_remaps = true
+
 ------ Initial sorting
 xplr.config.general.initial_sorting = {
     { sorter = "ByCanonicalIsDir", reverse = true },
@@ -15,20 +18,20 @@ xplr.config.general.initial_sorting = {
 }
 
 ------ Default UI
-xplr.config.general.default_ui.prefix = "  "
+xplr.config.general.default_ui.prefix = " "
 xplr.config.general.default_ui.suffix = ""
 
 ------ Focus UI
-xplr.config.general.focus_ui.prefix = "▸["
-xplr.config.general.focus_ui.suffix = "]"
+xplr.config.general.focus_ui.prefix = "▸"
+xplr.config.general.focus_ui.suffix = ""
 xplr.config.general.focus_ui.style.add_modifiers = { "Bold" }
-xplr.config.general.focus_ui.style.fg = "Blue"
+xplr.config.general.focus_ui.style.fg = "Yellow"
 
 ------ Selection UI
-xplr.config.general.selection_ui.prefix = " {"
-xplr.config.general.selection_ui.suffix = "}"
+xplr.config.general.selection_ui.prefix = " "
+xplr.config.general.selection_ui.suffix = ""
 xplr.config.general.selection_ui.style.add_modifiers = { "Bold" }
-xplr.config.general.selection_ui.style.fg = "LightGreen"
+xplr.config.general.selection_ui.style.fg = "Green"
 
 ------ Sort & filter UI
 -------- Separator
@@ -70,3 +73,8 @@ xplr.config.node_types.file.meta.icon = ""
 xplr.config.node_types.symlink.meta.icon = "§"
 xplr.config.node_types.symlink.style.add_modifiers = { "Italic" }
 xplr.config.node_types.symlink.style.fg = "Magenta"
+
+------ Panel UI
+xplr.config.general.panel_ui.default.borders = {
+    "Bottom",
+}

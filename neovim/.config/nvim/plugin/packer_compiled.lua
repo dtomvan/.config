@@ -90,7 +90,7 @@ _G.packer_plugins = {
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
   ["feline.nvim"] = {
-    config = { "\27LJ\1\2Ä\1\0\0\2\0\r\0\0194\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\4\0%\1\6\0:\1\5\0004\0\0\0007\0\a\0%\1\b\0>\0\2\0014\0\t\0%\1\n\0>\0\2\0027\0\v\0003\1\f\0>\0\2\1G\0\1\0\1\0\1\vpreset\vnoicon\nsetup\vfeline\frequire\24colorscheme gruvbox\bcmd\thard\26gruvbox_contrast_dark\6g\tdark\15background\6o\bvim\0" },
+    config = { "\27LJ\1\2í\1\0\0\2\0\14\0\0234\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\4\0%\1\6\0:\1\5\0004\0\0\0007\0\4\0'\1\0\0:\1\a\0004\0\0\0007\0\b\0%\1\t\0>\0\2\0014\0\n\0%\1\v\0>\0\2\0027\0\f\0003\1\r\0>\0\2\1G\0\1\0\1\0\1\vpreset\vnoicon\nsetup\vfeline\frequire\24colorscheme gruvbox\bcmd\29gruvbox_invert_selection\thard\26gruvbox_contrast_dark\6g\tdark\15background\6o\bvim\0" },
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/feline.nvim",
     url = "https://github.com/famiu/feline.nvim"
@@ -119,6 +119,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/harpoon",
     url = "https://github.com/ThePrimeagen/harpoon"
+  },
+  ["lightspeed.nvim"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lightspeed.nvim",
+    url = "https://github.com/ggandor/lightspeed.nvim"
   },
   ["lsp_extensions.nvim"] = {
     loaded = true,
@@ -149,6 +154,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
+  },
+  ["nvim-lsp-installer"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer",
+    url = "https://github.com/williamboman/nvim-lsp-installer"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -280,7 +290,7 @@ _G.packer_plugins = {
 time([[Defining packer_plugins]], false)
 -- Config for: feline.nvim
 time([[Config for feline.nvim]], true)
-try_loadstring("\27LJ\1\2Ä\1\0\0\2\0\r\0\0194\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\4\0%\1\6\0:\1\5\0004\0\0\0007\0\a\0%\1\b\0>\0\2\0014\0\t\0%\1\n\0>\0\2\0027\0\v\0003\1\f\0>\0\2\1G\0\1\0\1\0\1\vpreset\vnoicon\nsetup\vfeline\frequire\24colorscheme gruvbox\bcmd\thard\26gruvbox_contrast_dark\6g\tdark\15background\6o\bvim\0", "config", "feline.nvim")
+try_loadstring("\27LJ\1\2í\1\0\0\2\0\14\0\0234\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\4\0%\1\6\0:\1\5\0004\0\0\0007\0\4\0'\1\0\0:\1\a\0004\0\0\0007\0\b\0%\1\t\0>\0\2\0014\0\n\0%\1\v\0>\0\2\0027\0\f\0003\1\r\0>\0\2\1G\0\1\0\1\0\1\vpreset\vnoicon\nsetup\vfeline\frequire\24colorscheme gruvbox\bcmd\29gruvbox_invert_selection\thard\26gruvbox_contrast_dark\6g\tdark\15background\6o\bvim\0", "config", "feline.nvim")
 time([[Config for feline.nvim]], false)
 if should_profile then save_profiles() end
 

@@ -1,6 +1,6 @@
 -- Lsp trick
 xplr = xplr
-version = "0.15.0"
+version = "0.16.3"
 
 package.path = os.getenv("HOME") .. '/.config/xplr/plugins/?/src/init.lua'
 package.path = package.path .. ";" .. os.getenv("HOME") .. '/.config/xplr/?.lua'
@@ -29,5 +29,6 @@ require("zoxide").setup()
 require("dragon").setup()
 require("term").setup()
 require("xclip").setup()
+require("context-switch").setup()
 package.path = package.path .. ";" .. os.getenv("HOME") .. "/projects/?.xplr/src/init.lua"
 require("ouch").setup()

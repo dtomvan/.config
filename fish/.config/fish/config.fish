@@ -16,7 +16,7 @@ abbr g git
 abbr pf '~/venv/bin/nvr -c ":Clap filer"';
 abbr tovim "~/venv/bin/nvr -c \"cd \"(pwd)";
 abbr t tmux
-abbr x xplr
+abbr x 'xplr';
 abbr zel zellij
 alias dir=broot;
 alias e=nvim;

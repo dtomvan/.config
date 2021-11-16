@@ -15,6 +15,7 @@ require('packer').startup(function()
         config = function () 
             vim.o.background = "dark"
             vim.g.gruvbox_contrast_dark = "hard"
+            vim.g.gruvbox_invert_selection = 0
             vim.cmd([[colorscheme gruvbox]])
 
             require('feline').setup({
@@ -70,4 +71,6 @@ require('packer').startup(function()
     use 'stefandtw/quickfix-reflector.vim'
     use 'nvim-lua/popup.nvim'
     use "nvim-lua/plenary.nvim"
+    use 'williamboman/nvim-lsp-installer'
+    use 'ggandor/lightspeed.nvim'
 end)

@@ -58,3 +58,4 @@ nnoremap N Nzzzv
 nnoremap J mzJ`z
 nnoremap { {zzzv
 nnoremap } }zzzv
+autocmd BufEnter *.hs nnoremap <leader>sb :!stack build<cr>

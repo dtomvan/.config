@@ -42,11 +42,11 @@ wmname LG3D
 xsetroot -cursor_name left_ptr
 xbindkeys
 picom --experimental-backends --xrender-sync-fence --backend glx --resize-damage 1 &
-xautolock -locker ./i3lock.sh -nowlocker ./i3lock.sh &
+xautolock -locker "systemctl suspend" -nowlocker ./i3lock.sh &
 ckb-next -b &
 emacs --daemon &
 playerctld daemon &
 keynav &
-volctl &
+echo "RUNNING VOLCTL" && sleep 1 && volctl &
 clipmenud &
-~/.local/bin/bspwm-start
+~/.local/bin/xmonad-start
