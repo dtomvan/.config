@@ -17,10 +17,10 @@ let g:coq_settings = { 'auto_start': 'shut-up', 'keymap.recommended': v:true, 'k
 nnoremap <silent> <M-p> :call TransposeWords()<cr>
 
 " move line(s) up/down
-nnoremap <silent> <leader>k :m-2<CR>==
-nnoremap <silent> <leader>j :m+<CR>==
-vnoremap <silent> <leader>k :m-2<CR>gv=gv
-vnoremap <silent> <leader>j :m'>+<CR>gv=gv
+nno <silent> <leader>k :m-2<CR>==
+nno <silent> <leader>j :m+<CR>==
+vno <silent> <leader>k :m-2<CR>gv=gv
+vno <silent> <leader>j :m'>+<CR>gv=gv
 function! OnUIEnter(event)
     let l:ui = nvim_get_chan_info(a:event.chan)
     if has_key(l:ui, 'client') && has_key(l:ui.client, 'name')
@@ -34,28 +34,34 @@ function! OnUIEnter(event)
 endfunction
 autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
 
-nnoremap J mzJ`z
-nnoremap <silent> <leader>j :cnext<CR>zz
-nnoremap <silent> <leader>k :cprev<CR>zz
+nno J mzJ`z
+nno <silent> <leader>j :cnext<CR>zz
+nno <silent> <leader>k :cprev<CR>zz
 " nnoremap <silent> <leader>j :lnext<CR>zz
 " nnoremap <silent> <leader>k :lprev<CR>zz
-nnoremap <silent> \a :lua require("harpoon.mark").add_file()<CR>
-nnoremap <silent> <F1> :lua require("harpoon.ui").toggle_quick_menu()<CR>
-nnoremap <silent> <C-Space> :lua require("harpoon.ui").nav_file(1)<CR>
-nnoremap <silent> <C-c> :lua require("harpoon.ui").nav_file(2)<CR>
-nnoremap <silent> <C-y> :lua require("harpoon.ui").nav_file(3)<CR>
-nnoremap <silent> <C-h> :lua require("harpoon.ui").nav_file(4)<CR>
-nnoremap <leader>x :silent !chmod +x %<CR>
-nnoremap <silent> <leader>n :noh<cr>
-nnoremap <leader>s :so %<cr>
+nno <silent> \a :lua require("harpoon.mark").add_file()<CR>
+nno <silent> <F1> :lua require("harpoon.ui").toggle_quick_menu()<CR>
+nno <silent> <C-Space> :lua require("harpoon.ui").nav_file(1)<CR>
+nno <silent> <C-c> :lua require("harpoon.ui").nav_file(2)<CR>
+nno <silent> <C-y> :lua require("harpoon.ui").nav_file(3)<CR>
+nno <silent> <C-h> :lua require("harpoon.ui").nav_file(4)<CR>
+nno <leader>x :silent !chmod +x %<CR>
+nno <silent> <leader>n :noh<cr>
+nno <leader>s :so %<cr>
+vno <leader>s :!sort<cr>
 
-vnoremap <silent> J :m '>+1<CR>gv=gv
-vnoremap <silent> K :m '<-2<CR>gv=gv
+vno <silent> J :m '>+1<CR>gv=gv
+vno <silent> K :m '<-2<CR>gv=gv
 
-nnoremap Y yg$
-nnoremap n nzzzv
-nnoremap N Nzzzv
-nnoremap J mzJ`z
-nnoremap { {zzzv
-nnoremap } }zzzv
+nno Y yg$
+nno n nzzzv
+nno N Nzzzv
+nno J mzJ`z
+nno { {zzzv
+nno } }zzzv
 autocmd BufEnter *.hs nnoremap <leader>sb :!stack build<cr>
+nno j gjzzzv
+nno k gkzzzv
+vno j jzzzv
+vno k kzzzv
+nno p p==

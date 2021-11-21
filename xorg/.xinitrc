@@ -49,4 +49,4 @@ playerctld daemon &
 keynav &
 echo "RUNNING VOLCTL" && sleep 1 && volctl &
 clipmenud &
-~/.local/bin/xmonad-start
+exec $HOME/.local/bin/bspwm-start

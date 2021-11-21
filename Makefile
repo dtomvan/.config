@@ -29,4 +29,4 @@ xmonad: xmonad/.xmonad
 st: st/
 	cd st && sudo make install
 
-.PHONY: $(dirs) $(root-dirs) discord_arch_electron
+.PHONY: $(dirs) $(root-dirs) discord_arch_electron st
