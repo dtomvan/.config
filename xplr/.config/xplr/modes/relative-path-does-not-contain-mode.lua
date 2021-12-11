@@ -73,7 +73,7 @@ xplr.config.modes.builtin.relative_path_does_not_contain = {
                 {
                     RemoveNodeFilterFromInput = "IRelativePathDoesNotContain"
                 },
-                "BufferInputFromKey",
+                "UpdateInputBufferFromKey",
                 {
                     AddNodeFilterFromInput = "IRelativePathDoesNotContain"
                 },

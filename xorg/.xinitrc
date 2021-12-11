@@ -49,4 +49,5 @@ playerctld daemon &
 keynav &
 echo "RUNNING VOLCTL" && sleep 1 && volctl &
 clipmenud &
+check-updates &
 exec $HOME/.local/bin/bspwm-start

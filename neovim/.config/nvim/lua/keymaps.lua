@@ -82,27 +82,22 @@ map('n',
 )
 map('n',
     '<Space>cr',
-    ":vs term://cargo run<CR>10<C-w>>",
+    ":vs term://mold -run cargo run<CR>10<C-w>>",
     {noremap = false, silent = false}
 )
 map('n',
     '<Space>cb',
-    ":vs term://cargo b<CR>10<C-w>>",
+    ":vs term://mold -run cargo b<CR>10<C-w>>",
     {noremap = false, silent = false}
 )
 map('n',
     '<Space>cc',
-    ":vs term://cargo clippy<CR>10<C-w>>",
+    ":vs term://mold -run cargo clippy<CR>10<C-w>>",
     {noremap = false, silent = false}
 )
 map('n',
     '<Space>ct',
-    ":vs term://cargo t<CR>10<C-w>>",
-    {noremap = false, silent = false}
-)
-map('n',
-    '<Space>t',
-    ":Ttoggle<cr>",
+    ":vs term://mold -run cargo t<CR>10<C-w>>",
     {noremap = false, silent = false}
 )
 map('n',

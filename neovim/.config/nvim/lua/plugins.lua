@@ -52,6 +52,8 @@ require('packer').startup(function()
     -- Auto pairs
     use 'rstacruz/vim-closer'
     use 'Krasjet/auto.pairs'
+    -- Kotlin
+    use 'udalov/kotlin-vim'
     -- xplr
     use {
         'fhill2/xplr.nvim',

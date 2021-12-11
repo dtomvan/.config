@@ -108,7 +108,7 @@ xplr.config.modes.builtin.action = {
                 {
                     SwitchModeBuiltin = "number"
                 },
-                "BufferInputFromKey"
+                "UpdateInputBufferFromKey"
             }
         },
         on_special_character = nil,

@@ -58,7 +58,7 @@ xplr.config.modes.builtin.create_file = {
             on_special_character = nil,
             default = {
                 help = nil,
-                messages = {"BufferInputFromKey"}
+                messages = {"UpdateInputBufferFromKey"}
             }
         }
     }

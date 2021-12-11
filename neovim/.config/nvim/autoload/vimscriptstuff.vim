@@ -4,7 +4,9 @@ hi StatusLine guibg=#928374 guifg=#3c3836
 set clipboard=unnamedplus
 command! -nargs=* Ca !cargo <args>
 au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
-autocmd BufEnter *.rs nnoremap J :lua require'rust-tools.join_lines'.join_lines()<CR>
+autocmd BufEnter *.rs nnoremap <buffer> J :lua require'rust-tools.join_lines'.join_lines()<CR>
+autocmd BufEnter *.rs nnoremap <buffer> <leader>l :lua require'rust-tools.hover_actions'.hover_actions()<cr>
+autocmd BufEnter *.rs nnoremap <buffer> <leader>t :lua require'rust-tools.open_cargo_toml'.open_cargo_toml()<cr>
 autocmd BufEnter *.mom set ft=mom
 cnoreabbrev luf luafile
 cnoreabbrev fcd cd %:p:h
@@ -65,3 +67,4 @@ nno k gkzzzv
 vno j jzzzv
 vno k kzzzv
 nno p p==
+vno <c-a> do<esc>p0!!bc<cr>kJgv

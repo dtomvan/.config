@@ -23,6 +23,7 @@ alias e=nvim;
 alias get="keyvcli get";
 alias kv=keyvcli;
 alias pr="cd ~/projects && cd (command ls -d */ | sk)";
+alias cargo="mold -run cargo";
 
 export EDITOR=nvim;
 

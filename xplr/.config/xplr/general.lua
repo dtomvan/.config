@@ -92,7 +92,12 @@ xplr.fn.builtin.fmt_general_table_row_cols_1 = function(m)
     or m.permissions.group_execute
     or m.permissions.other_execute
 
-    if type(icon) ~= "string" and is_binary and m.canonical.is_file then
+    if m.is_broken then
+        -- Broken symlink icon is hardcoded. Not implemented in xplr yet.
+        m.meta.icon = ""
+    end
+
+    if not m.is_broken and type(icon) ~= "string" and is_binary and m.canonical.is_file then
         m.meta.icon = icons["application/octet-stream"]
     end
 

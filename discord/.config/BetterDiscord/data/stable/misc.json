@@ -12,5 +12,7 @@
         "plugin": {
             "view": "grid"
         }
-    }
+    },
+    "emoteVersion": "v1.3.0",
+    "favoriteEmotes": {}
 }
