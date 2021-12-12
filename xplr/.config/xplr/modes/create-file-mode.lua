@@ -46,10 +46,7 @@ xplr.config.modes.builtin.create_file = {
                 esc = {
                     help = "cancel",
                     messages = {
-                        "PopMode",
-                        {
-                            SwitchModeBuiltin = "create"
-                        }
+                        "PopMode"
                     }
                 }
             },

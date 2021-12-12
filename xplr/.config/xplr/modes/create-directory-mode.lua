@@ -39,17 +39,14 @@ xplr.config.modes.builtin.create_directory = {
                         else
                             echo PopMode >> "${XPLR_PIPE_MSG_IN:?}"
                             fi
-                            ]===]
-                        }
-                    }
+                            ]===],
+                        },
+                    },
                 },
                 esc = {
                     help = "cancel",
                     messages = {
-                        "PopMode",
-                        {
-                            SwitchModeBuiltin = "create"
-                        }
+                        "PopMode"
                     }
                 }
             },

@@ -4,6 +4,17 @@ xplr.config.modes.builtin.action = {
     extra_help = nil,
     key_bindings = {
         on_key = {
+            ["t"] = {
+                help = "open tmux in pwd",
+                messages = {
+                    {
+                        BashExec = [==[
+                        zsh -c "tmux new-session -dP; tmux a &; tmux choose-tree"
+                        ]==],
+                    },
+                    "PopMode",
+                }
+            },
             ["!"] = {
                 help = "shell",
                 messages = {
@@ -28,7 +39,6 @@ xplr.config.modes.builtin.action = {
             ["c"] = {
                 help = "create",
                 messages = {
-                    "PopMode",
                     {
                         SwitchModeBuiltin = "create"
                     },

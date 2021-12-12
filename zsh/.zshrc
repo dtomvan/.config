@@ -24,6 +24,19 @@ sowon() {
     fi
 }
 
+sleept() {
+    if [ "$1" = "--help" ]; then
+        echo "$0 <DATE>: Sleep until <DATE>"
+    else
+        current_epoch=$(date +%s)
+        target_epoch=$(date -d "$1" +%s)
+
+        sleep_seconds=$(( $target_epoch - $current_epoch ))
+
+        sleep $sleep_seconds
+    fi
+}
+
 eval "$(zoxide init zsh --cmd d)"
 
 HISTFILE=~/.histfile

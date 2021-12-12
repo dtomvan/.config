@@ -216,15 +216,15 @@ map(
 --     '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>',
 --     {noremap = true, silent = true}
 -- )
-map(
-    "n",
-    '<C-f>',
-    '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
-    {noremap = true, silent = true}
-)
-map(
-    "n",
-    '<C-b>',
-    '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>',
-    {noremap = true, silent = true}
-)
+-- map(
+--     "n",
+--     '<C-f>',
+--     '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
+--     {noremap = true, silent = true}
+-- )
+-- map(
+--     "n",
+--     '<C-b>',
+--     '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>',
+--     {noremap = true, silent = true}
+-- )

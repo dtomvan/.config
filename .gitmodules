@@ -49,3 +49,6 @@
 [submodule "xplr/.config/xplr/plugins/context-switch"]
 	path = xplr/.config/xplr/plugins/context-switch
 	url = https://github.com/igorepst/context-switch.xplr
+[submodule "xplr/.config/xplr/plugins/icons"]
+	path = xplr/.config/xplr/plugins/icons
+	url = https://github.com/dtomvan/icons.xplr

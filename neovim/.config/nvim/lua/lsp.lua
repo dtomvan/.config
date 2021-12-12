@@ -134,7 +134,7 @@ map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 map('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-map('n', '<space>f', ":lua vim.lsp.buf.formatting()<CR>", opts)
+map('n', '<c-f>', ":lua vim.lsp.buf.formatting()<CR>", opts)
 
 local rust_tools_opts = {
     tools = { -- rust-tools options
