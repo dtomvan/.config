@@ -28,6 +28,7 @@ require("type-to-nav").setup()
 require("zoxide").setup()
 require("dragon").setup()
 require("icons").setup()
+require("icons-prncss-xyz").setup()
 
 local term = require('term')
 local k_hsplit = term.profile_tmux_hsplit()

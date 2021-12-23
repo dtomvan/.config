@@ -9,7 +9,13 @@ xplr.config.modes.builtin.action = {
                 messages = {
                     {
                         BashExec = [==[
-                        zsh -c "tmux new-session -dP; tmux a &; tmux choose-tree"
+                        NAME="$PWD-$(tr -dc a-z </dev/urandom | head -c 3)"
+                        tmux has-session -t "$NAME"
+                        if [ $? != 0 ]
+                        then
+                            tmux new-session -s "$NAME" -d
+                        fi
+                        tmux attach -t "$NAME" || tmux switch-client -t "$NAME"
                         ]==],
                     },
                     "PopMode",

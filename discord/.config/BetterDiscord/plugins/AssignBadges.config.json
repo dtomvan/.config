@@ -12,6 +12,15 @@
         },
         "689118714750435388": {
             "EARLY_VERIFIED_BOT": true
+        },
+        "570954753605894144": {
+            "CERTIFIED_MODERATOR": false,
+            "EARLY_VERIFIED_DEVELOPER": false,
+            "EARLY_SUPPORTER": false,
+            "BUG_HUNTER_LEVEL_2": false,
+            "BUG_HUNTER_LEVEL_1": false,
+            "EARLY_VERIFIED_BOT": false,
+            "STAFF": false
         }
     }
 }

@@ -10,13 +10,15 @@ require('packer').startup(function()
     use 'andweeb/presence.nvim'
     -- Gruvbox (https://www.youtube.com/watch?v=DsyptvUvu3A)
     use 'morhetz/gruvbox'
+    use "rebelot/kanagawa.nvim"
     use {
         'famiu/feline.nvim',
         config = function () 
             vim.o.background = "dark"
             vim.g.gruvbox_contrast_dark = "hard"
             vim.g.gruvbox_invert_selection = 0
-            vim.cmd([[colorscheme gruvbox]])
+            vim.cmd("colorscheme kanagawa")
+            -- vim.cmd([[colorscheme gruvbox]])
 
             require('feline').setup({
                 preset = 'noicon'

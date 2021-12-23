@@ -1,5 +1,5 @@
 {
-    "PluginRepo": false,
+    "PluginRepo": true,
     "BDFDB": true,
     "CallTimeCounter": true,
     "ZeresPluginLibrary": true,
@@ -8,11 +8,11 @@
     "ReadAllNotificationsButton": true,
     "TypingIndicator": false,
     "BugReportHelper": false,
-    "HideDisabledEmojis": false,
+    "HideDisabledEmojis": true,
     "FriendNotifications": false,
     "GuildProfile": true,
     "ThemeRepo": false,
-    "ThemeSettings": false,
+    "ThemeSettings": true,
     "KeywordTracker": false,
     "SubtleDevicePrompt": true,
     "AssignBadges": false,
@@ -32,5 +32,10 @@
     "PersonalPins": true,
     "undefined": false,
     "EditRoles": true,
-    "AccountDetailsPlus": true
+    "AccountDetailsPlus": true,
+    "Animations": false,
+    "UserVolumeBooster": true,
+    "TypingUsersAvatars": true,
+    "AppNotifications": false,
+    "AvatarHover": true
 }

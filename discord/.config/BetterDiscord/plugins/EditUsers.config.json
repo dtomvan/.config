@@ -53,10 +53,12 @@
 		},
 		"549334475520344094": {
 			"name": "Robin",
-			"status": ""
+			"removeStatus": false,
+			"status": "max verstappen cringe"
 		},
 		"660119639908679690": {
 			"name": "Harmful",
+			"showAccountName": false,
 			"tag": ""
 		},
 		"235088799074484224": {
@@ -70,13 +72,21 @@
 			"tag": "DING"
 		},
 		"689118714750435388": {
-			"name": "jepser"
+			"name": "jepser",
+			"tag": "fortnite"
 		},
 		"282859044593598464": {
 			"name": "kutbot"
 		},
 		"557105752607555594": {
 			"name": "wiebe"
+		},
+		"742163882608689173": {
+			"tag": "egirl"
+		},
+		"736901809255350334": {
+			"name": "stellaaaaaaa",
+			"tag": "maakt mijn dag"
 		}
 	}
 }

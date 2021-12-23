@@ -22,6 +22,7 @@ bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
 bspc rule -a Dunst manage=off
 bspc rule -a discord desktop='^8'
+bspc rule -a mind desktop='^3'
 bspc rule -a i3lock layer=above
 
 bspc desktop='^1' --focus
@@ -34,6 +35,7 @@ FLOATING_BORDER_WIDTH=0
 feh --bg-center ~/Pictures/bg.png
 ~/i3lock.sh
 bspwmbar &
-dunst &
+# dunst &
+deadd-notification-center &
 discord --no-sandbox --start-minimized --ignore-gpu-blocklist --disable-features=UseOzonePlatform --enable-features=VaapiVideoDecoder --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy &
 volctl &
