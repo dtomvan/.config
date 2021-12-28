@@ -22,3 +22,6 @@ super + Return
 
 Print
  ~/.local/bin/screenshot
+
+shift + Print
+ feh ~/screenshots -S mtime
