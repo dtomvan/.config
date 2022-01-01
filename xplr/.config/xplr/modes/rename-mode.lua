@@ -50,7 +50,7 @@ xplr.config.modes.builtin.rename = {
         on_special_character = nil,
         default = {
             help = nil,
-            messages = {"BufferInputFromKey"}
+            messages = {"UpdateInputBufferFromKey"}
         }
     }
 }

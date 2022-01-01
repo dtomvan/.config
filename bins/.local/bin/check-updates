@@ -1,0 +1,6 @@
+#!/bin/sh
+while true; do
+    updates=$(checkupdates)
+    [ -n updates ] && eval $(dunstify -A "st -e ~/.local/bin/install-updates,install" "There are updates available. Middle click to install.")
+    sleep 3600
+done

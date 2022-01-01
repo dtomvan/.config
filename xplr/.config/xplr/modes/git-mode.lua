@@ -165,7 +165,7 @@ local add_mode = {
             },
             default = {
             help = "enter character",
-            messages = { "BufferInputFromKey" }
+            messages = { "UpdateInputBufferFromKey" }
         }
     }
 }

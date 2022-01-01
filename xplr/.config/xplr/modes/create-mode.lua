@@ -11,7 +11,6 @@ xplr.config.modes.builtin.create = {
             ["d"] = {
                 help = "create directory",
                 messages = {
-                    "PopMode",
                     {
                         SwitchModeBuiltin = "create directory"
                     },
@@ -27,7 +26,6 @@ xplr.config.modes.builtin.create = {
             ["f"] = {
                 help = "create file",
                 messages = {
-                    "PopMode",
                     {
                         SwitchModeBuiltin = "create file"
                     },

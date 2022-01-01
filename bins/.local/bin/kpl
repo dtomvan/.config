@@ -1,0 +1,348 @@
+#!/bin/bash
+
+# Checking dependencies
+JQ_BIN="$(whereis -b jq | awk '{print $2}')"
+ROFI_BIN="$(whereis -b rofi | awk '{print $2}')"
+CURL_BIN="$(whereis -b curl | awk '{print $2}')"
+STREAMLINK_BIN="$(whereis -b streamlink |awk '{print $2}')"
+
+if [ -z "$JQ_BIN" ]; then
+  echo "ERROR: Kappa Launcher dependency not found: jq"
+  exit 1
+fi
+if [ -z "$ROFI_BIN" ]; then
+  echo "ERROR: Kappa Launcher dependency not found: rofi"
+  exit 1
+fi
+if [ -z "$CURL_BIN" ]; then
+  echo "ERROR: Kappa Launcher dependency not found: curl"
+  exit 1
+fi
+if [ -z "$STREAMLINK_BIN" ]; then
+  echo "ERROR: Kappa Launcher dependency not found: streamlink"
+  echo "If you only intend to use the browser function, you will not need this"
+fi
+
+# Some functions
+_config () {
+  mkdir -p $MAIN_PATH
+    if [ -f config ]; then
+        cp config $MAIN_PATH
+    else
+        cp /etc/kpl/config $MAIN_PATH
+    fi
+}
+
+_error () {
+    echo "Configuration variable missing, attempting to fix this"
+}
+
+_updatecheck () {
+    # Checking if the configuration file is out of date, setting some defaults.
+    if [ -z "$MULTIPLE" ]; then
+        _error
+        echo -e "\n# Leaves current stream running when a new one is launched. Variables: true, false, ask.
+MULTIPLE=true" >> $MAIN_PATH/config
+    fi
+    if [ -z "$QUICK" ]; then
+        _error
+        echo -e "\n# Immediately launch stream from the main menu, without the option to change quality.
+QUICK=true"  >> $MAIN_PATH/config
+    fi
+    if [ -z "$VIEW" ]; then
+        _error
+        echo -e "\n# Expanded (channel name, game and viewer count) or minimal view (channel name only).
+# Variables expanded, minimal.
+# Note: The expanded view will change font to monospaced to line up columns.
+VIEW=expanded"  >> $MAIN_PATH/config
+    fi
+    if [ -z "$MAX_HEIGHT" ]; then
+        _error
+        echo -e "\n# Maximum height of the rofi window in lines. Used in the expanded mode where height is dynamic.
+MAX_HEIGHT=30"  >> $MAIN_PATH/config
+    fi
+}
+
+_filecheck () {
+  if [ -f "$FILE" ]; then
+    echo "Configuration file found, proceeding"
+    source $MAIN_PATH/config
+    _updatecheck
+  else
+    echo -e "First start detected, generating configuration file \n"
+    _config
+    echo -e "Configuration file created in .config/kpl \n"
+    echo "Edit it with your OAuth key (https://spheroid.xyz/kappa/) and relaunch the script"
+    exit
+  fi
+}
+
+_rofi () {
+  rofi -dmenu -i -disable-history -config "$ROFI_CONFIG" -hide-scrollbar true -scroll-method 1 "$@"
+}
+
+_launcher () {
+  if [[ "$STREAM" = "streamlink" ]]; then
+    if [[ "$MULTIPLE" != "true" ]]; then
+      killall -9 "$PLAYER"
+    fi
+    $PLAYER https://twitch.tv/$MAIN &
+    echo "launching $STREAM"
+    sleep 1
+    if [[ "$CHAT" = "chatterino" ]]; then
+      chatterino &
+    elif [[ "$CHAT" = "chatty" ]]; then
+      chatty -channel $MAIN -connect
+    else
+      echo "ERROR: Chat not defined in config file"
+    fi
+  elif [[ "$STREAM" = "browser" ]]; then
+    xdg-open https://twitch.tv/$MAIN
+  else
+    echo "ERROR: Player not defined in config file"
+  fi
+  exit
+}
+
+_quality () {
+  RESOLUTION=$(streamlink twitch.tv/$MAIN --loglevel=info --player=none | grep -i  audio_only | cut -d : -f 2 | tr , '\n' | tac | cut -d ' ' -f 2)
+  QUALITY=$(echo "$RESOLUTION" | _rofi -theme-str 'inputbar { children: [prompt];}' \
+  -no-custom -p "Select stream quality")
+  if [ -z "$QUALITY" ]; then
+    exit
+  fi
+}
+
+_multiple () {
+  if [[ "$MULTIPLE" = true ]]; then
+    MULTIPLE="true"
+  elif [[ "$MULTIPLE" = "ask" ]]; then
+   if [[ -z $(pgrep streamlink) ]]; then
+    MULTIPLE="true"
+   else
+    MULTIPLE=$( echo -e "true\nfalse" | _rofi -theme-str 'input { children: [prompt];}' -no-custom -p "Watch multiple streams at same time?")
+   fi
+  fi
+}
+
+_customdata () {
+  curl -s -o $MAIN_PATH/customdata.json -H "Client-ID: 3lyhpjkzellmam3843w7eq3es84375" \
+  -H "Authorization: Bearer $OAUTH" -X GET "https://api.twitch.tv/helix/streams?user_login=$MAIN"
+}
+
+_choice () {
+  if [[ "$CHOICE" = "<b>Watch now</b>" ]]; then
+    _multiple
+    _launcher
+  elif [[ "$CHOICE" = "Choose quality (default = best)" ]]; then
+    _quality
+    _multiple
+    _launcher
+  elif [[ "$CHOICE" = "Back to Followed channels" ]]; then
+    # break does not work when it's in a function that's in a while loop.
+    :
+  else [ -z "$MAIN" ];
+    exit
+  fi
+}
+
+_monospaced () {
+  # Check if font is in list of monospaced fonts
+  MONOFONTS=$(fc-list :mono | sed 's/:\ /:/' | awk -F : -v quote="'" '{print quote $2 quote}' | sort -u)
+  export MONO=$(echo "$MONOFONTS" | grep -ic "'$*'")
+}
+
+_fontname () {
+  # If FONT set in kpl config, test if its monospaced before using
+  if [[ ! -z $FONT ]]; then
+    FNAME=$(echo $FONT | awk -F " " '{$NF=""; print $0}' | sed 's/\ $//')
+    _monospaced "$FNAME"
+    if [[ $MONO -eq 1 ]]; then
+      export FNAME="$FNAME"
+      return
+    else
+      FONT=""
+    fi
+  fi
+  # If FONT set in rofi config, test if its monospaced before using
+  FNAME=$(grep -e "^[[:space:]].*font:" $R_FILE | cut -d \" -f 2 | awk '{$NF=""; print $0}' | sed 's/\ $//')
+  if [[ ! -z $FNAME ]]; then
+  _monospaced "$FNAME"
+    if [[ $MONO -eq 1 ]]; then
+      export FNAME="$FNAME"
+      return
+    fi
+  fi
+  # If FONT set in xresources, test if its monospaced before using or
+  # default to mono (family class which fontconfig will pick from monospaced fonts)
+  FNAME=$(rofi -dump-xresources | grep font | cut -d: -f 2 | sed 's/^\ *//g' | awk '{$NF=""; print $0}' | sed 's/\ $//')
+  if [[ $FNAME != "mono" ]]; then
+   _monospaced "$FNAME"
+  fi
+  if [[ $MONO -eq 1 ]]; then
+     export FNAME="$FNAME"
+     return
+   else
+     FNAME="mono"
+  fi
+}
+
+_fontsize (){
+  # If font set from kpl config
+  if [[ ! -z $FONT ]]; then
+    export FSIZE=$(echo $FONT | awk '{print $NF}')
+    return
+  fi
+  # If font is set in rofi config
+  FSIZE=$(grep -e "^[[:space:]].*font:" $R_FILE | cut -d \" -f 2 | awk '{print $NF}')
+  if [[ ! -z $FSIZE ]]; then
+    export FSIZE
+    return
+  fi
+  # If font is set from xresources else use default of 12
+  FSIZE=$(rofi -dump-xresources | grep font | cut -d: -f 2  | sed 's/^\ *//' | awk '{print $NF}')
+  if [[ ! -z $FSIZE ]]; then
+    export FSIZE
+  else
+    export FSIZE=12
+  fi
+}
+
+# Setting working directory, checking for configuration file, generating it if needed.
+# Getting variables from configuration file
+if [ -z "$XDG_CONFIG_HOME" ]; then
+  FILE=~/.config/kpl/config
+  MAIN_PATH=~/.config/kpl
+else
+  FILE=$XDG_CONFIG_HOME/kpl/config
+  MAIN_PATH=$XDG_CONFIG_HOME/kpl
+fi
+
+# Set rofi config file
+if [ -z "$ROFI_CONFIG" ]; then
+  if [ -z "$XDG_CONFIG_HOME" ]; then
+    R_FILE=~/.config/rofi/config.rasi
+  else
+    R_FILE=$XDG_CONFIG_HOME/kpl/config.rasi
+  fi
+else
+  R_FILE=$ROFI_CONFIG
+fi
+
+# Checking for a streamlink config file
+if [ -z "$XDG_CONFIG_HOME" ]; then
+  SL_FILE=~/.config/streamlink/config
+else
+  SL_FILE=$XDG_CONFIG_HOME/streamlink/config
+fi
+
+_filecheck
+
+# Setting OAuth key, connecting to Twitch API and retrieving follow data
+# This is a modified version of https://github.com/begs/livestreamers/blob/master/live.py
+
+curl -s -o $MAIN_PATH/followdata.json -H "Accept: application/vnd.twitchtv.v5+json" \
+-H "Client-ID: 3lyhpjkzellmam3843w7eq3es84375" \
+-H "Authorization: OAuth $OAUTH" \
+-X GET "https://api.twitch.tv/kraken/streams/followed?limit=100"
+curl -s -H "Accept: application/vnd.twitchtv.v5+json" \
+-H "Client-ID: 3lyhpjkzellmam3843w7eq3es84375" \
+-H "Authorization: OAuth $OAUTH" \
+-X GET "https://api.twitch.tv/kraken/streams/followed?limit=100&offset=100" >> $MAIN_PATH/followdata.json
+
+# Checking if json file is properly populated
+if grep -q "invalid oauth token" "$MAIN_PATH/followdata.json"; then
+  echo "ERROR: json file not populated, make sure you copied your OAuth token correctly"
+  exit
+else
+  echo "json file successfully populated"
+fi
+
+# Getting names of currently live streams
+while true; do
+  # Checking for quality value in streamlink configuration file
+  if [[ -f "$SL_FILE" ]] && [[ $(grep -c ^default-stream $SL_FILE) -eq 1 ]]; then
+    QUALITY=""
+  else
+    QUALITY=best
+  fi
+  # Expanded view output name^^game^^viewers (as string) from jq to be
+  # formatted by column or only name if minimal or not specified
+  if [[ $VIEW = "expanded" ]]; then
+    STREAMS=$(jq -r '.streams[] | "\(.channel.name)^^\(.game)^^\(.viewers)"' $MAIN_PATH/followdata.json | column -t -s "^^")
+    STATUS=$(jq -r '.streams[] | .channel.status' $MAIN_PATH/followdata.json)
+    # Get or discover the font to be used for expanded view
+    _fontname
+    _fontsize
+    # Calculate the max width of the streams in characters add 2 for margin and scrollbar
+    # -$WIDTH means width in characters rather than % of screen or pixels.
+    WIDTH=$(jq -r '.streams[] | "\(.channel.name)^^\(.game)^^\(.viewers)"' $MAIN_PATH/followdata.json | column -t -s "^^" | while read line; do echo -n "$line" | wc -m ; done |  sort -n -u | tail -1)
+    HEIGHT=$(jq -r '.streams[] | .channel.name' $MAIN_PATH/followdata.json | wc -l)
+    if [[ "$HEIGHT" -gt "$MAX_HEIGHT" ]]; then
+        HEIGHT=$MAX_HEIGHT
+    fi
+    MAIN=$(echo "$STREAMS" | _rofi -font "$FNAME $FSIZE" -width -$(($WIDTH + 3)) -lines $HEIGHT -theme-str 'entry { placeholder: ""; } inputbar { children: [prompt, entry];}' \
+    -p "Followed channels: " | cut -d ' ' -f 1)
+  else
+    STREAMS=$(jq -r '.streams[].channel.name' $MAIN_PATH/followdata.json)
+    MAIN=$(echo "$STREAMS" | _rofi -theme-str 'entry { placeholder: ""; } inputbar { children: [prompt, entry];}' \
+    -p "Followed channels: ")
+  fi
+
+  if [ -z "$MAIN" ]; then
+    exit
+  fi
+
+  if [[ "$STREAMS" != *"$MAIN"* ]]; then
+    while true; do
+      _customdata
+      if grep -q "user_name" "$MAIN_PATH/customdata.json" ; then
+        if [[ $QUICK = "true" ]]; then
+          _multiple
+          _launcher
+        fi
+
+        CHOICE=$(echo "<b>Watch now</b>
+Choose quality (default = best)
+Back to Followed channels" | _rofi -markup-rows -theme-str 'inputbar { children: [prompt];}' \
+-p "$MAIN is live! ")
+
+        _choice
+        break
+      else
+        CHOICE=$(echo "Back to Followed channels" | _rofi -theme-str \
+        'inputbar { children: [prompt];}' -p "$MAIN is currently offline :( ")
+        if [[ "$CHOICE" = "Back to Followed channels" ]]; then
+          break
+        else [ -z "$MAIN" ];
+          exit
+        fi
+      fi
+    done
+  elif [ -z "$MAIN" ]; then
+    exit
+  else
+    if [[ $QUICK = "true" ]]; then
+      _multiple
+      _launcher
+    fi
+    # Retrieving additional information
+    CURRENT_GAME=$(jq -r ".streams[].channel | select(.name==\"$MAIN\") | .game"  $MAIN_PATH/followdata.json)
+    STATUS=$(jq -r ".streams[].channel | select(.name==\"$MAIN\") | .status"  $MAIN_PATH/followdata.json)
+    VIEWERS=$(jq -r ".streams[] | select(.channel.name==\"$MAIN\") | .viewers"  $MAIN_PATH/followdata.json)
+
+    # Prompting with stream info and options
+    while true; do
+    CHOICE=$(echo "$STATUS
+
+<b>Watch now</b>
+Choose quality (default = best)
+Back to Followed channels" | sed 's/&/&amp;/g' | _rofi -theme-str 'inputbar { children: [prompt];}' \
+-selected-row 2 -no-custom -markup-rows -p "$MAIN is streaming $CURRENT_GAME to $VIEWERS viewers")
+
+    _choice
+    break
+  done
+  fi
+done
+exit

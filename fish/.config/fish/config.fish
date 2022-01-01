@@ -12,17 +12,18 @@ alias doc='rustup docs';
 set PATH ~/.cargo/bin/ ~/tetris-os/i386-elf-7.5.0-Linux-x86_64/bin ~/.local/bin $PATH
 
 abbr b clifm
-abbr g git-client
+abbr g git
 abbr pf '~/venv/bin/nvr -c ":Clap filer"';
 abbr tovim "~/venv/bin/nvr -c \"cd \"(pwd)";
 abbr t tmux
-abbr x xplr
+abbr x 'xplr';
 abbr zel zellij
 alias dir=broot;
 alias e=nvim;
 alias get="keyvcli get";
 alias kv=keyvcli;
 alias pr="cd ~/projects && cd (command ls -d */ | sk)";
+alias cargo="mold -run cargo";
 
 export EDITOR=nvim;
 

@@ -176,11 +176,16 @@ xplr.config.modes.builtin.default = {
             messages = {
                 "PopMode",
                 { SwitchModeBuiltin = "number" },
-                "BufferInputFromKey"
+                "UpdateInputBufferFromKey"
             }
         },
         on_special_character = nil,
-        default = nil
+        default = {
+            messages = {
+                "PopMode",
+                { SwitchModeBuiltin = "recover" },
+            }
+        }
     }
 }
 

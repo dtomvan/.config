@@ -40,3 +40,21 @@
 [submodule "xplr/.config/xplr/plugins/map"]
 	path = xplr/.config/xplr/plugins/map
 	url = https://github.com/sayanarijit/map.xplr
+[submodule "xplr/.config/xplr/plugins/term"]
+	path = xplr/.config/xplr/plugins/term
+	url = https://github.com/igorepst/term.xplr
+[submodule "xplr/.config/xplr/plugins/xclip"]
+	path = xplr/.config/xplr/plugins/xclip
+	url = https://github.com/sayanarijit/xclip.xplr
+[submodule "xplr/.config/xplr/plugins/context-switch"]
+	path = xplr/.config/xplr/plugins/context-switch
+	url = https://github.com/igorepst/context-switch.xplr
+[submodule "xplr/.config/xplr/plugins/icons"]
+	path = xplr/.config/xplr/plugins/icons
+	url = https://github.com/dtomvan/icons.xplr
+[submodule "xplr/.config/xplr/icons-prncss-xyz"]
+	path = xplr/.config/xplr/icons-prncss-xyz
+	url = https://github.com/prncss-xyz/icons.xplr.git
+[submodule "xplr/.config/xplr/plugins/icons-prncss-xyz"]
+	path = xplr/.config/xplr/plugins/icons-prncss-xyz
+	url = https://github.com/prncss-xyz/icons.xplr.git

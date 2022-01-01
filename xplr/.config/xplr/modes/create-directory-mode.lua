@@ -39,17 +39,14 @@ xplr.config.modes.builtin.create_directory = {
                         else
                             echo PopMode >> "${XPLR_PIPE_MSG_IN:?}"
                             fi
-                            ]===]
-                        }
-                    }
+                            ]===],
+                        },
+                    },
                 },
                 esc = {
                     help = "cancel",
                     messages = {
-                        "PopMode",
-                        {
-                            SwitchModeBuiltin = "create"
-                        }
+                        "PopMode"
                     }
                 }
             },
@@ -58,7 +55,7 @@ xplr.config.modes.builtin.create_directory = {
             on_special_character = nil,
             default = {
                 help = nil,
-                messages = {"BufferInputFromKey"}
+                messages = {"UpdateInputBufferFromKey"}
             }
         }
     }

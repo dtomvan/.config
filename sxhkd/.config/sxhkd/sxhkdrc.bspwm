@@ -5,6 +5,9 @@
 # bspwm hotkeys
 #
 
+# Dropdown terminal
+super + shift + t
+	tdrop -a st -e fish
 # quit/restart bspwm
 super + alt + {q,r}
 	bspc {quit,wm -r}

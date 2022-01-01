@@ -22,6 +22,8 @@
     a = add
     r = rm
     res = restore
+[commit]
+    template = ~/.gitmessage
 [sendemail]
     smtpserver = smtp-mail.outlook.com
     smtpuser = 129102@dr.nassaucollege.nl
@@ -29,3 +31,5 @@
     smtpserverport = 587
 [diff]
 	tool = nvimdiff
+[format]
+	pretty = fuller

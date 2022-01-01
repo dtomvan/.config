@@ -44,7 +44,7 @@ xplr.config.modes.builtin.number = {
         on_alphabet = nil,
         on_number = {
             help = "input",
-            messages = {"BufferInputFromKey"}
+            messages = {"UpdateInputBufferFromKey"}
         },
         on_special_character = nil,
         default = nil

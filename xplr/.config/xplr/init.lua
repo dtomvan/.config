@@ -1,6 +1,6 @@
 -- Lsp trick
 xplr = xplr
-version = "0.15.0"
+version = "0.16.4"
 
 package.path = os.getenv("HOME") .. '/.config/xplr/plugins/?/src/init.lua'
 package.path = package.path .. ";" .. os.getenv("HOME") .. '/.config/xplr/?.lua'
@@ -27,3 +27,15 @@ require("completion").setup()
 require("type-to-nav").setup()
 require("zoxide").setup()
 require("dragon").setup()
+require("icons").setup()
+require("icons-prncss-xyz").setup()
+
+local term = require('term')
+local k_hsplit = term.profile_tmux_hsplit()
+k_hsplit.key = 'ctrl-h'
+term.setup({term.profile_tmux_vsplit(), k_hsplit})
+
+require("xclip").setup()
+require("context-switch").setup()
+package.path = package.path .. ";" .. os.getenv("HOME") .. "/projects/?.xplr/src/init.lua"
+require("ouch").setup()

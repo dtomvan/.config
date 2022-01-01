@@ -45,6 +45,14 @@
 "pactl set-sink-volume @DEFAULT_SINK@ -1000"
    XF86AudioLowerVolume
 
+# Playerctl
+"playerctl play-pause"
+   XF86AudioPlay
+"playerctl previous"
+  XF86AudioPrev
+"playerctl next"
+  XF86AudioNext
+
 ##################################
 # End of xbindkeys configuration #
 ##################################

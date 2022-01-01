@@ -2,7 +2,7 @@
  * @name PersonalPins
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 2.0.7
+ * @version 2.0.8
  * @description Allows you to locally pin Messages
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -17,12 +17,12 @@ module.exports = (_ => {
 		"info": {
 			"name": "PersonalPins",
 			"author": "DevilBro",
-			"version": "2.0.7",
+			"version": "2.0.8",
 			"description": "Allows you to locally pin Messages"
 		}
 	};
 
-	return (window.Lightcord && !Node.prototype.isPrototypeOf(window.Lightcord) || window.LightCord && !Node.prototype.isPrototypeOf(window.LightCord)) ? class {
+	return (window.Lightcord && !Node.prototype.isPrototypeOf(window.Lightcord) || window.LightCord && !Node.prototype.isPrototypeOf(window.LightCord) || window.Astra && !Node.prototype.isPrototypeOf(window.Astra)) ? class {
 		getName () {return config.info.name;}
 		getAuthor () {return config.info.author;}
 		getVersion () {return config.info.version;}
@@ -505,7 +505,7 @@ module.exports = (_ => {
 					animation: BDFDB.LibraryComponents.PopoutContainer.Animation.SCALE,
 					position: BDFDB.LibraryComponents.PopoutContainer.Positions.BOTTOM,
 					align: BDFDB.LibraryComponents.PopoutContainer.Align.RIGHT,
-					width: 650,
+					width: 750,
 					maxHeight: "calc(100vh - 100px)",
 					onClose: instance => BDFDB.DOMUtils.removeClass(instance.domElementRef.current, BDFDB.disCN.channelheadericonselected),
 					renderPopout: instance => {

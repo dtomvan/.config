@@ -107,7 +107,7 @@ xplr.config.modes.builtin.search = {
                 {
                     RemoveNodeFilterFromInput = "IRelativePathDoesContain"
                 },
-                "BufferInputFromKey",
+                "UpdateInputBufferFromKey",
                 {
                     AddNodeFilterFromInput = "IRelativePathDoesContain"
                 },

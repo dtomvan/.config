@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sxhkd -c ~/.config/sxhkd/sxhkdrc.common &
+exec xmonad

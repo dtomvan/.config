@@ -4,6 +4,23 @@ xplr.config.modes.builtin.action = {
     extra_help = nil,
     key_bindings = {
         on_key = {
+            ["t"] = {
+                help = "open tmux in pwd",
+                messages = {
+                    {
+                        BashExec = [==[
+                        NAME="$PWD-$(tr -dc a-z </dev/urandom | head -c 3)"
+                        tmux has-session -t "$NAME"
+                        if [ $? != 0 ]
+                        then
+                            tmux new-session -s "$NAME" -d
+                        fi
+                        tmux attach -t "$NAME" || tmux switch-client -t "$NAME"
+                        ]==],
+                    },
+                    "PopMode",
+                }
+            },
             ["!"] = {
                 help = "shell",
                 messages = {
@@ -28,7 +45,6 @@ xplr.config.modes.builtin.action = {
             ["c"] = {
                 help = "create",
                 messages = {
-                    "PopMode",
                     {
                         SwitchModeBuiltin = "create"
                     },
@@ -108,7 +124,7 @@ xplr.config.modes.builtin.action = {
                 {
                     SwitchModeBuiltin = "number"
                 },
-                "BufferInputFromKey"
+                "UpdateInputBufferFromKey"
             }
         },
         on_special_character = nil,

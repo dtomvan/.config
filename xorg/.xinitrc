@@ -41,10 +41,13 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 wmname LG3D
 xsetroot -cursor_name left_ptr
 xbindkeys
-xautolock -locker ./i3lock.sh -nowlocker ./i3lock.sh &
+picom --experimental-backends --xrender-sync-fence --backend glx --resize-damage 1 &
+xautolock -locker "systemctl suspend" -nowlocker ./i3lock.sh &
 ckb-next -b &
 emacs --daemon &
-volctl &
-picom --backend glx --xrender-sync-fence &
+playerctld daemon &
+keynav &
+echo "RUNNING VOLCTL" && sleep 1 && volctl &
 clipmenud &
-~/.local/bin/bspwm-start
+check-updates &
+exec $HOME/.local/bin/bspwm-start

@@ -1,6 +1,6 @@
 Config { overrideRedirect = False
        , font     = "xft:Hack-9"
-       , bgColor  = "#5f5f5f"
+       , bgColor  = "#4a4c53"
        , fgColor  = "#f8f8f2"
        , position = TopW L 90
        , commands = [ Run Alsa "default" "Master"

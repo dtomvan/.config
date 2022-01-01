@@ -82,27 +82,22 @@ map('n',
 )
 map('n',
     '<Space>cr',
-    ":vs term://cargo run<CR>10<C-w>>",
+    ":vs term://mold -run cargo run<CR>10<C-w>>",
     {noremap = false, silent = false}
 )
 map('n',
     '<Space>cb',
-    ":vs term://cargo b<CR>10<C-w>>",
+    ":vs term://mold -run cargo b<CR>10<C-w>>",
     {noremap = false, silent = false}
 )
 map('n',
     '<Space>cc',
-    ":vs term://cargo check<CR>10<C-w>>",
+    ":vs term://mold -run cargo clippy<CR>10<C-w>>",
     {noremap = false, silent = false}
 )
 map('n',
     '<Space>ct',
-    ":vs term://cargo t<CR>10<C-w>>",
-    {noremap = false, silent = false}
-)
-map('n',
-    '<Space>t',
-    ":Ttoggle<cr>",
+    ":vs term://mold -run cargo t<CR>10<C-w>>",
     {noremap = false, silent = false}
 )
 map('n',
@@ -149,11 +144,6 @@ map('n',
     '<C-p>',
     "<cmd>lua R('telescopepickers').grep()<cr>",
     {noremap = true, silent = true}
-)
-map('n',
-    '\\',
-    "<Plug>(easymotion-prefix)",
-    {noremap = false, silent = true}
 )
 map('n',
     '<Space><CR>',
@@ -220,21 +210,21 @@ map(
     "mzJ`zzzzv",
     {noremap = true, silent = true}
 )
-map(
-    "n",
-    'K',
-    '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>',
-    {noremap = true, silent = true}
-)
-map(
-    "n",
-    '<C-f>',
-    '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
-    {noremap = true, silent = true}
-)
-map(
-    "n",
-    '<C-b>',
-    '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>',
-    {noremap = true, silent = true}
-)
+-- map(
+--     "n",
+--     'K',
+--     '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>',
+--     {noremap = true, silent = true}
+-- )
+-- map(
+--     "n",
+--     '<C-f>',
+--     '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
+--     {noremap = true, silent = true}
+-- )
+-- map(
+--     "n",
+--     '<C-b>',
+--     '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>',
+--     {noremap = true, silent = true}
+-- )

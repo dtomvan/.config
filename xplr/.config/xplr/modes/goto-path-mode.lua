@@ -47,7 +47,7 @@ xplr.config.modes.custom.go_to_path = {
     },
     default = {
       messages = {
-        "BufferInputFromKey",
+        "UpdateInputBufferFromKey",
       },
     },
   },

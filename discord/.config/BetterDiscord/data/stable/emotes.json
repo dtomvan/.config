@@ -1,15 +1,15 @@
 {
     "general": {
-        "download": true,
-        "emoteMenu": true,
+        "download": false,
+        "emoteMenu": false,
         "hideEmojiMenu": false,
-        "modifiers": true,
+        "modifiers": false,
         "animateOnHover": false
     },
     "categories": {
-        "twitchglobal": true,
+        "twitchglobal": false,
         "twitchsubscriber": false,
-        "frankerfacez": true,
-        "bttv": true
+        "frankerfacez": false,
+        "bttv": false
     }
 }
