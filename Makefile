@@ -1,4 +1,4 @@
-dirs = awesome bins bspwm clifm discord editorconfig emacs fish git gtk i3lock kitty neovim picom rofi sxhkd tmux xorg xplr zellij zsh
+dirs = awesome bins bspwm clifm discord editorconfig emacs fish git gtk i3lock kitty mpv neovim picom rofi sxhkd tmux xorg xplr zellij zsh
 root-dirs = xmonad-root
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 

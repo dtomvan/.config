@@ -1,16 +1,13 @@
+alias givefuck="curl -s rage.metroserve.me/\?format=plain"
 if [[ "$(tty)" == "/dev/tty1" ]] ; then
     startx &> /dev/null
 fi
 
-export PATH=~/.cargo/bin:~/.local/bin:$PATH
+export DENO_INSTALL="$HOME/.deno"
+export PATH=~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin
 export EDITOR=nvim
 
 eval "$(sheldon source)"
-
-xplr() {
-    target_dir="$(command xplr $@)"
-    [ ! -n $target_dir ] && cd $target_dir
-}
 
 sowon() {
     if [ -n "$argv" ]; then

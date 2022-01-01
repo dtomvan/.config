@@ -2,7 +2,7 @@
  * @name BDFDB
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 2.0.3
+ * @version 2.0.4
  * @description Required Library for DevilBro's Plugins
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -19,7 +19,7 @@ module.exports = (_ => {
 		"info": {
 			"name": "BDFDB",
 			"author": "DevilBro",
-			"version": "2.0.3",
+			"version": "2.0.4",
 			"description": "Required Library for DevilBro's Plugins"
 		},
 		"rawUrl": `https://mwittrien.github.io/BetterDiscordAddons/Library/0BDFDB.plugin.js`
@@ -4297,8 +4297,17 @@ module.exports = (_ => {
 			return BDFDB.DiscordUtils.getSettings("messageDisplayCompact") ? "compact" : "cozy";
 		};
 		BDFDB.DiscordUtils.getSettings = function (key) {
-			const settings = Object.assign({}, typeof LibraryModules.SettingsStore.getAllSettings == "function" ? LibraryModules.SettingsStore.getAllSettings() : LibraryModules.SettingsStore);
-			return key == null ? settings : (settings[key] != null ? settings[key] : LibraryModules.SettingsStore[key]);
+			if (!key) return null;
+			else if (LibraryModules.SettingsUtils && (LibraryModules.SettingsUtils[key] || LibraryModules.SettingsUtils[key + "DoNotUseYet"])) return (LibraryModules.SettingsUtils[key] || LibraryModules.SettingsUtils[key + "DoNotUseYet"]).getSetting();
+			else {
+				const value = BDFDB.LibraryModules.SettingsStore.getAllSettings()[key.slice(0, 1).toLowerCase() + key.slice(1)];
+				return value != undefined ? value: null;
+			}
+		};
+		BDFDB.DiscordUtils.setSettings = function (key, value) {
+			if (!key) return;
+			else if (LibraryModules.SettingsUtils && (LibraryModules.SettingsUtils[key] || LibraryModules.SettingsUtils[key + "DoNotUseYet"])) (LibraryModules.SettingsUtils[key] || LibraryModules.SettingsUtils[key + "DoNotUseYet"]).updateSetting(value);
+			else BDFDB.LibraryModules.SettingsUtilsOld.updateRemoteSettings({[key.slice(0, 1).toLowerCase() + key.slice(1)]: value});
 		};
 		BDFDB.DiscordUtils.getZoomFactor = function () {
 			let aRects = BDFDB.DOMUtils.getRects(document.querySelector(BDFDB.dotCN.appmount));
@@ -8143,15 +8152,15 @@ module.exports = (_ => {
 			if (!e.returnValue.props.children) LibraryModules.ContextMenuUtils.closeContextMenu();
 		}}, {priority: 10});
 		
-		let languageChangeTimeout, translateAllNew = e => {
+		let languageChangeTimeout;
+		if (LibraryModules.SettingsUtilsOld) BDFDB.PatchUtils.patch(BDFDB, LibraryModules.SettingsUtilsOld, ["updateRemoteSettings", "updateLocalSettings"], {after: e => {
 			if (e.methodArguments[0] && e.methodArguments[0].locale) {
 				BDFDB.TimeUtils.clear(languageChangeTimeout);
 				languageChangeTimeout = BDFDB.TimeUtils.timeout(_ => {
 					for (let pluginName in PluginStores.loaded) if (PluginStores.loaded[pluginName].started) BDFDB.PluginUtils.translate(PluginStores.loaded[pluginName]);
 				}, 10000);
 			}
-		};
-		if (LibraryModules.SettingsUtils) BDFDB.PatchUtils.patch(BDFDB, LibraryModules.SettingsUtils, "updateLocalSettings", {after: translateAllNew});
+		}});
 		
 		InternalBDFDB.onSettingsClosed = function () {
 			if (InternalBDFDB.SettingsUpdated) {
