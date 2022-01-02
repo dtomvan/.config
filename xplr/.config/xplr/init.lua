@@ -1,6 +1,6 @@
 -- Lsp trick
 xplr = xplr
-version = "0.16.4"
+version = "0.17.0"
 
 package.path = os.getenv("HOME") .. '/.config/xplr/plugins/?/src/init.lua'
 package.path = package.path .. ";" .. os.getenv("HOME") .. '/.config/xplr/?.lua'

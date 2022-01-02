@@ -12,7 +12,7 @@ require('packer').startup(function()
     use 'morhetz/gruvbox'
     use "rebelot/kanagawa.nvim"
     use {
-        'famiu/feline.nvim',
+        'feline-nvim/feline.nvim',
         config = function () 
             vim.o.background = "dark"
             vim.g.gruvbox_contrast_dark = "hard"
