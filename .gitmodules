@@ -64,3 +64,6 @@
 [submodule "xplr/.config/xplr/plugins/ouch"]
 	path = xplr/.config/xplr/plugins/ouch
 	url = https://github.com/dtomvan/ouch.xplr.git
+[submodule "rofi"]
+	path = rofi
+	url = https://github.com/adi1090x/rofi.git

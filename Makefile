@@ -1,8 +1,8 @@
-dirs = awesome bins bspwm clifm deadd discord editorconfig emacs fish git gtk i3lock kitty mpv neovim picom rofi sxhkd tmux xorg xplr zellij zsh
+dirs = awesome bins bspwm clifm deadd discord editorconfig emacs fish git gtk i3lock kitty mpv neovim picom sxhkd tmux xorg xplr zellij zsh
 root-dirs = xmonad-root
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 
-all: $(dirs) $(root-dirs) discord_arch_electron st /usr/local/bin/bspwmbar xmonad ~/.local/bin/sheldon
+all: $(dirs) $(root-dirs) discord_arch_electron st /usr/local/bin/bspwmbar xmonad ~/.local/bin/sheldon ~/.config/rofi rofisettings
 	localectl set-x11-keymap us "" "" compose:ralt
 
 ~/.local/bin/sheldon:
@@ -33,4 +33,13 @@ xmonad: xmonad/.xmonad
 st: st/
 	cd st && sudo make install
 
-.PHONY: $(dirs) $(root-dirs) discord_arch_electron st
+~/.config/rofi: rofi
+	cd rofi && chmod +x setup.sh && ./setup.sh
+
+mvrofi:
+	mv ~/.config/rofi ~/.config/rofi.old
+
+rofisettings:
+	stow --adopt rofisettings
+
+.PHONY: $(dirs) $(root-dirs) discord_arch_electron st mvrofi rofisettings

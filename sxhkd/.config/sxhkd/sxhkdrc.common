@@ -8,7 +8,7 @@ super + v
  clipmenu
 
 super + d
- rofi -show
+ ~/.config/rofi/bin/launcher_misc
 
 super + n
  kill -s USR1 $(pidof deadd-notification-center)
