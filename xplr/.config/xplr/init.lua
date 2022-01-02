@@ -37,5 +37,4 @@ term.setup({term.profile_tmux_vsplit(), k_hsplit})
 
 require("xclip").setup()
 require("context-switch").setup()
-package.path = package.path .. ";" .. os.getenv("HOME") .. "/projects/?.xplr/src/init.lua"
 require("ouch").setup()
