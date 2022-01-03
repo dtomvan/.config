@@ -58,3 +58,12 @@
 [submodule "xplr/.config/xplr/plugins/icons-prncss-xyz"]
 	path = xplr/.config/xplr/plugins/icons-prncss-xyz
 	url = https://github.com/prncss-xyz/icons.xplr.git
+[submodule "rofi/.config/rofi/adi1090x"]
+	path = rofi/.config/rofi/adi1090x
+	url = https://github.com/adi1090x/rofi.git
+[submodule "xplr/.config/xplr/plugins/ouch"]
+	path = xplr/.config/xplr/plugins/ouch
+	url = https://github.com/dtomvan/ouch.xplr.git
+[submodule "rofi"]
+	path = rofi
+	url = https://github.com/adi1090x/rofi.git

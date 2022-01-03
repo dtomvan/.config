@@ -88,7 +88,12 @@ _G.packer_plugins = {
   ["feline.nvim"] = {
     config = { "\27LJ\1\2î\1\0\0\2\0\14\0\0234\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\4\0%\1\6\0:\1\5\0004\0\0\0007\0\4\0'\1\0\0:\1\a\0004\0\0\0007\0\b\0%\1\t\0>\0\2\0014\0\n\0%\1\v\0>\0\2\0027\0\f\0003\1\r\0>\0\2\1G\0\1\0\1\0\1\vpreset\vnoicon\nsetup\vfeline\frequire\25colorscheme kanagawa\bcmd\29gruvbox_invert_selection\thard\26gruvbox_contrast_dark\6g\tdark\15background\6o\bvim\0" },
     loaded = true,
+<<<<<<< HEAD
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/feline.nvim"
+=======
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/feline.nvim",
+    url = "https://github.com/feline-nvim/feline.nvim"
+>>>>>>> main
   },
   firenvim = {
     loaded = true,
