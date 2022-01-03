@@ -45,6 +45,9 @@
 "pactl set-sink-volume @DEFAULT_SINK@ -1000"
    XF86AudioLowerVolume
 
+"amixer set Master toggle"
+   XF86AudioMute
+
 # Playerctl
 "playerctl play-pause"
    XF86AudioPlay
