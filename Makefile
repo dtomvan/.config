@@ -3,7 +3,8 @@ root-dirs = xmonad-root
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 
 all: $(dirs) $(root-dirs) discord_arch_electron st /usr/local/bin/bspwmbar xmonad ~/.local/bin/sheldon ~/.config/rofi rofisettings
-	localectl set-x11-keymap us "" "" compose:ralt
+	localectl set-x11-keymap us,gr "" "" compose:ralt
+	setxkbmap -option grp:alt_caps_toggle
 
 ~/.local/bin/sheldon:
 	curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
