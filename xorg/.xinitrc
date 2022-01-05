@@ -49,6 +49,6 @@ playerctld daemon &
 keynav &
 echo "RUNNING VOLCTL" && sleep 1 && volctl &
 clipmenud &
-setxkbmap -option grp:alt_caps_toggle &
+setxkbmap -option grp:alt_caps_toggle -option compose:ralt &
 sleep 10 && check-updates &
 exec $HOME/.local/bin/bspwm-start
