@@ -3,15 +3,20 @@ if [[ "$(tty)" == "/dev/tty1" ]] ; then
     startx &> /dev/null
 fi
 
+zle-keymap-select zle-line-init () {
+  case $KEYMAP in
+    vicmd) print -n '\e[0 q';;
+    viins|main) print -n '\e[4 q';;
+  esac
+}
+zle -N zle-keymap-select
+zle -N zle-line-init
+
 export DENO_INSTALL="$HOME/.deno"
 export PATH=~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin
 export EDITOR=nvim
 
 eval "$(sheldon source)"
-
-nvim() {
-    command nvim $*; echo -ne "\e[6 q"
-}
 
 sowon() {
     if [ -n "$argv" ]; then
