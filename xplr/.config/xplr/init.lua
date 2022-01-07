@@ -29,6 +29,7 @@ require("zoxide").setup()
 require("dragon").setup()
 require("icons").setup()
 require("icons-prncss-xyz").setup()
+require("dual-pane").setup()
 
 local term = require('term')
 local k_hsplit = term.profile_tmux_hsplit()
