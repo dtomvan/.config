@@ -10,7 +10,7 @@ export EDITOR=nvim
 eval "$(sheldon source)"
 
 nvim() {
-    command nvim $*; echo -ne "\e[6 q"
+    command nvim $*; echo -ne "\e[4 q"
 }
 
 sowon() {
