@@ -9,6 +9,10 @@ export EDITOR=nvim
 
 eval "$(sheldon source)"
 
+nvim() {
+    command nvim $*; echo -ne "\e[6 q"
+}
+
 sowon() {
     if [ -n "$argv" ]; then
         if [ "$1" = "clock" ]; then
