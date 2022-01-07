@@ -67,3 +67,6 @@
 [submodule "rofi"]
 	path = rofi
 	url = https://github.com/adi1090x/rofi.git
+[submodule "xplr/.config/xplr/plugins/dual-pane"]
+	path = xplr/.config/xplr/plugins/dual-pane
+	url = https://github.com/sayanarijit/dual-pane.xplr

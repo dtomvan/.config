@@ -6144,3 +6144,31 @@
 <Multi_key> <Y> <space>                : "Η"        U0397                # GREEK CAPITAL LETTER ΕΤΑ
 <Multi_key> <space> <Z>                : "Ζ"        U0396                # GREEK CAPITAL LETTER ZETA
 <Multi_key> <Z> <space>                : "Ζ"        U0396                # GREEK CAPITAL LETTER ZETA
+
+# CIRCUMFLEX ON 6
+<Multi_key> <6> <A>    	: "Â"   Acircumflex # LATIN CAPITAL LETTER A WITH CIRCUMFLEX
+<Multi_key> <6> <E>    	: "Ê"   Ecircumflex # LATIN CAPITAL LETTER E WITH CIRCUMFLEX
+<Multi_key> <6> <I>    	: "Î"   Icircumflex # LATIN CAPITAL LETTER I WITH CIRCUMFLEX
+<Multi_key> <6> <O>    	: "Ô"   Ocircumflex # LATIN CAPITAL LETTER O WITH CIRCUMFLEX
+<Multi_key> <6> <U>    	: "Û"   Ucircumflex # LATIN CAPITAL LETTER U WITH CIRCUMFLEX
+<Multi_key> <6> <a>    	: "â"   acircumflex # LATIN SMALL LETTER A WITH CIRCUMFLEX
+<Multi_key> <6> <e>    	: "ê"   ecircumflex # LATIN SMALL LETTER E WITH CIRCUMFLEX
+<Multi_key> <6> <i>    	: "î"   icircumflex # LATIN SMALL LETTER I WITH CIRCUMFLEX
+<Multi_key> <6> <o>    	: "ô"   ocircumflex # LATIN SMALL LETTER O WITH CIRCUMFLEX
+<Multi_key> <6> <u>    	: "û"   ucircumflex # LATIN SMALL LETTER U WITH CIRCUMFLEX
+<Multi_key> <6> <C>    	: "Ĉ"   U0108 # LATIN CAPITAL LETTER C WITH CIRCUMFLEX
+<Multi_key> <6> <c>    	: "ĉ"   U0109 # LATIN SMALL LETTER C WITH CIRCUMFLEX
+<Multi_key> <6> <G>    	: "Ĝ"   U011C # LATIN CAPITAL LETTER G WITH CIRCUMFLEX
+<Multi_key> <6> <g>    	: "ĝ"   U011D # LATIN SMALL LETTER G WITH CIRCUMFLEX
+<Multi_key> <6> <H>    	: "Ĥ"   U0124 # LATIN CAPITAL LETTER H WITH CIRCUMFLEX
+<Multi_key> <6> <h>    	: "ĥ"   U0125 # LATIN SMALL LETTER H WITH CIRCUMFLEX
+<Multi_key> <6> <J>    	: "Ĵ"   U0134 # LATIN CAPITAL LETTER J WITH CIRCUMFLEX
+<Multi_key> <6> <j>    	: "ĵ"   U0135 # LATIN SMALL LETTER J WITH CIRCUMFLEX
+<Multi_key> <6> <S>    	: "Ŝ"   U015C # LATIN CAPITAL LETTER S WITH CIRCUMFLEX
+<Multi_key> <6> <s>    	: "ŝ"   U015D # LATIN SMALL LETTER S WITH CIRCUMFLEX
+<Multi_key> <6> <W>    	: "Ŵ"   U0174 # LATIN CAPITAL LETTER W WITH CIRCUMFLEX
+<Multi_key> <6> <w>    	: "ŵ"   U0175 # LATIN SMALL LETTER W WITH CIRCUMFLEX
+<Multi_key> <6> <Y>    	: "Ŷ"   U0176 # LATIN CAPITAL LETTER Y WITH CIRCUMFLEX
+<Multi_key> <6> <y>    	: "ŷ"   U0177 # LATIN SMALL LETTER Y WITH CIRCUMFLEX
+<Multi_key> <6> <Z>    	: "Ẑ"   U1E90 # LATIN CAPITAL LETTER Z WITH CIRCUMFLEX
+<Multi_key> <6> <z>    	: "ẑ"   U1E91 # LATIN SMALL LETTER Z WITH CIRCUMFLEX
