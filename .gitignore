@@ -13,6 +13,7 @@ emacs/.emacs.d/smex-items
 emacs/.emacs.d/straight
 emacs/.emacs.d/transient
 emacs/.emacs.d/undo
+emacs/.emacs.d/var/prescient-save.el
 gtk/.config/gtk-3.0/bookmarks
 **/*.o
 st/config.h

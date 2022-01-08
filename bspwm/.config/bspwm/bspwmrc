@@ -28,7 +28,7 @@ bspc rule -a i3lock layer=above
 bspc desktop='^1' --focus
 
 bspwmbar &
-feh --bg-fill ~/Pictures/bg.jpg &
+feh --bg-fill ~/Pictures/bg.png &
 
 BORDER_WIDTH=$(bspc config border_width)
 FLOATING_BORDER_WIDTH=0
@@ -37,4 +37,3 @@ FLOATING_BORDER_WIDTH=0
 ~/i3lock.sh
 deadd-notification-center &
 discord --no-sandbox --start-minimized --ignore-gpu-blocklist --disable-features=UseOzonePlatform --enable-features=VaapiVideoDecoder --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy &
-volctl &
