@@ -73,3 +73,9 @@
 [submodule "st"]
 	path = st
 	url = https://github.com/dtomvan/st
+[submodule "dmenu"]
+	path = dmenu
+	url = https://github.com/dtomvan/dmenu
+[submodule "dmenu_drun"]
+	path = dmenu_drun
+	url = https://github.com/dtomvan/dmenu_drun

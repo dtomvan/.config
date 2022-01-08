@@ -2,8 +2,14 @@ dirs = awesome bins bspwm clifm deadd discord editorconfig emacs fish git gtk i3
 root-dirs = xmonad-root
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 
-all: $(dirs) $(root-dirs) discord_arch_electron st /usr/local/bin/bspwmbar xmonad ~/.local/bin/sheldon ~/.config/rofi rofisettings
+all: $(dirs) $(root-dirs) discord_arch_electron st /usr/local/bin/bspwmbar xmonad ~/.local/bin/sheldon ~/.config/rofi rofisettings ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu
 	localectl set-x11-keymap us,gr "" "" compose:ralt
+
+/usr/local/bin/dmenu: dmenu/
+	cd dmenu && sudo make install
+
+~/.cargo/bin/dmenu_drun: dmenu_drun/
+	cargo install --path dmenu_drun
 
 ~/.local/bin/sheldon:
 	curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
@@ -16,7 +22,7 @@ $(root-dirs):
 	sudo stow $@ -t /usr/share
 
 $(submodules):
-	git submodule update --recursive
+	git submodule update --init --recursive
 
 discord_arch_electron:
 	cd $@ && makepkg -si
@@ -42,4 +48,4 @@ mvrofi:
 rofisettings:
 	stow --adopt rofisettings
 
-.PHONY: $(dirs) $(root-dirs) discord_arch_electron st mvrofi rofisettings
+.PHONY: $(dirs) $(root-dirs) discord_arch_electron st mvrofi rofisettings /usr/local/bin/dmenu ~/.cargo/bin/dmenu_drun
