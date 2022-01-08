@@ -102,7 +102,7 @@ map('n',
 )
 map('n',
     '<Space>q',
-    ":lua R('telescope.builtin').lsp_workspace_diagnostics()<cr>",
+    ":lua R('telescope.builtin').diagnostics()<cr>",
     {noremap = true, silent = true}
 )
 map('n',
