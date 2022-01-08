@@ -19,4 +19,4 @@ dir="$HOME/.config/rofi/launchers/misc"
 # themes=($(ls -p --hide="launcher.sh" $dir))
 # theme="${themes[$(( $RANDOM % 16 ))]}"
 
-rofi -no-lazy-grab -show drun -modi drun -theme $dir/"$theme"
+rofi -no-lazy-grab -show combi -modi combi,run,drun -combi-modi window,run,drun -theme $dir/"$theme"
