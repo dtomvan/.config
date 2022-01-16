@@ -42,7 +42,7 @@ wmname LG3D
 xsetroot -cursor_name left_ptr
 xbindkeys
 picom --experimental-backends --xrender-sync-fence --backend glx --resize-damage 1 &
-xautolock -locker "systemctl suspend" -nowlocker ./i3lock.sh &
+xautolock -notify 10 -notifier 'notify-send "locking in 10 seconds..."' -locker "systemctl suspend" -nowlocker ./i3lock.sh &
 ckb-next -b &
 emacs --daemon &
 playerctld daemon &

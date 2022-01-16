@@ -10,6 +10,12 @@ super + v
 super + d
  ~/.cargo/bin/dmenu_drun
 
+super + control + 9
+ notify-send "toggling xautolock off" && xautolock -disable
+
+super + control + 0
+ notify-send "toggling xautolock on" && xautolock -enable
+
 super + n
  kill -s USR1 $(pidof deadd-notification-center)
 
