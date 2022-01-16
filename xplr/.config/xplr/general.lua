@@ -79,6 +79,15 @@ xplr.config.general.panel_ui.default.borders = {
     "Bottom",
 }
 
+xplr.fn.builtin.fmt_general_table_row_cols_0 = function(m)
+  local index = " " .. m.relative_index
+  if m.is_focused then
+      index = m.index
+  end
+
+  return "  " .. index
+end
+
 xplr.fn.builtin.fmt_general_table_row_cols_1 = function(m)
     local icons = require("icons")
     local ext = m.relative_path:match("^.*%.(.*)$") or ""
