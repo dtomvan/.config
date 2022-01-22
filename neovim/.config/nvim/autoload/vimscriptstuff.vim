@@ -7,7 +7,7 @@ au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
 autocmd BufEnter *.rs nnoremap <buffer> J :lua require'rust-tools.join_lines'.join_lines()<CR>
 autocmd BufEnter *.rs nnoremap <buffer> <leader>l :lua require'rust-tools.hover_actions'.hover_actions()<cr>
 autocmd BufEnter *.rs nnoremap <buffer> <leader>t :lua require'rust-tools.open_cargo_toml'.open_cargo_toml()<cr>
-autocmd BufEnter *.mom set ft=mom
+autocmd BufWritePre :silent lua vim.lsp.buf.formatting()
 cnoreabbrev luf luafile
 cnoreabbrev fcd cd %:p:h
 autocmd BufReadPost *

@@ -1,4 +1,4 @@
-require('packer').startup(function() 
+require('packer').startup(function()
     -- Packer
     use 'wbthomason/packer.nvim'
     -- Tpope goodness
@@ -10,21 +10,20 @@ require('packer').startup(function()
     use 'andweeb/presence.nvim'
     -- Gruvbox (https://www.youtube.com/watch?v=DsyptvUvu3A)
     use 'morhetz/gruvbox'
-    use "rebelot/kanagawa.nvim"
+    use 'rebelot/kanagawa.nvim'
     use {
         'feline-nvim/feline.nvim',
-        config = function () 
-            vim.o.background = "dark"
-            vim.g.gruvbox_contrast_dark = "hard"
+        config = function()
+            vim.o.background = 'dark'
+            vim.g.gruvbox_contrast_dark = 'hard'
             vim.g.gruvbox_invert_selection = 0
-            vim.cmd("colorscheme kanagawa")
-            -- vim.cmd([[colorscheme gruvbox]])
+            vim.cmd 'colorscheme kanagawa'
 
-            require('feline').setup({
-                preset = 'noicon'
-            })
+            require('feline').setup {
+                preset = 'noicon',
+            }
         end,
-        requires = {'kyazdani42/nvim-web-devicons', opt = true}
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     }
     -- Prime goodness
     use 'ThePrimeagen/harpoon'
@@ -32,7 +31,7 @@ require('packer').startup(function()
     -- Git signs
     use 'lewis6991/gitsigns.nvim'
     -- TJ telescope Johnson
-    use "nvim-telescope/telescope.nvim"
+    use 'nvim-telescope/telescope.nvim'
     use 'nvim-telescope/telescope-fzy-native.nvim'
     -- Rust or Bust
     use 'rust-lang/rust.vim'
@@ -50,7 +49,7 @@ require('packer').startup(function()
     use 'hrsh7th/cmp-nvim-lsp'
     use 'saadparwaiz1/cmp_luasnip'
     use 'L3MON4D3/LuaSnip'
-    use "rafamadriz/friendly-snippets"
+    use 'rafamadriz/friendly-snippets'
     -- Auto pairs
     use 'rstacruz/vim-closer'
     use 'Krasjet/auto.pairs'
@@ -59,14 +58,18 @@ require('packer').startup(function()
     -- xplr
     use {
         'fhill2/xplr.nvim',
-        run = function() require'xplr'.install({hide=true}) end,
-        requires = {{'nvim-lua/plenary.nvim'}, {'MunifTanjim/nui.nvim'}}
+        run = function()
+            require('xplr').install { hide = true }
+        end,
+        requires = { { 'nvim-lua/plenary.nvim' }, { 'MunifTanjim/nui.nvim' } },
     }
     use 'ron-rs/ron.vim'
     use 'Raimondi/vim-transpose-words'
     use {
         'glacambre/firenvim',
-        run = function() vim.fn['firenvim#install'](0) end 
+        run = function()
+            vim.fn['firenvim#install'](0)
+        end,
     }
     -- Misc
     use 'tversteeg/registers.nvim'
@@ -74,7 +77,24 @@ require('packer').startup(function()
     use 'andymass/vim-matchup'
     use 'stefandtw/quickfix-reflector.vim'
     use 'nvim-lua/popup.nvim'
-    use "nvim-lua/plenary.nvim"
-    use 'williamboman/nvim-lsp-installer'
+    use 'nvim-lua/plenary.nvim'
+    use {
+        'williamboman/nvim-lsp-installer',
+        run = function()
+            vim.cmd [[LspInstall rust_analyzer taplo pylsp kotlin_language_server]]
+        end,
+    }
     use 'ggandor/lightspeed.nvim'
+    use {
+        'jose-elias-alvarez/null-ls.nvim',
+        config = function()
+            require('null-ls').setup {
+                sources = {
+                    require('null-ls').builtins.formatting.stylua,
+                    require('null-ls').builtins.formatting.taplo,
+                },
+            }
+        end,
+        requires = { 'nvim-lua/plenary.nvim' },
+    }
 end)

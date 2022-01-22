@@ -160,6 +160,12 @@ _G.packer_plugins = {
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nui.nvim",
     url = "https://github.com/MunifTanjim/nui.nvim"
   },
+  ["null-ls.nvim"] = {
+    config = { "\27LJ\1\2°\1\0\0\5\0\n\0\0234\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\b\0002\2\3\0004\3\0\0%\4\1\0>\3\2\0027\3\3\0037\3\4\0037\3\5\3;\3\1\0024\3\0\0%\4\1\0>\3\2\0027\3\3\0037\3\6\0037\3\a\3;\3\2\2:\2\t\1>\0\2\1G\0\1\0\fsources\1\0\0\ntaplo\15completion\vstylua\15formatting\rbuiltins\nsetup\fnull-ls\frequire\0" },
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
+    url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
+  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-cmp",
@@ -298,6 +304,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: null-ls.nvim
+time([[Config for null-ls.nvim]], true)
+try_loadstring("\27LJ\1\2°\1\0\0\5\0\n\0\0234\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\b\0002\2\3\0004\3\0\0%\4\1\0>\3\2\0027\3\3\0037\3\4\0037\3\5\3;\3\1\0024\3\0\0%\4\1\0>\3\2\0027\3\3\0037\3\6\0037\3\a\3;\3\2\2:\2\t\1>\0\2\1G\0\1\0\fsources\1\0\0\ntaplo\15completion\vstylua\15formatting\rbuiltins\nsetup\fnull-ls\frequire\0", "config", "null-ls.nvim")
+time([[Config for null-ls.nvim]], false)
 -- Config for: feline.nvim
 time([[Config for feline.nvim]], true)
 try_loadstring("\27LJ\1\2î\1\0\0\2\0\14\0\0234\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\4\0%\1\6\0:\1\5\0004\0\0\0007\0\4\0'\1\0\0:\1\a\0004\0\0\0007\0\b\0%\1\t\0>\0\2\0014\0\n\0%\1\v\0>\0\2\0027\0\f\0003\1\r\0>\0\2\1G\0\1\0\1\0\1\vpreset\vnoicon\nsetup\vfeline\frequire\25colorscheme kanagawa\bcmd\29gruvbox_invert_selection\thard\26gruvbox_contrast_dark\6g\tdark\15background\6o\bvim\0", "config", "feline.nvim")
