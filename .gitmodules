@@ -79,3 +79,9 @@
 [submodule "dmenu_drun"]
 	path = dmenu_drun
 	url = https://github.com/dtomvan/dmenu_drun
+[submodule "xplr/.config/xplr/plugins/luamark"]
+	path = xplr/.config/xplr/plugins/luamark
+	url = https://gitlab.com/Erik.Lundstedt/luamark.xplr.git
+[submodule "xwinwrap"]
+	path = xwinwrap
+	url = https://github.com/Baitinq/xwinwrap

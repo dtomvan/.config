@@ -28,7 +28,7 @@ bspc rule -a i3lock layer=above
 bspc desktop='^1' --focus
 
 bspwmbar &
-feh --bg-fill ~/Pictures/bg.png &
+~/bg.sh bg.gif &
 
 BORDER_WIDTH=$(bspc config border_width)
 FLOATING_BORDER_WIDTH=0

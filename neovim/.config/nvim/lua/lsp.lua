@@ -11,7 +11,7 @@ require('nvim-treesitter.configs').setup {
     ignore_install = {},
     highlight = {
         enable = true,
-        disable = {},
+        disable = {"vim"},
         -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
         -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
         -- Using this option may slow down your editor, and you may see some duplicate highlights.
@@ -149,18 +149,30 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<C-f>', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
-R('nlua.lsp.nvim').setup(R 'lspconfig', {
-    on_attach = on_attach,
-    globals = {
-        'Color',
-        'c',
-        'Group',
-        'g',
-        's',
-        'use',
-        'custom_nvim_lspconfig_attach',
-    },
-})
+local lsp_installer_servers = require 'nvim-lsp-installer.servers'
+
+local server_available, requested_server = lsp_installer_servers.get_server 'sumneko_lua'
+if server_available then
+    requested_server:on_ready(function()
+        requested_server:setup {
+            on_attach = on_attach,
+            globals = {
+                'Color',
+                'c',
+                'Group',
+                'g',
+                's',
+                'use',
+                'xplr',
+                'vim',
+            },
+        }
+    end)
+    if not requested_server:is_installed() then
+        -- Queue the server to be installed
+        requested_server:install()
+    end
+end
 
 -- Register a handler that will be called for all installed servers.
 -- Alternatively, you may also register handlers on specific server instances instead (see example below).

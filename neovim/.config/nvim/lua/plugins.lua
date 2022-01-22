@@ -36,7 +36,6 @@ require('packer').startup(function()
     -- Rust or Bust
     use 'rust-lang/rust.vim'
     use 'cespare/vim-toml'
-    use 'tjdevries/nlua.nvim'
     use 'simrat39/rust-tools.nvim'
     -- Lsp
     use 'nvim-treesitter/nvim-treesitter'

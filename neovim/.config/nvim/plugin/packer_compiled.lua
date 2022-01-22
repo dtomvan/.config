@@ -150,11 +150,6 @@ _G.packer_plugins = {
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lspsaga.nvim",
     url = "https://github.com/glepnir/lspsaga.nvim"
   },
-  ["nlua.nvim"] = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nlua.nvim",
-    url = "https://github.com/tjdevries/nlua.nvim"
-  },
   ["nui.nvim"] = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nui.nvim",
