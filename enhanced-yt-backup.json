@@ -48,8 +48,8 @@
         "controlvolumemousebutton": true,
         "customcolors": {
             "--main-color": "#c34043",
-            "--main-background": "#1e1f28",
-            "--second-background": "#16161d",
+            "--main-background": "#16161d",
+            "--second-background": "#1e1f28",
             "--hover-background": "#2a2a37",
             "--main-text": "#dcd9cc",
             "--dimmer-text": "#8787af",

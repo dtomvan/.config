@@ -1,4 +1,3 @@
-local nvim_lsp = require 'lspconfig'
 vim.o.runtimepath = vim.o.runtimepath
     .. ','
     .. os.getenv 'HOME'
@@ -157,9 +156,7 @@ lsp_installer.on_server_ready(function(server)
     -- (optional) Customize the options passed to the server
     if server.name == 'sumneko_lua' then
         local cache_location = vim.fn.stdpath 'data'
-
         local base_directory = string.format('%s/lsp_servers/sumneko_lua/extension/server', cache_location)
-
         local bin_location = string.format('%s/bin/lua-language-server', base_directory)
 
         local sumneko_command = function()
@@ -184,6 +181,15 @@ lsp_installer.on_server_ready(function(server)
                 'vim',
             },
         })
+    elseif server.name == 'rome' then
+        opts.filetypes = {
+            'javascript',
+            'javascriptreact',
+            'typescript',
+            'typescript.tsx',
+            'typescriptreact',
+        }
+        server:setup(opts)
     else
         -- This setup() function is exactly the same as lspconfig's setup function.
         -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
