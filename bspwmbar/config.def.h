@@ -26,7 +26,7 @@ const char *fontname = "Jetbrains Mono:size=12";
 /* bspwmbar fg color */
 #define FGCOLOR    "#e5e5e5"
 /* bspwmbar bg color */
-#define BGCOLOR    "#222222"
+#define BGCOLOR    "#1F1F28"
 /* inactive fg color */
 #define ALTFGCOLOR "#7f7f7f"
 /* graph bg color */
@@ -69,19 +69,7 @@ module_t right_modules[] = {
 			.prefix = "",
 			.format = "%H:%M:%S %F",
 		},
-	},
-    { /* battery */
-        .battery = {
-            .func = battery,
-            /* .prefix = " ", */
-            /* .prefix_1 = " ", */
-            /* .prefix_2 = " ", */
-            /* .prefix_3 = " ", */
-            /* .prefix_4 = " ", */
-            .suffix = "%",
-            .path = "/sys/class/power_supply/BAT0/uevent",
-        },
-    },
+	}
 };
 
 #endif

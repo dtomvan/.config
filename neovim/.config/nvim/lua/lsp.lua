@@ -11,7 +11,7 @@ require('nvim-treesitter.configs').setup {
     ignore_install = {},
     highlight = {
         enable = true,
-        disable = {"vim"},
+        disable = { 'vim' },
         -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
         -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
         -- Using this option may slow down your editor, and you may see some duplicate highlights.
@@ -149,13 +149,30 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<C-f>', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
-local lsp_installer_servers = require 'nvim-lsp-installer.servers'
+-- Register a handler that will be called for all installed servers.
+-- Alternatively, you may also register handlers on specific server instances instead (see example below).
+lsp_installer.on_server_ready(function(server)
+    local opts = { on_attach = on_attach }
 
-local server_available, requested_server = lsp_installer_servers.get_server 'sumneko_lua'
-if server_available then
-    requested_server:on_ready(function()
-        requested_server:setup {
+    -- (optional) Customize the options passed to the server
+    if server.name == 'sumneko_lua' then
+        local cache_location = vim.fn.stdpath 'data'
+
+        local base_directory = string.format('%s/lsp_servers/sumneko_lua/extension/server', cache_location)
+
+        local bin_location = string.format('%s/bin/lua-language-server', base_directory)
+
+        local sumneko_command = function()
+            return {
+                bin_location,
+                '-E',
+                string.format('%s/main.lua', base_directory),
+            }
+        end
+        require('nlua.lsp.nvim').setup(require 'lspconfig', {
+            cmd = sumneko_command(),
             on_attach = on_attach,
+
             globals = {
                 'Color',
                 'c',
@@ -166,27 +183,12 @@ if server_available then
                 'xplr',
                 'vim',
             },
-        }
-    end)
-    if not requested_server:is_installed() then
-        -- Queue the server to be installed
-        requested_server:install()
+        })
+    else
+        -- This setup() function is exactly the same as lspconfig's setup function.
+        -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+        server:setup(opts)
     end
-end
-
--- Register a handler that will be called for all installed servers.
--- Alternatively, you may also register handlers on specific server instances instead (see example below).
-lsp_installer.on_server_ready(function(server)
-    local opts = { on_attach = on_attach }
-
-    -- (optional) Customize the options passed to the server
-    -- if server.name == "tsserver" then
-    --     opts.root_dir = function() ... end
-    -- end
-
-    -- This setup() function is exactly the same as lspconfig's setup function.
-    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-    server:setup(opts)
 end)
 
 local rust_tools_opts = {

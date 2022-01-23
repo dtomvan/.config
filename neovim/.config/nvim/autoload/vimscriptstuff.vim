@@ -11,7 +11,6 @@ au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
 
 hi TabLineFill guibg=#333333
 hi StatusLine guibg=#928374 guifg=#3c3836
-hi Normal guibg=NONE ctermbg=NONE
 
 let mapleader = "\<Space>"
 set clipboard=unnamedplus

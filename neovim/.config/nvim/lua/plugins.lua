@@ -18,6 +18,7 @@ require('packer').startup(function()
             vim.g.gruvbox_contrast_dark = 'hard'
             vim.g.gruvbox_invert_selection = 0
             vim.cmd 'colorscheme kanagawa'
+            vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
 
             require('feline').setup {
                 preset = 'noicon',
@@ -43,6 +44,7 @@ require('packer').startup(function()
     use 'onsails/lspkind-nvim'
     use 'nvim-lua/lsp_extensions.nvim'
     use 'glepnir/lspsaga.nvim'
+    use 'tjdevries/nlua.nvim'
     -- Autocompletion
     use 'hrsh7th/nvim-cmp'
     use 'hrsh7th/cmp-nvim-lsp'
