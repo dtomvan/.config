@@ -1,4 +1,3 @@
-alacritty
 alsa-utils
 amd-ucode
 arc-solid-gtk-theme
@@ -18,7 +17,6 @@ deadd-notification-center-git
 deepin-icon-theme
 dhcpcd
 discord_arch_electron
-dunst
 dust
 exa
 fd
@@ -37,7 +35,6 @@ hyperfine
 i3lock-color
 intel-ucode
 jq
-kitty
 lxappearance
 maim
 man-pages
