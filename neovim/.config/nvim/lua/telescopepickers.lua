@@ -51,32 +51,12 @@ end
 
 function M.dotfiles()
     builtin.git_files {
-        cwd = '~/.config/nvim',
-    }
-end
-
-function M.gitclient()
-    builtin.git_files {
-        cwd = '~/projects/git-client',
+        cwd = '~/DotFiles',
     }
 end
 
 function M.grep()
-    if LASTGREP == nil then
-        LASTGREP = ''
-    end
-    builtin.live_grep {
-        attach_mappings = function(_, map)
-            map('i', '<CR>', function(bufnr)
-                LASTGREP = TelescopeGlobalState.global.current_line
-                require('telescope.actions').select_default(bufnr)
-                require('telescope.actions').close(bufnr)
-            end)
-            map('i', '<M-g>', function(_) --[[ IDK HOW? ]]
-            end)
-            return true
-        end,
-    }
+    builtin.live_grep()
 end
 
 return M

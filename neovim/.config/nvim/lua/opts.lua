@@ -44,3 +44,4 @@ ops.updatetime = 300
 ops.wrap = true
 ops.wrap = true
 ops.writebackup = true
+ops.scrolloff = 8

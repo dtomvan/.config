@@ -13,7 +13,7 @@
     "Discolored": false,
     "Frosted Glass": false,
     "Transparency": false,
-    "Quarrel": true,
-    "BetterDefaultGlasscord": false,
+    "Quarrel": false,
+    "BetterDefaultGlasscord": true,
     "Ovel": false
 }

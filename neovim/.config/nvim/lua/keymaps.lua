@@ -1,74 +1,50 @@
-local map = vim.api.nvim_set_keymap
-map('', '<Space>', '<Nop>', { noremap = true, silent = true })
-map('', '<Down>', 'j<C-e>', { noremap = true, silent = false })
-map('', '<Up>', 'k<C-y>', { noremap = true, silent = false })
-map('n', '<Space><Space>', ':<up>', { noremap = true, silent = false })
-map('n', '<C-k>', '<C-w>2<', { noremap = false, silent = true })
-map('n', '<C-j>', '<C-w>2>', { noremap = false, silent = true })
-map('n', '<C-S-Left>', '<C-w><C-H>', { noremap = true, silent = true })
-map('n', '<C-S-Down>', '<C-w><C-J>', { noremap = true, silent = true })
-map('n', '<C-S-Up>', '<C-w><C-K>', { noremap = true, silent = true })
-map('n', '<C-S-Right>', '<C-w><C-L>', { noremap = true, silent = true })
-map('n', '<F8>', ':TagbarToggle<CR>', { noremap = false, silent = true })
-map('n', '<Space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
-map('n', '<Space>b', "<cmd>lua R('telescopepickers').buffers()<cr>", { noremap = true, silent = true })
-map('n', '<Space>ca', "<cmd>lua require('telescope.builtin').lsp_code_actions()<cr>", { noremap = true, silent = true })
-map('n', '<Space>ch', "<cmd>lua require('telescope.builtin').command_history()<cr>", { noremap = true, silent = true })
-map('n', '<Space>fp', "<cmd>lua require('telescopepickers').projects()<cr>", { noremap = true, silent = true })
-map('n', '<Space>fd', "<cmd>lua require('telescopepickers').configs()<cr>", { noremap = true, silent = true })
-map('n', '<Space>cr', ':vs term://mold -run cargo run<CR>10<C-w>>', { noremap = false, silent = false })
-map('n', '<Space>cb', ':vs term://mold -run cargo b<CR>10<C-w>>', { noremap = false, silent = false })
-map('n', '<Space>cc', ':vs term://mold -run cargo clippy<CR>10<C-w>>', { noremap = false, silent = false })
-map('n', '<Space>ct', ':vs term://mold -run cargo t<CR>10<C-w>>', { noremap = false, silent = false })
-map('n', '<Space>q', ":lua R('telescope.builtin').diagnostics()<cr>", { noremap = true, silent = true })
-map('n', '<Space>dd', ":lua R('telescopepickers').dotfiles()<CR>", { noremap = true, silent = true })
-map('n', '<Space>dg', ":lua R('telescopepickers').gitclient()<CR>", { noremap = true, silent = true })
-map('n', '<Space>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", { noremap = true, silent = true })
-map('n', '<Space>fc', "<cmd>lua require('telescope.builtin').commands()<cr>", { noremap = true, silent = true })
-map(
-    'n',
-    '<Space>ft',
-    "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>",
-    { noremap = true, silent = true }
-)
-map('n', '<Space>id', "<cmd>r !date +'%F'<CR>", { noremap = true, silent = true })
-map(
-    'n',
+local mapx = require 'mapx'
+
+mapx.map('<leader>', '<Nop>', 'silent')
+
+-- Window management
+mapx.nnoremap('<C-S-Left>', '<C-w><C-H>', 'silent')
+mapx.nnoremap('<C-S-Down>', '<C-w><C-J>', 'silent')
+mapx.nnoremap('<C-S-Up>', '<C-w><C-K>', 'silent')
+mapx.nnoremap('<C-S-Right>', '<C-w><C-L>', 'silent')
+mapx.nnoremap('<C-Left>', ':vertical resize -2<CR>', 'silent')
+mapx.nnoremap('<C-Right>', ':vertical resize +2<CR>', 'silent')
+mapx.nnoremap('<C-Up>', ':resize -2<CR>', 'silent')
+mapx.nnoremap('<C-Down>', ':resize +2<CR>', 'silent')
+
+-- Telescope
+mapx.nnoremap('<leader>b', "<cmd>lua R('telescopepickers').buffers()<cr>", 'silent')
+mapx.nnoremap('<leader>ca', "<cmd>lua require('telescope.builtin').lsp_code_actions()<cr>", 'silent')
+mapx.nnoremap('<leader>ch', "<cmd>lua require('telescope.builtin').command_history()<cr>", 'silent')
+mapx.nnoremap('<leader>dd', ":lua R('telescopepickers').dotfiles()<CR>", 'silent')
+mapx.nnoremap('<leader>fc', "<cmd>lua require('telescope.builtin').commands()<cr>", 'silent')
+mapx.nnoremap('<leader>fd', "<cmd>lua require('telescopepickers').configs()<cr>", 'silent')
+mapx.nnoremap('<leader>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", 'silent')
+mapx.nnoremap('<leader>fp', "<cmd>lua require('telescopepickers').projects()<cr>", 'silent')
+mapx.nnoremap('<leader>ft', "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>", 'silent')
+mapx.nnoremap('<leader>q', ":lua R('telescope.builtin').diagnostics()<cr>", 'silent')
+mapx.nnoremap('<leader>id', "<cmd>r !date +'%F'<CR>", 'silent')
+mapx.nnoremap(
     '<C-e>',
     ":lua require'telescope.builtin'.find_files{find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' }}<cr>",
-    { noremap = true, silent = true }
+    'silent'
 )
-map('n', '<C-p>', "<cmd>lua R('telescopepickers').grep()<cr>", { noremap = true, silent = true })
-map('n', '<Space><CR>', '<C-w>w', { noremap = true, silent = false })
-map('n', '<C-Left>', ':vertical resize -2<CR>', { noremap = false, silent = true })
-map('n', '<C-Right>', ':vertical resize +2<CR>', { noremap = false, silent = true })
-map('n', '<C-Up>', ':resize -2<CR>', { noremap = false, silent = true })
-map('n', '<C-Down>', ':resize +2<CR>', { noremap = false, silent = true })
-map('n', '<C-q>', ":lua require'telescope'.extensions.project.project{}<CR>", { noremap = true, silent = false })
-map('n', 'gh', "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", { noremap = true, silent = true })
+mapx.nnoremap('<C-p>', "<cmd>lua R('telescopepickers').grep()<cr>", 'silent')
+
+-- Quick terminals
+mapx.nnoremap('<leader>cl', ':vs term://$SHELL<cr>i', 'silent')
+mapx.nnoremap('<leader>cr', ':vs term://mold -run cargo run<CR>10<C-w>>', 'silent')
+mapx.nnoremap('<leader>cb', ':vs term://mold -run cargo b<CR>10<C-w>>', 'silent')
+mapx.nnoremap('<leader>cc', ':vs term://mold -run cargo clippy<CR>10<C-w>>', 'silent')
+mapx.nnoremap('<leader>ct', ':vs term://mold -run cargo t<CR>10<C-w>>', 'silent')
+
+-- Edge cases
+mapx.nnoremap('<leader><leader>', ':<up>', 'silent')
+mapx.nnoremap('<leader><CR>', '<C-w>w', 'silent')
+mapx.nnoremap('<C-q>', ":lua require'telescope'.extensions.project.project{}<CR>", 'silent')
+
 -- Thanks prime (:
 local breakpoints = { ',', '!', '.', '?', ';' }
 for _, point in ipairs(breakpoints) do
-    map('i', point, point .. '<c-g>u', { noremap = true, silent = false })
+    mapx.inoremap(point, point .. '<c-g>u', 'silent')
 end
-map('n', 'n', 'nzzzv', { noremap = true, silent = true })
-map('n', 'N', 'Nzzzv', { noremap = true, silent = true })
-map('n', 'J', 'mzJ`zzzzv', { noremap = true, silent = true })
--- map(
---     "n",
---     'K',
---     '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>',
---     {noremap = true, silent = true}
--- )
--- map(
---     "n",
---     '<C-f>',
---     '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
---     {noremap = true, silent = true}
--- )
--- map(
---     "n",
---     '<C-b>',
---     '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>',
---     {noremap = true, silent = true}
--- )

@@ -1,3 +1,5 @@
+local lsp_installer_servers = require 'nvim-lsp-installer.servers'
+
 vim.o.runtimepath = vim.o.runtimepath
     .. ','
     .. os.getenv 'HOME'
@@ -114,7 +116,7 @@ cmp.setup {
 local lsp_installer = require 'nvim-lsp-installer'
 
 -- Mappings.
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
     local function buf_set_keymap(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)
     end
@@ -139,64 +141,19 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
     buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    buf_set_keymap('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
     buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
     buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-    buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
     buf_set_keymap('n', '<C-f>', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
--- Register a handler that will be called for all installed servers.
--- Alternatively, you may also register handlers on specific server instances instead (see example below).
-lsp_installer.on_server_ready(function(server)
-    local opts = { on_attach = on_attach }
-
-    -- (optional) Customize the options passed to the server
-    if server.name == 'sumneko_lua' then
-        local cache_location = vim.fn.stdpath 'data'
-        local base_directory = string.format('%s/lsp_servers/sumneko_lua/extension/server', cache_location)
-        local bin_location = string.format('%s/bin/lua-language-server', base_directory)
-
-        local sumneko_command = function()
-            return {
-                bin_location,
-                '-E',
-                string.format('%s/main.lua', base_directory),
-            }
-        end
-        require('nlua.lsp.nvim').setup(require 'lspconfig', {
-            cmd = sumneko_command(),
-            on_attach = on_attach,
-
-            globals = {
-                'Color',
-                'c',
-                'Group',
-                'g',
-                's',
-                'use',
-                'xplr',
-                'vim',
-            },
-        })
-    elseif server.name == 'rome' then
-        opts.filetypes = {
-            'javascript',
-            'javascriptreact',
-            'typescript',
-            'typescript.tsx',
-            'typescriptreact',
-        }
-        server:setup(opts)
-    else
-        -- This setup() function is exactly the same as lspconfig's setup function.
-        -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-        server:setup(opts)
-    end
-end)
-
+-- Rust
+local rust_command = function()
+    local _, server = lsp_installer_servers.get_server 'rust_analyzer'
+    return server._default_options.cmd
+end
 local rust_tools_opts = {
     tools = { -- rust-tools options
         -- Automatically set inlay hints (type hints)
@@ -301,8 +258,49 @@ local rust_tools_opts = {
     -- all the opts to send to nvim-lspconfig
     -- these override the defaults set by rust-tools.nvim
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
-    server = {}, -- rust-analyer options
+    -- rust-analyer options
+    server = { on_attach = on_attach, standalone = true, cmd = rust_command() },
 }
 
+-- Register a handler that will be called for all installed servers.
+-- Alternatively, you may also register handlers on specific server instances instead (see example below).
+lsp_installer.on_server_ready(function(server)
+    local opts = { on_attach = on_attach }
+
+    -- (optional) Customize the options passed to the server
+    if server.name == 'sumneko_lua' then
+        require('nlua.lsp.nvim').setup(require 'lspconfig', {
+            cmd = server._default_options.cmd,
+            on_attach = on_attach,
+
+            globals = {
+                'Color',
+                'c',
+                'Group',
+                'g',
+                's',
+                'use',
+                'xplr',
+                'vim',
+            },
+        })
+    elseif server.name == 'rome' then
+        opts.filetypes = {
+            'javascript',
+            'javascriptreact',
+            'typescript',
+            'typescript.tsx',
+            'typescriptreact',
+        }
+        server:setup(opts)
+    elseif server.name == 'rust_analyzer' then
+        -- Do nothing, you should call rust_tools beforehand
+        -- We are using it's auto-installed path, though.
+    else
+        -- This setup() function is exactly the same as lspconfig's setup function.
+        -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+        server:setup(opts)
+    end
+end)
+
 require('rust-tools').setup(rust_tools_opts)
-require('rust-tools.inlay_hints').setup_autocmd()

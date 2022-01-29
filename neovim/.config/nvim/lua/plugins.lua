@@ -1,6 +1,8 @@
 require('packer').startup(function()
     -- Packer
     use 'wbthomason/packer.nvim'
+    -- Maps
+    use 'b0o/mapx.nvim'
     -- Tpope goodness
     use 'tpope/vim-commentary'
     use 'tpope/vim-surround'
@@ -29,6 +31,7 @@ require('packer').startup(function()
     -- Prime goodness
     use 'ThePrimeagen/harpoon'
     use 'ThePrimeagen/refactoring.nvim'
+    use 'ThePrimeagen/vim-be-good'
     -- Git signs
     use 'lewis6991/gitsigns.nvim'
     -- TJ telescope Johnson
@@ -37,9 +40,16 @@ require('packer').startup(function()
     -- Rust or Bust
     use 'rust-lang/rust.vim'
     use 'cespare/vim-toml'
-    use 'simrat39/rust-tools.nvim'
+    use {
+        'simrat39/rust-tools.nvim',
+    }
     -- Lsp
-    use 'nvim-treesitter/nvim-treesitter'
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = function()
+            vim.cmd [[ TSUpdate ]]
+        end
+    }
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
     use 'nvim-lua/lsp_extensions.nvim'

@@ -8,6 +8,8 @@ autocmd BufReadPost *
             \ |   exe "normal! g`\""
             \ | endif
 au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
+" Handy for dates in your commit message
+au BufEnter */COMMIT_EDITMSG vmap <buffer> <leader>0 d:r! date +\%Y-\%m-\%d<cr>VK<esc>
 
 hi TabLineFill guibg=#333333
 hi StatusLine guibg=#928374 guifg=#3c3836
@@ -22,17 +24,11 @@ cnoreabbrev fcd cd %:p:h
 " move line(s) up/down
 nno <silent> <leader>k :m-2<CR>==
 nno <silent> <leader>j :m+<CR>==
-nno Y yg$
-nno n nzzzv
-nno N Nzzzv
+nno <leader>y mpggyG`p
 nno J mzJ`z
-nno { {zzzv
-nno } }zzzv
-nno j gjzzzv
-nno k gkzzzv
 nno J mzJ`z
-nno <silent> <leader>j :cnext<CR>zz
-nno <silent> <leader>k :cprev<CR>zz
+nno <silent> <leader>j :cnext<CR>
+nno <silent> <leader>k :cprev<CR>
 nno <silent> \a :lua require("harpoon.mark").add_file()<CR>
 nno <silent> <F1> :lua require("harpoon.ui").toggle_quick_menu()<CR>
 nno <silent> <C-Space> :lua require("harpoon.ui").nav_file(1)<CR>
@@ -47,8 +43,6 @@ nno p p==
 vno <leader>s :!sort<cr>
 vno <silent> J :m '>+1<CR>gv=gv
 vno <silent> K :m '<-2<CR>gv=gv
-vno j jzzzv
-vno k kzzzv
 vno <silent> <leader>k :m-2<CR>gv=gv
 vno <silent> <leader>j :m'>+<CR>gv=gv
 vno <c-a> do<esc>p0!!bc<cr>kJgv

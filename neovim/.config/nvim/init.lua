@@ -19,8 +19,9 @@ require 'globals'
 R 'plugins'
 R 'config-xplr'
 vim.cmd [[source ~/.config/nvim/autoload/vimscriptstuff.vim]]
-R 'lsp'
 R 'opts'
+R 'lsp'
+vim.cmd [[ au! VimEnter *.rs ]]
 R 'keymaps'
 R('gitsigns').setup {}
 R('telescope').setup {}

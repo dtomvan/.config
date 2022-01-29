@@ -1,5 +1,6 @@
 local transform_mod = require('telescope.actions.mt').transform_mod
 local tele_actions = require 'telescope.actions'
+local actions_state = require 'telescope.actions.state'
 
 local actions = {}
 
@@ -21,7 +22,7 @@ function actions.delete_buffer(prompt_bufnr)
 end
 
 function actions.delete_selected_buffers(prompt_bufnr)
-    local picker = tele_actions.get_current_picker(prompt_bufnr)
+    local picker = actions_state.get_current_picker(prompt_bufnr)
 
     for _, entry in ipairs(picker:get_multi_selection()) do
         vim.fn.execute('bd! ' .. entry.bufnr)
