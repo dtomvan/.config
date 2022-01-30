@@ -1,9 +1,3 @@
-[submodule "awesome/.config/awesome/vicious"]
-	path = awesome/.config/awesome/vicious
-	url = https://github.com/vicious-widgets/vicious.git
-[submodule "awesome/.config/awesome/themes/ayu"]
-	path = awesome/.config/awesome/themes/ayu
-	url = https://github.com/MArpogaus/awesome-ayu.git
 [submodule "xplr/.config/xplr/plugins/fzf"]
 	path = xplr/.config/xplr/plugins/fzf
 	url = https://github.com/sayanarijit/fzf.xplr.git
