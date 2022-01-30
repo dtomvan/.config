@@ -113,10 +113,13 @@ cmp.setup {
     },
 }
 
+local lsp_status = require 'lsp-status'
 local lsp_installer = require 'nvim-lsp-installer'
 
 -- Mappings.
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
+    lsp_status.on_attach(client)
+
     local function buf_set_keymap(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)
     end
@@ -158,6 +161,13 @@ local on_attach = function(_, bufnr)
     buf_set_keymap('n', 'gR', '<cmd>Trouble lsp_references<cr>', opts)
 end
 
+lsp_status.register_progress()
+
+local capabilities = vim.tbl_extend(
+    'keep',
+    require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    lsp_status.capabilities
+)
 -- Rust
 local rust_command = function()
     local _, server = lsp_installer_servers.get_server 'rust_analyzer'
@@ -272,7 +282,7 @@ local rust_tools_opts = {
         on_attach = on_attach,
         standalone = true,
         cmd = rust_command(),
-        capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+        capabilities = capabilities,
     },
 }
 
@@ -281,7 +291,7 @@ local rust_tools_opts = {
 lsp_installer.on_server_ready(function(server)
     local opts = {
         on_attach = on_attach,
-        capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+        capabilities = capabilities,
     }
 
     -- (optional) Customize the options passed to the server

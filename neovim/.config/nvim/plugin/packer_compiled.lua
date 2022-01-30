@@ -90,7 +90,7 @@ _G.packer_plugins = {
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
   ["feline.nvim"] = {
-    config = { "\27LJ\1\2 \2\0\0\2\0\15\0\0274\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\4\0%\1\6\0:\1\5\0004\0\0\0007\0\4\0'\1\0\0:\1\a\0004\0\0\0007\0\b\0%\1\t\0>\0\2\0014\0\0\0007\0\b\0%\1\n\0>\0\2\0014\0\v\0%\1\f\0>\0\2\0027\0\r\0003\1\14\0>\0\2\1G\0\1\0\1\0\1\vpreset\vnoicon\nsetup\vfeline\frequire&hi Normal guibg=NONE ctermbg=NONE\25colorscheme kanagawa\bcmd\29gruvbox_invert_selection\thard\26gruvbox_contrast_dark\6g\tdark\15background\6o\bvim\0" },
+    config = { "\27LJ\1\2O\0\0\2\0\3\0\f4\0\0\0007\0\1\0007\0\2\0>\0\1\2\19\0\0\0'\1\0\0\0\1\0\0T\0\2€)\0\1\0T\1\1€)\0\2\0H\0\2\0\20buf_get_clients\blsp\bvimŽ\1\0\0\5\0\t\0\0214\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0024\1\3\0\16\2\0\0>\1\2\2\a\1\4\0T\1\b€4\1\4\0007\1\5\1\16\2\0\0%\3\6\0%\4\a\0>\1\4\3H\1\2\0T\1\2€%\1\b\0H\1\2\0G\0\1\0\6 \5\tðŸ‡»\tgsub\vstring\ttype\vstatus\15lsp-status\frequire¼\3\1\0\5\0\26\1-4\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\4\0%\1\5\0>\0\2\0014\0\0\0007\0\4\0%\1\6\0>\0\2\0014\0\0\0007\0\a\0007\0\b\0\b\0\0\0T\0\23€4\0\t\0%\1\n\0>\0\2\0027\0\v\0004\1\f\0007\1\r\0017\2\14\0008\2\2\0023\3\15\0001\4\16\0:\4\17\3>\1\3\0014\1\t\0%\2\18\0>\1\2\0027\1\19\0013\2\20\0:\0\21\0023\3\23\0001\4\22\0:\4\24\3:\3\25\2>\1\2\0014\0\0\0007\0\a\0'\1\1\0:\1\b\0G\0\1\0\21custom_providers\23lsp_current_status\1\0\0\0\15components\1\0\0\nsetup\vfeline\fenabled\0\1\0\1\rprovider\23lsp_current_status\vactive\vinsert\ntable\vnoicon\19feline.presets\frequire\20feline_has_init\6g&hi Normal guibg=NONE ctermbg=NONE\25colorscheme kanagawa\bcmd\tdark\15background\6o\bvim\2\0" },
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/feline.nvim",
     url = "https://github.com/feline-nvim/feline.nvim"
@@ -109,11 +109,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
-  },
-  gruvbox = {
-    loaded = true,
-    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/gruvbox",
-    url = "https://github.com/morhetz/gruvbox"
   },
   harpoon = {
     loaded = true,
@@ -134,6 +129,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lightspeed.nvim",
     url = "https://github.com/ggandor/lightspeed.nvim"
+  },
+  ["lsp-status.nvim"] = {
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/lsp-status.nvim",
+    url = "https://github.com/nvim-lua/lsp-status.nvim"
   },
   ["lsp_extensions.nvim"] = {
     loaded = true,
@@ -185,6 +185,12 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
+  },
+  ["nvim-notify"] = {
+    config = { "\27LJ\1\2—\2\0\2\6\0\v\0.4\2\0\0%\3\1\0>\2\2\2\16\3\0\0\16\4\1\0>\2\3\0014\2\2\0007\2\3\0027\2\4\0027\2\5\2\5\1\2\0T\2\6€4\2\2\0007\2\6\0027\2\a\2\16\3\0\0>\2\2\1T\2\27€4\2\2\0007\2\3\0027\2\4\0027\2\b\2\5\1\2\0T\2\v€4\2\2\0007\2\6\0027\2\t\0022\3\3\0003\4\n\0;\0\1\4;\4\1\3)\4\2\0002\5\0\0>\2\4\1T\2\n€4\2\2\0007\2\6\0027\2\t\0022\3\3\0002\4\3\0;\0\1\4;\4\1\3)\4\2\0002\5\0\0>\2\4\1G\0\1\0\1\3\0\0\0\15WarningMsg\14nvim_echo\tWARN\21nvim_err_writeln\bapi\nERROR\vlevels\blog\bvim\vnotify\frequire™\1\1\0\2\0\6\0\n4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0>\0\2\0014\0\4\0001\1\5\0:\1\1\0G\0\1\0\0\bvim\1\0\4\22background_colour\f#000000\vrender\fdefault\ftimeout\3ˆ'\vstages\22fade_in_slide_out\nsetup\vnotify\frequire\0" },
+    loaded = true,
+    path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-notify",
+    url = "https://github.com/rcarriga/nvim-notify"
   },
   ["nvim-treesitter"] = {
     loaded = true,
@@ -326,22 +332,26 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: feline.nvim
-time([[Config for feline.nvim]], true)
-try_loadstring("\27LJ\1\2 \2\0\0\2\0\15\0\0274\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\4\0%\1\6\0:\1\5\0004\0\0\0007\0\4\0'\1\0\0:\1\a\0004\0\0\0007\0\b\0%\1\t\0>\0\2\0014\0\0\0007\0\b\0%\1\n\0>\0\2\0014\0\v\0%\1\f\0>\0\2\0027\0\r\0003\1\14\0>\0\2\1G\0\1\0\1\0\1\vpreset\vnoicon\nsetup\vfeline\frequire&hi Normal guibg=NONE ctermbg=NONE\25colorscheme kanagawa\bcmd\29gruvbox_invert_selection\thard\26gruvbox_contrast_dark\6g\tdark\15background\6o\bvim\0", "config", "feline.nvim")
-time([[Config for feline.nvim]], false)
 -- Config for: trouble.nvim
 time([[Config for trouble.nvim]], true)
 try_loadstring("\27LJ\1\0029\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
 time([[Config for trouble.nvim]], false)
--- Config for: null-ls.nvim
-time([[Config for null-ls.nvim]], true)
-try_loadstring("\27LJ\1\2¥\1\0\0\5\0\t\0\0234\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\a\0002\2\3\0004\3\0\0%\4\1\0>\3\2\0027\3\3\0037\3\4\0037\3\5\3;\3\1\0024\3\0\0%\4\1\0>\3\2\0027\3\3\0037\3\4\0037\3\6\3;\3\2\2:\2\b\1>\0\2\1G\0\1\0\fsources\1\0\0\ntaplo\vstylua\15formatting\rbuiltins\nsetup\fnull-ls\frequire\0", "config", "null-ls.nvim")
-time([[Config for null-ls.nvim]], false)
 -- Config for: todo-comments.nvim
 time([[Config for todo-comments.nvim]], true)
 try_loadstring("\27LJ\1\2?\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\18todo-comments\frequire\0", "config", "todo-comments.nvim")
 time([[Config for todo-comments.nvim]], false)
+-- Config for: feline.nvim
+time([[Config for feline.nvim]], true)
+try_loadstring("\27LJ\1\2O\0\0\2\0\3\0\f4\0\0\0007\0\1\0007\0\2\0>\0\1\2\19\0\0\0'\1\0\0\0\1\0\0T\0\2€)\0\1\0T\1\1€)\0\2\0H\0\2\0\20buf_get_clients\blsp\bvimŽ\1\0\0\5\0\t\0\0214\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0024\1\3\0\16\2\0\0>\1\2\2\a\1\4\0T\1\b€4\1\4\0007\1\5\1\16\2\0\0%\3\6\0%\4\a\0>\1\4\3H\1\2\0T\1\2€%\1\b\0H\1\2\0G\0\1\0\6 \5\tðŸ‡»\tgsub\vstring\ttype\vstatus\15lsp-status\frequire¼\3\1\0\5\0\26\1-4\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\4\0%\1\5\0>\0\2\0014\0\0\0007\0\4\0%\1\6\0>\0\2\0014\0\0\0007\0\a\0007\0\b\0\b\0\0\0T\0\23€4\0\t\0%\1\n\0>\0\2\0027\0\v\0004\1\f\0007\1\r\0017\2\14\0008\2\2\0023\3\15\0001\4\16\0:\4\17\3>\1\3\0014\1\t\0%\2\18\0>\1\2\0027\1\19\0013\2\20\0:\0\21\0023\3\23\0001\4\22\0:\4\24\3:\3\25\2>\1\2\0014\0\0\0007\0\a\0'\1\1\0:\1\b\0G\0\1\0\21custom_providers\23lsp_current_status\1\0\0\0\15components\1\0\0\nsetup\vfeline\fenabled\0\1\0\1\rprovider\23lsp_current_status\vactive\vinsert\ntable\vnoicon\19feline.presets\frequire\20feline_has_init\6g&hi Normal guibg=NONE ctermbg=NONE\25colorscheme kanagawa\bcmd\tdark\15background\6o\bvim\2\0", "config", "feline.nvim")
+time([[Config for feline.nvim]], false)
+-- Config for: null-ls.nvim
+time([[Config for null-ls.nvim]], true)
+try_loadstring("\27LJ\1\2¥\1\0\0\5\0\t\0\0234\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\a\0002\2\3\0004\3\0\0%\4\1\0>\3\2\0027\3\3\0037\3\4\0037\3\5\3;\3\1\0024\3\0\0%\4\1\0>\3\2\0027\3\3\0037\3\4\0037\3\6\3;\3\2\2:\2\b\1>\0\2\1G\0\1\0\fsources\1\0\0\ntaplo\vstylua\15formatting\rbuiltins\nsetup\fnull-ls\frequire\0", "config", "null-ls.nvim")
+time([[Config for null-ls.nvim]], false)
+-- Config for: nvim-notify
+time([[Config for nvim-notify]], true)
+try_loadstring("\27LJ\1\2—\2\0\2\6\0\v\0.4\2\0\0%\3\1\0>\2\2\2\16\3\0\0\16\4\1\0>\2\3\0014\2\2\0007\2\3\0027\2\4\0027\2\5\2\5\1\2\0T\2\6€4\2\2\0007\2\6\0027\2\a\2\16\3\0\0>\2\2\1T\2\27€4\2\2\0007\2\3\0027\2\4\0027\2\b\2\5\1\2\0T\2\v€4\2\2\0007\2\6\0027\2\t\0022\3\3\0003\4\n\0;\0\1\4;\4\1\3)\4\2\0002\5\0\0>\2\4\1T\2\n€4\2\2\0007\2\6\0027\2\t\0022\3\3\0002\4\3\0;\0\1\4;\4\1\3)\4\2\0002\5\0\0>\2\4\1G\0\1\0\1\3\0\0\0\15WarningMsg\14nvim_echo\tWARN\21nvim_err_writeln\bapi\nERROR\vlevels\blog\bvim\vnotify\frequire™\1\1\0\2\0\6\0\n4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0>\0\2\0014\0\4\0001\1\5\0:\1\1\0G\0\1\0\0\bvim\1\0\4\22background_colour\f#000000\vrender\fdefault\ftimeout\3ˆ'\vstages\22fade_in_slide_out\nsetup\vnotify\frequire\0", "config", "nvim-notify")
+time([[Config for nvim-notify]], false)
 if should_profile then save_profiles() end
 
 end)
