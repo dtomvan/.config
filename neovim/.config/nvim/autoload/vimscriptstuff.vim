@@ -10,6 +10,14 @@ autocmd BufReadPost *
 au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
 " Handy for dates in your commit message
 au BufEnter */COMMIT_EDITMSG vmap <buffer> <leader>0 d:r! date +\%Y-\%m-\%d<cr>VK<esc>
+au BufEnter */COMMIT_EDITMSG nmap <silent> <buffer> <leader>0 V/# Please enter the commit message/-1<cr>d:call histdel('/', -1)<cr>:r! date +\%Y-\%m-\%d<cr>VK<esc>
+
+" Set line numbers for documentation
+augroup vim help
+    autocmd!
+    autocmd FileType help setlocal number
+    autocmd FileType help setlocal relativenumber
+augroup END
 
 hi TabLineFill guibg=#333333
 hi StatusLine guibg=#928374 guifg=#3c3836

@@ -16,14 +16,14 @@ mapx.nnoremap('<C-Down>', ':resize +2<CR>', 'silent')
 mapx.nnoremap('<leader>b', "<cmd>lua R('telescopepickers').buffers()<cr>", 'silent')
 mapx.nnoremap('<leader>ca', "<cmd>lua require('telescope.builtin').lsp_code_actions()<cr>", 'silent')
 mapx.nnoremap('<leader>ch', "<cmd>lua require('telescope.builtin').command_history()<cr>", 'silent')
-mapx.nnoremap('<leader>dd', ":lua R('telescopepickers').dotfiles()<CR>", 'silent')
+mapx.nnoremap('<leader>dd', "<cmd>lua R('telescopepickers').dotfiles()<CR>", 'silent')
+mapx.nnoremap('<leader>fb', "<cmd>lua R('telescopepickers').current_buffer()<CR>", 'silent')
 mapx.nnoremap('<leader>fc', "<cmd>lua require('telescope.builtin').commands()<cr>", 'silent')
-mapx.nnoremap('<leader>fd', "<cmd>lua require('telescopepickers').configs()<cr>", 'silent')
+mapx.nnoremap('<leader>fd', "<cmd>lua R('telescopepickers').configs()<cr>", 'silent')
 mapx.nnoremap('<leader>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", 'silent')
-mapx.nnoremap('<leader>fp', "<cmd>lua require('telescopepickers').projects()<cr>", 'silent')
+mapx.nnoremap('<leader>fp', "<cmd>lua R('telescopepickers').projects()<cr>", 'silent')
 mapx.nnoremap('<leader>ft', "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>", 'silent')
-mapx.nnoremap('<leader>q', ":lua R('telescope.builtin').diagnostics()<cr>", 'silent')
-mapx.nnoremap('<leader>id', "<cmd>r !date +'%F'<CR>", 'silent')
+mapx.nnoremap('<leader>q', "<cmd>lua R('telescopepickers').diagnostics()<cr>", 'silent')
 mapx.nnoremap(
     '<C-e>',
     ":lua require'telescope.builtin'.find_files{find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' }}<cr>",
@@ -38,7 +38,11 @@ mapx.nnoremap('<leader>cb', ':vs term://mold -run cargo b<CR>10<C-w>>', 'silent'
 mapx.nnoremap('<leader>cc', ':vs term://mold -run cargo clippy<CR>10<C-w>>', 'silent')
 mapx.nnoremap('<leader>ct', ':vs term://mold -run cargo t<CR>10<C-w>>', 'silent')
 
--- Edge cases
+-- Toggles
+mapx.nnoremap('<leader>ot', '<cmd>set expandtab!<cr><cmd>set expandtab?<cr>', 'silent')
+
+-- Utils
+mapx.nnoremap('<leader>id', "<cmd>r !date +'%F'<CR>", 'silent')
 mapx.nnoremap('<leader><leader>', ':<up>', 'silent')
 mapx.nnoremap('<leader><CR>', '<C-w>w', 'silent')
 mapx.nnoremap('<C-q>', ":lua require'telescope'.extensions.project.project{}<CR>", 'silent')

@@ -5,15 +5,22 @@ local actions_state = require 'telescope.actions.state'
 local actions = {}
 
 function actions.cd_into_dir(prompt_bufnr)
-    local dir = tele_actions.get_selected_entry().value
+    local dir = actions_state.get_selected_entry().value
     tele_actions.close(prompt_bufnr)
-    vim.fn.execute('cd ' .. dir, 'silent')
-    -- require('telescope.builtin').find_files()
-    -- vim.fn.execute("normal i")
+    vim.fn.chdir('cd ' .. dir)
+end
+
+function actions.edit_and_cd(prompt_bufnr)
+    local picker = actions_state.get_current_picker(prompt_bufnr)
+    local file = actions_state.get_selected_entry().value
+
+    tele_actions.close(prompt_bufnr)
+    vim.cmd('e ' .. picker.cwd .. "/" .. file)
+    vim.fn.chdir(vim.fn.expand('%:p:h'))
 end
 
 function actions.delete_buffer(prompt_bufnr)
-    local buffer = tele_actions.get_selected_entry().bufnr
+    local buffer = actions_state.get_selected_entry().bufnr
     vim.fn.execute('bd! ' .. buffer)
     tele_actions.remove_selection(prompt_bufnr)
     tele_actions.close(prompt_bufnr)

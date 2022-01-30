@@ -147,6 +147,15 @@ local on_attach = function(_, bufnr)
     buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
     buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<C-f>', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+    -- Trouble.nvim
+    buf_set_keymap('n', '<leader>xx', '<cmd>Trouble<cr>', opts)
+    buf_set_keymap('n', '<leader>xc', '<cmd>TroubleClose<cr>', opts)
+    buf_set_keymap('n', '<leader>xw', '<cmd>Trouble workspace_diagnostics<cr>', opts)
+    buf_set_keymap('n', '<leader>xd', '<cmd>Trouble document_diagnostics<cr>', opts)
+    buf_set_keymap('n', '<leader>xl', '<cmd>Trouble loclist<cr>', opts)
+    buf_set_keymap('n', '<leader>xq', '<cmd>Trouble quickfix<cr>', opts)
+    buf_set_keymap('n', 'gR', '<cmd>Trouble lsp_references<cr>', opts)
 end
 
 -- Rust
@@ -259,13 +268,21 @@ local rust_tools_opts = {
     -- these override the defaults set by rust-tools.nvim
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
     -- rust-analyer options
-    server = { on_attach = on_attach, standalone = true, cmd = rust_command() },
+    server = {
+        on_attach = on_attach,
+        standalone = true,
+        cmd = rust_command(),
+        capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    },
 }
 
 -- Register a handler that will be called for all installed servers.
 -- Alternatively, you may also register handlers on specific server instances instead (see example below).
 lsp_installer.on_server_ready(function(server)
-    local opts = { on_attach = on_attach }
+    local opts = {
+        on_attach = on_attach,
+        capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    }
 
     -- (optional) Customize the options passed to the server
     if server.name == 'sumneko_lua' then

@@ -48,7 +48,7 @@ require('packer').startup(function()
         'nvim-treesitter/nvim-treesitter',
         run = function()
             vim.cmd [[ TSUpdate ]]
-        end
+        end,
     }
     use 'neovim/nvim-lspconfig'
     use 'onsails/lspkind-nvim'
@@ -64,6 +64,21 @@ require('packer').startup(function()
     -- Auto pairs
     use 'rstacruz/vim-closer'
     use 'Krasjet/auto.pairs'
+    -- Diagnotic plugins by folke
+    use {
+        'folke/trouble.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function()
+            require('trouble').setup {}
+        end,
+    }
+    use {
+        'folke/todo-comments.nvim',
+        requires = 'nvim-lua/plenary.nvim',
+        config = function()
+            require('todo-comments').setup {}
+        end,
+    }
     -- Kotlin
     use 'udalov/kotlin-vim'
     -- xplr
