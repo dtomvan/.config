@@ -33,3 +33,9 @@ Print
 
 shift + Print
  feh ~/screenshots -S mtime
+
+super + {slash,minus,equal}
+ mpc {toggle,prev,next}
+
+super + {underscore,plus}
+ mpc volume {-,+}3

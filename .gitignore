@@ -20,3 +20,5 @@ st/config.h
 st/st
 bins/.local/bin/sheldon
 xwinwrap/xwinwrap
+**/*.log
+ncmpcpp/.config/ncmpcpp/patterns.list

@@ -1,0 +1,23 @@
+visualizer_data_source = "/tmp/mpd.fifo"
+visualizer_output_name = "my_fifo"
+visualizer_in_stereo = "no"
+visualizer_type = "spectrum" (spectrum/wave)
+visualizer_look = "▋▋"
+visualizer_color = "white"
+
+progressbar_look = "▁▁▁"
+progressbar_color = "black"
+progressbar_elapsed_color = "white"
+
+song_status_format = " $6%a  $7%t  $5%b "
+
+now_playing_prefix = "$b$2▶ "
+now_playing_suffix = "$8$/b"
+
+color1 = "white"
+color2 = "black"
+
+mouse_support = "yes"
+playlist_display_mode = "classic" (classic/columns)
+autocenter_mode = "yes"
+enable_window_title = "yes"
