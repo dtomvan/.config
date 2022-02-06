@@ -44,8 +44,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/tomvd/.cache/nvim/packer_hererocks/2.0.5/share/lua/5.1/?.lua;/home/tomvd/.cache/nvim/packer_hererocks/2.0.5/share/lua/5.1/?/init.lua;/home/tomvd/.cache/nvim/packer_hererocks/2.0.5/lib/luarocks/rocks-5.1/?.lua;/home/tomvd/.cache/nvim/packer_hererocks/2.0.5/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/tomvd/.cache/nvim/packer_hererocks/2.0.5/lib/lua/5.1/?.so"
+local package_path_str = "/home/tomvd/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/home/tomvd/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/home/tomvd/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/home/tomvd/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/home/tomvd/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -90,7 +90,7 @@ _G.packer_plugins = {
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
   ["feline.nvim"] = {
-    config = { "\27LJ\1\2O\0\0\2\0\3\0\f4\0\0\0007\0\1\0007\0\2\0>\0\1\2\19\0\0\0'\1\0\0\0\1\0\0T\0\2€)\0\1\0T\1\1€)\0\2\0H\0\2\0\20buf_get_clients\blsp\bvimŽ\1\0\0\5\0\t\0\0214\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0024\1\3\0\16\2\0\0>\1\2\2\a\1\4\0T\1\b€4\1\4\0007\1\5\1\16\2\0\0%\3\6\0%\4\a\0>\1\4\3H\1\2\0T\1\2€%\1\b\0H\1\2\0G\0\1\0\6 \5\tðŸ‡»\tgsub\vstring\ttype\vstatus\15lsp-status\frequire¼\3\1\0\5\0\26\1-4\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\4\0%\1\5\0>\0\2\0014\0\0\0007\0\4\0%\1\6\0>\0\2\0014\0\0\0007\0\a\0007\0\b\0\b\0\0\0T\0\23€4\0\t\0%\1\n\0>\0\2\0027\0\v\0004\1\f\0007\1\r\0017\2\14\0008\2\2\0023\3\15\0001\4\16\0:\4\17\3>\1\3\0014\1\t\0%\2\18\0>\1\2\0027\1\19\0013\2\20\0:\0\21\0023\3\23\0001\4\22\0:\4\24\3:\3\25\2>\1\2\0014\0\0\0007\0\a\0'\1\1\0:\1\b\0G\0\1\0\21custom_providers\23lsp_current_status\1\0\0\0\15components\1\0\0\nsetup\vfeline\fenabled\0\1\0\1\rprovider\23lsp_current_status\vactive\vinsert\ntable\vnoicon\19feline.presets\frequire\20feline_has_init\6g&hi Normal guibg=NONE ctermbg=NONE\25colorscheme kanagawa\bcmd\tdark\15background\6o\bvim\2\0" },
+    config = { "\27LJ\2\nO\0\0\2\0\3\0\f6\0\0\0009\0\1\0009\0\2\0B\0\1\2\21\0\0\0)\1\0\0\0\1\0\0X\0\2€+\0\1\0X\1\1€+\0\2\0L\0\2\0\20buf_get_clients\blsp\bvimŽ\1\0\0\6\0\t\0\0216\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0026\1\3\0\18\3\0\0B\1\2\2\a\1\4\0X\1\b€6\1\4\0009\1\5\1\18\3\0\0'\4\6\0'\5\a\0B\1\4\3L\1\2\0X\1\2€'\1\b\0L\1\2\0K\0\1\0\6 \5\tðŸ‡»\tgsub\vstring\ttype\vstatus\15lsp-status\frequire¼\3\1\0\6\0\26\1-6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\4\0'\2\5\0B\0\2\0016\0\0\0009\0\4\0'\2\6\0B\0\2\0016\0\0\0009\0\a\0009\0\b\0\b\0\0\0X\0\23€6\0\t\0'\2\n\0B\0\2\0029\0\v\0006\1\f\0009\1\r\0019\3\14\0:\3\2\0035\4\15\0003\5\16\0=\5\17\4B\1\3\0016\1\t\0'\3\18\0B\1\2\0029\1\19\0015\3\20\0=\0\21\0035\4\23\0003\5\22\0=\5\24\4=\4\25\3B\1\2\0016\0\0\0009\0\a\0)\1\1\0=\1\b\0K\0\1\0\21custom_providers\23lsp_current_status\1\0\0\0\15components\1\0\0\nsetup\vfeline\fenabled\0\1\0\1\rprovider\23lsp_current_status\vactive\vinsert\ntable\vnoicon\19feline.presets\frequire\20feline_has_init\6g&hi Normal guibg=NONE ctermbg=NONE\25colorscheme kanagawa\bcmd\tdark\15background\6o\bvim\2\0" },
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/feline.nvim",
     url = "https://github.com/feline-nvim/feline.nvim"
@@ -166,7 +166,7 @@ _G.packer_plugins = {
     url = "https://github.com/MunifTanjim/nui.nvim"
   },
   ["null-ls.nvim"] = {
-    config = { "\27LJ\1\2¥\1\0\0\5\0\t\0\0234\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\a\0002\2\3\0004\3\0\0%\4\1\0>\3\2\0027\3\3\0037\3\4\0037\3\5\3;\3\1\0024\3\0\0%\4\1\0>\3\2\0027\3\3\0037\3\4\0037\3\6\3;\3\2\2:\2\b\1>\0\2\1G\0\1\0\fsources\1\0\0\ntaplo\vstylua\15formatting\rbuiltins\nsetup\fnull-ls\frequire\0" },
+    config = { "\27LJ\2\n¥\1\0\0\a\0\t\0\0236\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\a\0004\3\3\0006\4\0\0'\6\1\0B\4\2\0029\4\3\0049\4\4\0049\4\5\4>\4\1\0036\4\0\0'\6\1\0B\4\2\0029\4\3\0049\4\4\0049\4\6\4>\4\2\3=\3\b\2B\0\2\1K\0\1\0\fsources\1\0\0\ntaplo\vstylua\15formatting\rbuiltins\nsetup\fnull-ls\frequire\0" },
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
     url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
@@ -187,7 +187,7 @@ _G.packer_plugins = {
     url = "https://github.com/neovim/nvim-lspconfig"
   },
   ["nvim-notify"] = {
-    config = { "\27LJ\1\2—\2\0\2\6\0\v\0.4\2\0\0%\3\1\0>\2\2\2\16\3\0\0\16\4\1\0>\2\3\0014\2\2\0007\2\3\0027\2\4\0027\2\5\2\5\1\2\0T\2\6€4\2\2\0007\2\6\0027\2\a\2\16\3\0\0>\2\2\1T\2\27€4\2\2\0007\2\3\0027\2\4\0027\2\b\2\5\1\2\0T\2\v€4\2\2\0007\2\6\0027\2\t\0022\3\3\0003\4\n\0;\0\1\4;\4\1\3)\4\2\0002\5\0\0>\2\4\1T\2\n€4\2\2\0007\2\6\0027\2\t\0022\3\3\0002\4\3\0;\0\1\4;\4\1\3)\4\2\0002\5\0\0>\2\4\1G\0\1\0\1\3\0\0\0\15WarningMsg\14nvim_echo\tWARN\21nvim_err_writeln\bapi\nERROR\vlevels\blog\bvim\vnotify\frequire™\1\1\0\2\0\6\0\n4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0>\0\2\0014\0\4\0001\1\5\0:\1\1\0G\0\1\0\0\bvim\1\0\4\22background_colour\f#000000\vrender\fdefault\ftimeout\3ˆ'\vstages\22fade_in_slide_out\nsetup\vnotify\frequire\0" },
+    config = { "\27LJ\2\n—\2\0\2\a\0\v\0.6\2\0\0'\4\1\0B\2\2\2\18\4\0\0\18\5\1\0B\2\3\0016\2\2\0009\2\3\0029\2\4\0029\2\5\2\5\1\2\0X\2\6€6\2\2\0009\2\6\0029\2\a\2\18\4\0\0B\2\2\1X\2\27€6\2\2\0009\2\3\0029\2\4\0029\2\b\2\5\1\2\0X\2\v€6\2\2\0009\2\6\0029\2\t\0024\4\3\0005\5\n\0>\0\1\5>\5\1\4+\5\2\0004\6\0\0B\2\4\1X\2\n€6\2\2\0009\2\6\0029\2\t\0024\4\3\0004\5\3\0>\0\1\5>\5\1\4+\5\2\0004\6\0\0B\2\4\1K\0\1\0\1\3\0\0\0\15WarningMsg\14nvim_echo\tWARN\21nvim_err_writeln\bapi\nERROR\vlevels\blog\bvim\vnotify\frequire™\1\1\0\3\0\6\0\n6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\0016\0\4\0003\1\5\0=\1\1\0K\0\1\0\0\bvim\1\0\4\vrender\fdefault\ftimeout\3ˆ'\22background_colour\f#000000\vstages\22fade_in_slide_out\nsetup\vnotify\frequire\0" },
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/nvim-notify",
     url = "https://github.com/rcarriga/nvim-notify"
@@ -263,13 +263,13 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
   ["todo-comments.nvim"] = {
-    config = { "\27LJ\1\2?\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\18todo-comments\frequire\0" },
+    config = { "\27LJ\2\n?\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\18todo-comments\frequire\0" },
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/todo-comments.nvim",
     url = "https://github.com/folke/todo-comments.nvim"
   },
   ["trouble.nvim"] = {
-    config = { "\27LJ\1\0029\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\ftrouble\frequire\0" },
+    config = { "\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0" },
     loaded = true,
     path = "/home/tomvd/.local/share/nvim/site/pack/packer/start/trouble.nvim",
     url = "https://github.com/folke/trouble.nvim"
@@ -332,26 +332,26 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: trouble.nvim
-time([[Config for trouble.nvim]], true)
-try_loadstring("\27LJ\1\0029\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
-time([[Config for trouble.nvim]], false)
--- Config for: todo-comments.nvim
-time([[Config for todo-comments.nvim]], true)
-try_loadstring("\27LJ\1\2?\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\18todo-comments\frequire\0", "config", "todo-comments.nvim")
-time([[Config for todo-comments.nvim]], false)
 -- Config for: feline.nvim
 time([[Config for feline.nvim]], true)
-try_loadstring("\27LJ\1\2O\0\0\2\0\3\0\f4\0\0\0007\0\1\0007\0\2\0>\0\1\2\19\0\0\0'\1\0\0\0\1\0\0T\0\2€)\0\1\0T\1\1€)\0\2\0H\0\2\0\20buf_get_clients\blsp\bvimŽ\1\0\0\5\0\t\0\0214\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0024\1\3\0\16\2\0\0>\1\2\2\a\1\4\0T\1\b€4\1\4\0007\1\5\1\16\2\0\0%\3\6\0%\4\a\0>\1\4\3H\1\2\0T\1\2€%\1\b\0H\1\2\0G\0\1\0\6 \5\tðŸ‡»\tgsub\vstring\ttype\vstatus\15lsp-status\frequire¼\3\1\0\5\0\26\1-4\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\4\0%\1\5\0>\0\2\0014\0\0\0007\0\4\0%\1\6\0>\0\2\0014\0\0\0007\0\a\0007\0\b\0\b\0\0\0T\0\23€4\0\t\0%\1\n\0>\0\2\0027\0\v\0004\1\f\0007\1\r\0017\2\14\0008\2\2\0023\3\15\0001\4\16\0:\4\17\3>\1\3\0014\1\t\0%\2\18\0>\1\2\0027\1\19\0013\2\20\0:\0\21\0023\3\23\0001\4\22\0:\4\24\3:\3\25\2>\1\2\0014\0\0\0007\0\a\0'\1\1\0:\1\b\0G\0\1\0\21custom_providers\23lsp_current_status\1\0\0\0\15components\1\0\0\nsetup\vfeline\fenabled\0\1\0\1\rprovider\23lsp_current_status\vactive\vinsert\ntable\vnoicon\19feline.presets\frequire\20feline_has_init\6g&hi Normal guibg=NONE ctermbg=NONE\25colorscheme kanagawa\bcmd\tdark\15background\6o\bvim\2\0", "config", "feline.nvim")
+try_loadstring("\27LJ\2\nO\0\0\2\0\3\0\f6\0\0\0009\0\1\0009\0\2\0B\0\1\2\21\0\0\0)\1\0\0\0\1\0\0X\0\2€+\0\1\0X\1\1€+\0\2\0L\0\2\0\20buf_get_clients\blsp\bvimŽ\1\0\0\6\0\t\0\0216\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0026\1\3\0\18\3\0\0B\1\2\2\a\1\4\0X\1\b€6\1\4\0009\1\5\1\18\3\0\0'\4\6\0'\5\a\0B\1\4\3L\1\2\0X\1\2€'\1\b\0L\1\2\0K\0\1\0\6 \5\tðŸ‡»\tgsub\vstring\ttype\vstatus\15lsp-status\frequire¼\3\1\0\6\0\26\1-6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\4\0'\2\5\0B\0\2\0016\0\0\0009\0\4\0'\2\6\0B\0\2\0016\0\0\0009\0\a\0009\0\b\0\b\0\0\0X\0\23€6\0\t\0'\2\n\0B\0\2\0029\0\v\0006\1\f\0009\1\r\0019\3\14\0:\3\2\0035\4\15\0003\5\16\0=\5\17\4B\1\3\0016\1\t\0'\3\18\0B\1\2\0029\1\19\0015\3\20\0=\0\21\0035\4\23\0003\5\22\0=\5\24\4=\4\25\3B\1\2\0016\0\0\0009\0\a\0)\1\1\0=\1\b\0K\0\1\0\21custom_providers\23lsp_current_status\1\0\0\0\15components\1\0\0\nsetup\vfeline\fenabled\0\1\0\1\rprovider\23lsp_current_status\vactive\vinsert\ntable\vnoicon\19feline.presets\frequire\20feline_has_init\6g&hi Normal guibg=NONE ctermbg=NONE\25colorscheme kanagawa\bcmd\tdark\15background\6o\bvim\2\0", "config", "feline.nvim")
 time([[Config for feline.nvim]], false)
+-- Config for: trouble.nvim
+time([[Config for trouble.nvim]], true)
+try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
+time([[Config for trouble.nvim]], false)
 -- Config for: null-ls.nvim
 time([[Config for null-ls.nvim]], true)
-try_loadstring("\27LJ\1\2¥\1\0\0\5\0\t\0\0234\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\a\0002\2\3\0004\3\0\0%\4\1\0>\3\2\0027\3\3\0037\3\4\0037\3\5\3;\3\1\0024\3\0\0%\4\1\0>\3\2\0027\3\3\0037\3\4\0037\3\6\3;\3\2\2:\2\b\1>\0\2\1G\0\1\0\fsources\1\0\0\ntaplo\vstylua\15formatting\rbuiltins\nsetup\fnull-ls\frequire\0", "config", "null-ls.nvim")
+try_loadstring("\27LJ\2\n¥\1\0\0\a\0\t\0\0236\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\a\0004\3\3\0006\4\0\0'\6\1\0B\4\2\0029\4\3\0049\4\4\0049\4\5\4>\4\1\0036\4\0\0'\6\1\0B\4\2\0029\4\3\0049\4\4\0049\4\6\4>\4\2\3=\3\b\2B\0\2\1K\0\1\0\fsources\1\0\0\ntaplo\vstylua\15formatting\rbuiltins\nsetup\fnull-ls\frequire\0", "config", "null-ls.nvim")
 time([[Config for null-ls.nvim]], false)
 -- Config for: nvim-notify
 time([[Config for nvim-notify]], true)
-try_loadstring("\27LJ\1\2—\2\0\2\6\0\v\0.4\2\0\0%\3\1\0>\2\2\2\16\3\0\0\16\4\1\0>\2\3\0014\2\2\0007\2\3\0027\2\4\0027\2\5\2\5\1\2\0T\2\6€4\2\2\0007\2\6\0027\2\a\2\16\3\0\0>\2\2\1T\2\27€4\2\2\0007\2\3\0027\2\4\0027\2\b\2\5\1\2\0T\2\v€4\2\2\0007\2\6\0027\2\t\0022\3\3\0003\4\n\0;\0\1\4;\4\1\3)\4\2\0002\5\0\0>\2\4\1T\2\n€4\2\2\0007\2\6\0027\2\t\0022\3\3\0002\4\3\0;\0\1\4;\4\1\3)\4\2\0002\5\0\0>\2\4\1G\0\1\0\1\3\0\0\0\15WarningMsg\14nvim_echo\tWARN\21nvim_err_writeln\bapi\nERROR\vlevels\blog\bvim\vnotify\frequire™\1\1\0\2\0\6\0\n4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0>\0\2\0014\0\4\0001\1\5\0:\1\1\0G\0\1\0\0\bvim\1\0\4\22background_colour\f#000000\vrender\fdefault\ftimeout\3ˆ'\vstages\22fade_in_slide_out\nsetup\vnotify\frequire\0", "config", "nvim-notify")
+try_loadstring("\27LJ\2\n—\2\0\2\a\0\v\0.6\2\0\0'\4\1\0B\2\2\2\18\4\0\0\18\5\1\0B\2\3\0016\2\2\0009\2\3\0029\2\4\0029\2\5\2\5\1\2\0X\2\6€6\2\2\0009\2\6\0029\2\a\2\18\4\0\0B\2\2\1X\2\27€6\2\2\0009\2\3\0029\2\4\0029\2\b\2\5\1\2\0X\2\v€6\2\2\0009\2\6\0029\2\t\0024\4\3\0005\5\n\0>\0\1\5>\5\1\4+\5\2\0004\6\0\0B\2\4\1X\2\n€6\2\2\0009\2\6\0029\2\t\0024\4\3\0004\5\3\0>\0\1\5>\5\1\4+\5\2\0004\6\0\0B\2\4\1K\0\1\0\1\3\0\0\0\15WarningMsg\14nvim_echo\tWARN\21nvim_err_writeln\bapi\nERROR\vlevels\blog\bvim\vnotify\frequire™\1\1\0\3\0\6\0\n6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\0016\0\4\0003\1\5\0=\1\1\0K\0\1\0\0\bvim\1\0\4\vrender\fdefault\ftimeout\3ˆ'\22background_colour\f#000000\vstages\22fade_in_slide_out\nsetup\vnotify\frequire\0", "config", "nvim-notify")
 time([[Config for nvim-notify]], false)
+-- Config for: todo-comments.nvim
+time([[Config for todo-comments.nvim]], true)
+try_loadstring("\27LJ\2\n?\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\18todo-comments\frequire\0", "config", "todo-comments.nvim")
+time([[Config for todo-comments.nvim]], false)
 if should_profile then save_profiles() end
 
 end)

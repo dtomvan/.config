@@ -15,5 +15,6 @@
     "Transparency": false,
     "Quarrel": false,
     "BetterDefaultGlasscord": true,
-    "Ovel": false
+    "Ovel": false,
+    "MinimalMode": true
 }

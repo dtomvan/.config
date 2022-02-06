@@ -1,3 +1,6 @@
+super + e
+ xdg-open .
+
 super + shift + Escape
  xautolock -locknow
 
@@ -23,10 +26,8 @@ super + n
 super + Escape
  pkill -USR1 -x sxhkd
 
-# super + Return
-#  kitty --single-instance -e zsh
 super + Return
-   st -e zsh
+   wezterm start
 
 Print
  ~/.local/bin/screenshot

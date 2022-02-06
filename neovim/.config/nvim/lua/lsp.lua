@@ -22,8 +22,8 @@ require('nvim-treesitter.configs').setup {
 }
 
 -- THANKS TJ
-local lspkind = require 'lspkind'
-lspkind.init()
+-- local lspkind = require 'lspkind'
+-- lspkind.init()
 
 vim.cmd [[
   imap <silent><expr> <c-k> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<c-k>'
@@ -89,20 +89,20 @@ cmp.setup {
         end,
     },
 
-    formatting = {
-        -- Youtube: How to set up nice formatting for your sources.
-        format = lspkind.cmp_format {
-            with_text = true,
-            menu = {
-                buffer = '[buf]',
-                nvim_lsp = '[LSP]',
-                nvim_lua = '[api]',
-                path = '[path]',
-                luasnip = '[snip]',
-                -- gh_issues = "[issues]",
-            },
-        },
-    },
+    -- formatting = {
+    --     -- Youtube: How to set up nice formatting for your sources.
+    --     format = lspkind.cmp_format {
+    --         with_text = true,
+    --         menu = {
+    --             buffer = '[buf]',
+    --             nvim_lsp = '[LSP]',
+    --             nvim_lua = '[api]',
+    --             path = '[path]',
+    --             luasnip = '[snip]',
+    --             -- gh_issues = "[issues]",
+    --         },
+    --     },
+    -- },
 
     experimental = {
         -- I like the new menu better! Nice work hrsh7th
