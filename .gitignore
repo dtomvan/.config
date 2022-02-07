@@ -22,3 +22,4 @@ bins/.local/bin/sheldon
 xwinwrap/xwinwrap
 **/*.log
 ncmpcpp/.config/ncmpcpp/patterns.list
+discord/.config/BetterDiscord/plugins/EditUsers.config.json
