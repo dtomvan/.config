@@ -33,15 +33,20 @@
 		"592692593901699072": {
 			"name": "WideHardo",
 			"showServerNick": false,
-			"status": "I am an idiot and cruhbridge sucks",
-			"tag": "shitass",
+			"status": "cargo install --profile \"een lol\" deze --target-dir achter-in-je-hol",
+			"statusEmoji": {
+				"id": null,
+				"name": "😍",
+				"animated": false
+			},
+			"tag": "",
 			"url": "https://i.kym-cdn.com/entries/icons/original/000/036/252/WideHardo_Banner.jpg",
 			"useServerNick": false
 		},
 		"570954753605894144": {
 			"name": "koen",
 			"showServerNick": false,
-			"status": "Definitely online and working on cruhbridge",
+			"status": "I use java btw",
 			"tag": "",
 			"useServerNick": true
 		},
@@ -87,6 +92,7 @@
 		},
 		"736901809255350334": {
 			"name": "stellaaaaaaa",
+			"status": "maaaaakt mijn daaaaaag",
 			"tag": "maakt mijn dag"
 		},
 		"155149108183695360": {
@@ -97,6 +103,27 @@
 			"status": "srrgfdfgh",
 			"statusEmoji": null,
 			"url": ""
+		},
+		"357156679684718592": {
+			"status": "niek.omg.im.gonna.die"
+		},
+		"813714193776771093": {
+			"status": "TGTTOSAWAF"
+		},
+		"547073401278431256": {
+			"name": "UwU furri",
+			"useServerNick": true
+		},
+		"543816004103569449": {
+			"name": "leo",
+			"tag": ""
+		},
+		"599633867070242816": {
+			"name": "PINDAROS"
+		},
+		"679257607608991756": {
+			"status": "867345765237645 bridge wins",
+			"tag": "sweat"
 		}
 	}
 }
