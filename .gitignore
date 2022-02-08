@@ -19,3 +19,7 @@ gtk/.config/gtk-3.0/bookmarks
 st/config.h
 st/st
 bins/.local/bin/sheldon
+xwinwrap/xwinwrap
+**/*.log
+ncmpcpp/.config/ncmpcpp/patterns.list
+discord/.config/BetterDiscord/plugins/EditUsers.config.json

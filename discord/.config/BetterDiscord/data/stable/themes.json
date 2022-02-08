@@ -10,5 +10,11 @@
     "Simplify": false,
     "Alexis Modern Discord Theme": false,
     "Nocturnal": false,
-    "Discolored": true
+    "Discolored": false,
+    "Frosted Glass": false,
+    "Transparency": false,
+    "Quarrel": false,
+    "BetterDefaultGlasscord": true,
+    "Ovel": false,
+    "MinimalMode": true
 }

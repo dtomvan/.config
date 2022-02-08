@@ -6,13 +6,6 @@
         "showToasts": false,
         "mediaKeys": false
     },
-    "appearance": {
-        "twentyFourHour": true,
-        "hideGiftButton": false,
-        "hideGIFButton": false,
-        "minimalMode": false,
-        "coloredText": false
-    },
     "addons": {
         "addonErrors": true,
         "autoReload": true,
@@ -23,16 +16,25 @@
         "liveUpdate": false,
         "openAction": "settings"
     },
-    "developer": {
-        "debuggerHotkey": false,
-        "reactDevTools": true,
-        "inspectElement": false,
-        "devToolsWarning": false,
-        "debugLogs": false
+    "editor": {
+        "lineNumbers": true,
+        "minimap": true,
+        "hover": true,
+        "quickSuggestions": true,
+        "fontSize": 14,
+        "renderWhitespace": "selection"
     },
     "window": {
         "transparency": true,
         "removeMinimumSize": false,
         "frame": false
+    },
+    "developer": {
+        "debugLogs": false,
+        "devTools": false,
+        "debuggerHotkey": false,
+        "reactDevTools": true,
+        "inspectElement": false,
+        "devToolsWarning": false
     }
 }
