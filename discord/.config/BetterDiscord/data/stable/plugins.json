@@ -1,5 +1,5 @@
 {
-    "PluginRepo": false,
+    "PluginRepo": true,
     "BDFDB": true,
     "CallTimeCounter": true,
     "ZeresPluginLibrary": true,
@@ -32,10 +32,12 @@
     "PersonalPins": true,
     "undefined": false,
     "EditRoles": true,
-    "AccountDetailsPlus": false,
+    "AccountDetailsPlus": true,
     "Animations": false,
     "UserVolumeBooster": true,
     "TypingUsersAvatars": true,
     "AppNotifications": false,
-    "AvatarHover": true
+    "AvatarHover": true,
+    "CopyRawMessage": true,
+    "BetterCodeblocks": true
 }

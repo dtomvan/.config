@@ -1,6 +1,6 @@
 {
 	"changeLogs": {
-		"BDFDB": "2.0.6",
+		"BDFDB": "2.1.3",
 		"ChatAliases": "2.3.3",
 		"CustomStatusPresets": "1.0.7",
 		"DisplayServersAsChannels": "1.5.0",
@@ -20,7 +20,7 @@
 		"useChromium": false
 	},
 	"hashes": {
-		"0BDFDB.data.json": "6161bf8d9b4106e6ca412d1e0481a882156f2aa5",
+		"0BDFDB.data.json": "186bf6fd9f2112c2f7159fd6d4bfd46a6b1b5d20",
 		"0BDFDB.raw.css": "a1036e10077b9457f3903795204f7dbd91d7646d"
 	}
 }

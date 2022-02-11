@@ -22,15 +22,7 @@ module.exports = (_ => {
 		}
 	};
 
-	return (window.Lightcord && !Node.prototype.isPrototypeOf(window.Lightcord) || window.LightCord && !Node.prototype.isPrototypeOf(window.LightCord) || window.Astra && !Node.prototype.isPrototypeOf(window.Astra)) ? class {
-		getName () {return config.info.name;}
-		getAuthor () {return config.info.author;}
-		getVersion () {return config.info.version;}
-		getDescription () {return "Do not use LightCord!";}
-		load () {BdApi.alert("Attention!", "By using LightCord you are risking your Discord Account, due to using a 3rd Party Client. Switch to an official Discord Client (https://discord.com/) with the proper BD Injection (https://betterdiscord.app/)");}
-		start() {}
-		stop() {}
-	} : !window.BDFDB_Global || (!window.BDFDB_Global.loaded && !window.BDFDB_Global.started) ? class {
+	return !window.BDFDB_Global || (!window.BDFDB_Global.loaded && !window.BDFDB_Global.started) ? class {
 		getName () {return config.info.name;}
 		getAuthor () {return config.info.author;}
 		getVersion () {return config.info.version;}
@@ -967,7 +959,7 @@ module.exports = (_ => {
 							if (changedUsers[e2.methodArguments[0].user.id].name) userName.props.children = changedUsers[e2.methodArguments[0].user.id].name;
 							this.changeUserColor(userName, e2.methodArguments[0].user.id);
 						}
-						let avatar = BDFDB.ReactUtils.findChild(e2.returnValue, {props: [["className", BDFDB.disCN.auditlogpopoutavatar]]});
+						let avatar = BDFDB.ReactUtils.findChild(e2.returnValue, {props: [["className", BDFDB.disCN.selectfilterpopoutavatar]]});
 						if (avatar) avatar.props.src = this.getUserAvatar(e2.methodArguments[0].user.id);
 					}}}, {force: true, noCache: true});
 				}
@@ -1748,7 +1740,7 @@ module.exports = (_ => {
 						BDFDB.ReactUtils.forceUpdate(instance);
 					}
 					else instance.checkTimeout = BDFDB.TimeUtils.timeout(_ => {
-						BDFDB.LibraryRequires.request(url, (error, response, result) => {
+						BDFDB.LibraryRequires.request(url, {agentOptions: {rejectUnauthorized: false}}, (error, response, result) => {
 							delete instance.checkTimeout;
 							if (instance.props.disabled) {
 								delete instance.props.success;

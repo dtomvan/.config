@@ -44,10 +44,10 @@ require('packer').startup(function()
                     custom_providers = {
                         lsp_current_status = function()
                             local status = require('lsp-status').status()
-                            if type(status) == "string" then
+                            if type(status) == 'string' then
                                 -- Hacky way to get rid of extra characters from
                                 -- rust_analyzer
-                                local result, _ = string.gsub(status, "\240\159\135\187", '')
+                                local result, _ = string.gsub(status, '\240\159\135\187', '')
                                 return result
                             else
                                 return ' '
@@ -65,6 +65,33 @@ require('packer').startup(function()
     use 'ThePrimeagen/harpoon'
     use 'ThePrimeagen/refactoring.nvim'
     use 'ThePrimeagen/vim-be-good'
+    use {
+        'samodostal/is-prime-online.nvim',
+        requires = { 'nvim-lua/plenary.nvim' },
+        config = function()
+            require('is-prime-online').setup {
+                source = 'twitch',
+                streamer_name = 'ThePrimeagen',
+                refresh_interval_in_seconds = 60,
+            }
+
+            local timer = vim.loop.new_timer()
+            timer:start(
+                1000,
+                20000,
+                vim.schedule_wrap(function()
+                    local status = require('is-prime-online').status()
+                    if status == true and vim.g.PRIME_STATUS ~= 1 then
+                        vim.notify '🟢 Prime is online!'
+                        vim.g.PRIME_STATUS = 1
+                    elseif status == false and vim.g.PRIME_STATUS == 1 then
+                        vim.notify '🔴 Prime is offline.'
+                        vim.g.PRIME_STATUS = 0
+                    end
+                end)
+            )
+        end,
+    }
 
     -- Git signs
     use 'lewis6991/gitsigns.nvim'
