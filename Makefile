@@ -2,7 +2,7 @@ dirs = backgrounds bins bspwm deadd discord editorconfig emacs fish git gtk i3lo
 root-dirs = xmonad-root
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 
-all: $(dirs) $(root-dirs) discord_arch_electron st /usr/local/bin/bspwmbar xmonad ~/.local/bin/sheldon ~/.config/rofi rofisettings ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~/.local/bin/xwinwrap
+all: $(dirs) $(root-dirs) st /usr/local/bin/bspwmbar xmonad ~/.local/bin/sheldon ~/.config/rofi rofisettings ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~/.local/bin/xwinwrap
 	localectl set-x11-keymap us,gr "" "" compose:ralt
 
 /usr/local/bin/dmenu: dmenu/
@@ -23,9 +23,6 @@ $(root-dirs):
 
 $(submodules):
 	git submodule update --init --recursive
-
-discord_arch_electron:
-	cd $@ && makepkg -si
 
 xmonad: xmonad/.xmonad
 	stow $@
@@ -53,4 +50,4 @@ rofisettings:
 	cp xwinwrap/xwinwrap ~/.local/bin
 	chmod +x ~/.local/bin/xwinwrap
 
-.PHONY: $(dirs) $(root-dirs) discord_arch_electron st mvrofi rofisettings /usr/local/bin/dmenu ~/.cargo/bin/dmenu_drun
+.PHONY: $(dirs) $(root-dirs) st mvrofi rofisettings /usr/local/bin/dmenu ~/.cargo/bin/dmenu_drun

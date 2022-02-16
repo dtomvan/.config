@@ -1,0 +1,15 @@
+{
+    "BDFDB": true,
+    "AccountDetailsPlus": true,
+    "BetterCodeblocks": true,
+    "BetterFriendList": true,
+    "CallTimeCounter": true,
+    "CopyRawMessage": true,
+    "EditUsers": true,
+    "GuildProfile": true,
+    "PluginRepo": false,
+    "SplitLargeMessages": true,
+    "SubtleDevicePrompt": true,
+    "TypingUsersAvatars": false,
+    "ZeresPluginLibrary": false
+}

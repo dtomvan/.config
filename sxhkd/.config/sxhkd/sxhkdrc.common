@@ -40,3 +40,9 @@ super + {slash,minus,equal}
 
 super + {underscore,plus}
  mpc volume {-,+}3
+
+super + control + r
+ open-bar
+
+super + shift + r
+ close-bar

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+bspc config bottom_padding 24 && eww open bar

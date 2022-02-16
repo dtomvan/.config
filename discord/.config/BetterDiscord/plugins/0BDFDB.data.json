@@ -84,8 +84,8 @@
 		"LocalSettingsStore": {"props": ["darkSidebar", "keyboardModeEnabled"]},
 		"LoginUtils": {"props": ["login", "logout"]},
 		"MediaComponentUtils": {"props": ["renderImageComponent", "renderAudioComponent"]},
-		"MediaDeviceUtils": {"props": ["getOutputDevices", "getInputDevices"]},
 		"MediaDeviceSetUtils": {"props": ["setOutputDevice", "setInputDevice"]},
+		"MediaDeviceUtils": {"props": ["getOutputDevices", "getInputDevices"]},
 		"MemberCountUtils": {"props": ["getMemberCount", "getMemberCounts"]},
 		"MemberStore": {"props": ["getMember", "getMembers"]},
 		"MentionUtils": {"props": ["isRawMessageMentioned", "isMentioned"]},
@@ -187,6 +187,7 @@
 			"GuildIcon"
 		],
 		"Finder": {
+			"useUserVolumeItem": {"lazyLoaded": true},
 			"Account": {"class": "accountinfo"},
 			"App": {"class": "app"},
 			"AppSkeleton": {"class": "app"},
@@ -208,7 +209,7 @@
 			"DirectMessage": {"class": "guildouter", "forceObserve": true},
 			"EmojiPicker": {"strings": ["EMOJI_PICKER_TAB_PANEL_ID", "diversitySelector"]},
 			"FocusRing": {"props": ["FocusRingScope"]},
-			"GuildFolderSettingsModal": {"lazyLoaded": true},
+			"GuildFolderSettingsModal": {"lazyLoaded": true, "exported": true},
 			"GuildHeader": {"strings": ["bannerVisible", "guildBanner", "onContextMenu"]},
 			"GuildIcon": {"class": "avataricon", "forceObserve": true},
 			"GuildItem": {"strings": ["selectedChannelId", "guildNode", "lowerBadgeWidth"]},
@@ -303,6 +304,7 @@
 		"AvatarComponents": {"props": ["AnimatedAvatar"]},
 		"Badges": {"props": ["IconBadge", "NumberBadge"], "assign": true},
 		"CardRemoveButton": {"name": "RemoveButton"},
+		"ChannelTextAreaTypes": {"props": ["ChatInputTypes"], "value": "ChatInputTypes"},
 		"Checkmark": {"name": "Checkmark"},
 		"Connectors": {"props": ["Router", "Link"], "assign": true},
 		"DiscordTag": {"name": "DiscordTag"},
@@ -353,7 +355,9 @@
 		"UserBadgesKeys": {"props": ["BadgeKeys"], "value": "BadgeKeys"},
 		"UserPopout": {"name": "UserPopoutContainer"},
 		"UserSummaryItem": {"name": "UserSummaryItem"},
-		"VideoForwardRef": {"strings": ["displayName=\"Video\"", "\"video\"", "HTMLImageElement"], "value": "default"}
+		"VideoForwardRef": {"strings": ["displayName=\"Video\"", "\"video\"", "HTMLImageElement"], "value": "default"},
+		"VoiceSettingsConstants": {"props": ["MediaEngineContextTypes", "DEFAULT_VOLUME"]},
+		"VolumeUtils": {"props": ["amplitudeToPerceptual", "perceptualToAmplitude"]}
 	},
 	"SvgIcons": {
 		"ACTIVITY": {
@@ -1279,6 +1283,7 @@
 		"ModalMiniContent": {"props": ["modal", "content"], "length": 2},
 		"ModalSub": {"props": ["modal", "sizeLarge"]},
 		"NameContainer": {"props": ["nameAndDecorators", "name"]},
+		"NameContainerState": {"props": ["interactive", "selected", "muted"]},
 		"NameTag": {"props": ["bot", "nameTag"]},
 		"NitroStore": {"props": ["applicationStore", "marketingHeader"]},
 		"NoteTextarea": {"props": ["textarea"], "length": 1},
@@ -2609,14 +2614,14 @@
 		"modeselectable": ["FormText", "modeSelectable"],
 		"namecontainer": ["NameContainer", "container"],
 		"namecontaineravatar": ["NameContainer", "avatar"],
-		"namecontainerchildren": ["NameContainer", "children"],
-		"namecontainerclickable": ["NameContainer", "clickable"],
 		"namecontainercontent": ["NameContainer", "content"],
+		"namecontainerinteractive": ["NameContainerState", "interactive"],
 		"namecontainerlayout": ["NameContainer", "layout"],
+		"namecontainermuted": ["NameContainerState", "muted"],
 		"namecontainername": ["NameContainer", "name"],
 		"namecontainernamecontainer": ["NotFound", "nameContainerNameContainer"],
 		"namecontainernamewrapper": ["NameContainer", "nameAndDecorators"],
-		"namecontainerselected": ["NameContainer", "selected"],
+		"namecontainerselected": ["NameContainerState", "selected"],
 		"namecontainersubtext": ["NameContainer", "subText"],
 		"nametag": ["NameTag", "nameTag"],
 		"nitrostore": ["NitroStore", "applicationStore"],
@@ -5084,6 +5089,8 @@
 		}
 	},
 	"BDFDB_Patrons": {
+		"839934284101976094": 	{"active": true,		"tier": "t2",		"text": "",					"color": "",			"id": "tacos (CoZha)"},
+		"296567130952826880": 	{"active": true,		"tier": "t2",		"text": "",					"color": "",			"id": "sukumizu (tekki)"},
 		"779410322187354163": 	{"active": true,		"tier": "t3",		"text": "",					"color": "",			"id": "Liam (LiaHu)"},
 		"169931777371144192": 	{"active": true,		"tier": "t3",		"text": "",					"color": "",			"id": "DogGodLog (JHa)"},
 		"293806543042904068": 	{"active": true,		"tier": "t2",		"text": "",					"color": "",			"id": "Lopus312"},

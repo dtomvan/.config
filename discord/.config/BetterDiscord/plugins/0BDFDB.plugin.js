@@ -2,7 +2,7 @@
  * @name BDFDB
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 2.1.3
+ * @version 2.1.7
  * @description Required Library for DevilBro's Plugins
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -19,12 +19,17 @@ module.exports = (_ => {
 		"info": {
 			"name": "BDFDB",
 			"author": "DevilBro",
-			"version": "2.1.3",
+			"version": "2.1.7",
 			"description": "Required Library for DevilBro's Plugins"
 		},
 		"rawUrl": `https://mwittrien.github.io/BetterDiscordAddons/Library/0BDFDB.plugin.js`,
 		"changeLog": {
+			"progress": {
+				"Updates": "Yes there have been a lot of Updates in the Last Days, that's because I haven't had time to fix old stuff in the last weeks and Discord changed a lot in the last days. This is the last Update for now, since some of y'all are annoyed by update notifications"
+			},
 			"fixed": {
+				"Context Menu Slider": "Fixed an issue where the volume slider in the User Menu couldn't be dragged properlly",
+				"Context Menus Entry Spam": "Fixed an issue where in some plugin combinations, context menu entries would get mulitplicated",
 				"Lazy Components": "Properly patches lazy components now, fixing issues with multiple plugins",
 				"Context Menus": "Fully work again, no further crashes",
 				"Better Friend List": "Fixed Crash"
@@ -1420,35 +1425,40 @@ module.exports = (_ => {
 				if (!BDFDB.ArrayUtils.is(plugin.eventListeners)) plugin.eventListeners = [];
 				let eventCallback = null;
 				if (selector) {
-					if (origEventName == "mouseenter" || origEventName == "mouseleave") {
-						eventCallback = e => {
-							for (let child of e.path) if (typeof child.matches == "function" && child.matches(selector) && !child[namespace + "BDFDB" + origEventName]) {
-								child[namespace + "BDFDB" + origEventName] = true;
-								if (origEventName == "mouseenter") callback(BDFDB.ListenerUtils.copyEvent(e, child));
-								let mouseOut = e2 => {
-									if (e2.target.contains(child) || e2.target == child || !child.contains(e2.target)) {
-										if (origEventName == "mouseleave") callback(BDFDB.ListenerUtils.copyEvent(e, child));
-										delete child[namespace + "BDFDB" + origEventName];
-										document.removeEventListener("mouseout", mouseOut);
-									}
-								};
-								document.addEventListener("mouseout", mouseOut);
-								break;
-							}
-						};
-					}
-					else {
-						eventCallback = e => {
-							for (let child of e.path) if (typeof child.matches == "function" && child.matches(selector)) {
-								callback(BDFDB.ListenerUtils.copyEvent(e, child));
-								break;
-							}
-						};
-					}
+					if (origEventName == "mouseenter" || origEventName == "mouseleave") eventCallback = e => {
+						for (let child of e.path) if (typeof child.matches == "function" && child.matches(selector) && !child[namespace + "BDFDB" + origEventName]) {
+							child[namespace + "BDFDB" + origEventName] = true;
+							if (origEventName == "mouseenter") callback(BDFDB.ListenerUtils.copyEvent(e, child));
+							let mouseOut = e2 => {
+								if (e2.target.contains(child) || e2.target == child || !child.contains(e2.target)) {
+									if (origEventName == "mouseleave") callback(BDFDB.ListenerUtils.copyEvent(e, child));
+									delete child[namespace + "BDFDB" + origEventName];
+									document.removeEventListener("mouseout", mouseOut);
+								}
+							};
+							document.addEventListener("mouseout", mouseOut);
+							break;
+						}
+					};
+					else eventCallback = e => {
+						for (let child of e.path) if (typeof child.matches == "function" && child.matches(selector)) {
+							callback(BDFDB.ListenerUtils.copyEvent(e, child));
+							break;
+						}
+					};
 				}
-				else eventCallback = e => {callback(BDFDB.ListenerUtils.copyEvent(e, ele));};
+				else eventCallback = e => callback(BDFDB.ListenerUtils.copyEvent(e, ele));
+				
+				let observer;
+				if (Node.prototype.isPrototypeOf(ele)) {
+					observer = new MutationObserver(changes => changes.forEach(change => {
+						const nodes = Array.from(change.removedNodes);
+						if (nodes.indexOf(ele) > -1 || nodes.some(n =>  n.contains(ele))) BDFDB.ListenerUtils.remove(plugin, ele, actions, selector);
+					}));
+					observer.observe(document.body, {subtree: true, childList: true});
+				}
 
-				plugin.eventListeners.push({ele, eventName, origEventName, namespace, selector, eventCallback});
+				plugin.eventListeners.push({ele, eventName, origEventName, namespace, selector, eventCallback, observer});
 				ele.addEventListener(eventName, eventCallback, true);
 			}
 		};
@@ -1459,6 +1469,7 @@ module.exports = (_ => {
 				while (plugin.eventListeners.length) {
 					let listener = plugin.eventListeners.pop();
 					listener.ele.removeEventListener(listener.eventName, listener.eventCallback, true);
+					if (listener.observer) listener.observer.disconnect();
 				}
 			}
 			else if (Node.prototype.isPrototypeOf(ele) || ele === window) {
@@ -1470,6 +1481,7 @@ module.exports = (_ => {
 						let removedListeners = [];
 						if (listener.ele == ele && (!eventName || listener.origEventName == eventName) && listener.namespace == namespace && (selector === undefined || listener.selector == selector)) {
 							listener.ele.removeEventListener(listener.eventName, listener.eventCallback, true);
+							if (listener.observer) listener.observer.disconnect();
 							removedListeners.push(listener);
 						}
 						if (removedListeners.length) plugin.eventListeners = plugin.eventListeners.filter(listener => !removedListeners.includes(listener));
@@ -2106,7 +2118,7 @@ module.exports = (_ => {
 			
 			const observer = new MutationObserver(changes => changes.forEach(change => {
 				const nodes = Array.from(change.removedNodes);
-				if (nodes.indexOf(itemLayer) > -1 || nodes.indexOf(anker) > -1 || nodes.some(n => n.contains(anker))) removeTooltip();
+				if (nodes.indexOf(itemLayer) > -1 || nodes.indexOf(anker) > -1 || nodes.some(n =>  n.contains(anker))) removeTooltip();
 			}));
 			observer.observe(document.body, {subtree: true, childList: true});
 			
@@ -2140,6 +2152,7 @@ module.exports = (_ => {
 					}
 					methodNames = BDFDB.ArrayUtils.removeCopies(methodNames).flat(10).filter(n => n);
 					if (methodNames.includes("componentDidMount")) InternalBDFDB.initiateProcess(plugin, type, {
+						arguments: [],
 						instance: instance,
 						returnvalue: undefined,
 						component: undefined,
@@ -2148,6 +2161,7 @@ module.exports = (_ => {
 					});
 					if (methodNames.includes("render")) forceRender = true;
 					else if (!forceRender && methodNames.includes("componentDidUpdate")) InternalBDFDB.initiateProcess(plugin, type, {
+						arguments: [],
 						instance: instance,
 						returnvalue: undefined,
 						component: undefined,
@@ -2250,6 +2264,7 @@ module.exports = (_ => {
 						for (let pluginData of pluginDataObjs) BDFDB.PatchUtils.patch(pluginData.plugin, toBePatched, config.subComponent.type || "default", {after: e => {
 							for (let patchType in pluginData.patchTypes) BDFDB.PatchUtils.patch(pluginData.plugin, config.subComponent.children && e.returnValue.props && e.returnValue.props.children ? e.returnValue.props.children[0] || e.returnValue.props.children : e.returnValue , "type", {
 								[patchType]: e2 => InternalBDFDB.initiateProcess(pluginData.plugin, config.mappedType, {
+									arguments: e2.methodArguments,
 									instance: e2.thisObject,
 									returnvalue: e2.returnValue,
 									component: toBePatched,
@@ -2263,6 +2278,7 @@ module.exports = (_ => {
 						for (let pluginData of pluginDataObjs) for (let patchType in pluginData.patchTypes) {
 							BDFDB.PatchUtils.patch(pluginData.plugin, toBePatched, pluginData.patchTypes[patchType], {
 								[patchType]: e => InternalBDFDB.initiateProcess(pluginData.plugin, config.mappedType, {
+									arguments: e.methodArguments,
 									instance: e.thisObject,
 									returnvalue: e.returnValue,
 									component: toBePatched,
@@ -3096,7 +3112,7 @@ module.exports = (_ => {
 				LibraryModules.ReactDOM.render(component, node);
 				let observer = new MutationObserver(changes => changes.forEach(change => {
 					let nodes = Array.from(change.removedNodes);
-					if (nodes.indexOf(node) > -1 || nodes.some(n => n.contains(node))) {
+					if (nodes.indexOf(node) > -1 || nodes.some(n =>  n.contains(node))) {
 						observer.disconnect();
 						BDFDB.ReactUtils.unmountComponentAtNode(node);
 					}
@@ -7978,6 +7994,7 @@ module.exports = (_ => {
 				EmojiPickerListRow: "default"
 			},
 			after: {
+				useUserVolumeItem: "default",
 				Menu: "default",
 				SettingsView: "componentDidMount",
 				Shakeable: "render",
@@ -7988,6 +8005,22 @@ module.exports = (_ => {
 				AnalyticsContext: ["componentDidMount", "componentDidUpdate"],
 				PeopleListItem: ["componentDidMount", "componentDidUpdate"],
 				DiscordTag: "default"
+			}
+		};
+		
+		InternalBDFDB.processUseUserVolumeItem = function (e) {
+			if (e.returnvalue) {
+				let id = e.arguments[0];
+				let engine = e.arguments[1] != null ? e.arguments[1] : BDFDB.LibraryComponents.VoiceSettingsConstants.MediaEngineContextTypes.DEFAULT;
+				let localVolume = BDFDB.LibraryModules.MediaDeviceUtils.getLocalVolume(id, engine);
+				e.returnvalue = BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuSliderItem, {
+					id: e.returnvalue.props.id,
+					label: e.returnvalue.props.label,
+					value: BDFDB.LibraryComponents.VolumeUtils.amplitudeToPerceptual(localVolume),
+					maxValue: BDFDB.LibraryModules.PlatformUtils.isPlatformEmbedded ? 200 : 100,
+					onValueChange: value => BDFDB.LibraryModules.MediaDeviceSetUtils.setLocalVolume(id, BDFDB.LibraryComponents.VolumeUtils.perceptualToAmplitude(value), engine),
+					onValueRender: value => `${value}%`
+				});
 			}
 		};
 		
@@ -8004,6 +8037,7 @@ module.exports = (_ => {
 							if (module) BDFDB.PatchUtils.patch(BDFDB, module.default.prototype, "render", {after: e => {
 								BDFDB.PatchUtils.patch(BDFDB, e.returnValue.type, "type", {after: e2 => {
 									InternalBDFDB.triggerQueuePatch("GuildHeaderContextMenu", {
+										arguments: e2.methodArguments,
 										instance: {props: e2.methodArguments[0]},
 										returnvalue: e2.returnValue,
 										component: e.returnValue,
@@ -8139,7 +8173,7 @@ module.exports = (_ => {
 					avatarWrapper.props.children = BDFDB.TimeUtils.suppress((...args) => {
 						let renderedChildren = renderChildren(...args);
 						return InternalBDFDB._processAvatarRender(e.instance.props.message.author, renderedChildren, BDFDB.disCN.messageavatar) || renderedChildren;
-					});
+					}, "Error in Avatar Render of MessageHeader!");
 				}
 				else if (avatarWrapper && avatarWrapper.type == "img") e.returnvalue.props.children[0] = InternalBDFDB._processAvatarRender(e.instance.props.message.author, avatarWrapper) || avatarWrapper;
 			}
@@ -8203,7 +8237,7 @@ module.exports = (_ => {
 			}
 		};
 		const QueuedComponents = ["GuildHeaderContextMenu", "SystemMessageOptionContextMenu", "SystemMessageOptionToolbar", "MessageOptionContextMenu", "MessageOptionToolbar"];
-		const ContextMenuTypes = ["UserSettingsCog", "UserProfileActions", "User", "Developer", "Slate", "GuildSettingsRole", "GuildDirectoryEntry", "GuildFolder", "GroupDM", "SystemMessage", "Message", "Native", "Role", "Guild", "Channel"];
+		const ContextMenuTypes = ["UserSettingsCog", "UserProfileActions", "GroupDM", "DM", "User", "Developer", "Slate", "GuildSettingsRole", "GuildDirectoryEntry", "GuildFolder", "SystemMessage", "Message", "Native", "Role", "Guild", "Channel"];
 		InternalBDFDB.addQueuePatches = function (plugin) {
 			plugin = plugin == BDFDB && InternalBDFDB || plugin;
 			for (let type of QueuedComponents) if (typeof plugin[`on${type}`] == "function") {
@@ -8234,56 +8268,42 @@ module.exports = (_ => {
 		InternalBDFDB.patchContextMenu = function (plugin, type, module) {
 			if (!module || !module.default) return;
 			plugin = plugin == BDFDB && InternalBDFDB || plugin;
-			if (!module.default.displayName || module.default.displayName.indexOf("ContextMenu") == -1) {
-				BDFDB.PatchUtils.patch(plugin, module, "default", {after: e => {
-					if (typeof plugin[`on${type}`] != "function") return;
-					else if (e.returnValue && e.returnValue.props.children && e.returnValue.props.children.type && e.returnValue.props.children.type.displayName) {
+			const call = (args, props, returnValue, name) => {
+				if (!returnValue || !returnValue.props || !returnValue.props.children || returnValue.props.children.__BDFDBPatchesCalled && returnValue.props.children.__BDFDBPatchesCalled[plugin.name]) return;
+				returnValue.props.children.__BDFDBPatchesCalled = Object.assign({}, returnValue.props.children.__BDFDBPatchesCalled, {[plugin.name]: true});
+				return plugin[`on${type}`]({
+					arguments: args,
+					instance: {props: props},
+					returnvalue: returnValue,
+					component: module,
+					methodname: "default",
+					type: name
+				});
+			};
+			BDFDB.PatchUtils.patch(plugin, module, "default", {after: e => {
+				if (typeof plugin[`on${type}`] != "function") return;
+				else if (e.returnValue && e.returnValue.props.children) {
+					if (BDFDB.ArrayUtils.is(e.returnValue.props.children)) call(e.methodArguments, e.methodArguments[0], e.returnValue, module.default.displayName);
+					else if (e.returnValue.props.children.type && e.returnValue.props.children.type.displayName) {
 						let name = e.returnValue.props.children.type.displayName;
 						let originalReturn = e.returnValue.props.children.type(e.returnValue.props.children.props);
-						let newType = props => {
+						if (!originalReturn || !originalReturn.type) return;
+						let newType = (...args) => {
 							const returnValue = BDFDB.ReactUtils.createElement(originalReturn.type, originalReturn.props);
-							if (returnValue.props.children) plugin[`on${type}`]({
-								instance: {props: props},
-								returnvalue: returnValue,
-								component: module,
-								methodname: "default",
-								type: name
-							});
+							if (returnValue.props.children) call(args, args[0], returnValue, name);
 							else BDFDB.PatchUtils.patch(plugin, returnValue, "type", {after: e2 => {
-								if (e2.returnValue && typeof plugin[`on${type}`] == "function") plugin[`on${type}`]({
-									instance: {props: e2.methodArguments[0]},
-									returnvalue: e2.returnValue,
-									component: module,
-									methodname: "default",
-									type: name
-								});
-							}});
+								if (e2.returnValue && typeof plugin[`on${type}`] == "function") call(e2.methodArguments, e2.methodArguments[0], e2.returnValue, name);
+							}}, {noCache: true});
 							return returnValue;
 						};
 						newType.displayName = name;
 						e.returnValue.props.children = BDFDB.ReactUtils.createElement(newType, e.returnValue.props.children.props);
 					}
-				}}, {name: type});
-			}
-			else BDFDB.PatchUtils.patch(plugin, module, "default", {after: e => {
-				if (typeof plugin[`on${type}`] != "function") return;
-				else if (e.returnValue.props.children) plugin[`on${type}`]({
-					instance: {props: e.methodArguments[0]},
-					returnvalue: e.returnValue,
-					component: module,
-					methodname: "default",
-					type: module.default.displayName
-				});
+				}
 				else BDFDB.PatchUtils.patch(plugin, e.returnValue, "type", {after: e2 => {
-					if (e2.returnValue && typeof plugin[`on${type}`] == "function") plugin[`on${type}`]({
-						instance: {props: e2.methodArguments[0]},
-						returnvalue: e2.returnValue,
-						component: module,
-						methodname: "default",
-						type: module.default.displayName
-					});
-				}});
-			}});
+					if (e2.returnValue && typeof plugin[`on${type}`] == "function") call(e2.methodArguments, e2.methodArguments[0], e2.returnValue, module.default.displayName);
+				}}, {noCache: true});
+			}}, {name: type});
 		};
 		
 		BDFDB.ReactUtils.instanceKey = Object.keys(document.querySelector(BDFDB.dotCN.app) || {}).some(n => n.startsWith("__reactInternalInstance")) ? "_reactInternalFiber" : "_reactInternals";
@@ -8388,6 +8408,7 @@ module.exports = (_ => {
 				let menu = BDFDB.ReactUtils.findChild(e2.returnValue, {filter: c => c && c.props && typeof c.props.onRequestClose == "function" && c.props.onRequestClose.toString().indexOf("moreUtilities") > -1});
 				let isSystem = BDFDB.MessageUtils.isSystemMessage(e2.methodArguments[0] && e2.methodArguments[0].message);
 				InternalBDFDB.triggerQueuePatch(isSystem ? "SystemMessageOptionToolbar" : "MessageOptionToolbar", {
+					arguments: e2.methodArguments,
 					instance: {props: e2.methodArguments[0]},
 					returnvalue: e2.returnValue,
 					methodname: "default",
@@ -8401,6 +8422,7 @@ module.exports = (_ => {
 						BDFDB.PatchUtils.patch(BDFDB, renderedPopout, "type", {after: e3 => {
 							let isSystem = BDFDB.MessageUtils.isSystemMessage(e3.methodArguments[0] && e3.methodArguments[0].message);
 							InternalBDFDB.triggerQueuePatch(isSystem ? "SystemMessageOptionContextMenu" : "MessageOptionContextMenu", {
+								arguments: e3.methodArguments,
 								instance: {props: e3.methodArguments[0]},
 								returnvalue: e3.returnValue,
 								methodname: "default",
@@ -8408,7 +8430,7 @@ module.exports = (_ => {
 							});
 						}}, {noCache: true});
 						return renderedPopout;
-					});
+					}, "Error in Popout Render of MessageOptionToolbar!");
 				}
 			}}, {once: true});
 		}});

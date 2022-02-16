@@ -2,7 +2,7 @@
  * @name SplitLargeMessages
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 1.7.0
+ * @version 1.7.1
  * @description Allows you to enter larger Messages, which will automatically split into several smaller Messages
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -17,25 +17,12 @@ module.exports = (_ => {
 		"info": {
 			"name": "SplitLargeMessages",
 			"author": "DevilBro",
-			"version": "1.7.0",
+			"version": "1.7.1",
 			"description": "Allows you to enter larger Messages, which will automatically split into several smaller Messages"
-		},
-		"changeLog": {
-			"improved": {
-				"Threads": "Works flawlessly with Threads now."
-			}
 		}
 	};
 
-	return (window.Lightcord && !Node.prototype.isPrototypeOf(window.Lightcord) || window.LightCord && !Node.prototype.isPrototypeOf(window.LightCord) || window.Astra && !Node.prototype.isPrototypeOf(window.Astra)) ? class {
-		getName () {return config.info.name;}
-		getAuthor () {return config.info.author;}
-		getVersion () {return config.info.version;}
-		getDescription () {return "Do not use LightCord!";}
-		load () {BdApi.alert("Attention!", "By using LightCord you are risking your Discord Account, due to using a 3rd Party Client. Switch to an official Discord Client (https://discord.com/) with the proper BD Injection (https://betterdiscord.app/)");}
-		start() {}
-		stop() {}
-	} : !window.BDFDB_Global || (!window.BDFDB_Global.loaded && !window.BDFDB_Global.started) ? class {
+	return !window.BDFDB_Global || (!window.BDFDB_Global.loaded && !window.BDFDB_Global.started) ? class {
 		getName () {return config.info.name;}
 		getAuthor () {return config.info.author;}
 		getVersion () {return config.info.version;}
@@ -152,7 +139,7 @@ module.exports = (_ => {
 			}
 			
 			processChannelTextAreaContainer (e) {
-				if (e.instance.props.type == BDFDB.DiscordConstants.TextareaTypes.NORMAL || e.instance.props.type == BDFDB.DiscordConstants.TextareaTypes.SIDEBAR) {
+				if (e.instance.props.type == BDFDB.LibraryComponents.ChannelTextAreaTypes.NORMAL || e.instance.props.type == BDFDB.LibraryComponents.ChannelTextAreaTypes.SIDEBAR) {
 					let [children, index] = BDFDB.ReactUtils.findParent(e.returnvalue, {name: "SlateCharacterCount"});
 					if (index > -1) {
 						let text = BDFDB.LibraryModules.SlateSelectionUtils.serialize(children[index].props.document, "raw");
@@ -170,7 +157,7 @@ module.exports = (_ => {
 			}
 
 			processChannelEditorContainer (e) {
-				if (e.instance.props.type == BDFDB.DiscordConstants.TextareaTypes.NORMAL || e.instance.props.type == BDFDB.DiscordConstants.TextareaTypes.SIDEBAR) e.instance.props.shouldUploadLongMessages = false;
+				if (e.instance.props.type == BDFDB.LibraryComponents.ChannelTextAreaTypes.NORMAL || e.instance.props.type == BDFDB.LibraryComponents.ChannelTextAreaTypes.SIDEBAR) e.instance.props.shouldUploadLongMessages = false;
 			}
 
 			formatText (text) {

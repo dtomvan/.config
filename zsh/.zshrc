@@ -13,7 +13,7 @@ zle -N zle-keymap-select
 zle -N zle-line-init
 
 export DENO_INSTALL="$HOME/.deno"
-export PATH=~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin
+export PATH=~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin
 export EDITOR=nvim
 
 eval "$(sheldon source)"
@@ -46,8 +46,8 @@ sleept() {
 eval "$(zoxide init zsh --cmd d)"
 
 HISTFILE=~/.histfile
-HISTSIZE=2000
-SAVEHIST=2000
+HISTSIZE=4000
+SAVEHIST=4000
 setopt autocd extendedglob notify globdots noflowcontrol
 unsetopt beep
 bindkey -v
@@ -165,7 +165,6 @@ alias gcl="git clone"
 alias gcm="git commit -m"
 alias gcod="git checkout develop"
 alias gco="git checkout"
-alias gcom="git checkout (__git.default_branch)"
 alias gcount="git shortlog -sn"
 alias gcpa="git cherry-pick --abort"
 alias gcpc="git cherry-pick --continue"

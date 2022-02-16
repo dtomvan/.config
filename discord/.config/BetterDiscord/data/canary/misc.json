@@ -1,0 +1,9 @@
+{
+    "version": "1.5.2",
+    "emoteVersion": "v1.5.2",
+    "drawerStates": {
+        "settings": {
+            "addons": false
+        }
+    }
+}

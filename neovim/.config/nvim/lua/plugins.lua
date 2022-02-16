@@ -221,4 +221,6 @@ require('packer').startup(function()
             vim.fn['firenvim#install'](0)
         end,
     }
+    -- EWWWWWW
+    use 'elkowar/yuck.vim'
 end)

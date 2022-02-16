@@ -28,6 +28,7 @@ bspc rule -a i3lock layer=above
 bspc desktop='^1' --focus
 
 bspwmbar &
+eww daemon &
 
 ~/i3lock.sh
 hsetroot -solid "#16161D"
