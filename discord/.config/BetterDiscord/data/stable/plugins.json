@@ -28,14 +28,17 @@
     "EditUsers": true,
     "ClickableMentions": false,
     "GlobalReplies": false,
-    "PinIcon": true,
+    "PinIcon": false,
     "PersonalPins": true,
     "undefined": false,
     "EditRoles": true,
-    "AccountDetailsPlus": false,
+    "AccountDetailsPlus": true,
     "Animations": false,
     "UserVolumeBooster": true,
     "TypingUsersAvatars": true,
     "AppNotifications": false,
-    "AvatarHover": true
+    "AvatarHover": true,
+    "CopyRawMessage": true,
+    "BetterCodeblocks": true,
+    "BetterFriendList": true
 }

@@ -2,7 +2,7 @@
  * @name BDFDB
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 2.0.9
+ * @version 2.1.7
  * @description Required Library for DevilBro's Plugins
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -19,10 +19,22 @@ module.exports = (_ => {
 		"info": {
 			"name": "BDFDB",
 			"author": "DevilBro",
-			"version": "2.0.9",
+			"version": "2.1.7",
 			"description": "Required Library for DevilBro's Plugins"
 		},
-		"rawUrl": `https://mwittrien.github.io/BetterDiscordAddons/Library/0BDFDB.plugin.js`
+		"rawUrl": `https://mwittrien.github.io/BetterDiscordAddons/Library/0BDFDB.plugin.js`,
+		"changeLog": {
+			"progress": {
+				"Updates": "Yes there have been a lot of Updates in the Last Days, that's because I haven't had time to fix old stuff in the last weeks and Discord changed a lot in the last days. This is the last Update for now, since some of y'all are annoyed by update notifications"
+			},
+			"fixed": {
+				"Context Menu Slider": "Fixed an issue where the volume slider in the User Menu couldn't be dragged properlly",
+				"Context Menus Entry Spam": "Fixed an issue where in some plugin combinations, context menu entries would get mulitplicated",
+				"Lazy Components": "Properly patches lazy components now, fixing issues with multiple plugins",
+				"Context Menus": "Fully work again, no further crashes",
+				"Better Friend List": "Fixed Crash"
+			}
+		}
 	};
 	
 	const DiscordObjects = {};
@@ -1185,31 +1197,66 @@ module.exports = (_ => {
 			}
 		};
 		
+		InternalBDFDB.getModuleString = function (module) {
+			const id = (BDFDB.ModuleUtils.find(m => m == module && m, {useExport: false}) || {}).id;
+			if (!id) return "";
+			const req = InternalBDFDB.getWebModuleReq();
+			return (req.m[id] || "").toString();
+		};
+		
+		InternalBDFDB.lazyLoadModuleImports = function (moduleString) {
+			if (typeof moduleString !== "string") moduleString = InternalBDFDB.getModuleString(moduleString);
+			if (!moduleString || typeof moduleString !== "string") return BDFDB.LogUtils.error("Trying to lazy load Imports but Module is not a String");
+			const [, promiseMatch, menuRequest] = moduleString.match(/return (Promise\.all\(.+?\))\.then\((.+?)\)\);/) ?? [];
+			if (!promiseMatch) return BDFDB.LogUtils.error("Trying to lazy load Imports but Module does not contain lazy Imports");
+			const imports = promiseMatch.match(/\d+/g)?.map(e => Number(e));
+			const menuIndex = menuRequest.match(/\d+/)?.[0];
+			if (!imports || !menuIndex) return BDFDB.LogUtils.error("Trying to lazy load Imports but could not find Indexes");
+			const req = InternalBDFDB.getWebModuleReq();
+			return Promise.all(imports.map(index => req.e(index))).then(() => req(menuIndex));
+		};
+		
 		BDFDB.ModuleUtils = {};
 		BDFDB.ModuleUtils.find = function (filter, config = {}) {
 			let useExport = typeof config.useExport != "boolean" ? true : config.useExport;
 			let onlySearchUnloaded = typeof config.onlySearchUnloaded != "boolean" ? false : config.onlySearchUnloaded;
-			let req = InternalBDFDB.getWebModuleReq();
+			let all = typeof config.all != "boolean" ? false : config.all;
+			const req = InternalBDFDB.getWebModuleReq();
+			const found = [];
 			if (!onlySearchUnloaded) for (let i in req.c) if (req.c.hasOwnProperty(i)) {
 				let m = req.c[i].exports, r = null;
-				if (m && (typeof m == "object" || typeof m == "function") && !!(r = filter(m))) return useExport ? r : req.c[i];
+				if (m && (typeof m == "object" || typeof m == "function") && !!(r = filter(m))) {
+					if (all) found.push(useExport ? r : req.c[i]);
+					else return useExport ? r : req.c[i];
+				}
 				if (m && m.__esModule && m.default && (typeof m.default == "object" || typeof m.default == "function")) {
-					if (!!(r = filter(m.default))) return useExport ? r : req.c[i];
-					else if (m.default.type && (typeof m.default.type == "object" || typeof m.default.type == "function") && !!(r = filter(m.default.type))) return useExport ? r : req.c[i];
+					if (!!(r = filter(m.default))) {
+						if (all) found.push(useExport ? r : req.c[i]);
+						else return useExport ? r : req.c[i];
+					}
+					else if (m.default.type && (typeof m.default.type == "object" || typeof m.default.type == "function") && !!(r = filter(m.default.type))) {
+						if (all) found.push(useExport ? r : req.c[i]);
+						else return useExport ? r : req.c[i];
+					}
 				}
 			}
 			for (let i in req.m) if (req.m.hasOwnProperty(i)) {
 				let m = req.m[i];
 				if (m && typeof m == "function") {
-					if (req.c[i] && !onlySearchUnloaded && filter(m)) return useExport ? req.c[i].exports : req.c[i];
+					if (req.c[i] && !onlySearchUnloaded && filter(m)) {
+						if (all) found.push(useExport ? req.c[i].exports : req.c[i]);
+						else return useExport ? req.c[i].exports : req.c[i];
+					}
 					if (!req.c[i] && onlySearchUnloaded && filter(m)) {
 						const resolved = {}, resolved2 = {};
 						m(resolved, resolved2, req);
 						const trueResolved = resolved2 && BDFDB.ObjectUtils.isEmpty(resolved2) ? resolved : resolved2;
-						return useExport ? trueResolved.exports : trueResolved;
+						if (all) found.push(useExport ? trueResolved.exports : trueResolved);
+						else return useExport ? trueResolved.exports : trueResolved;
 					}
 				}
 			}
+			if (all) return found;
 		};
 		BDFDB.ModuleUtils.findByProperties = function (...properties) {
 			properties = properties.flat(10);
@@ -1378,35 +1425,40 @@ module.exports = (_ => {
 				if (!BDFDB.ArrayUtils.is(plugin.eventListeners)) plugin.eventListeners = [];
 				let eventCallback = null;
 				if (selector) {
-					if (origEventName == "mouseenter" || origEventName == "mouseleave") {
-						eventCallback = e => {
-							for (let child of e.path) if (typeof child.matches == "function" && child.matches(selector) && !child[namespace + "BDFDB" + origEventName]) {
-								child[namespace + "BDFDB" + origEventName] = true;
-								if (origEventName == "mouseenter") callback(BDFDB.ListenerUtils.copyEvent(e, child));
-								let mouseOut = e2 => {
-									if (e2.target.contains(child) || e2.target == child || !child.contains(e2.target)) {
-										if (origEventName == "mouseleave") callback(BDFDB.ListenerUtils.copyEvent(e, child));
-										delete child[namespace + "BDFDB" + origEventName];
-										document.removeEventListener("mouseout", mouseOut);
-									}
-								};
-								document.addEventListener("mouseout", mouseOut);
-								break;
-							}
-						};
-					}
-					else {
-						eventCallback = e => {
-							for (let child of e.path) if (typeof child.matches == "function" && child.matches(selector)) {
-								callback(BDFDB.ListenerUtils.copyEvent(e, child));
-								break;
-							}
-						};
-					}
+					if (origEventName == "mouseenter" || origEventName == "mouseleave") eventCallback = e => {
+						for (let child of e.path) if (typeof child.matches == "function" && child.matches(selector) && !child[namespace + "BDFDB" + origEventName]) {
+							child[namespace + "BDFDB" + origEventName] = true;
+							if (origEventName == "mouseenter") callback(BDFDB.ListenerUtils.copyEvent(e, child));
+							let mouseOut = e2 => {
+								if (e2.target.contains(child) || e2.target == child || !child.contains(e2.target)) {
+									if (origEventName == "mouseleave") callback(BDFDB.ListenerUtils.copyEvent(e, child));
+									delete child[namespace + "BDFDB" + origEventName];
+									document.removeEventListener("mouseout", mouseOut);
+								}
+							};
+							document.addEventListener("mouseout", mouseOut);
+							break;
+						}
+					};
+					else eventCallback = e => {
+						for (let child of e.path) if (typeof child.matches == "function" && child.matches(selector)) {
+							callback(BDFDB.ListenerUtils.copyEvent(e, child));
+							break;
+						}
+					};
 				}
-				else eventCallback = e => {callback(BDFDB.ListenerUtils.copyEvent(e, ele));};
+				else eventCallback = e => callback(BDFDB.ListenerUtils.copyEvent(e, ele));
+				
+				let observer;
+				if (Node.prototype.isPrototypeOf(ele)) {
+					observer = new MutationObserver(changes => changes.forEach(change => {
+						const nodes = Array.from(change.removedNodes);
+						if (nodes.indexOf(ele) > -1 || nodes.some(n =>  n.contains(ele))) BDFDB.ListenerUtils.remove(plugin, ele, actions, selector);
+					}));
+					observer.observe(document.body, {subtree: true, childList: true});
+				}
 
-				plugin.eventListeners.push({ele, eventName, origEventName, namespace, selector, eventCallback});
+				plugin.eventListeners.push({ele, eventName, origEventName, namespace, selector, eventCallback, observer});
 				ele.addEventListener(eventName, eventCallback, true);
 			}
 		};
@@ -1417,6 +1469,7 @@ module.exports = (_ => {
 				while (plugin.eventListeners.length) {
 					let listener = plugin.eventListeners.pop();
 					listener.ele.removeEventListener(listener.eventName, listener.eventCallback, true);
+					if (listener.observer) listener.observer.disconnect();
 				}
 			}
 			else if (Node.prototype.isPrototypeOf(ele) || ele === window) {
@@ -1428,6 +1481,7 @@ module.exports = (_ => {
 						let removedListeners = [];
 						if (listener.ele == ele && (!eventName || listener.origEventName == eventName) && listener.namespace == namespace && (selector === undefined || listener.selector == selector)) {
 							listener.ele.removeEventListener(listener.eventName, listener.eventCallback, true);
+							if (listener.observer) listener.observer.disconnect();
 							removedListeners.push(listener);
 						}
 						if (removedListeners.length) plugin.eventListeners = plugin.eventListeners.filter(listener => !removedListeners.includes(listener));
@@ -2064,7 +2118,7 @@ module.exports = (_ => {
 			
 			const observer = new MutationObserver(changes => changes.forEach(change => {
 				const nodes = Array.from(change.removedNodes);
-				if (nodes.indexOf(itemLayer) > -1 || nodes.indexOf(anker) > -1 || nodes.some(n => n.contains(anker))) removeTooltip();
+				if (nodes.indexOf(itemLayer) > -1 || nodes.indexOf(anker) > -1 || nodes.some(n =>  n.contains(anker))) removeTooltip();
 			}));
 			observer.observe(document.body, {subtree: true, childList: true});
 			
@@ -2098,6 +2152,7 @@ module.exports = (_ => {
 					}
 					methodNames = BDFDB.ArrayUtils.removeCopies(methodNames).flat(10).filter(n => n);
 					if (methodNames.includes("componentDidMount")) InternalBDFDB.initiateProcess(plugin, type, {
+						arguments: [],
 						instance: instance,
 						returnvalue: undefined,
 						component: undefined,
@@ -2106,6 +2161,7 @@ module.exports = (_ => {
 					});
 					if (methodNames.includes("render")) forceRender = true;
 					else if (!forceRender && methodNames.includes("componentDidUpdate")) InternalBDFDB.initiateProcess(plugin, type, {
+						arguments: [],
 						instance: instance,
 						returnvalue: undefined,
 						component: undefined,
@@ -2159,6 +2215,7 @@ module.exports = (_ => {
 					lazyLoaded: finderData && finderData.lazyLoaded,
 					stringFind: finderData && finderData.strings,
 					propertyFind: finderData && finderData.props,
+					prototypeFind: finderData && finderData.protos,
 					specialFilter: finderData && finderData.special && InternalBDFDB.createFilter(finderData.special),
 					subComponent: finderData && finderData.subComponent,
 					forceObserve: finderData && finderData.forceObserve,
@@ -2167,7 +2224,7 @@ module.exports = (_ => {
 					mapped: InternalData.ModuleUtilsConfig.PatchMap[type]
 				};
 				config.nonRender = config.specialFilter || BDFDB.ObjectUtils.toArray(pluginData.patchTypes).flat(10).filter(n => n && !InternalData.ModuleUtilsConfig.InstanceFunctions.includes(n)).length > 0;
-				config.nonPrototype = !!(config.subComponent && config.subComponent.strings || config.stringFind || config.subComponent && config.subComponent.props || config.propertyFind || config.nonRender);
+				config.nonPrototype = !!(config.subComponent && config.subComponent.strings || config.stringFind || config.subComponent && config.subComponent.props || config.propertyFind || config.subComponent && config.subComponent.protos || config.prototypeFind || config.nonRender);
 				
 				config.mappedType = config.mapped ? config.mapped + " _ _ " + type : type;
 				config.name = config.subComponent && config.subComponent.name || config.mappedType.split(" _ _ ")[0];
@@ -2190,6 +2247,7 @@ module.exports = (_ => {
 					else if (config.classNames.length) InternalBDFDB.searchComponent(pluginData, config);
 					else if (config.subComponent && config.subComponent.strings || config.stringFind) patchSpecial("findByString", config.subComponent && config.subComponent.strings || config.stringFind);
 					else if (config.subComponent && config.subComponent.props || config.propertyFind) patchSpecial("findByProperties", config.subComponent && config.subComponent.props || config.propertyFind);
+					else if (config.subComponent && config.subComponent.protos || config.prototypeFind) patchSpecial("findByPrototypes", config.subComponent && config.subComponent.protos || config.prototypeFind);
 					else if (config.nonRender) patchSpecial("findByName", config.name);
 					else InternalBDFDB.patchComponent(pluginData, BDFDB.ModuleUtils.findByName(config.name), config);
 				}
@@ -2206,6 +2264,7 @@ module.exports = (_ => {
 						for (let pluginData of pluginDataObjs) BDFDB.PatchUtils.patch(pluginData.plugin, toBePatched, config.subComponent.type || "default", {after: e => {
 							for (let patchType in pluginData.patchTypes) BDFDB.PatchUtils.patch(pluginData.plugin, config.subComponent.children && e.returnValue.props && e.returnValue.props.children ? e.returnValue.props.children[0] || e.returnValue.props.children : e.returnValue , "type", {
 								[patchType]: e2 => InternalBDFDB.initiateProcess(pluginData.plugin, config.mappedType, {
+									arguments: e2.methodArguments,
 									instance: e2.thisObject,
 									returnvalue: e2.returnValue,
 									component: toBePatched,
@@ -2219,6 +2278,7 @@ module.exports = (_ => {
 						for (let pluginData of pluginDataObjs) for (let patchType in pluginData.patchTypes) {
 							BDFDB.PatchUtils.patch(pluginData.plugin, toBePatched, pluginData.patchTypes[patchType], {
 								[patchType]: e => InternalBDFDB.initiateProcess(pluginData.plugin, config.mappedType, {
+									arguments: e.methodArguments,
 									instance: e.thisObject,
 									returnvalue: e.returnValue,
 									component: toBePatched,
@@ -3052,7 +3112,7 @@ module.exports = (_ => {
 				LibraryModules.ReactDOM.render(component, node);
 				let observer = new MutationObserver(changes => changes.forEach(change => {
 					let nodes = Array.from(change.removedNodes);
-					if (nodes.indexOf(node) > -1 || nodes.some(n => n.contains(node))) {
+					if (nodes.indexOf(node) > -1 || nodes.some(n =>  n.contains(node))) {
 						observer.disconnect();
 						BDFDB.ReactUtils.unmountComponentAtNode(node);
 					}
@@ -3088,11 +3148,13 @@ module.exports = (_ => {
 		BDFDB.MessageUtils.openMenu = function (message, e = mousePosition, slim = false) {
 			if (!message) return;
 			let channel = LibraryModules.ChannelStore.getChannel(message.channel_id);
-			if (channel) LibraryModules.ContextMenuUtils.openContextMenu(e, function (e) {
-				return BDFDB.ReactUtils.createElement((BDFDB.ModuleUtils.findByName(slim ? "MessageSearchResultContextMenu" : "MessageContextMenu", false) || {exports: {}}).exports.default, Object.assign({}, e, {
-					message: message,
-					channel: channel
-				}));
+			if (!channel) return;
+			e = BDFDB.ListenerUtils.copyEvent(e.nativeEvent || e, (e.nativeEvent || e).currentTarget);
+			let menu = BDFDB.ModuleUtils.findByName(slim ? "MessageSearchResultContextMenu" : "MessageContextMenu", false, true);
+			if (menu) LibraryModules.ContextMenuUtils.openContextMenu(e, e2 => BDFDB.ReactUtils.createElement(menu.exports.default, Object.assign({}, e2, {message, channel})));
+			else InternalBDFDB.lazyLoadModuleImports(BDFDB.ModuleUtils.findByString(slim ? ["SearchResult", "message:", "openContextMenu"] : ["useHoveredMessage", "useContextMenuUser", "openContextMenu"])).then(_ => {
+				menu = BDFDB.ModuleUtils.findByName(slim ? "MessageSearchResultContextMenu" : "MessageContextMenu", false);
+				if (menu) LibraryModules.ContextMenuUtils.openContextMenu(e, e2 => BDFDB.ReactUtils.createElement(menu.exports.default, Object.assign({}, e2, {message, channel})));
 			});
 		};
 			
@@ -3100,15 +3162,19 @@ module.exports = (_ => {
 		BDFDB.UserUtils.is = function (user) {
 			return user && user instanceof BDFDB.DiscordObjects.User;
 		};
-		var myDataUser = LibraryModules.UserStore && LibraryModules.UserStore.getCurrentUser && LibraryModules.UserStore.getCurrentUser();
-		if (myDataUser) document.body.setAttribute("data-current-user-id", myDataUser.id);
+		const myDataUser = LibraryModules.UserStore && LibraryModules.UserStore.getCurrentUser && LibraryModules.UserStore.getCurrentUser();
+		if (myDataUser && BDFDB.UserUtils._id != myDataUser.id) {
+			document.body.setAttribute("data-current-user-id", myDataUser.id);
+			BDFDB.UserUtils._id = myDataUser.id;
+		}
 		BDFDB.UserUtils.me = new Proxy(myDataUser || {}, {
 			get: function (list, item) {
-				if (!myDataUser) {
-					myDataUser = LibraryModules.UserStore && LibraryModules.UserStore.getCurrentUser && LibraryModules.UserStore.getCurrentUser();
-					if (myDataUser) document.body.setAttribute("data-current-user-id", myDataUser.id);
+				const user = LibraryModules.UserStore && LibraryModules.UserStore.getCurrentUser && LibraryModules.UserStore.getCurrentUser();
+				if (user && BDFDB.UserUtils._id != user.id) {
+					document.body.setAttribute("data-current-user-id", user.id);
+					BDFDB.UserUtils._id = user.id;
 				}
-				return myDataUser ? myDataUser[item] : null;
+				return user ? user[item] : null;
 				
 			}
 		});
@@ -3156,11 +3222,13 @@ module.exports = (_ => {
 			return false;
 		};
 		BDFDB.UserUtils.openMenu = function (user, guildId, e = mousePosition) {
-			if (user && guildId) LibraryModules.ContextMenuUtils.openContextMenu(e, function (e) {
-				return BDFDB.ReactUtils.createElement((BDFDB.ModuleUtils.findByName("GuildChannelUserContextMenu", false) || {exports: {}}).exports.default, Object.assign({}, e, {
-					user: user,
-					guildId: guildId
-				}));
+			if (!user || !guildId) return;
+			e = BDFDB.ListenerUtils.copyEvent(e.nativeEvent || e, (e.nativeEvent || e).currentTarget);
+			let menu = BDFDB.ModuleUtils.findByName("GuildChannelUserContextMenu", false, true);
+			if (menu) LibraryModules.ContextMenuUtils.openContextMenu(e, e2 => BDFDB.ReactUtils.createElement(menu.exports.default, Object.assign({}, e2, {user, guildId})));
+			else InternalBDFDB.lazyLoadModuleImports(BDFDB.ModuleUtils.findByString("openUserContextMenu", "user:", "openContextMenu")).then(_ => {
+				menu = BDFDB.ModuleUtils.findByName("GuildChannelUserContextMenu", false);
+				if (menu) LibraryModules.ContextMenuUtils.openContextMenu(e, e2 => BDFDB.ReactUtils.createElement(menu.exports.default, Object.assign({}, e2, {user, guildId})));
 			});
 		};
 
@@ -3184,10 +3252,13 @@ module.exports = (_ => {
 			return LibraryModules.FolderStore.guildFolders.filter(n => n.folderId).find(n => n.guildIds.includes(id));
 		};
 		BDFDB.GuildUtils.openMenu = function (guild, e = mousePosition) {
-			if (guild) LibraryModules.ContextMenuUtils.openContextMenu(e, function (e) {
-				return BDFDB.ReactUtils.createElement((BDFDB.ModuleUtils.findByName("GuildContextMenu", false) || {exports: {}}).exports.default, Object.assign({}, e, {
-					guild: guild
-				}));
+			if (!guild) return;
+			e = BDFDB.ListenerUtils.copyEvent(e.nativeEvent || e, (e.nativeEvent || e).currentTarget);
+			let menu = BDFDB.ModuleUtils.findByName("GuildContextMenu", false, true);
+			if (menu) LibraryModules.ContextMenuUtils.openContextMenu(e, e2 => BDFDB.ReactUtils.createElement(menu.exports.default, Object.assign({}, e2, {guild})));
+			else InternalBDFDB.lazyLoadModuleImports(BDFDB.ModuleUtils.findByString("renderUnavailableBadge", "guild:", "openContextMenu")).then(_ => {
+				menu = BDFDB.ModuleUtils.findByName("GuildContextMenu", false);
+				if (menu) LibraryModules.ContextMenuUtils.openContextMenu(e, e2 => BDFDB.ReactUtils.createElement(menu.exports.default, Object.assign({}, e2, {guild})));
 			});
 		};
 		BDFDB.GuildUtils.markAsRead = function (guildIds) {
@@ -3274,23 +3345,6 @@ module.exports = (_ => {
 			if (!channel) return "";
 			if (!channel.icon) return channel.isDM() ? BDFDB.UserUtils.getAvatar(channel.recipients[0]) : (channel.isGroupDM() ? window.location.origin + LibraryModules.IconUtils.getChannelIconURL(channel).split("?")[0] : null);
 			return LibraryModules.IconUtils.getChannelIconURL(channel).split("?")[0];
-		};
-		BDFDB.DMUtils.openMenu = function (channel, e = mousePosition) {
-			if (channel) {
-				if (channel.isGroupDM()) LibraryModules.ContextMenuUtils.openContextMenu(e, function (e) {
-					return BDFDB.ReactUtils.createElement((BDFDB.ModuleUtils.findByName("GroupDMContextMenu", false) || {exports: {}}).exports.default, Object.assign({}, e, {
-						channel: channel,
-						selected: channel.id == LibraryModules.LastChannelStore.getChannelId()
-					}));
-				});
-				else LibraryModules.ContextMenuUtils.openContextMenu(e, function (e) {
-					return BDFDB.ReactUtils.createElement((BDFDB.ModuleUtils.findByName("DMUserContextMenu", false) || {exports: {}}).exports.default, Object.assign({}, e, {
-						user: LibraryModules.UserStore.getUser(channel.recipients[0]),
-						channel: channel,
-						selected: channel.id == LibraryModules.LastChannelStore.getChannelId()
-					}));
-				});
-			}
 		};
 		BDFDB.DMUtils.markAsRead = function (dmIds) {
 			let unreadDMs = [dmIds].flat(10).filter(id => id && typeof id == "string" && BDFDB.DMUtils.isDMChannel(id) && (LibraryModules.UnreadChannelUtils.hasUnread(id) || LibraryModules.UnreadChannelUtils.getMentionCount(id) > 0));
@@ -4005,13 +4059,11 @@ module.exports = (_ => {
 		const RealMenuItems = BDFDB.ModuleUtils.findByProperties("MenuItem", "MenuGroup");
 		BDFDB.ContextMenuUtils = {};
 		BDFDB.ContextMenuUtils.open = function (plugin, e, children) {
-			LibraryModules.ContextMenuUtils.openContextMenu(e, function (e) {
-				return BDFDB.ReactUtils.createElement(InternalComponents.LibraryComponents.Menu, {
-					navId: "bdfdb-context",
-					onClose: LibraryModules.ContextMenuUtils.closeContextMenu,
-					children: children
-				}, true);
-			});
+			LibraryModules.ContextMenuUtils.openContextMenu(e, _ => BDFDB.ReactUtils.createElement(InternalComponents.LibraryComponents.Menu, {
+				navId: "bdfdb-context",
+				onClose: LibraryModules.ContextMenuUtils.closeContextMenu,
+				children: children
+			}, true));
 		};
 		BDFDB.ContextMenuUtils.close = function (nodeOrInstance) {
 			if (!BDFDB.ObjectUtils.is(nodeOrInstance)) return;
@@ -5991,7 +6043,7 @@ module.exports = (_ => {
 				.replace(/\$month/g, timeObj.toLocaleDateString(language, {month: "long"}))
 				.replace(/\$dayS/g, timeObj.toLocaleDateString(language, {weekday: "short"}))
 				.replace(/\$day/g, timeObj.toLocaleDateString(language, {weekday: "long"}))
-				.replace(/\$agoAmount/g, daysAgo < 0 ? "" : daysAgo > 1 ? BDFDB.LanguageUtils.LanguageStringsFormat(`GAME_LIBRARY_LAST_PLAYED_${daysAgo > 80 ? "MONTHS" : daysAgo > 30 ? "WEEKS" : "DAYS"}`, daysAgo > 80 ? Math.round(daysAgo/30) : daysAgo > 30 ? Math.round(daysAgo/7) : daysAgo) : BDFDB.LanguageUtils.LanguageStrings[`SEARCH_SHORTCUT_${daysAgo == 1 ? "YESTERDAY" : "TODAY"}`])
+				.replace(/\$agoAmount/g, daysAgo < 0 ? "" : daysAgo > 1 ? BDFDB.DiscordObjects.Timestamp(timeObj.getTime()).fromNow() : BDFDB.LanguageUtils.LanguageStrings[`SEARCH_SHORTCUT_${daysAgo == 1 ? "YESTERDAY" : "TODAY"}`])
 				.replace(/\$agoDays/g, daysAgo < 0 ? "" : daysAgo > 1 ? BDFDB.LanguageUtils.LanguageStringsFormat(`GAME_LIBRARY_LAST_PLAYED_DAYS`, daysAgo) : BDFDB.LanguageUtils.LanguageStrings[`SEARCH_SHORTCUT_${daysAgo == 1 ? "YESTERDAY" : "TODAY"}`])
 				.replace(/\$agoDate/g, daysAgo < 0 ? "" : daysAgo > 1 ? date : BDFDB.LanguageUtils.LanguageStrings[`SEARCH_SHORTCUT_${daysAgo == 1 ? "YESTERDAY" : "TODAY"}`])
 				.replace(/\(\)|\[\]/g, "").replace(/,\s*$|^\s*,/g, "").replace(/ +/g, " ").trim();
@@ -6838,25 +6890,21 @@ module.exports = (_ => {
 								align: InternalComponents.LibraryComponents.Flex.Align.CENTER,
 								className: BDFDB.disCN.quickselectclick,
 								onClick: event => {
-									LibraryModules.ContextMenuUtils.openContextMenu(event, _ => {
-										return BDFDB.ReactUtils.createElement(InternalComponents.LibraryComponents.Menu, {
-											navId: "bdfdb-quickselect",
-											onClose: LibraryModules.ContextMenuUtils.closeContextMenu,
-											className: this.props.popoutClassName,
-											children: BDFDB.ContextMenuUtils.createItem(InternalComponents.LibraryComponents.MenuItems.MenuGroup, {
-												children: options.map((option, i) => {
-													let selected = option.value && option.value === selectedOption.value || option.key && option.key === selectedOption.key;
-													return BDFDB.ContextMenuUtils.createItem(InternalComponents.LibraryComponents.MenuItems.MenuItem, {
-														label: option.label,
-														id: BDFDB.ContextMenuUtils.createItemId("option", option.key || option.value || i),
-														action: selected ? null : event2 => {
-															this.handleChange.bind(this)(option)
-														}
-													});
-												})
+									LibraryModules.ContextMenuUtils.openContextMenu(event, _ => BDFDB.ReactUtils.createElement(InternalComponents.LibraryComponents.Menu, {
+										navId: "bdfdb-quickselect",
+										onClose: LibraryModules.ContextMenuUtils.closeContextMenu,
+										className: this.props.popoutClassName,
+										children: BDFDB.ContextMenuUtils.createItem(InternalComponents.LibraryComponents.MenuItems.MenuGroup, {
+											children: options.map((option, i) => {
+												let selected = option.value && option.value === selectedOption.value || option.key && option.key === selectedOption.key;
+												return BDFDB.ContextMenuUtils.createItem(InternalComponents.LibraryComponents.MenuItems.MenuItem, {
+													label: option.label,
+													id: BDFDB.ContextMenuUtils.createItemId("option", option.key || option.value || i),
+													action: selected ? null : event2 => this.handleChange.bind(this)(option)
+												});
 											})
-										});
-									});
+										})
+									}));
 								},
 								children: [
 									BDFDB.ReactUtils.createElement("div", {
@@ -7941,10 +7989,12 @@ module.exports = (_ => {
 		
 		InternalBDFDB.patchedModules = {
 			before: {
+				SearchBar: "render",
 				EmojiPicker: "type",
 				EmojiPickerListRow: "default"
 			},
 			after: {
+				useUserVolumeItem: "default",
 				Menu: "default",
 				SettingsView: "componentDidMount",
 				Shakeable: "render",
@@ -7955,6 +8005,22 @@ module.exports = (_ => {
 				AnalyticsContext: ["componentDidMount", "componentDidUpdate"],
 				PeopleListItem: ["componentDidMount", "componentDidUpdate"],
 				DiscordTag: "default"
+			}
+		};
+		
+		InternalBDFDB.processUseUserVolumeItem = function (e) {
+			if (e.returnvalue) {
+				let id = e.arguments[0];
+				let engine = e.arguments[1] != null ? e.arguments[1] : BDFDB.LibraryComponents.VoiceSettingsConstants.MediaEngineContextTypes.DEFAULT;
+				let localVolume = BDFDB.LibraryModules.MediaDeviceUtils.getLocalVolume(id, engine);
+				e.returnvalue = BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuSliderItem, {
+					id: e.returnvalue.props.id,
+					label: e.returnvalue.props.label,
+					value: BDFDB.LibraryComponents.VolumeUtils.amplitudeToPerceptual(localVolume),
+					maxValue: BDFDB.LibraryModules.PlatformUtils.isPlatformEmbedded ? 200 : 100,
+					onValueChange: value => BDFDB.LibraryModules.MediaDeviceSetUtils.setLocalVolume(id, BDFDB.LibraryComponents.VolumeUtils.perceptualToAmplitude(value), engine),
+					onValueRender: value => `${value}%`
+				});
 			}
 		};
 		
@@ -7971,6 +8037,7 @@ module.exports = (_ => {
 							if (module) BDFDB.PatchUtils.patch(BDFDB, module.default.prototype, "render", {after: e => {
 								BDFDB.PatchUtils.patch(BDFDB, e.returnValue.type, "type", {after: e2 => {
 									InternalBDFDB.triggerQueuePatch("GuildHeaderContextMenu", {
+										arguments: e2.methodArguments,
 										instance: {props: e2.methodArguments[0]},
 										returnvalue: e2.returnValue,
 										component: e.returnValue,
@@ -7995,6 +8062,11 @@ module.exports = (_ => {
 			}
 		};
 		
+			
+		InternalBDFDB.processSearchBar = function (e) {
+			if (typeof e.instance.props.query != "string") e.instance.props.query = "";
+		};
+			
 		InternalBDFDB.processSettingsView = function (e) {
 			if (e.node && e.node.parentElement && e.node.parentElement.getAttribute("aria-label") == BDFDB.DiscordConstants.Layers.USER_SETTINGS) InternalBDFDB.addListObserver(e.node.parentElement);
 		};
@@ -8101,7 +8173,7 @@ module.exports = (_ => {
 					avatarWrapper.props.children = BDFDB.TimeUtils.suppress((...args) => {
 						let renderedChildren = renderChildren(...args);
 						return InternalBDFDB._processAvatarRender(e.instance.props.message.author, renderedChildren, BDFDB.disCN.messageavatar) || renderedChildren;
-					});
+					}, "Error in Avatar Render of MessageHeader!");
 				}
 				else if (avatarWrapper && avatarWrapper.type == "img") e.returnvalue.props.children[0] = InternalBDFDB._processAvatarRender(e.instance.props.message.author, avatarWrapper) || avatarWrapper;
 			}
@@ -8117,7 +8189,8 @@ module.exports = (_ => {
 			const user = BDFDB.ReactUtils.findValue(e.instance, "user");
 			if (!user) return;
 			const wrapper = e.node.querySelector(BDFDB.dotCNC.userpopout + BDFDB.dotCN.userprofile) || e.node;
-			InternalBDFDB._processAvatarMount(user, e.node.querySelector(BDFDB.dotCN.avatarwrapper), wrapper);
+			const avatar = e.node.querySelector(BDFDB.dotCN.avatarwrapper);
+			if (avatar) InternalBDFDB._processAvatarMount(user, e.instance.props.section == BDFDB.DiscordConstants.AnalyticsSections.PROFILE_POPOUT ? avatar.parentElement : avatar, wrapper);
 			InternalBDFDB._processUserInfoNode(user, wrapper);
 		};
 		InternalBDFDB.processPeopleListItem = function (e) {
@@ -8137,6 +8210,7 @@ module.exports = (_ => {
 			let module;
 			if (config.stringFind) module = BDFDB.ModuleUtils.findByString(config.stringFind, false, true);
 			else if (config.propertyFind) module = BDFDB.ModuleUtils.findByProperties(config.propertyFind, false, true);
+			else if (config.prototypeFind) module = BDFDB.ModuleUtils.findByPrototypes(config.prototypeFind, false, true);
 			else module = BDFDB.ModuleUtils.findByName(config.name, false, true);
 			if (module) {
 				let exports = !config.exported && module.exports || module;
@@ -8152,6 +8226,10 @@ module.exports = (_ => {
 						const value = m[prop];
 						return value !== undefined && !(typeof value == "string" && !value);
 					}) && m;
+					else if (config.prototypeFind) filter = m =>  m.prototype && [config.prototypeFind].flat(10).filter(n => n).every(prop => {
+						const value = m.prototype[prop];
+						return value !== undefined && !(typeof value == "string" && !value);
+					}) && m;
 					else filter = m => m.displayName === config.name && m || m.render && m.render.displayName === config.name && m || m[config.name] && m[config.name].displayName === name && m[config.name];
 					PluginStores.chunkObserver[config.mappedType].filter = filter;
 				}
@@ -8159,7 +8237,7 @@ module.exports = (_ => {
 			}
 		};
 		const QueuedComponents = ["GuildHeaderContextMenu", "SystemMessageOptionContextMenu", "SystemMessageOptionToolbar", "MessageOptionContextMenu", "MessageOptionToolbar"];
-		const ContextMenuTypes = ["UserSettingsCog", "UserProfileActions", "User", "Developer", "Slate", "GuildFolder", "GroupDM", "SystemMessage", "Message", "Native", "Role", "Guild", "Channel"];
+		const ContextMenuTypes = ["UserSettingsCog", "UserProfileActions", "GroupDM", "DM", "User", "Developer", "Slate", "GuildSettingsRole", "GuildDirectoryEntry", "GuildFolder", "SystemMessage", "Message", "Native", "Role", "Guild", "Channel"];
 		InternalBDFDB.addQueuePatches = function (plugin) {
 			plugin = plugin == BDFDB && InternalBDFDB || plugin;
 			for (let type of QueuedComponents) if (typeof plugin[`on${type}`] == "function") {
@@ -8179,13 +8257,7 @@ module.exports = (_ => {
 			for (let type of ContextMenuTypes) {
 				type = `${type}ContextMenu`;
 				if (typeof plugin[`on${type}`] == "function") {
-					if (!PluginStores.contextChunkObserver[type]) {
-						PluginStores.contextChunkObserver[type] = {query: [], modules: []};
-						PluginStores.contextChunkObserver[type].filter = m => m && m.displayName && `${ContextMenuTypes.find(t => m.displayName.indexOf(t) > -1)}ContextMenu` == type;
-					}
-					else {
-						for (let module of PluginStores.contextChunkObserver[type].modules) InternalBDFDB.patchContextMenu(plugin, type, module);
-					}
+					for (let module of PluginStores.contextChunkObserver[type].modules) InternalBDFDB.patchContextMenu(plugin, type, module);
 					if (PluginStores.contextChunkObserver[type].query.indexOf(plugin) == -1) {
 						PluginStores.contextChunkObserver[type].query.push(plugin);
 						PluginStores.contextChunkObserver[type].query.sort((x, y) => x.name < y.name ? -1 : x.name > y.name ? 1 : 0);
@@ -8196,43 +8268,42 @@ module.exports = (_ => {
 		InternalBDFDB.patchContextMenu = function (plugin, type, module) {
 			if (!module || !module.default) return;
 			plugin = plugin == BDFDB && InternalBDFDB || plugin;
-			if (!module.default.displayName || module.default.displayName.indexOf("ContextMenu") == -1) {
-				BDFDB.PatchUtils.patch(plugin, module, "default", {after: e => {
-					if (e.returnValue && e.returnValue.props.children && e.returnValue.props.children.type && e.returnValue.props.children.type.displayName) {
-						let name = e.returnValue.props.children.type.displayName;
-						BDFDB.PatchUtils.patch(plugin, e.returnValue.props.children, "type", {after: e2 => {
-							if (!e2.returnValue || typeof plugin[`on${type}`] != "function") return;
-							else {
-								if (e2.returnValue.props && e2.returnValue.props.children) plugin[`on${type}`]({
-									instance: {props: e2.methodArguments[0]},
-									returnvalue: e2.returnValue,
-									component: module,
-									methodname: "default",
-									type: name
-								});
-								else if (typeof e2.returnValue.type == "function") BDFDB.PatchUtils.patch(plugin, e2.returnValue, "type", {after: e3 => {
-									if (e3.returnValue && typeof plugin[`on${type}`] == "function") plugin[`on${type}`]({
-										instance: {props: e.methodArguments[0]},
-										returnvalue: e3.returnValue,
-										component: module,
-										methodname: "default",
-										type: name
-									});
-								}}, {name: name, noCache: true});
-							}
-						}}, {name: name, noCache: true});
-					}
-				}}, {name: type});
-			}
-			else BDFDB.PatchUtils.patch(plugin, module, "default", {after: e => {
-				if (e.returnValue && typeof plugin[`on${type}`] == "function") plugin[`on${type}`]({
-					instance: {props: e.methodArguments[0]},
-					returnvalue: e.returnValue,
+			const call = (args, props, returnValue, name) => {
+				if (!returnValue || !returnValue.props || !returnValue.props.children || returnValue.props.children.__BDFDBPatchesCalled && returnValue.props.children.__BDFDBPatchesCalled[plugin.name]) return;
+				returnValue.props.children.__BDFDBPatchesCalled = Object.assign({}, returnValue.props.children.__BDFDBPatchesCalled, {[plugin.name]: true});
+				return plugin[`on${type}`]({
+					arguments: args,
+					instance: {props: props},
+					returnvalue: returnValue,
 					component: module,
 					methodname: "default",
-					type: module.default.displayName
+					type: name
 				});
-			}});
+			};
+			BDFDB.PatchUtils.patch(plugin, module, "default", {after: e => {
+				if (typeof plugin[`on${type}`] != "function") return;
+				else if (e.returnValue && e.returnValue.props.children) {
+					if (BDFDB.ArrayUtils.is(e.returnValue.props.children)) call(e.methodArguments, e.methodArguments[0], e.returnValue, module.default.displayName);
+					else if (e.returnValue.props.children.type && e.returnValue.props.children.type.displayName) {
+						let name = e.returnValue.props.children.type.displayName;
+						let originalReturn = e.returnValue.props.children.type(e.returnValue.props.children.props);
+						if (!originalReturn || !originalReturn.type) return;
+						let newType = (...args) => {
+							const returnValue = BDFDB.ReactUtils.createElement(originalReturn.type, originalReturn.props);
+							if (returnValue.props.children) call(args, args[0], returnValue, name);
+							else BDFDB.PatchUtils.patch(plugin, returnValue, "type", {after: e2 => {
+								if (e2.returnValue && typeof plugin[`on${type}`] == "function") call(e2.methodArguments, e2.methodArguments[0], e2.returnValue, name);
+							}}, {noCache: true});
+							return returnValue;
+						};
+						newType.displayName = name;
+						e.returnValue.props.children = BDFDB.ReactUtils.createElement(newType, e.returnValue.props.children.props);
+					}
+				}
+				else BDFDB.PatchUtils.patch(plugin, e.returnValue, "type", {after: e2 => {
+					if (e2.returnValue && typeof plugin[`on${type}`] == "function") call(e2.methodArguments, e2.methodArguments[0], e2.returnValue, module.default.displayName);
+				}}, {noCache: true});
+			}}, {name: type});
 		};
 		
 		BDFDB.ReactUtils.instanceKey = Object.keys(document.querySelector(BDFDB.dotCN.app) || {}).some(n => n.startsWith("__reactInternalInstance")) ? "_reactInternalFiber" : "_reactInternals";
@@ -8255,7 +8326,7 @@ module.exports = (_ => {
 						for (const type in PluginStores.chunkObserver) {
 							const foundModule = PluginStores.chunkObserver[type].filter(exports) || exports.default && PluginStores.chunkObserver[type].filter(exports.default);
 							if (foundModule) {
-								InternalBDFDB.patchComponent(PluginStores.chunkObserver[type].query, foundModule, PluginStores.chunkObserver[type].config);
+								InternalBDFDB.patchComponent(PluginStores.chunkObserver[type].query, PluginStores.chunkObserver[type].config.exported ? foundModule : exports, PluginStores.chunkObserver[type].config);
 								removedTypes.push(type);
 								break;
 							}
@@ -8268,6 +8339,7 @@ module.exports = (_ => {
 							if (returnValue && returnValue.props && returnValue.props.object == BDFDB.DiscordConstants.AnalyticsObjects.CONTEXT_MENU) {
 								for (const type in PluginStores.contextChunkObserver) {
 									if (PluginStores.contextChunkObserver[type].filter(returnValue.props.children.type)) {
+										exports._BDFDB_ContextMenuWrap = type;
 										found = true;
 										if (PluginStores.contextChunkObserver[type].modules.indexOf(exports) == -1) PluginStores.contextChunkObserver[type].modules.push(exports);
 										for (const plugin of PluginStores.contextChunkObserver[type].query) InternalBDFDB.patchContextMenu(plugin, type, exports);
@@ -8314,6 +8386,15 @@ module.exports = (_ => {
 			};
 		})();
 		
+		for (let type of ContextMenuTypes) {
+			type = `${type}ContextMenu`;
+			if (!PluginStores.contextChunkObserver[type]) {
+				PluginStores.contextChunkObserver[type] = {query: [], modules: []};
+				PluginStores.contextChunkObserver[type].filter = m => m && (m.displayName && m.displayName.endsWith("ContextMenu") && `${ContextMenuTypes.find(t => m.displayName.indexOf(t) > -1)}ContextMenu` == type || m._BDFDB_ContextMenuWrap && m._BDFDB_ContextMenuWrap.endsWith("ContextMenu") && `${ContextMenuTypes.find(t => m._BDFDB_ContextMenuWrap.indexOf(t) > -1)}ContextMenu` == type) && m;
+				PluginStores.contextChunkObserver[type].modules = BDFDB.ModuleUtils.find(PluginStores.contextChunkObserver[type].filter, {all: true});
+			}
+		}
+		
 		InternalBDFDB.patchPlugin(BDFDB);
 		InternalBDFDB.addQueuePatches(BDFDB);
 		InternalBDFDB.addContextChunkObservers(BDFDB);
@@ -8325,17 +8406,31 @@ module.exports = (_ => {
 			let toolbar = BDFDB.ReactUtils.findChild(e.returnValue, {filter: c => c && c.props && c.props.showMoreUtilities != undefined && c.props.showEmojiPicker != undefined && c.props.setPopout != undefined});
 			if (toolbar) BDFDB.PatchUtils.patch(BDFDB, toolbar, "type", {after: e2 => {
 				let menu = BDFDB.ReactUtils.findChild(e2.returnValue, {filter: c => c && c.props && typeof c.props.onRequestClose == "function" && c.props.onRequestClose.toString().indexOf("moreUtilities") > -1});
-				InternalBDFDB.triggerQueuePatch(BDFDB.MessageUtils.isSystemMessage(e2.methodArguments[0] && e2.methodArguments[0].message) ? "SystemMessageOptionToolbar" : "MessageOptionToolbar", {instance: {props: e2.methodArguments[0]}, returnvalue: e2.returnValue, methodname: "default"});
+				let isSystem = BDFDB.MessageUtils.isSystemMessage(e2.methodArguments[0] && e2.methodArguments[0].message);
+				InternalBDFDB.triggerQueuePatch(isSystem ? "SystemMessageOptionToolbar" : "MessageOptionToolbar", {
+					arguments: e2.methodArguments,
+					instance: {props: e2.methodArguments[0]},
+					returnvalue: e2.returnValue,
+					methodname: "default",
+					type: isSystem ? "SystemMessageOptionToolbar" : "MessageOptionToolbar"
+				});
 				if (menu && typeof menu.props.renderPopout == "function") {
 					let renderPopout = menu.props.renderPopout;
 					menu.props.renderPopout = BDFDB.TimeUtils.suppress((...args) => {
 						let renderedPopout = renderPopout(...args);
 						renderedPopout.props.updatePosition = _ => {};
 						BDFDB.PatchUtils.patch(BDFDB, renderedPopout, "type", {after: e3 => {
-							InternalBDFDB.triggerQueuePatch(BDFDB.MessageUtils.isSystemMessage(e3.methodArguments[0] && e3.methodArguments[0].message) ? "SystemMessageOptionContextMenu" : "MessageOptionContextMenu", {instance: {props: e3.methodArguments[0]}, returnvalue: e3.returnValue, methodname: "default"});
+							let isSystem = BDFDB.MessageUtils.isSystemMessage(e3.methodArguments[0] && e3.methodArguments[0].message);
+							InternalBDFDB.triggerQueuePatch(isSystem ? "SystemMessageOptionContextMenu" : "MessageOptionContextMenu", {
+								arguments: e3.methodArguments,
+								instance: {props: e3.methodArguments[0]},
+								returnvalue: e3.returnValue,
+								methodname: "default",
+								type: isSystem ? "SystemMessageOptionContextMenu" : "MessageOptionContextMenu"
+							});
 						}}, {noCache: true});
 						return renderedPopout;
-					});
+					}, "Error in Popout Render of MessageOptionToolbar!");
 				}
 			}}, {once: true});
 		}});

@@ -1,0 +1,16 @@
+(defwindow bar
+           :monitor 0
+           :geometry (geometry :x "0px"
+                               :y "0px"
+                               :width "40%"
+                               :height "24px"
+                               :anchor "bottom center")
+           :reserve (struts :distance "24px" :side "bottom")
+           :windowtype "dock"
+  (rock))
+
+
+(defwidget rock []
+  (literal :content rock_listen))
+
+(deflisten rock_listen `./drive`)

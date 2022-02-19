@@ -1,18 +1,18 @@
 {
     "general": {
-        "emotes": true,
+        "emotes": false,
         "publicServers": false,
-        "voiceDisconnect": true,
+        "voiceDisconnect": false,
         "showToasts": false,
         "mediaKeys": false
     },
     "addons": {
         "addonErrors": true,
         "autoReload": true,
-        "editAction": "system"
+        "editAction": "detached"
     },
     "customcss": {
-        "customcss": false,
+        "customcss": true,
         "liveUpdate": false,
         "openAction": "settings"
     },
@@ -25,16 +25,16 @@
         "renderWhitespace": "selection"
     },
     "window": {
-        "transparency": true,
+        "transparency": false,
         "removeMinimumSize": false,
         "frame": false
     },
     "developer": {
         "debugLogs": false,
-        "devTools": true,
+        "devTools": false,
         "debuggerHotkey": false,
-        "reactDevTools": true,
-        "inspectElement": true,
+        "reactDevTools": false,
+        "inspectElement": false,
         "devToolsWarning": false
     }
 }
