@@ -25,7 +25,7 @@
         "renderWhitespace": "selection"
     },
     "window": {
-        "transparency": false,
+        "transparency": true,
         "removeMinimumSize": false,
         "frame": false
     },

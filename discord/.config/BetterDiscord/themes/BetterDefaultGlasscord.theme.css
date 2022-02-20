@@ -111,7 +111,7 @@ body{background-color: transparent;}
 }
 
 .theme-dark {
-   --glasscord-primary: #1a1c1fa2 !important;
+   --glasscord-primary: #1e1e28a2 !important;
    --glasscord-secondary: #15161ac7 !important;
    --glasscord-secondary-alt: #16171a75 !important;
    --glasscord-accent: var(--alt-color2) !important;

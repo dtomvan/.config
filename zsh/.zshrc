@@ -129,6 +129,7 @@ zle -N my-expand-alias
 bindkey '^ ' my-expand-alias
 
 # ALIASES
+alias rm='echo "This is not the command you are looking for."; false'
 alias aoc="~/projects/aoc-2021"
 alias athenaeum '~/.local/share/flatpak/exports/bin/com.gitlab.librebob.Athenaeum'
 alias cargo="mold -run cargo"

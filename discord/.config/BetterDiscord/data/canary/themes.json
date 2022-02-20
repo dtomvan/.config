@@ -1,5 +1,5 @@
 {
     "BetterDefaultGlasscord": true,
-    "MinimalMode": true,
+    "MinimalMode": false,
     "Quarrel": false
 }

@@ -8,6 +8,7 @@ ops.compatible = false
 ops.completeopt = 'menuone'
 ops.completeopt = { 'menuone', 'noinsert', 'noselect' }
 ops.copyindent = true
+ops.clipboard = "unnamedplus"
 ops.cursorline = true
 ops.expandtab = true
 ops.expandtab = true

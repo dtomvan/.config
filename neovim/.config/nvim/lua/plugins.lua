@@ -6,9 +6,6 @@ require('packer').startup(function()
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
 
-    -- Maps
-    use 'b0o/mapx.nvim'
-
     -- Tpope goodness
     use 'tpope/vim-commentary'
     use 'tpope/vim-surround'
@@ -65,6 +62,7 @@ require('packer').startup(function()
     use 'ThePrimeagen/harpoon'
     use 'ThePrimeagen/refactoring.nvim'
     use 'ThePrimeagen/vim-be-good'
+    use 'theprimeagen/jvim.nvim'
     use {
         'samodostal/is-prime-online.nvim',
         requires = { 'nvim-lua/plenary.nvim' },
@@ -130,6 +128,7 @@ require('packer').startup(function()
                 sources = {
                     require('null-ls').builtins.formatting.stylua,
                     require('null-ls').builtins.formatting.taplo,
+                    require('null-ls').builtins.formatting.black,
                 },
             }
         end,
@@ -223,4 +222,6 @@ require('packer').startup(function()
     }
     -- EWWWWWW
     use 'elkowar/yuck.vim'
+    -- Profiler
+    use 'dstein64/vim-startuptime'
 end)

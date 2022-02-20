@@ -1,54 +1,138 @@
-local mapx = require 'mapx'
-
-mapx.map('<leader>', '<Nop>', 'silent')
-
--- Window management
-mapx.nnoremap('<C-S-Left>', '<C-w><C-H>', 'silent')
-mapx.nnoremap('<C-S-Down>', '<C-w><C-J>', 'silent')
-mapx.nnoremap('<C-S-Up>', '<C-w><C-K>', 'silent')
-mapx.nnoremap('<C-S-Right>', '<C-w><C-L>', 'silent')
-mapx.nnoremap('<C-Left>', ':vertical resize -2<CR>', 'silent')
-mapx.nnoremap('<C-Right>', ':vertical resize +2<CR>', 'silent')
-mapx.nnoremap('<C-Up>', ':resize -2<CR>', 'silent')
-mapx.nnoremap('<C-Down>', ':resize +2<CR>', 'silent')
-
--- Telescope
-mapx.nnoremap('<leader>b', "<cmd>lua R('telescopepickers').buffers()<cr>", 'silent')
-mapx.nnoremap('<leader>ca', "<cmd>lua require('telescope.builtin').lsp_code_actions()<cr>", 'silent')
-mapx.nnoremap('<leader>ch', "<cmd>lua require('telescope.builtin').command_history()<cr>", 'silent')
-mapx.nnoremap('<leader>dd', "<cmd>lua R('telescopepickers').dotfiles()<CR>", 'silent')
-mapx.nnoremap('<leader>fb', "<cmd>lua R('telescopepickers').current_buffer()<CR>", 'silent')
-mapx.nnoremap('<leader>fc', "<cmd>lua require('telescope.builtin').commands()<cr>", 'silent')
-mapx.nnoremap('<leader>fd', "<cmd>lua R('telescopepickers').configs()<cr>", 'silent')
-mapx.nnoremap('<leader>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", 'silent')
-mapx.nnoremap('<leader>fp', "<cmd>lua R('telescopepickers').projects()<cr>", 'silent')
-mapx.nnoremap('<leader>ft', "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>", 'silent')
-mapx.nnoremap('<leader>q', "<cmd>lua R('telescopepickers').diagnostics()<cr>", 'silent')
-mapx.nnoremap(
-    '<C-e>',
-    ":lua require'telescope.builtin'.find_files{find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' }}<cr>",
-    'silent'
-)
-mapx.nnoremap('<C-p>', "<cmd>lua R('telescopepickers').grep()<cr>", 'silent')
-
--- Quick terminals
-mapx.nnoremap('<leader>cl', ':vs term://$SHELL<cr>i', 'silent')
-mapx.nnoremap('<leader>cr', ':vs term://mold -run cargo run<CR>10<C-w>>', 'silent')
-mapx.nnoremap('<leader>cb', ':vs term://mold -run cargo b<CR>10<C-w>>', 'silent')
-mapx.nnoremap('<leader>cc', ':vs term://mold -run cargo clippy<CR>10<C-w>>', 'silent')
-mapx.nnoremap('<leader>ct', ':vs term://mold -run cargo t<CR>10<C-w>>', 'silent')
-
--- Toggles
-mapx.nnoremap('<leader>ot', '<cmd>set expandtab!<cr><cmd>set expandtab?<cr>', 'silent')
-
--- Utils
-mapx.nnoremap('<leader>id', "<cmd>r !date +'%F'<CR>", 'silent')
-mapx.nnoremap('<leader><leader>', ':<up>', 'silent')
-mapx.nnoremap('<leader><CR>', '<C-w>w', 'silent')
-mapx.nnoremap('<C-q>', ":lua require'telescope'.extensions.project.project{}<CR>", 'silent')
+local silent = { silent = true, noremap = true }
+vim.keymap.set('', '<space>', '<Nop>', silent)
 
 -- Thanks prime (:
 local breakpoints = { ',', '!', '.', '?', ';' }
 for _, point in ipairs(breakpoints) do
-    mapx.inoremap(point, point .. '<c-g>u', 'silent')
+    vim.keymap.set('i', point, point .. '<c-g>u', silent)
 end
+
+-- Toggles
+vim.keymap.set('n', '<leader>ot', '<cmd>set expandtab!<cr><cmd>set expandtab?<cr>', silent)
+
+-- Utils
+vim.keymap.set('n', '<leader><CR>', '<C-w>w', silent)
+vim.keymap.set('n', '<leader><leader>', ':<up>', silent)
+vim.keymap.set('n', '<leader>id', "<cmd>r !date +'%F'<CR>", silent)
+
+-- Window management
+vim.keymap.set('n', '<C-Down>', ':resize +2<CR>', silent)
+vim.keymap.set('n', '<C-Up>', ':resize -2<CR>', silent)
+vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', silent)
+vim.keymap.set('n', '<C-Left>', ':vertical resize -2<CR>', silent)
+vim.keymap.set('n', '<C-S-Right>', '<C-w><C-L>', silent)
+vim.keymap.set('n', '<C-S-Up>', '<C-w><C-K>', silent)
+vim.keymap.set('n', '<C-S-Down>', '<C-w><C-J>', silent)
+vim.keymap.set('n', '<C-S-Left>', '<C-w><C-H>', silent)
+
+-- Join lines correctly
+vim.keymap.set('n', 'J', 'mzJ`z', silent)
+-- copy entire file
+vim.keymap.set('n', '<leader>y', 'mpggyG`p', silent)
+-- quickfix list
+vim.keymap.set('n', '<leader>j', ':cnext<CR>', silent)
+vim.keymap.set('n', '<leader>k', ':cprev<CR>', silent)
+-- harpoon
+vim.keymap.set('n', '\\a', function()
+    require('harpoon.mark').add_file()
+end, silent)
+vim.keymap.set('n', '<F1>', function()
+    require('harpoon.ui').toggle_quick_menu()
+end, silent)
+vim.keymap.set('n', '<C-Space>', function()
+    require('harpoon.ui').nav_file(1)
+end, silent)
+vim.keymap.set('n', '<C-c>', function()
+    require('harpoon.ui').nav_file(2)
+end, silent)
+vim.keymap.set('n', '<C-y>', function()
+    require('harpoon.ui').nav_file(3)
+end, silent)
+vim.keymap.set('n', '<C-h>', function()
+    require('harpoon.ui').nav_file(4)
+end, silent)
+-- chmod +x
+vim.keymap.set('n', '<leader>x', ':silent !chmod +x %<CR>', silent)
+-- no highlight
+vim.keymap.set('n', '<leader>n', ':noh<cr>', silent)
+-- shout out the file
+vim.keymap.set('n', '<leader>s', ':so %<cr>', silent)
+-- paste correctly
+vim.keymap.set('n', 'p', 'p==', silent)
+
+vim.keymap.set('n', '<left>', require('jvim').to_parent, silent)
+vim.keymap.set('n', '<right>', require('jvim').descend, silent)
+vim.keymap.set('n', '<up>', require('jvim').prev_sibling, silent)
+vim.keymap.set('n', '<down>', require('jvim').next_sibling, silent)
+
+-----------------------------------------
+-- Lua bindings (neovim 0.7 or higher) --
+-----------------------------------------
+
+-- Quick terminals
+local term_win_id = 0
+local function open_term(cmd, tmode, bufnr)
+    local windows = vim.api.nvim_list_wins()
+    for _, window_id in ipairs(windows) do
+        if term_win_id == window_id then
+            vim.api.nvim_win_close(term_win_id, true)
+            term_win_id = 0
+        end
+    end
+    local window = require('plenary.window.float').centered { bufnr = bufnr }
+    term_win_id = window.win_id
+    if bufnr == nil then
+        local job = vim.fn.termopen(cmd)
+        if tmode then
+            vim.cmd 'start'
+        end
+        vim.keymap.set('n', '<esc>', function()
+            require('plenary.window').try_close(window.win_id)
+            vim.fn.jobstop(job)
+        end, { buffer = window.bufnr })
+
+        vim.keymap.set({ 'n', 't' }, '<a-q>', function()
+            vim.cmd 'winc J'
+        end, { buffer = window.bufnr })
+
+        vim.keymap.set({ 'n', 't' }, '<a-f>', function()
+            open_term(cmd, tmode, window.bufnr)
+        end, { buffer = window.bufnr })
+    end
+    vim.cmd 'autocmd! WinLeave <buffer>'
+end
+vim.keymap.set('n', '<leader>cl', function()
+    open_term(vim.env.SHELL, true)
+end)
+vim.keymap.set('n', '<leader>cb', function()
+    open_term('mold -run cargo b', false)
+end)
+vim.keymap.set('n', '<leader>cc', function()
+    open_term('mold -run cargo clippy', false)
+end)
+vim.keymap.set('n', '<leader>cr', function()
+    open_term('mold -run cargo r', false)
+end)
+vim.keymap.set('n', '<leader>ct', function()
+    open_term('mold -run cargo t', false)
+end)
+
+vim.keymap.set('n', '<C-e>', function()
+    require('telescope.builtin').find_files { find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' } }
+end, silent)
+
+-- Telescope
+-- Custom pickers
+vim.keymap.set('n', '<C-p>', R('telescopepickers').grep, silent)
+vim.keymap.set('n', '<leader>b', R('telescopepickers').buffers, silent)
+vim.keymap.set('n', '<leader>dd', R('telescopepickers').dotfiles, silent)
+vim.keymap.set('n', '<leader>fb', R('telescopepickers').current_buffer, silent)
+vim.keymap.set('n', '<leader>fd', R('telescopepickers').configs, silent)
+vim.keymap.set('n', '<leader>fp', R('telescopepickers').projects, silent)
+vim.keymap.set('n', '<leader>q', R('telescopepickers').diagnostics, silent)
+-- Builtin pickers
+vim.keymap.set('n', '<leader>ca', require('telescope.builtin').lsp_code_actions, silent)
+vim.keymap.set('n', '<leader>ch', require('telescope.builtin').command_history, silent)
+vim.keymap.set('n', '<leader>fc', require('telescope.builtin').commands, silent)
+vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, silent)
+vim.keymap.set('n', '<leader>ft', require('telescope.builtin').lsp_workspace_symbols, silent)

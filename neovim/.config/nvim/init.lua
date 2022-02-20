@@ -39,17 +39,20 @@ require('telescope').load_extension 'fzy_native'
 local ls = require 'luasnip'
 ls.snippets = {
     all = {
-        ls.parser.parse_snippet("IUSEARCHBTW",
-        [[One time I was ordering coffee and suddenly realised the barista didn't
+        ls.parser.parse_snippet(
+            'IUSEARCHBTW',
+            [[One time I was ordering coffee and suddenly realised the barista didn't
 know I use Arch. Needless to say, I stopped mid-order to inform her that
 I do indeed use Arch. I must have spoken louder than I intended because
 the whole café instantly erupted into a prolonged applause. I walked
 outside with my head held high. I never did finish my order that day,
 but just knowing that everyone around me was aware that I use Arch was
-more energising than a simple cup of coffee could ever be.]]),
+more energising than a simple cup of coffee could ever be.]]
+        ),
 
-        ls.parser.parse_snippet("LINUX",
-        [[I'd just like to interject for a moment. What you're referring to as
+        ls.parser.parse_snippet(
+            'LINUX',
+            [[I'd just like to interject for a moment. What you're referring to as
 Linux, is in fact, GNU/Linux, or as I've recently taken to calling it,
 GNU plus Linux. Linux is not an operating system unto itself, but rather
 another free component of a fully functioning GNU system made useful by
@@ -68,6 +71,7 @@ is an essential part of an operating system, but useless by itself; it can only
 function in the context of a complete operating system. Linux is normally used
 in combination with the GNU operating system: the whole system is basically GNU
 with Linux added, or GNU/Linux. All the so-called "Linux" distributions are
-really distributions of GNU/Linux.]])
-    }
+really distributions of GNU/Linux.]]
+        ),
+    },
 }
