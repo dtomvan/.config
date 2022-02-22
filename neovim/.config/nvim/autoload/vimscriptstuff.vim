@@ -27,8 +27,6 @@ hi TabLineFill guibg=#333333
 hi StatusLine guibg=#928374 guifg=#3c3836
 
 let mapleader = "\<Space>"
-command! -nargs=* Ca !cargo <args>
-command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 cnoreabbrev luf luafile
 cnoreabbrev fcd cd %:p:h
 

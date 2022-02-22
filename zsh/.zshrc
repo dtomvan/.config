@@ -274,4 +274,5 @@ alias srb2='~/.local/share/flatpak/exports/bin/org.srb2.SRB2'
 alias tree="fd | tree --fromfile ."
 alias t="tmux"
 alias vim="nvim"
-alias x='cd "$(xplr --print-pwd-as-result)"'
+alias xcd='cd "$(xplr --print-pwd-as-result)"'
+alias x='xplr'

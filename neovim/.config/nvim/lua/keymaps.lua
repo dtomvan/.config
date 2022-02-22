@@ -1,4 +1,6 @@
 local silent = { silent = true, noremap = true }
+local noremap = { noremap = true }
+local expr = { expr = true, silent = true }
 vim.keymap.set('', '<space>', '<Nop>', silent)
 
 -- Thanks prime (:
@@ -117,22 +119,4 @@ vim.keymap.set('n', '<leader>ct', function()
     open_term('mold -run cargo t', false)
 end)
 
-vim.keymap.set('n', '<C-e>', function()
-    require('telescope.builtin').find_files { find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' } }
-end, silent)
-
--- Telescope
--- Custom pickers
-vim.keymap.set('n', '<C-p>', R('telescopepickers').grep, silent)
-vim.keymap.set('n', '<leader>b', R('telescopepickers').buffers, silent)
-vim.keymap.set('n', '<leader>dd', R('telescopepickers').dotfiles, silent)
-vim.keymap.set('n', '<leader>fb', R('telescopepickers').current_buffer, silent)
-vim.keymap.set('n', '<leader>fd', R('telescopepickers').configs, silent)
-vim.keymap.set('n', '<leader>fp', R('telescopepickers').projects, silent)
-vim.keymap.set('n', '<leader>q', R('telescopepickers').diagnostics, silent)
--- Builtin pickers
-vim.keymap.set('n', '<leader>ca', require('telescope.builtin').lsp_code_actions, silent)
-vim.keymap.set('n', '<leader>ch', require('telescope.builtin').command_history, silent)
-vim.keymap.set('n', '<leader>fc', require('telescope.builtin').commands, silent)
-vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, silent)
-vim.keymap.set('n', '<leader>ft', require('telescope.builtin').lsp_workspace_symbols, silent)
+return { silent = silent, noremap = noremap, expr = expr }
