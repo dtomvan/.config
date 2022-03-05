@@ -34,7 +34,7 @@ require('xpm').setup {
             require 'commands'
         end,
     },
-    'https://github.com/dtomvan/icons.xplr',
+    'dtomvan/icons.xplr',
     'dtomvan/ouch.xplr',
     'igorepst/context-switch.xplr',
     {
@@ -55,4 +55,5 @@ require('xpm').setup {
     'sayanarijit/map.xplr',
     'sayanarijit/xclip.xplr',
     'sayanarijit/zoxide.xplr',
+    'dtomvan/paste-rs.xplr',
 }

@@ -1,8 +1,8 @@
 {
     "BDFDB": true,
     "AccountDetailsPlus": true,
-    "BetterCodeblocks": true,
-    "BetterFriendList": true,
+    "BetterCodeblocks": false,
+    "BetterFriendList": false,
     "CallTimeCounter": true,
     "CopyRawMessage": true,
     "EditUsers": true,

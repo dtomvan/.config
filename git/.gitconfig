@@ -35,3 +35,5 @@
 	tool = nvimdiff
 [format]
 	pretty = fuller
+[rebase]
+	autosquash = true

@@ -1,15 +1,15 @@
 {
 	"changeLogs": {
-		"BDFDB": "2.1.7",
+		"BDFDB": "2.1.9",
 		"ChatAliases": "2.3.3",
 		"CopyRawMessage": "1.1.2",
 		"CustomStatusPresets": "1.0.7",
 		"DisplayServersAsChannels": "1.5.0",
 		"EditRoles": "1.0.8",
-		"EditUsers": "4.4.8",
+		"EditUsers": "4.5.2",
 		"FriendNotifications": "1.7.8",
 		"GameActivityToggle": "1.0.4",
-		"SplitLargeMessages": "1.7.0",
+		"SplitLargeMessages": "1.7.2",
 		"ThemeSettings": "1.3.3"
 	},
 	"choices": {
@@ -21,7 +21,7 @@
 		"useChromium": false
 	},
 	"hashes": {
-		"0BDFDB.data.json": "dc987925ad7472d1e68f70da9dfbdd3199105179",
-		"0BDFDB.raw.css": "a1036e10077b9457f3903795204f7dbd91d7646d"
+		"0BDFDB.data.json": "f6f1063b93385058e09ea98e1920cc3efa3fe95e",
+		"0BDFDB.raw.css": "e4f850b97d5093dae560f81c5b1ea0ef7b446642"
 	}
 }

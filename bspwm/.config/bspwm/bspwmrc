@@ -34,4 +34,11 @@ eww daemon &
 hsetroot -solid "#16161D"
 sleep 1 && ~/bg.sh bg.gif &
 deadd-notification-center &
-discord-canary --no-sandbox --start-minimized --ignore-gpu-blocklist --disable-features=UseOzonePlatform --enable-features=VaapiVideoDecoder --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy &
+betterdiscordctl -f canary install || true && discord-canary --no-sandbox \
+--start-minimized \
+--ignore-gpu-blocklist \
+--disable-features=UseOzonePlatform \
+--enable-features=VaapiVideoDecoder \
+--use-gl=desktop \
+--enable-gpu-rasterization \
+--enable-zero-copy &

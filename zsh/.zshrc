@@ -13,7 +13,7 @@ zle -N zle-keymap-select
 zle -N zle-line-init
 
 export DENO_INSTALL="$HOME/.deno"
-export PATH=~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin
+export PATH=~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin:~/go/bin
 export EDITOR=nvim
 
 eval "$(sheldon source)"
@@ -46,8 +46,8 @@ sleept() {
 eval "$(zoxide init zsh --cmd d)"
 
 HISTFILE=~/.histfile
-HISTSIZE=4000
-SAVEHIST=4000
+HISTSIZE=20000
+SAVEHIST=20000
 setopt autocd extendedglob notify globdots noflowcontrol
 unsetopt beep
 bindkey -v

@@ -1,3 +1,13 @@
+augroup Binary
+  au!
+  au BufReadPre  *.bin let &bin=1
+  au BufReadPost *.bin if &bin | %!xxd
+  au BufReadPost *.bin set ft=xxd | endif
+  au BufWritePre *.bin if &bin | %!xxd -r
+  au BufWritePre *.bin endif
+  au BufWritePost *.bin if &bin | %!xxd
+  au BufWritePost *.bin set nomod | endif
+augroup END
 autocmd TermOpen * setlocal nonumber norelativenumber
 autocmd BufEnter *.rs nnoremap <buffer> J :lua require'rust-tools.join_lines'.join_lines()<CR>
 autocmd BufEnter *.rs nnoremap <buffer> <leader>l :lua require'rust-tools.hover_actions'.hover_actions()<cr>
@@ -35,4 +45,3 @@ vno <silent> J :m '>+1<CR>gv=gv
 vno <silent> K :m '<-2<CR>gv=gv
 vno <silent> <leader>k :m-2<CR>gv=gv
 vno <silent> <leader>j :m'>+<CR>gv=gv
-vno <c-a> do<esc>p0!!bc<cr>kJgv

@@ -118,5 +118,8 @@ end)
 vim.keymap.set('n', '<leader>ct', function()
     open_term('mold -run cargo t', false)
 end)
+vim.keymap.set('n', '<leader>tl', function()
+    open_term('mold -run cargo t --lib', false)
+end)
 
 return { silent = silent, noremap = noremap, expr = expr }
