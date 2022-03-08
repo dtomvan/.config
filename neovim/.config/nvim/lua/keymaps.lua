@@ -62,10 +62,20 @@ vim.keymap.set('n', '<leader>s', ':so %<cr>', silent)
 -- paste correctly
 vim.keymap.set('n', 'p', 'p==', silent)
 
+-- DA PRIMAGEN
 vim.keymap.set('n', '<left>', require('jvim').to_parent, silent)
 vim.keymap.set('n', '<right>', require('jvim').descend, silent)
 vim.keymap.set('n', '<up>', require('jvim').prev_sibling, silent)
 vim.keymap.set('n', '<down>', require('jvim').next_sibling, silent)
+
+-- Sort selection
+vim.keymap.set('v', '<leader>s', ':!sort<cr>', silent)
+-- Move lines
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", silent)
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", silent)
+-- Never used this prob does the same
+vim.keymap.set('v', '<leader>k', ':m-2<CR>gv=gv', silent)
+vim.keymap.set('v', '<leader>j', ":m'>+<CR>gv=gv", silent)
 
 -----------------------------------------
 -- Lua bindings (neovim 0.7 or higher) --

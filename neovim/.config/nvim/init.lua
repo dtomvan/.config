@@ -23,3 +23,4 @@ R 'opts'
 R 'lsp'
 vim.cmd [[ au! VimEnter *.rs ]]
 R 'keymaps'
+R 'au'

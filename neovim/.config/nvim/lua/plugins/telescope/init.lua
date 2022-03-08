@@ -3,7 +3,7 @@ local silent = require('keymaps').silent
 require('telescope').setup {
     extensions = {
         fzy_native = {
-            override_generic_sorter = false,
+            override_generic_sorter = true,
             override_file_sorter = true,
         },
     },
@@ -11,9 +11,7 @@ require('telescope').setup {
 require('telescope').load_extension 'fzy_native'
 
 -- Custom pickers
-vim.keymap.set('n', '<C-e>', function()
-    require('telescope.builtin').find_files { find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' } }
-end, silent)
+vim.keymap.set('n', '<C-e>', require('telescope.builtin').fd, silent)
 vim.keymap.set('n', '<C-p>', R('plugins.telescope.pickers').grep, silent)
 vim.keymap.set('n', '<leader>b', R('plugins.telescope.pickers').buffers, silent)
 vim.keymap.set('n', '<leader>dd', R('plugins.telescope.pickers').dotfiles, silent)

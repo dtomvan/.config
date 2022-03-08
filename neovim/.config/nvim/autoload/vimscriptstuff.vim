@@ -1,19 +1,4 @@
-augroup Binary
-  au!
-  au BufReadPre  *.bin let &bin=1
-  au BufReadPost *.bin if &bin | %!xxd
-  au BufReadPost *.bin set ft=xxd | endif
-  au BufWritePre *.bin if &bin | %!xxd -r
-  au BufWritePre *.bin endif
-  au BufWritePost *.bin if &bin | %!xxd
-  au BufWritePost *.bin set nomod | endif
-augroup END
-autocmd TermOpen * setlocal nonumber norelativenumber
-autocmd BufEnter *.rs nnoremap <buffer> J :lua require'rust-tools.join_lines'.join_lines()<CR>
-autocmd BufEnter *.rs nnoremap <buffer> <leader>l :lua require'rust-tools.hover_actions'.hover_actions()<cr>
-autocmd BufEnter *.rs nnoremap <buffer> <leader>t :lua require'rust-tools.open_cargo_toml'.open_cargo_toml()<cr>
-autocmd BufWritePre :silent lua vim.lsp.buf.formatting()
-autocmd BufEnter *.hs nnoremap <leader>sb :!stack build<cr>
+" Too much wizardry for me to convert that to lua
 autocmd BufReadPost *
             \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
             \ |   exe "normal! g`\""
@@ -26,22 +11,8 @@ au BufEnter *.tsv setlocal noexpandtab textwidth=0
 au BufEnter *.tsv nmap <silent> <buffer> <leader>0 <cmd>!cat % \| xclip -sel clip<cr>
 au BufEnter *.tsv vmap <silent> <buffer> <leader>9 <cmd>'<,'>s/\(.*\)	\(.*\)/\2	\1<cr>
 
-" Set line numbers for documentation
-augroup vim help
-    autocmd!
-    autocmd FileType help setlocal number
-    autocmd FileType help setlocal relativenumber
-augroup END
-
 hi TabLineFill guibg=#333333
 hi StatusLine guibg=#928374 guifg=#3c3836
 
-let mapleader = "\<Space>"
 cnoreabbrev luf luafile
 cnoreabbrev fcd cd %:p:h
-
-vno <leader>s :!sort<cr>
-vno <silent> J :m '>+1<CR>gv=gv
-vno <silent> K :m '<-2<CR>gv=gv
-vno <silent> <leader>k :m-2<CR>gv=gv
-vno <silent> <leader>j :m'>+<CR>gv=gv
