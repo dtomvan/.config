@@ -4,6 +4,8 @@
 --  / /|  / /___/ /_/ /| |/ // // /  / /
 -- /_/ |_/_____/\____/ |___/___/_/  /_/
 
+vim.g.did_load_filetypes = 1
+
 local execute = vim.api.nvim_command
 local fn = vim.fn
 

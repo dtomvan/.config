@@ -6172,3 +6172,8 @@
 <Multi_key> <6> <y>    	: "ŷ"   U0177 # LATIN SMALL LETTER Y WITH CIRCUMFLEX
 <Multi_key> <6> <Z>    	: "Ẑ"   U1E90 # LATIN CAPITAL LETTER Z WITH CIRCUMFLEX
 <Multi_key> <6> <z>    	: "ẑ"   U1E91 # LATIN SMALL LETTER Z WITH CIRCUMFLEX
+
+# Easily type yprogegrammeni
+<Multi_key> <Greek_iota> <a>        	: "ᾳ"   U1FB3 # GREEK SMALL LETTER ALPHA WITH YPOGEGRAMMENI
+<Multi_key> <Greek_iota> <h>        	: "ῃ"   U1FC3 # GREEK SMALL LETTER ETA WITH YPOGEGRAMMENI
+<Multi_key> <Greek_iota> <v>        	: "ῳ"   U1FF3 # GREEK SMALL LETTER OMEGA WITH YPOGEGRAMMENI

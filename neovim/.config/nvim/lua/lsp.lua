@@ -56,10 +56,10 @@ cmp.setup {
         -- { name = "gh_issues" },
 
         -- Youtube: Could enable this only for lua, but nvim_lua handles that already.
-        { name = 'luasnip' },
-        { name = 'nvim_lua' },
-        { name = 'zsh' },
         { name = 'nvim_lsp' },
+        { name = 'nvim_lua' },
+        { name = 'luasnip' },
+        { name = 'zsh' },
         { name = 'path' },
         { name = 'buffer', keyword_length = 5 },
     },

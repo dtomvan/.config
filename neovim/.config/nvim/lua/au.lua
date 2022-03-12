@@ -67,7 +67,13 @@ au('BufEnter', {
     group = rs,
 })
 
-au('BufWritePre', { callback = vim.lsp.buf.formatting })
+group('Formatting', gops)
+au('BufWritePre', {
+    group = 'Formatting',
+    callback = function()
+        vim.lsp.buf.formatting()
+    end,
+})
 
 local hsp = '*.hs'
 local hs = 'HaskBufs'

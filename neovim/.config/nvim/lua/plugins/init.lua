@@ -2,9 +2,21 @@ require('packer').startup(function()
     -- Packer
     use 'wbthomason/packer.nvim'
 
+    -- Startup time improvements
+    use {
+        'lewis6991/impatient.nvim',
+        config = function()
+            require 'impatient'
+        end,
+    }
+    use 'nathom/filetype.nvim'
+
     -- Plenary
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
+
+    -- Discord presence
+    use 'andweeb/presence.nvim'
 
     -- Tpope goodness
     use 'tpope/vim-commentary'
@@ -12,11 +24,6 @@ require('packer').startup(function()
     use 'tpope/vim-git'
     use 'tpope/vim-fugitive'
 
-    -- Discord presence
-    use 'andweeb/presence.nvim'
-
-    -- Gruvbox (https://www.youtube.com/watch?v=DsyptvUvu3A)
-    -- use 'morhetz/gruvbox'
     use 'rebelot/kanagawa.nvim'
     -- Status line
     use 'nvim-lua/lsp-status.nvim'
@@ -63,40 +70,13 @@ require('packer').startup(function()
     use 'ThePrimeagen/refactoring.nvim'
     use 'ThePrimeagen/vim-be-good'
     use 'theprimeagen/jvim.nvim'
-    use {
-        'samodostal/is-prime-online.nvim',
-        requires = { 'nvim-lua/plenary.nvim' },
-        config = function()
-            require('is-prime-online').setup {
-                source = 'twitch',
-                streamer_name = 'ThePrimeagen',
-                refresh_interval_in_seconds = 60,
-            }
-
-            local timer = vim.loop.new_timer()
-            timer:start(
-                1000,
-                20000,
-                vim.schedule_wrap(function()
-                    local status = require('is-prime-online').status()
-                    if status == true and vim.g.PRIME_STATUS ~= 1 then
-                        vim.notify '🟢 Prime is online!'
-                        vim.g.PRIME_STATUS = 1
-                    elseif status == false and vim.g.PRIME_STATUS == 1 then
-                        vim.notify '🔴 Prime is offline.'
-                        vim.g.PRIME_STATUS = 0
-                    end
-                end)
-            )
-        end,
-    }
 
     -- Git signs
     use {
         'lewis6991/gitsigns.nvim',
-        config = function ()
-            R('gitsigns').setup {}
-        end
+        config = function()
+            require('gitsigns').setup {}
+        end,
     }
 
     -- TJ telescope Johnson
@@ -104,7 +84,7 @@ require('packer').startup(function()
         'nvim-telescope/telescope.nvim',
         config = function()
             R 'plugins.telescope'
-        end
+        end,
     }
     use 'nvim-telescope/telescope-fzy-native.nvim'
 
@@ -229,14 +209,6 @@ require('packer').startup(function()
     use 'ggandor/lightspeed.nvim'
     use 'ron-rs/ron.vim'
     use 'Raimondi/vim-transpose-words'
-    use {
-        'glacambre/firenvim',
-        run = function()
-            vim.fn['firenvim#install'](0)
-        end,
-    }
-    -- EWWWWWW
-    use 'elkowar/yuck.vim'
     -- Profiler
     use 'dstein64/vim-startuptime'
     -- Developer profiler
