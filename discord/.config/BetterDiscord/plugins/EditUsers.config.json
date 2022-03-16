@@ -41,7 +41,7 @@
 			},
 			"tag": "",
 			"url": "https://i.kym-cdn.com/entries/icons/original/000/036/252/WideHardo_Banner.jpg",
-			"useServerNick": false
+			"useServerNick": true
 		},
 		"570954753605894144": {
 			"name": "koen",
@@ -126,6 +126,10 @@
 		"679257607608991756": {
 			"status": "867345765237645 bridge wins",
 			"tag": "sweat"
+		},
+		"638652932853727246": {
+			"name": "Plato",
+			"url": "https://cdn.discordapp.com/avatars/638652932853727246/894b50262ca9f9cbe6e1ff74721a7bae.webp"
 		}
 	}
 }

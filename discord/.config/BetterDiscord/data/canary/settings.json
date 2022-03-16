@@ -31,7 +31,7 @@
     },
     "developer": {
         "debugLogs": false,
-        "devTools": false,
+        "devTools": true,
         "debuggerHotkey": false,
         "reactDevTools": false,
         "inspectElement": false,

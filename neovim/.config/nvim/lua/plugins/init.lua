@@ -24,46 +24,16 @@ require('packer').startup(function()
     use 'tpope/vim-git'
     use 'tpope/vim-fugitive'
 
-    use 'rebelot/kanagawa.nvim'
-    -- Status line
-    use 'nvim-lua/lsp-status.nvim'
     use {
-        'feline-nvim/feline.nvim',
+        'rebelot/kanagawa.nvim',
         config = function()
             vim.o.background = 'dark'
             vim.cmd 'colorscheme kanagawa'
             vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
-            if vim.g.feline_has_init ~= 1 then
-                local components = require('feline.presets')['noicon']
-
-                table.insert(components.active[2], {
-                    provider = 'lsp_current_status',
-                    enabled = function()
-                        return #vim.lsp.buf_get_clients() > 0
-                    end,
-                })
-
-                require('feline').setup {
-                    components = components,
-                    custom_providers = {
-                        lsp_current_status = function()
-                            local status = require('lsp-status').status()
-                            if type(status) == 'string' then
-                                -- Hacky way to get rid of extra characters from
-                                -- rust_analyzer
-                                local result, _ = string.gsub(status, '\240\159\135\187', '')
-                                return result
-                            else
-                                return ' '
-                            end
-                        end,
-                    },
-                }
-            end
-            vim.g.feline_has_init = 1
         end,
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     }
+    -- Status line
+    use 'nvim-lua/lsp-status.nvim'
 
     -- Prime goodness
     use 'ThePrimeagen/harpoon'
@@ -87,6 +57,13 @@ require('packer').startup(function()
         end,
     }
     use 'nvim-telescope/telescope-fzy-native.nvim'
+    use {
+        'tjdevries/express_line.nvim',
+        config = function()
+            R 'plugins.express_line'
+        end,
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    }
 
     -- Rust or Bust
     use 'rust-lang/rust.vim'

@@ -4,7 +4,8 @@
     "drawerStates": {
         "settings": {
             "addons": false,
-            "window": true
+            "window": true,
+            "developer": true
         }
     }
 }

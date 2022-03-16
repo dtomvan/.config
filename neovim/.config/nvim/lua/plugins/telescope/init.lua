@@ -1,6 +1,20 @@
 local silent = require('keymaps').silent
 
 require('telescope').setup {
+    defaults = {
+        vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--multiline',
+            '--vimgrep',
+            '--pcre2',
+            '--smart-case',
+        },
+    },
     extensions = {
         fzy_native = {
             override_generic_sorter = true,

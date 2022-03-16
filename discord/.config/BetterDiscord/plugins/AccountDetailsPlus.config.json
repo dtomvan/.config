@@ -2,5 +2,9 @@
     "currentVersionInfo": {
         "version": "1.0.1",
         "hasShownChangelog": true
+    },
+    "settings": {
+        "popoutOnClick": true,
+        "nicknameByDefault": true
     }
 }
