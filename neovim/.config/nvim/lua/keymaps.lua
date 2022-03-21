@@ -1,6 +1,8 @@
 local silent = { silent = true, noremap = true }
 local noremap = { noremap = true }
 local expr = { expr = true, silent = true }
+local neogit = require 'neogit'
+
 vim.keymap.set('', '<space>', '<Nop>', silent)
 
 -- Thanks prime (:
@@ -50,7 +52,7 @@ end, silent)
 vim.keymap.set('n', '<C-y>', function()
     require('harpoon.ui').nav_file(3)
 end, silent)
-vim.keymap.set('n', '<C-f>', function()
+vim.keymap.set('n', '<C-\\>', function()
     require('harpoon.ui').nav_file(4)
 end, silent)
 -- chmod +x
@@ -136,5 +138,13 @@ vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', '<C-j>', '<C-w>j')
 vim.keymap.set('n', '<C-k>', '<C-w>k')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
+
+vim.keymap.set('n', '<leader>gs', function()
+    neogit.open { kind = 'split' }
+end)
+
+vim.keymap.set('n', '<leader>gc', function()
+    neogit.open { 'commit' }
+end)
 
 return { silent = silent, noremap = noremap, expr = expr }

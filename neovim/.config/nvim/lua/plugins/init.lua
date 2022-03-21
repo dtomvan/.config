@@ -173,6 +173,18 @@ require('packer').startup(function()
     use 'ggandor/lightspeed.nvim'
     use { 'ron-rs/ron.vim', ft = 'ron' }
     use 'Raimondi/vim-transpose-words'
+
+    -- Neogit
+    use {
+        'TimUntersberger/neogit',
+        requires = 'nvim-lua/plenary.nvim',
+        config = function()
+            local neogit = require 'neogit'
+
+            neogit.setup {}
+        end,
+    }
+
     -- Profiler
     use 'dstein64/vim-startuptime'
     -- Developer profiler
