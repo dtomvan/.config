@@ -16,3 +16,7 @@ hi StatusLine guibg=#928374 guifg=#3c3836
 
 cnoreabbrev luf luafile
 cnoreabbrev fcd cd %:p:h
+
+command! -nargs=+ Rg execute 'silent grep! <args>' | copen
+
+highlight WinSeparator guibg=NONE

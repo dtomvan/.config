@@ -276,3 +276,5 @@ alias t="tmux"
 alias vim="nvim"
 alias xcd='cd "$(xplr --print-pwd-as-result)"'
 alias x='xplr'
+
+source ~/projects/fucke.rs/shells/zsh/setup.sh

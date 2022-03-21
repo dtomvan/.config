@@ -11,7 +11,7 @@ super + v
  clipmenu
 
 super + d
- ~/.cargo/bin/dmenu_drun
+ export PATH=~/.cargo/bin:~/.local/bin/:$PATH && ~/.cargo/bin/dmenu_drun
 
 super + control + 9
  notify-send "toggling xautolock off" && xautolock -disable

@@ -34,13 +34,14 @@ apply = ["defer"]
 
 [plugins.pure]
 github = 'sindresorhus/pure'
-use = [
-    'async.zsh',
-    'pure.zsh',
-]
+use = ['async.zsh', 'pure.zsh']
 
 [plugins.fzf]
 github = 'unixorn/fzf-zsh-plugin'
+apply = ["defer"]
+
+[plugins.sd]
+github = "ianthehenry/sd"
 apply = ["defer"]
 
 # use = ["{{ name }}.zsh"]

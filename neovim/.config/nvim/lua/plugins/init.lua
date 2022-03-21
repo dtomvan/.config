@@ -23,6 +23,9 @@ require('packer').startup(function()
     use 'tpope/vim-surround'
     use 'tpope/vim-git'
     use 'tpope/vim-fugitive'
+    use 'tpope/vim-eunuch'
+    use 'tpope/vim-unimpaired'
+    use 'tpope/vim-repeat'
 
     use {
         'rebelot/kanagawa.nvim',
@@ -38,7 +41,7 @@ require('packer').startup(function()
     -- Prime goodness
     use 'ThePrimeagen/harpoon'
     use 'ThePrimeagen/refactoring.nvim'
-    use 'ThePrimeagen/vim-be-good'
+    use { 'ThePrimeagen/vim-be-good', cmd = 'VimBeGood' }
     use 'theprimeagen/jvim.nvim'
 
     -- Git signs
@@ -66,8 +69,8 @@ require('packer').startup(function()
     }
 
     -- Rust or Bust
-    use 'rust-lang/rust.vim'
-    use 'cespare/vim-toml'
+    use { 'rust-lang/rust.vim', ft = 'rust' }
+    use { 'cespare/vim-toml', ft = 'toml' }
     use 'simrat39/rust-tools.nvim'
 
     -- Lsp
@@ -117,22 +120,6 @@ require('packer').startup(function()
     -- Auto pairs
     use 'rstacruz/vim-closer'
     use 'Krasjet/auto.pairs'
-
-    -- Diagnotic plugins by folke
-    use {
-        'folke/trouble.nvim',
-        requires = 'kyazdani42/nvim-web-devicons',
-        config = function()
-            require('trouble').setup {}
-        end,
-    }
-    use {
-        'folke/todo-comments.nvim',
-        requires = 'nvim-lua/plenary.nvim',
-        config = function()
-            require('todo-comments').setup {}
-        end,
-    }
 
     -- Kotlin
     use 'udalov/kotlin-vim'
@@ -184,7 +171,7 @@ require('packer').startup(function()
     use 'andymass/vim-matchup'
     use 'stefandtw/quickfix-reflector.vim'
     use 'ggandor/lightspeed.nvim'
-    use 'ron-rs/ron.vim'
+    use { 'ron-rs/ron.vim', ft = 'ron' }
     use 'Raimondi/vim-transpose-words'
     -- Profiler
     use 'dstein64/vim-startuptime'
