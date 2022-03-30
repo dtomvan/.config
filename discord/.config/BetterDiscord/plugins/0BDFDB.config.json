@@ -1,6 +1,6 @@
 {
 	"changeLogs": {
-		"BDFDB": "2.1.9",
+		"BDFDB": "2.2.4",
 		"ChatAliases": "2.3.3",
 		"CopyRawMessage": "1.1.2",
 		"CustomStatusPresets": "1.0.7",
@@ -22,6 +22,6 @@
 	},
 	"hashes": {
 		"0BDFDB.data.json": "8f08825d634cb1ebc423392cd4cb4f58805127e6",
-		"0BDFDB.raw.css": "5b4dfd0092eb658a85c3896c5fdab49cf83d0cee"
+		"0BDFDB.raw.css": "afe854fd60051d750cebb99fb290bdce5c415f27"
 	}
 }

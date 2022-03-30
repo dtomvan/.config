@@ -6,7 +6,7 @@ mkdir -p $HOME/.lunarclient/logs/
 DATE=$(date +%F)
 AMOUNT=$(ls ~/.lunarclient/logs/1.18*.log -1 | wc -l)
 
-/home/tomvd/.lunarclient/jre/1.18/zulu17.30.15-ca-fx-jre17.0.1-linux_x64/bin/java \
+/home/tomvd/.lunarclient/jre/1.18.1/zulu17.30.15-ca-fx-jre17.0.1-linux_x64/bin/java \
 -javaagent:"$HOME/solar-patcher.jar=$HOME/config.example.json" \
 --add-modules jdk.naming.dns \
 --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming \
@@ -14,16 +14,16 @@ AMOUNT=$(ls ~/.lunarclient/logs/1.18*.log -1 | wc -l)
 --add-opens java.base/java.io=ALL-UNNAMED \
 -Xms3072m -Xmx3072m \
 -Djava.library.path="$HOME/.lunarclient/offline/1.18/natives" \
--cp "$HOME/.lunarclient/offline/1.18/lunar-assets-prod-1-optifine.jar:$HOME/.lunarclient/offline/1.18/lunar-assets-prod-2-optifine.jar:$HOME/.lunarclient/offline/1.18/lunar-assets-prod-3-optifine.jar:$HOME/.lunarclient/offline/1.18/lunar-libs.jar:$HOME/.lunarclient/offline/1.18/lunar-prod-optifine.jar:$HOME/.lunarclient/offline/1.18/OptiFine.jar:$HOME/.lunarclient/offline/1.18/vpatcher-prod.jar" \
+-cp "$HOME/.lunarclient/offline/1.18.1/lunar-assets-prod-1-optifine.jar:$HOME/.lunarclient/offline/1.18.1/lunar-assets-prod-2-optifine.jar:$HOME/.lunarclient/offline/1.18.1/lunar-assets-prod-3-optifine.jar:$HOME/.lunarclient/offline/1.18.1/lunar-libs.jar:$HOME/.lunarclient/offline/1.18.1/lunar-prod-optifine.jar:$HOME/.lunarclient/offline/1.18.1/OptiFine.jar:$HOME/.lunarclient/offline/1.18.1/vpatcher-prod.jar" \
 com.moonsworth.lunar.patcher.LunarMain \
---version 1.18 \
+--version 1.18.1 \
 --accessToken 0 \
---assetIndex 1.18 \
+--assetIndex 1.18.1 \
 --userProperties {} \
 --gameDir "$HOME/.minecraft" \
 --texturesDir "$HOME/.lunarclient/textures" \
 --width 1904 \
---height 1040 2>&1 | tee ~/.lunarclient/logs/1.18-$DATE-$AMOUNT.log
+--height 1040 2>&1 | tee ~/.lunarclient/logs/1.18.1-$DATE-$AMOUNT.log
 
 TOOK="$SECONDS"
 EPOCH='jan 1 1970'

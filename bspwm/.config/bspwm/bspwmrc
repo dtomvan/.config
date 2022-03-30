@@ -18,6 +18,7 @@ bspc config pointer_modifier        mod4
 bspc config pointer_motion_interval 10
 
 bspc rule -a mplayer2 state=floating
+bspc rule -a mumble state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
 bspc rule -a Dunst manage=off

@@ -1,5 +1,25 @@
 local lsp_installer_servers = require 'nvim-lsp-installer.servers'
 
+local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
+
+-- These two are optional and provide syntax highlighting
+-- for Neorg tables and the @document.meta tag
+parser_configs.norg_meta = {
+    install_info = {
+        url = 'https://github.com/nvim-neorg/tree-sitter-norg-meta',
+        files = { 'src/parser.c' },
+        branch = 'main',
+    },
+}
+
+parser_configs.norg_table = {
+    install_info = {
+        url = 'https://github.com/nvim-neorg/tree-sitter-norg-table',
+        files = { 'src/parser.c' },
+        branch = 'main',
+    },
+}
+
 require('nvim-treesitter.configs').setup {
     ensure_installed = 'maintained',
     sync_install = false,
@@ -56,6 +76,7 @@ cmp.setup {
         -- { name = "gh_issues" },
 
         -- Youtube: Could enable this only for lua, but nvim_lua handles that already.
+        { name = 'neorg' },
         { name = 'nvim_lsp' },
         { name = 'nvim_lua' },
         { name = 'luasnip' },
@@ -126,7 +147,7 @@ local on_attach = function(client, bufnr)
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end)
     buf_set_keymap('n', '<space>D', vim.lsp.buf.type_definition)
-    buf_set_keymap('n', '<space>rn', vim.lsp.buf.rename)
+    buf_set_keymap('n', '<space>rn', require("utils").quick_fix_rename)
     buf_set_keymap('n', '<space>a', vim.lsp.buf.code_action)
     buf_set_keymap('n', 'gr', vim.lsp.buf.references)
     buf_set_keymap('n', '<space>e', vim.diagnostic.open_float)

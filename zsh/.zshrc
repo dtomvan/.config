@@ -128,6 +128,18 @@ function my-expand-alias() { zle _expand_alias }
 zle -N my-expand-alias
 bindkey '^ ' my-expand-alias
 
+fancy-ctrl-z () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line -w
+  else
+    zle push-input -w
+    zle clear-screen -w
+  fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
+
 # ALIASES
 alias rm='echo "This is not the command you are looking for."; false'
 alias aoc="~/projects/aoc-2021"
@@ -267,7 +279,7 @@ alias gupv="git pull --rebase -v"
 alias gwch="git whatchanged -p --alias=commit --pretty=medium"
 alias less="bat"
 alias less='bat'
-alias ls="exa --color=always -la"
+alias ls="exa --icons"
 alias luamake=/home/tomvd/.cache/nvim/nlua/sumneko_lua/lua-language-server/3rd/luamake/luamake
 alias openrct2='~/.local/share/flatpak/exports/bin/io.openrct2.OpenRCT2'
 alias srb2='~/.local/share/flatpak/exports/bin/org.srb2.SRB2'

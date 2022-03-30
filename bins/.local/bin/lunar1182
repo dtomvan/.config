@@ -1,0 +1,52 @@
+#!/bin/bash
+
+pushd ~/.lunarclient/offline/1.18.2
+mkdir -p $HOME/.lunarclient/logs/
+
+DATE=$(date +%F)
+AMOUNT=$(ls ~/.lunarclient/logs/1.18*.log -1 | wc -l)
+
+~/.lunarclient/jre/1.18.2/zulu17.30.15-ca-fx-jre17.0.1-linux_x64/bin/java \
+-javaagent:"$HOME/solar-patcher.jar=$HOME/config.example.json" \
+--add-modules jdk.naming.dns \
+--add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming \
+-Djna.boot.library.path=natives \
+-Dlog4j2.formatMsgNoLookups=true \
+--add-opens java.base/java.io=ALL-UNNAMED \
+-Xms3072m -Xmx3072m \
+-Djava.library.path=natives \
+-XX:+DisableAttachMechanism \
+-cp \
+"vpatcher-prod.jar:lunar-prod-optifine.jar:lunar-libs.jar"\
+":lunar-assets-prod-1-optifine.jar:lunar-assets-prod-2-optifine.jar"\
+":lunar-assets-prod-3-optifine.jar:OptiFine_1.18.2_HD_U_H6" \
+com.moonsworth.lunar.patcher.LunarMain \
+--version 1.18.2 \
+--accessToken 0 \
+--assetIndex 1.18 \
+--userProperties {} \
+--gameDir /home/tomvd/.minecraft \
+--texturesDir /home/tomvd/.lunarclient/textures \
+--launcherVersion 2.10.0 \
+--width 1904 \
+--height 1040 \
+--workingDirectory . \
+--classpathDir . 2>&1 | tee ~/.lunarclient/logs/1.18.2-$DATE-$AMOUNT.log
+
+TOOK="$SECONDS"
+EPOCH='jan 1 1970'
+FILE=~/gamin.txt
+
+calc_date() {
+    a=( $(date -u -d "$*" +"%j days %H:%M:%S") )
+    a[0]=$((10#${a[0]}-1)); echo "${a[@]}"
+}
+
+minify_date() {
+    date -u -d "$EPOCH $* seconds" +%s
+}
+
+OLD_TIME_STAMP=$(minify_date $(cat "$FILE"))
+
+calc_date "$EPOCH + $TOOK seconds + $OLD_TIME_STAMP seconds" > $FILE
+popd

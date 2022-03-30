@@ -185,6 +185,16 @@ require('packer').startup(function()
         end,
     }
 
+    -- Neorg
+    use {
+        'nvim-neorg/neorg',
+        config = function()
+            require('plugins.norg')
+        end,
+        run = ':TSInstall norg norg_meta norg_table',
+        requires = 'nvim-lua/plenary.nvim',
+    }
+
     -- Profiler
     use 'dstein64/vim-startuptime'
     -- Developer profiler

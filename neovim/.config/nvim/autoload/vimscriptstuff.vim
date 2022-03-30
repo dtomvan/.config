@@ -13,7 +13,7 @@ au BufEnter *.tsv nmap <silent> <buffer> <leader>0 <cmd>!cat % \| xclip -sel cli
 au BufEnter *.tsv vmap <silent> <buffer> <leader>9 <cmd>'<,'>s/\(.*\)	\(.*\)/\2	\1<cr>
 
 hi TabLineFill guibg=#333333
-hi StatusLine guibg=#928374 guifg=#3c3836
+hi WinSeparator guibg=NONE
 
 cnoreabbrev luf luafile
 cnoreabbrev fcd cd %:p:h

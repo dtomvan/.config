@@ -43,10 +43,10 @@ end, silent)
 vim.keymap.set('n', '<F1>', function()
     require('harpoon.ui').toggle_quick_menu()
 end, silent)
-vim.keymap.set('n', '<C-Space>', function()
+vim.keymap.set('n', '<F2>', function()
     require('harpoon.ui').nav_file(1)
 end, silent)
-vim.keymap.set('n', '<Tab>', function()
+vim.keymap.set('n', '<F3>', function()
     require('harpoon.ui').nav_file(2)
 end, silent)
 vim.keymap.set('n', '<C-y>', function()
@@ -146,5 +146,8 @@ end)
 vim.keymap.set('n', '<leader>gc', function()
     neogit.open { 'commit' }
 end)
+
+-- neorg
+vim.keymap.set('n', '<leader>no', '<cmd>tabnew<cr>:Neorg workspace <tab>', { remap = true })
 
 return { silent = silent, noremap = noremap, expr = expr }
