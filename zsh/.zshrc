@@ -280,6 +280,8 @@ alias gwch="git whatchanged -p --alias=commit --pretty=medium"
 alias less="bat"
 alias less='bat'
 alias ls="exa --icons"
+alias ll="ls -lah"
+alias la="ls -a"
 alias luamake=/home/tomvd/.cache/nvim/nlua/sumneko_lua/lua-language-server/3rd/luamake/luamake
 alias openrct2='~/.local/share/flatpak/exports/bin/io.openrct2.OpenRCT2'
 alias srb2='~/.local/share/flatpak/exports/bin/org.srb2.SRB2'

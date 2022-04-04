@@ -31,9 +31,9 @@ bspc desktop='^1' --focus
 bspwmbar &
 eww daemon &
 
-~/i3lock.sh
-hsetroot -solid "#16161D"
-sleep 1 && ~/bg.sh bg.gif &
+~/i3lock.sh &
+hsetroot -solid "#16161D" &
+~/bg.sh bg.gif &
 deadd-notification-center &
 betterdiscordctl -f canary install || true && discord-canary --no-sandbox \
 --start-minimized \

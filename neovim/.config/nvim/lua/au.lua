@@ -75,6 +75,17 @@ au('BufEnter', {
 --     end,
 -- })
 
+group('Regels.md', gops)
+au('BufWritePre', {
+    group = 'Regels.md',
+    callback = function()
+        if vim.fn.expand("%:p") == "/home/tomvd/regels.md" then
+            local line = 'Laatst bijgewerkt op: ' .. os.date '%F %T'
+            vim.api.nvim_buf_set_lines(0, -2, -1, false, { line })
+        end
+    end,
+})
+
 local hsp = '*.hs'
 local hs = 'HaskBufs'
 group(hs, gops)
