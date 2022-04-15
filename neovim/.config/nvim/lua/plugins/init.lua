@@ -26,6 +26,7 @@ require('packer').startup(function()
     use 'tpope/vim-eunuch'
     use 'tpope/vim-unimpaired'
     use 'tpope/vim-repeat'
+    use 'tpope/vim-vinegar'
 
     use {
         'rebelot/kanagawa.nvim',

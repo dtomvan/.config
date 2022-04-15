@@ -2,7 +2,7 @@
  * @name BDFDB
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 2.2.5
+ * @version 2.3.0
  * @description Required Library for DevilBro's Plugins
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -19,8 +19,14 @@ module.exports = (_ => {
 		"info": {
 			"name": "BDFDB",
 			"author": "DevilBro",
-			"version": "2.2.5",
+			"version": "2.3.0",
 			"description": "Required Library for DevilBro's Plugins"
+		},
+		"rawUrl": "https://mwittrien.github.io/BetterDiscordAddons/Library/0BDFDB.plugin.js",
+		"changeLog": {
+			"added": {
+				"Plugin Config Sync": "Allows you to disable the synchronization of plugin config files between Discord Accounts"
+			}
 		}
 	};
 	
@@ -40,9 +46,14 @@ module.exports = (_ => {
 	
 	const Internal = Object.assign({}, BDFDB, {
 		patchPriority: 0,
+		forceSyncData: true,
 		settings: {},
 		defaults: {
 			general: {
+				shareData: {
+					value: true,
+					onChange: _ => Cache.data = {}
+				},
 				showToasts: {
 					value: true,
 					isDisabled: data => data.nativeValue,
@@ -972,13 +983,32 @@ module.exports = (_ => {
 	
 	const request = require("request"), fs = require("fs"), path = require("path");
 	
-	Internal.writeConfig = function (path, config) {
-		try {fs.writeFileSync(path, JSON.stringify(config, null, "	"));}
+	Internal.writeConfig = function (plugin, path, config) {
+		let sync = Internal.shouldSyncConfig(plugin);
+		let allData = {};
+		try {allData = JSON.parse(fs.readFileSync(path));}
+		catch (err) {allData = {};}
+		try {
+			BDFDB.ObjectUtils.deepAssign(allData, !sync ? (plugin.neverSyncData ? {[BDFDB.UserUtils.me.id]: config} : {all: config, [BDFDB.UserUtils.me.id]: config}) : {all: config});
+			fs.writeFileSync(path, JSON.stringify(allData, null, "	"));
+		}
 		catch (err) {}
 	};
-	Internal.readConfig = function (path) {
-		try {return JSON.parse(fs.readFileSync(path));}
+	Internal.readConfig = function (plugin, path) {
+		let sync = Internal.shouldSyncConfig(plugin);
+		try {
+			let config = JSON.parse(fs.readFileSync(path));
+			if (config && Object.keys(config).some(n => !(n == "all" || parseInt(n)))) {
+				config = !sync ? (plugin.neverSyncData ? {[BDFDB.UserUtils.me.id]: config} : {all: config, [BDFDB.UserUtils.me.id]: config}) : {all: config};
+				try {fs.writeFileSync(path, JSON.stringify(config, null, "	"));}
+				catch (err) {}
+			}
+			return config && config[sync ? "all" : BDFDB.UserUtils.me.id] || {};
+		}
 		catch (err) {return {};}
+	};
+	Internal.shouldSyncConfig = function (plugin) {
+		return plugin.neverSyncData !== undefined ? !plugin.neverSyncData : (plugin.forceSyncData || Internal.settings.general.shareData);
 	};
 	
 	BDFDB.DataUtils = {};
@@ -988,7 +1018,7 @@ module.exports = (_ => {
 		let fileName = pluginName == "BDFDB" ? "0BDFDB" : pluginName;
 		let configPath = path.join(BDFDB.BDUtils.getPluginsFolder(), fileName + ".config.json");
 		
-		let config = Cache.data[pluginName] !== undefined ? Cache.data[pluginName] : (Internal.readConfig(configPath) || {});
+		let config = Cache.data[pluginName] !== undefined ? Cache.data[pluginName] : (Internal.readConfig(plugin, configPath) || {});
 		
 		if (key === undefined) config = BDFDB.ObjectUtils.is(data) ? BDFDB.ObjectUtils.sort(data) : data;
 		else {
@@ -1008,7 +1038,7 @@ module.exports = (_ => {
 		else {
 			if (configIsObject) config = BDFDB.ObjectUtils.sort(config);
 			Cache.data[pluginName] = configIsObject ? BDFDB.ObjectUtils.deepAssign({}, config) : config;
-			Internal.writeConfig(configPath, config);
+			Internal.writeConfig(plugin, configPath, config);
 		}
 	};
 
@@ -1018,7 +1048,7 @@ module.exports = (_ => {
 		let fileName = pluginName == "BDFDB" ? "0BDFDB" : pluginName;
 		let configPath = path.join(BDFDB.BDUtils.getPluginsFolder(), fileName + ".config.json");
 		
-		let config = Cache.data[pluginName] !== undefined ? Cache.data[pluginName] : (Internal.readConfig(configPath) || {});
+		let config = Cache.data[pluginName] !== undefined ? Cache.data[pluginName] : (Internal.readConfig(plugin, configPath) || {});
 		let configIsObject = BDFDB.ObjectUtils.is(config);
 		Cache.data[pluginName] = configIsObject ? BDFDB.ObjectUtils.deepAssign({}, config) : config;
 		
@@ -1035,7 +1065,7 @@ module.exports = (_ => {
 		let fileName = pluginName == "BDFDB" ? "0BDFDB" : pluginName;
 		let configPath = path.join(BDFDB.BDUtils.getPluginsFolder(), fileName + ".config.json");
 		
-		let config = Cache.data[pluginName] !== undefined ? Cache.data[pluginName] : (Internal.readConfig(configPath) || {});
+		let config = Cache.data[pluginName] !== undefined ? Cache.data[pluginName] : (Internal.readConfig(plugin, configPath) || {});
 		let configIsObject = BDFDB.ObjectUtils.is(config);
 		
 		if (key === undefined || !configIsObject) config = {};
@@ -1052,7 +1082,7 @@ module.exports = (_ => {
 		else {
 			if (configIsObject) config = BDFDB.ObjectUtils.sort(config);
 			Cache.data[pluginName] = configIsObject ? BDFDB.ObjectUtils.deepAssign({}, config) : config;
-			Internal.writeConfig(configPath, config);
+			Internal.writeConfig(plugin, configPath, config);
 		}
 	};
 	BDFDB.DataUtils.get = function (plugin, key, id) {
@@ -3164,6 +3194,7 @@ module.exports = (_ => {
 			get: function (list, item) {
 				const user = Internal.LibraryModules.UserStore && Internal.LibraryModules.UserStore.getCurrentUser && Internal.LibraryModules.UserStore.getCurrentUser();
 				if (user && BDFDB.UserUtils._id != user.id) {
+					Cache.data = {};
 					document.body.setAttribute("data-current-user-id", user.id);
 					BDFDB.UserUtils._id = user.id;
 				}
@@ -3209,7 +3240,7 @@ module.exports = (_ => {
 			if (!BDFDB.DiscordConstants.Permissions[permission]) BDFDB.LogUtils.warn([permission, "not found in Permissions"]);
 			else {
 				let channel = Internal.LibraryModules.ChannelStore.getChannel(channelId);
-				if (channel) return Internal.LibraryModules.PermissionRoleUtils.can(BDFDB.DiscordConstants.Permissions[permission], id, channel);
+				if (channel) return Internal.LibraryModules.PermissionRoleUtils.can({permission: BDFDB.DiscordConstants.Permissions[permission], user: id, context: channel});
 			}
 			return false;
 		};
@@ -5162,8 +5193,6 @@ module.exports = (_ => {
 			};
 			
 			CustomComponents.Checkbox = reactInitialized && class BDFDB_Checkbox extends Internal.LibraryModules.React.Component {
-				handleClick(e) {if (typeof this.props.onClick == "function") this.props.onClick(e, this);}
-				handleContextMenu(e) {if (typeof this.props.onContextMenu == "function") this.props.onContextMenu(e, this);}
 				handleMouseDown(e) {if (typeof this.props.onMouseDown == "function") this.props.onMouseDown(e, this);}
 				handleMouseUp(e) {if (typeof this.props.onMouseUp == "function") this.props.onMouseUp(e, this);}
 				handleMouseEnter(e) {if (typeof this.props.onMouseEnter == "function") this.props.onMouseEnter(e, this);}
@@ -5217,6 +5246,10 @@ module.exports = (_ => {
 									type: "checkbox",
 									onClick: this.props.disabled || this.props.readOnly ? (_ => {}) : this.handleChange.bind(this),
 									onContextMenu: this.props.disabled || this.props.readOnly ? (_ => {}) : this.handleChange.bind(this),
+									onMouseUp: !this.props.disabled && this.handleMouseDown.bind(this),
+									onMouseDown: !this.props.disabled && this.handleMouseUp.bind(this),
+									onMouseEnter: !this.props.disabled && this.handleMouseEnter.bind(this),
+									onMouseLeave: !this.props.disabled && this.handleMouseLeave.bind(this),
 									checked: this.props.value,
 									style: {
 										width: this.props.size,
@@ -6869,11 +6902,13 @@ module.exports = (_ => {
 						if ((this.props.openOnClick || this.props.openOnClick === undefined)) this.toggle();
 						if (typeof this.props.onClick == "function") this.props.onClick(e, this);
 						if (typeof childProps.onClick == "function") childProps.onClick(e, childThis);
+						if (this.props.killEvent || childProps.killEvent) BDFDB.ListenerUtils.stopEvent(e);
 					};
 					child.props.onContextMenu = (e, childThis) => {
 						if (this.props.openOnContextMenu) this.toggle();
 						if (typeof this.props.onContextMenu == "function") this.props.onContextMenu(e, this);
 						if (typeof childProps.onContextMenu == "function") childProps.onContextMenu(e, childThis);
+						if (this.props.killEvent || childProps.killEvent) BDFDB.ListenerUtils.stopEvent(e);
 					};
 					return BDFDB.ReactUtils.createElement(Internal.LibraryModules.React.Fragment, {
 						onClick: this.toggle,
@@ -7242,17 +7277,20 @@ module.exports = (_ => {
 								},
 								children: this.props.settings.map(setting => BDFDB.ReactUtils.createElement("div", {
 									className: BDFDB.disCN.checkboxcontainer,
-									children: BDFDB.ReactUtils.createElement(Internal.LibraryComponents.Checkbox, {
-										disabled: props.disabled,
-										cardId: props.key,
-										settingId: setting,
-										shape: Internal.LibraryComponents.Checkbox.Shapes && Internal.LibraryComponents.Checkbox.Shapes.ROUND,
-										type: Internal.LibraryComponents.Checkbox.Types && Internal.LibraryComponents.Checkbox.Types.INVERTED,
-										color: this.props.checkboxColor,
-										getColor: this.props.getCheckboxColor,
-										value: props[setting],
-										getValue: this.props.getCheckboxValue,
-										onChange: this.props.onCheckboxChange
+									children: BDFDB.ReactUtils.createElement(Internal.LibraryComponents.TooltipContainer, {
+										text: setting,
+										children: BDFDB.ReactUtils.createElement(Internal.LibraryComponents.Checkbox, {
+											disabled: props.disabled,
+											cardId: props.key,
+											settingId: setting,
+											shape: Internal.LibraryComponents.Checkbox.Shapes && Internal.LibraryComponents.Checkbox.Shapes.ROUND,
+											type: Internal.LibraryComponents.Checkbox.Types && Internal.LibraryComponents.Checkbox.Types.INVERTED,
+											color: this.props.checkboxColor,
+											getColor: this.props.getCheckboxColor,
+											value: props[setting],
+											getValue: this.props.getCheckboxValue,
+											onChange: this.props.onCheckboxChange
+										})
 									})
 								})).flat(10).filter(n => n)
 							})
@@ -7919,6 +7957,7 @@ module.exports = (_ => {
 					return BDFDB.ReactUtils.createElement(Internal.LibraryComponents.PopoutContainer, BDFDB.ObjectUtils.exclude(Object.assign({}, this.props, {
 						wrap: false,
 						renderPopout: instance => BDFDB.ReactUtils.createElement(Internal.LibraryComponents.UserPopout, {
+							user: Internal.LibraryModules.UserStore.getUser(this.props.userId),
 							userId: this.props.userId,
 							channelId: this.props.channelId,
 							guildId: this.props.guildId
@@ -9031,7 +9070,8 @@ module.exports = (_ => {
 								value: Internal.settings.general[key],
 								nativeValue: nativeSetting,
 								disabled: disabled
-							}) : true) && (Internal.settings.general[key] || nativeSetting)
+							}) : true) && (Internal.settings.general[key] || nativeSetting),
+							onChange: typeof Internal.defaults.general[key].onChange == "function" ? Internal.defaults.general[key].onChange : (_ => {})
 						}));
 					}
 					settingsItems.push(BDFDB.ReactUtils.createElement(Internal.LibraryComponents.SettingsItem, {

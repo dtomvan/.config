@@ -58,4 +58,5 @@ return {
         {key="p", mods="ALT", action=wezterm.action{SwitchWorkspaceRelative=-1}},
     },
     window_background_opacity = 0.98,
+    check_for_updates = false,
 }

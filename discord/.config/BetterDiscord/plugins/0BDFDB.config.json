@@ -1,27 +1,30 @@
 {
-	"changeLogs": {
-		"BDFDB": "2.2.4",
-		"ChatAliases": "2.3.3",
-		"CopyRawMessage": "1.1.2",
-		"CustomStatusPresets": "1.0.7",
-		"DisplayServersAsChannels": "1.5.0",
-		"EditRoles": "1.0.8",
-		"EditUsers": "4.5.4",
-		"FriendNotifications": "1.7.8",
-		"GameActivityToggle": "1.0.4",
-		"SplitLargeMessages": "1.7.2",
-		"ThemeSettings": "1.3.3"
-	},
-	"choices": {
-		"toastPosition": "right"
-	},
-	"general": {
-		"showToasts": true,
-		"showSupportBadges": true,
-		"useChromium": false
-	},
-	"hashes": {
-		"0BDFDB.data.json": "5da134f5193d54039ec7a7bcb4ecadb4be418369",
-		"0BDFDB.raw.css": "afe854fd60051d750cebb99fb290bdce5c415f27"
+	"all": {
+		"changeLogs": {
+			"BDFDB": "2.3.0",
+			"ChatAliases": "2.3.3",
+			"CopyRawMessage": "1.1.2",
+			"CustomStatusPresets": "1.0.7",
+			"DisplayServersAsChannels": "1.5.0",
+			"EditRoles": "1.0.8",
+			"EditUsers": "4.5.4",
+			"FriendNotifications": "1.7.8",
+			"GameActivityToggle": "1.0.4",
+			"SplitLargeMessages": "1.7.2",
+			"ThemeSettings": "1.3.3"
+		},
+		"choices": {
+			"toastPosition": "right"
+		},
+		"general": {
+			"showToasts": true,
+			"showSupportBadges": true,
+			"useChromium": false,
+			"shareData": true
+		},
+		"hashes": {
+			"0BDFDB.data.json": "a372dfd478fed12f97edbd12b495ef92beab4255",
+			"0BDFDB.raw.css": "afe854fd60051d750cebb99fb290bdce5c415f27"
+		}
 	}
 }

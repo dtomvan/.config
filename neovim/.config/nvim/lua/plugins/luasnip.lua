@@ -9,11 +9,9 @@ local i = ls.insert_node
 local s = ls.snippet
 local t = ls.text_node
 
-vim.o.runtimepath = vim.o.runtimepath
-    .. ','
-    .. os.getenv 'HOME'
-    .. '/.local/share/nvim/site/pack/packer/start/friendly-snippets/'
-require('luasnip/loaders/from_vscode').load()
+require('luasnip/loaders/from_vscode').lazy_load {
+    paths = { '/.local/share/nvim/site/pack/packer/start/friendly-snippets/' },
+}
 
 -- THANKS TJ
 vim.cmd [[

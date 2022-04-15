@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ln -s ~/.minecraft/versions/1.8.9 ~/.minecraft/versions/1.8 || true
+ln -s ~/.minecraft/versions/1.8.9/1.8.9.jar ~/.minecraft/versions/1.8/1.8.jar || true
+
+for version in 1.8 1.18.2; do
+    java -cp ~/lunar-util.jar \
+    com.grappenmaker.solarpatcher.util.LunarMapper \
+    ~/.lunarclient/offline/$version/lunar-prod-optifine.jar \
+    ~/.minecraft/versions/$version/$version.jar \
+    ~/.lunarclient/offline/$version/$version-remapped.jar
+done

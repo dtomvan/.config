@@ -21,7 +21,50 @@ parser_configs.norg_table = {
 }
 
 require('nvim-treesitter.configs').setup {
-    ensure_installed = 'maintained',
+    ensure_installed = {
+        -- If you want an easy overview, select all of them and
+        -- type :!column -t -s' '<cr>
+        'bash',
+        'c',
+        'cmake',
+        'comment',
+        'cpp',
+        'c_sharp',
+        'css',
+        'dart',
+        'dockerfile',
+        'fennel',
+        'fish',
+        'gdscript',
+        'go',
+        'gomod',
+        'graphql',
+        'haskell',
+        'help',
+        'hjson',
+        'hocon',
+        'html',
+        'java',
+        'javascript',
+        'jsdoc',
+        'json',
+        'kotlin',
+        'latex',
+        'lua',
+        'make',
+        'markdown',
+        'python',
+        'rasi',
+        'regex',
+        'rust',
+        'scss',
+        'svelte',
+        'toml',
+        'tsx',
+        'typescript',
+        'vue',
+        'yaml',
+    },
     sync_install = false,
     ignore_install = {},
     highlight = {
@@ -147,7 +190,7 @@ local on_attach = function(client, bufnr)
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end)
     buf_set_keymap('n', '<space>D', vim.lsp.buf.type_definition)
-    buf_set_keymap('n', '<space>rn', require("utils").quick_fix_rename)
+    buf_set_keymap('n', '<space>rn', require('utils').quick_fix_rename)
     buf_set_keymap('n', '<space>a', vim.lsp.buf.code_action)
     buf_set_keymap('n', 'gr', vim.lsp.buf.references)
     buf_set_keymap('n', '<space>e', vim.diagnostic.open_float)
@@ -290,6 +333,25 @@ local rust_tools_opts = {
     },
 }
 
+local function get_lua_runtime()
+    local result = {};
+    for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+        local lua_path = path .. "/lua/";
+        if vim.fn.isdirectory(lua_path) then
+            result[lua_path] = true
+        end
+    end
+
+    -- This loads the `lua` files from nvim into the runtime.
+    result[vim.fn.expand("$VIMRUNTIME/lua")] = true
+
+    -- TODO: Figure out how to get these to work...
+    --  Maybe we need to ship these instead of putting them in `src`?...
+    result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
+
+    return result
+end
+
 -- Register a handler that will be called for all installed servers.
 -- Alternatively, you may also register handlers on specific server instances instead (see example below).
 lsp_installer.on_server_ready(function(server)
@@ -300,20 +362,50 @@ lsp_installer.on_server_ready(function(server)
 
     -- (optional) Customize the options passed to the server
     if server.name == 'sumneko_lua' then
-        require('nlua.lsp.nvim').setup(require 'lspconfig', {
-            cmd = server._default_options.cmd,
-            on_attach = on_attach,
-
-            globals = {
-                'Color',
-                'c',
-                'Group',
-                'g',
-                's',
-                'use',
-                'xplr',
-                'vim',
+        require('lspconfig').sumneko_lua.setup({
+            settings = {
+                Lua = {
+                    runtime = {
+                        version = "LuaJIT",
+                    },
+                    completion = {
+                        keywordSnippet = "Disable",
+                        showWord = "Disable",
+                    },
+                    diagnostics = {
+                        enable = true,
+                        disable = {
+                            "trailing-space",
+                        },
+                        globals = {
+                            "vim",
+                            "describe",
+                            "it",
+                            "before_each",
+                            "after_each",
+                            "teardown",
+                            "pending",
+                            "clear",
+                            'Color',
+                            'c',
+                            'Group',
+                            'g',
+                            's',
+                            'use',
+                            'xplr',
+                        },
+                    },
+                    workspace = {
+                        library = get_lua_runtime(),
+                        maxPreload = 10000,
+                        preloadFileSize = 10000,
+                    },
+                }
             },
+            filetypes = { "lua" },
+            on_attach = on_attach,
+            capabilities = capabilities,
+            root_dir = require('lspconfig.util').find_git_ancestor,
         })
     elseif server.name == 'rome' then
         opts.filetypes = {

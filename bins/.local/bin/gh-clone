@@ -1,0 +1,4 @@
+#!/bin/bash
+set -euo pipefail
+
+gh s | xargs -n1 gh repo clone
