@@ -52,4 +52,5 @@ clipmenud &
 setxkbmap -option grp:alt_caps_toggle -option compose:rwin &
 sleep 10 && check-updates &
 discord-notify &
+task-noti &
 exec $HOME/.local/bin/bspwm-start

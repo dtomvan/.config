@@ -19,7 +19,6 @@ require('packer').startup(function()
     use 'andweeb/presence.nvim'
 
     -- Tpope goodness
-    use 'tpope/vim-commentary'
     use 'tpope/vim-surround'
     use 'tpope/vim-git'
     use 'tpope/vim-fugitive'
@@ -27,6 +26,14 @@ require('packer').startup(function()
     use 'tpope/vim-unimpaired'
     use 'tpope/vim-repeat'
     use 'tpope/vim-vinegar'
+
+    -- Commenting
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
 
     use {
         'rebelot/kanagawa.nvim',
