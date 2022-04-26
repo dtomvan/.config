@@ -79,7 +79,7 @@ group('Regels.md', gops)
 au('BufWritePre', {
     group = 'Regels.md',
     callback = function()
-        if vim.fn.expand("%:p") == "/home/tomvd/regels.md" then
+        if vim.fn.expand '%:p' == '/home/tomvd/regels.md' then
             local line = 'Laatst bijgewerkt op: ' .. os.date '%F %T'
             vim.api.nvim_buf_set_lines(0, -2, -1, false, { line })
         end
@@ -106,4 +106,12 @@ au('FileType', {
         vim.wo.rnu = true
     end,
     group = help,
+})
+
+group('TextYankHighlight', gops)
+au('TextYankPost', {
+    group = "TextYankHighlight",
+    callback = function()
+        vim.highlight.on_yank { on_visual = false }
+    end,
 })

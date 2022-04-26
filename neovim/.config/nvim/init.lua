@@ -8,6 +8,7 @@ vim.g.did_load_filetypes = 1
 
 local execute = vim.api.nvim_command
 local fn = vim.fn
+local hl = vim.api.nvim_set_hl
 
 local install_path = fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 
@@ -23,6 +24,8 @@ R 'config-xplr'
 vim.cmd [[source ~/.config/nvim/autoload/vimscriptstuff.vim]]
 R 'opts'
 R 'lsp'
-vim.cmd [[ au! VimEnter *.rs ]]
 R 'keymaps'
 R 'au'
+R 'cmd'
+
+hl(0, 'WinSeparator', { bg = 'NONE' })

@@ -1,4 +1,3 @@
-" Too much wizardry for me to convert that to lua
 autocmd BufReadPost *
             \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
             \ |   exe "normal! g`\""
@@ -12,12 +11,5 @@ au BufEnter *.tsv setlocal noexpandtab textwidth=0
 au BufEnter *.tsv nmap <silent> <buffer> <leader>0 <cmd>!cat % \| xclip -sel clip<cr>
 au BufEnter *.tsv vmap <silent> <buffer> <leader>9 <cmd>'<,'>s/\(.*\)	\(.*\)/\2	\1<cr>
 
-hi TabLineFill guibg=#333333
-hi WinSeparator guibg=NONE
-
 cnoreabbrev luf luafile
 cnoreabbrev fcd cd %:p:h
-
-command! -nargs=+ Rg execute 'silent grep! <args>' | copen
-
-highlight WinSeparator guibg=NONE

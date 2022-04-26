@@ -1,7 +1,7 @@
 {
 	"all": {
 		"changeLogs": {
-			"BDFDB": "2.3.0",
+			"BDFDB": "2.3.1",
 			"ChatAliases": "2.3.3",
 			"CopyRawMessage": "1.1.2",
 			"CustomStatusPresets": "1.0.7",

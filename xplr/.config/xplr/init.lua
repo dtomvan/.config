@@ -5,36 +5,32 @@ local home = os.getenv 'HOME'
 
 package.path = package.path .. ';' .. home .. '/.config/xplr/?.lua;' .. home .. '/.config/xplr/modes/?.lua;'
 
-local xpm_path = '.local/share/xplr/xpm.xplr/'
+local xpm_path = home .. '/.local/share/xplr/dtomvan/xpm.xplr'
 local xpm_url = 'https://github.com/dtomvan/xpm.xplr'
-package.path = package.path
-    .. ';'
-    .. home
-    .. '/'
-    .. xpm_path
-    .. '?.lua;'
-    .. home
-    .. '/'
-    .. xpm_path
-    .. '?/init.lua;'
-os.execute(string.format('ls ~/%s >/dev/null || git clone %s ~/%s', xpm_path, xpm_url, xpm_path))
 
--- Config
----- General
-require 'general'
+package.path = package.path .. ';' .. xpm_path .. '/?.lua;' .. xpm_path .. '/?/init.lua'
+
+os.execute(string.format("[ -e '%s' ] || git clone '%s' '%s'", xpm_path, xpm_url, xpm_path))
+
 -- Layouts
 require 'layouts'
 -- Modes
 require 'modes'
 -- Plugins
 require('xpm').setup {
+    'dtomvan/xpm.xplr',
     {
         'sayanarijit/command-mode.xplr',
         after = function()
             require 'commands'
         end,
     },
-    'dtomvan/icons.xplr',
+    {
+        'dtomvan/icons.xplr',
+        after = function()
+            require 'general'
+        end
+    },
     'dtomvan/ouch.xplr',
     'igorepst/context-switch.xplr',
     {
