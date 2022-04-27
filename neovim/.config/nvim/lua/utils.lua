@@ -15,44 +15,40 @@ end
 -- After https://www.youtube.com/watch?v=tAVxxdFFYMU
 function M.quick_fix_rename()
     -- NOTE: This way is kind of naive
-    local old = vim.fn.expand('<cword>')
-    local new_name = vim.fn.input('New Name > ', old)
+    local old = vim.fn.expand '<cword>'
+    vim.ui.input({ prompt = 'New Name > ', default = old }, function(new_name)
+        local position_params = vim.lsp.util.make_position_params()
 
-    if new_name == "" then
-        return
-    end
+        position_params.newName = new_name
 
-    local position_params = vim.lsp.util.make_position_params()
+        vim.lsp.buf_request(0, 'textDocument/rename', position_params, function(err, result, ...)
+            vim.lsp.handlers['textDocument/rename'](err, result, ...)
 
-    position_params.newName = new_name
+            if not result then
+                return
+            end
 
-    vim.lsp.buf_request(0, 'textDocument/rename', position_params, function(err, result, ...)
-        vim.lsp.handlers['textDocument/rename'](err, result, ...)
+            local entries = {}
+            if result.changes then
+                for uri, edits in pairs(result.changes) do
+                    local bufnr = vim.uri_to_bufnr(uri)
 
-        if not result then
-            return
-        end
+                    for _, edit in ipairs(edits) do
+                        local start_line = edit.range.start.line + 1
+                        local line = vim.api.nvim_buf_get_lines(bufnr, start_line - 1, start_line, false)[1]
 
-        local entries = {}
-        if result.changes then
-            for uri, edits in pairs(result.changes) do
-                local bufnr = vim.uri_to_bufnr(uri)
-
-                for _, edit in ipairs(edits) do
-                    local start_line = edit.range.start.line + 1
-                    local line = vim.api.nvim_buf_get_lines(bufnr, start_line - 1, start_line, false)[1]
-
-                    table.insert(entries, {
-                        bufnr = bufnr,
-                        lnum = start_line,
-                        col = edit.range.start.character + 1,
-                        text = line,
-                    })
+                        table.insert(entries, {
+                            bufnr = bufnr,
+                            lnum = start_line,
+                            col = edit.range.start.character + 1,
+                            text = line,
+                        })
+                    end
                 end
             end
-        end
 
-        vim.fn.setqflist(entries, 'r')
+            vim.fn.setqflist(entries, 'r')
+        end)
     end)
 end
 

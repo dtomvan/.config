@@ -2,23 +2,24 @@ local cmd = vim.api.nvim_create_user_command
 local system = vim.fn.system
 
 cmd('Rg', function(i)
-    local args = i.fargs
-    table.insert(args, 1, 'rg')
-    table.insert(args, 2, '-n')
-    table.insert(args, 3, '--column')
-    local result = system(args)
+    local args = i.args
+    local result = system('rg -n --column ' .. args)
     local items = {}
     for res in vim.gsplit(result, '\n') do
         local filename, lnum, col, text = string.match(res, '(.+):(%d+):(%d+):(.+)')
-        local item = {
-            filename = filename,
-            lnum = lnum,
-            text = text,
-            col = col,
-        }
-        table.insert(items, item)
+        -- Check if the line isn't a context line
+        if filename then
+            local item = {
+                filename = filename,
+                lnum = lnum,
+                text = text,
+                col = col,
+            }
+            table.insert(items, item)
+        end
     end
-    vim.fn.setqflist({}, ' ', { title = 'rg' .. i.args, items = items })
+    vim.fn.setqflist({}, ' ', { title = 'rg ' .. args, items = items })
+    vim.cmd 'cope'
 end, {
     nargs = '+',
     force = true,

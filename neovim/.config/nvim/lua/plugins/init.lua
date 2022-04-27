@@ -32,7 +32,7 @@ require('packer').startup(function()
         'numToStr/Comment.nvim',
         config = function()
             require('Comment').setup()
-        end
+        end,
     }
 
     use {
@@ -74,6 +74,14 @@ require('packer').startup(function()
             R 'plugins.express_line'
         end,
         requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    }
+    -- Use Telescope as vim.ui.select
+    -- and a fancy prompt for vim.ui.input
+    use {
+        'stevearc/dressing.nvim',
+        config = function()
+            require('dressing').setup {}
+        end,
     }
 
     -- Rust or Bust
@@ -197,7 +205,7 @@ require('packer').startup(function()
     use {
         'nvim-neorg/neorg',
         config = function()
-            require('plugins.norg')
+            require 'plugins.norg'
         end,
         run = ':TSInstall norg norg_meta norg_table',
         requires = 'nvim-lua/plenary.nvim',

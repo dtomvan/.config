@@ -34,7 +34,6 @@ vim.keymap.set('n', '<leader>fd', R('plugins.telescope.pickers').configs, silent
 vim.keymap.set('n', '<leader>fp', R('plugins.telescope.pickers').projects, silent)
 vim.keymap.set('n', '<leader>q', R('plugins.telescope.pickers').diagnostics, silent)
 -- Builtin pickers
-vim.keymap.set('n', '<leader>ca', require('telescope.builtin').lsp_code_actions, silent)
 vim.keymap.set('n', '<leader>ch', require('telescope.builtin').command_history, silent)
 vim.keymap.set('n', '<leader>fc', require('telescope.builtin').commands, silent)
 vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, silent)
