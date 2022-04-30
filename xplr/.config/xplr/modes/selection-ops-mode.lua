@@ -1,11 +1,11 @@
 xplr.config.modes.builtin.selection_ops = {
-    name = "selection ops",
+    name = 'selection ops',
     help = nil,
     extra_help = nil,
     key_bindings = {
         on_key = {
-            ["c"] = {
-                help = "copy here",
+            ['c'] = {
+                help = 'copy here',
                 messages = {
                     {
                         BashExec = [===[
@@ -18,24 +18,24 @@ xplr.config.modes.builtin.selection_ops = {
                             done < "${XPLR_PIPE_SELECTION_OUT:?}")
                             echo ExplorePwdAsync >> "${XPLR_PIPE_MSG_IN:?}"
                             read -p "[enter to continue]"
-                            ]===]
-                        },
-                        "PopMode",
-                    }
+                            ]===],
+                    },
+                    'PopMode',
                 },
-                ["ctrl-c"] = {
-                    help = "terminate",
-                    messages = {"Terminate"}
-                },
-                esc = {
-                    help = "cancel",
-                    messages = {"PopMode"}
-                },
-                ["m"] = {
-                    help = "move here",
-                    messages = {
-                        {
-                            BashExec = [===[
+            },
+            ['ctrl-c'] = {
+                help = 'terminate',
+                messages = { 'Terminate' },
+            },
+            esc = {
+                help = 'cancel',
+                messages = { 'PopMode' },
+            },
+            ['m'] = {
+                help = 'move here',
+                messages = {
+                    {
+                        BashExec = [===[
                             (while IFS= read -r line; do
                             result=$(mv -v -- "${line:?}" ./)
                             if [[ -n $result ]]; then
@@ -50,16 +50,16 @@ xplr.config.modes.builtin.selection_ops = {
                                 done < "${XPLR_PIPE_SELECTION_OUT:?}")
                                 echo ExplorePwdAsync >> "${XPLR_PIPE_MSG_IN:?}"
                                 read -p "[enter to continue]"
-                                ]===]
-                            },
-                            "PopMode",
-                        }
+                                ]===],
                     },
-                    ["x"] = {
-                        help = "open in gui",
-                        messages = {
-                            {
-                                BashExecSilently = [===[
+                    'PopMode',
+                },
+            },
+            ['x'] = {
+                help = 'open in gui',
+                messages = {
+                    {
+                        BashExecSilently = [===[
                                 if [ -z "$OPENER" ]; then
                                     if command -v xdg-open; then
                                         OPENER=xdg-open
@@ -73,16 +73,16 @@ xplr.config.modes.builtin.selection_ops = {
                                         (while IFS= read -r line; do
                                         $OPENER "${line:?}" > /dev/null 2>&1
                                         done < "${XPLR_PIPE_RESULT_OUT:?}")
-                                        ]===]
-                                    },
-                                    "ClearScreen",
-                                    "PopMode",
-                                }
-                            }
-                        },
-                        on_alphabet = nil,
-                        on_number = nil,
-                        on_special_character = nil,
-                        default = nil
-                    }
-                }
+                                        ]===],
+                    },
+                    'ClearScreen',
+                    'PopMode',
+                },
+            },
+        },
+        on_alphabet = nil,
+        on_number = nil,
+        on_special_character = nil,
+        default = nil,
+    },
+}

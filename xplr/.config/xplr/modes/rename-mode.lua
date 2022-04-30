@@ -1,31 +1,31 @@
 xplr.config.modes.builtin.rename = {
-    name = "rename",
+    name = 'rename',
     help = nil,
     extra_help = nil,
     key_bindings = {
         on_key = {
             backspace = {
-                help = "remove last character",
-                messages = {"RemoveInputBufferLastCharacter"}
+                help = 'remove last character',
+                messages = { 'RemoveInputBufferLastCharacter' },
             },
-            ["ctrl-c"] = {
-                help = "terminate",
-                messages = {"Terminate"}
+            ['ctrl-c'] = {
+                help = 'terminate',
+                messages = { 'Terminate' },
             },
-            ["ctrl-u"] = {
-                help = "remove line",
+            ['ctrl-u'] = {
+                help = 'remove line',
                 messages = {
                     {
-                        SetInputBuffer = ""
-                    }
-                }
+                        SetInputBuffer = '',
+                    },
+                },
             },
-            ["ctrl-w"] = {
-                help = "remove last word",
-                messages = {"RemoveInputBufferLastWord"}
+            ['ctrl-w'] = {
+                help = 'remove last word',
+                messages = { 'RemoveInputBufferLastWord' },
             },
             enter = {
-                help = "rename",
+                help = 'rename',
                 messages = {
                     {
                         BashExecSilently = [===[
@@ -35,22 +35,22 @@ xplr.config.modes.builtin.rename = {
                         && echo ExplorePwd >> "${XPLR_PIPE_MSG_IN:?}" \
                         && echo FocusByFileName: "'"$TARGET"'" >> "${XPLR_PIPE_MSG_IN:?}" \
                         && echo LogSuccess: $SRC renamed to $TARGET >> "${XPLR_PIPE_MSG_IN:?}"
-                        ]===]
+                        ]===],
                     },
-                    "PopMode",
-                }
+                    'PopMode',
+                },
             },
             esc = {
-                help = "cancel",
-                messages = {"PopMode"}
-            }
+                help = 'cancel',
+                messages = { 'PopMode' },
+            },
         },
         on_alphabet = nil,
         on_number = nil,
         on_special_character = nil,
         default = {
             help = nil,
-            messages = {"UpdateInputBufferFromKey"}
-        }
-    }
+            messages = { 'UpdateInputBufferFromKey' },
+        },
+    },
 }

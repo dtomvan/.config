@@ -1,21 +1,21 @@
 local toplevel_mode = {
-    name = "git",
+    name = 'git',
     key_bindings = {
         on_key = {
-            ["a"] = {
-                help = "git add",
+            ['a'] = {
+                help = 'git add',
                 messages = {
-                    "PopMode",
+                    'PopMode',
                     {
-                        SwitchModeCustom = "git add"
+                        SwitchModeCustom = 'git add',
                     },
                     {
-                        SetInputBuffer = ""
-                    }
-                }
+                        SetInputBuffer = '',
+                    },
+                },
             },
-            ["s"] = {
-                help = "git add selected",
+            ['s'] = {
+                help = 'git add selected',
                 messages = {
                     {
                         BashExec = [===[
@@ -24,49 +24,49 @@ local toplevel_mode = {
                             cat $PTH | xargs git add
                             read -p "[press enter to continue]"
                         fi
-                        ]===]
-                    }
-                }
+                        ]===],
+                    },
+                },
             },
-            ["c"] = {
-                help = "git commit",
+            ['c'] = {
+                help = 'git commit',
                 messages = {
                     {
                         BashExec = [===[
                         git commit -v
                         read -p "[press enter to continue]"
-                        ]===]
+                        ]===],
                     },
-                    "PopMode",
+                    'PopMode',
                     {
-                        SwitchModeCustom = "git"
-                    }
-                }
+                        SwitchModeCustom = 'git',
+                    },
+                },
             },
-            ["b"] = {
-                help = "git branch",
+            ['b'] = {
+                help = 'git branch',
                 messages = {
                     {
                         BashExec = [===[
                         git branch | fzf | xargs git checkout
                         echo ExplorePwd >> "${XPLR_PIPE_MSG_IN:?}"
-                        ]===]
-                    }
-                }
+                        ]===],
+                    },
+                },
             },
-            ["p"] = {
-                help = "git push",
+            ['p'] = {
+                help = 'git push',
                 messages = {
                     {
                         BashExec = [===[
                         git push
                         read -p "[press enter to continue]"
-                        ]===]
-                    }
-                }
+                        ]===],
+                    },
+                },
             },
-            ["r"] = {
-                help = "git reset",
+            ['r'] = {
+                help = 'git reset',
                 messages = {
                     {
                         BashExec = [===[
@@ -76,64 +76,63 @@ local toplevel_mode = {
                             git reset
                         fi
                         read -p "[press enter to continue]"
-                        ]===]
-                    }
-                }
+                        ]===],
+                    },
+                },
             },
-            ["f"] = {
-                help = "git pull",
+            ['f'] = {
+                help = 'git pull',
                 messages = {
                     {
                         BashExec = [===[
                         git pull
                         read -p "[press enter to continue]"
-                        ]===]
-                    }
-                }
+                        ]===],
+                    },
+                },
             },
-            ["l"] = {
-                help = "git log",
+            ['l'] = {
+                help = 'git log',
                 messages = {
                     {
                         -- Shamelessly stolen from lf's tips page
                         BashExec = [===[
                         git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
                         read -p "[press enter to continue]"
-                        ]===]
-                    }
-
-                }
+                        ]===],
+                    },
+                },
             },
-            ["S"] = {
-                help = "git status",
+            ['S'] = {
+                help = 'git status',
                 messages = {
                     {
                         -- Shamelessly stolen from lf's tips page
                         BashExec = [===[
                         git status
                         read -p "[press enter to continue]"
-                        ]===]
-                    }
-                }
+                        ]===],
+                    },
+                },
             },
             esc = {
-                help = "cancel",
-                messages = { "PopMode" }
+                help = 'cancel',
+                messages = { 'PopMode' },
             },
-            ["ctrl-c"] = {
-                help = "terminate",
-                messages = { "Terminate" }
+            ['ctrl-c'] = {
+                help = 'terminate',
+                messages = { 'Terminate' },
             },
-            }
-        }
-    }
+        },
+    },
+}
 
 local add_mode = {
-    name = "git add",
+    name = 'git add',
     key_bindings = {
         on_key = {
             enter = {
-                help = "stage file",
+                help = 'stage file',
                 messages = {
                     {
                         BashExecSilently = [===[
@@ -146,28 +145,28 @@ local add_mode = {
                             echo PopMode >> "${XPLR_PIPE_MSG_IN:?}"
                             echo SwitchModeCustom: git >> "${XPLR_PIPE_MSG_IN:?}"
                         fi
-                        ]===]
-                        }
-                    }
+                        ]===],
+                    },
                 },
-                esc = {
-                    help = "cancel",
-                    messages = { "PopMode" }
-                },
-                ["ctrl-c"] = {
-                    help = "terminate",
-                    messages = { "Terminate" }
-                },
-                backspace = {
-                    help = "delete character",
-                    messages = { "RemoveInputBufferLastCharacter" }
-                }
             },
-            default = {
-            help = "enter character",
-            messages = { "UpdateInputBufferFromKey" }
-        }
-    }
+            esc = {
+                help = 'cancel',
+                messages = { 'PopMode' },
+            },
+            ['ctrl-c'] = {
+                help = 'terminate',
+                messages = { 'Terminate' },
+            },
+            backspace = {
+                help = 'delete character',
+                messages = { 'RemoveInputBufferLastCharacter' },
+            },
+        },
+        default = {
+            help = 'enter character',
+            messages = { 'UpdateInputBufferFromKey' },
+        },
+    },
 }
 
 return { toplevel_mode = toplevel_mode, add_mode = add_mode }

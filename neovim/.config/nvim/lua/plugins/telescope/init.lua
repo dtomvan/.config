@@ -25,7 +25,6 @@ require('telescope').setup {
 require('telescope').load_extension 'fzy_native'
 
 -- Custom pickers
-vim.keymap.set('n', '<C-e>', require('telescope.builtin').fd, silent)
 vim.keymap.set('n', '<C-p>', R('plugins.telescope.pickers').grep, silent)
 vim.keymap.set('n', '<leader>b', R('plugins.telescope.pickers').buffers, silent)
 vim.keymap.set('n', '<leader>dd', R('plugins.telescope.pickers').dotfiles, silent)
@@ -38,3 +37,5 @@ vim.keymap.set('n', '<leader>ch', require('telescope.builtin').command_history, 
 vim.keymap.set('n', '<leader>fc', require('telescope.builtin').commands, silent)
 vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, silent)
 vim.keymap.set('n', '<leader>ft', require('telescope.builtin').lsp_workspace_symbols, silent)
+vim.keymap.set('n', '<C-e>', require('telescope.builtin').fd, silent)
+vim.keymap.set('n', '<leader>/', require('telescope.builtin').help_tags, silent)

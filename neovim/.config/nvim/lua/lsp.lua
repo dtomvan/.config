@@ -334,20 +334,20 @@ local rust_tools_opts = {
 }
 
 local function get_lua_runtime()
-    local result = {};
+    local result = {}
     for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-        local lua_path = path .. "/lua/";
+        local lua_path = path .. '/lua/'
         if vim.fn.isdirectory(lua_path) then
             result[lua_path] = true
         end
     end
 
     -- This loads the `lua` files from nvim into the runtime.
-    result[vim.fn.expand("$VIMRUNTIME/lua")] = true
+    result[vim.fn.expand '$VIMRUNTIME/lua'] = true
 
     -- TODO: Figure out how to get these to work...
     --  Maybe we need to ship these instead of putting them in `src`?...
-    result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
+    result[vim.fn.expand '~/build/neovim/src/nvim/lua'] = true
 
     return result
 end
@@ -362,30 +362,30 @@ lsp_installer.on_server_ready(function(server)
 
     -- (optional) Customize the options passed to the server
     if server.name == 'sumneko_lua' then
-        require('lspconfig').sumneko_lua.setup({
+        require('lspconfig').sumneko_lua.setup {
             settings = {
                 Lua = {
                     runtime = {
-                        version = "LuaJIT",
+                        version = 'LuaJIT',
                     },
                     completion = {
-                        keywordSnippet = "Disable",
-                        showWord = "Disable",
+                        keywordSnippet = 'Disable',
+                        showWord = 'Disable',
                     },
                     diagnostics = {
                         enable = true,
                         disable = {
-                            "trailing-space",
+                            'trailing-space',
                         },
                         globals = {
-                            "vim",
-                            "describe",
-                            "it",
-                            "before_each",
-                            "after_each",
-                            "teardown",
-                            "pending",
-                            "clear",
+                            'vim',
+                            'describe',
+                            'it',
+                            'before_each',
+                            'after_each',
+                            'teardown',
+                            'pending',
+                            'clear',
                             'Color',
                             'c',
                             'Group',
@@ -400,13 +400,13 @@ lsp_installer.on_server_ready(function(server)
                         maxPreload = 10000,
                         preloadFileSize = 10000,
                     },
-                }
+                },
             },
-            filetypes = { "lua" },
+            filetypes = { 'lua' },
             on_attach = on_attach,
             capabilities = capabilities,
             root_dir = require('lspconfig.util').find_git_ancestor,
-        })
+        }
     elseif server.name == 'rome' then
         opts.filetypes = {
             'javascript',

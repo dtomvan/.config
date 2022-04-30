@@ -1,31 +1,31 @@
 xplr.config.modes.builtin.create_file = {
-    name = "create file",
+    name = 'create file',
     help = nil,
     extra_help = nil,
     key_bindings = {
         on_key = {
             backspace = {
-                help = "remove last character",
-                messages = {"RemoveInputBufferLastCharacter"}
+                help = 'remove last character',
+                messages = { 'RemoveInputBufferLastCharacter' },
             },
-            ["ctrl-c"] = {
-                help = "terminate",
-                messages = {"Terminate"}
+            ['ctrl-c'] = {
+                help = 'terminate',
+                messages = { 'Terminate' },
             },
-            ["ctrl-u"] = {
-                help = "remove line",
+            ['ctrl-u'] = {
+                help = 'remove line',
                 messages = {
                     {
-                        SetInputBuffer = ""
-                    }
-                }
+                        SetInputBuffer = '',
+                    },
+                },
             },
-            ["ctrl-w"] = {
-                help = "remove last word",
-                messages = {"RemoveInputBufferLastWord"}
+            ['ctrl-w'] = {
+                help = 'remove last word',
+                messages = { 'RemoveInputBufferLastWord' },
             },
             enter = {
-                help = "create file",
+                help = 'create file',
                 messages = {
                     {
                         BashExecSilently = [===[
@@ -39,23 +39,23 @@ xplr.config.modes.builtin.create_file = {
                         else
                             echo PopMode >> "${XPLR_PIPE_MSG_IN:?}"
                             fi
-                            ]===]
-                        }
-                    }
+                            ]===],
+                    },
                 },
-                esc = {
-                    help = "cancel",
-                    messages = {
-                        "PopMode"
-                    }
-                }
             },
-            on_alphabet = nil,
-            on_number = nil,
-            on_special_character = nil,
-            default = {
-                help = nil,
-                messages = {"UpdateInputBufferFromKey"}
-            }
-        }
-    }
+            esc = {
+                help = 'cancel',
+                messages = {
+                    'PopMode',
+                },
+            },
+        },
+        on_alphabet = nil,
+        on_number = nil,
+        on_special_character = nil,
+        default = {
+            help = nil,
+            messages = { 'UpdateInputBufferFromKey' },
+        },
+    },
+}

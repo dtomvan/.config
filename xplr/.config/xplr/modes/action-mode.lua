@@ -1,11 +1,11 @@
 xplr.config.modes.builtin.action = {
-    name = "action to",
+    name = 'action to',
     help = nil,
     extra_help = nil,
     key_bindings = {
         on_key = {
-            ["t"] = {
-                help = "open tmux in pwd",
+            ['t'] = {
+                help = 'open tmux in pwd',
                 messages = {
                     {
                         BashExec = [==[
@@ -18,116 +18,116 @@ xplr.config.modes.builtin.action = {
                         tmux attach -t "$NAME" || tmux switch-client -t "$NAME"
                         ]==],
                     },
-                    "PopMode",
-                }
+                    'PopMode',
+                },
             },
-            ["!"] = {
-                help = "shell",
+            ['!'] = {
+                help = 'shell',
                 messages = {
                     {
                         Call = {
-                            command = "zsh",
-                        }
+                            command = 'zsh',
+                        },
                     },
-                    "ExplorePwdAsync",
-                    "PopMode",
-                }
+                    'ExplorePwdAsync',
+                    'PopMode',
+                },
             },
-            ["g"] = {
-                help = "git operations",
+            ['g'] = {
+                help = 'git operations',
                 messages = {
-                    "PopMode",
+                    'PopMode',
                     {
-                        SwitchModeCustom = "git"
+                        SwitchModeCustom = 'git',
                     },
-                }
+                },
             },
-            ["c"] = {
-                help = "create",
+            ['c'] = {
+                help = 'create',
                 messages = {
                     {
-                        SwitchModeBuiltin = "create"
+                        SwitchModeBuiltin = 'create',
                     },
-                }
+                },
             },
-            ["ctrl-c"] = {
-                help = "terminate",
-                messages = {"Terminate"}
+            ['ctrl-c'] = {
+                help = 'terminate',
+                messages = { 'Terminate' },
             },
-            ["e"] = {
-                help = "open in editor",
+            ['e'] = {
+                help = 'open in editor',
                 messages = {
                     {
                         BashExec = [===[
                         ${EDITOR:-vi} "${XPLR_FOCUS_PATH:?}"
-                        ]===]
+                        ]===],
                     },
-                    "PopMode",
-                }
+                    'PopMode',
+                },
             },
-            ["x"] = {
-                help = "open in gui",
+            ['x'] = {
+                help = 'open in gui',
                 messages = {
                     {
                         BashExec = [===[
                         xdg-open "${XPLR_FOCUS_PATH:?}"
-                        ]===]
+                        ]===],
                     },
-                    "PopMode",
-                }
+                    'PopMode',
+                },
             },
             esc = {
-                help = "cancel",
-                messages = {"PopMode"}
+                help = 'cancel',
+                messages = { 'PopMode' },
             },
-            ["l"] = {
-                help = "logs",
+            ['l'] = {
+                help = 'logs',
                 messages = {
                     {
                         BashExec = [===[
                         [ -z "$PAGER" ] && PAGER="less -+F"
                         cat -- "${XPLR_PIPE_LOGS_OUT}" | ${PAGER:?}
-                        ]===]
+                        ]===],
                     },
-                    "PopMode",
-                }
+                    'PopMode',
+                },
             },
-            ["s"] = {
-                help = "selection operations",
+            ['s'] = {
+                help = 'selection operations',
                 messages = {
-                    "PopMode",
+                    'PopMode',
                     {
-                        SwitchModeBuiltin = "selection_ops"
+                        SwitchModeBuiltin = 'selection_ops',
                     },
-                }
+                },
             },
-            ["m"] = {
-                help = "toggle mouse",
+            ['m'] = {
+                help = 'toggle mouse',
                 messages = {
-                    "PopMode",
-                    "ToggleMouse",
-                }
+                    'PopMode',
+                    'ToggleMouse',
+                },
             },
-            ["q"] = {
-                help = "quit options",
+            ['q'] = {
+                help = 'quit options',
                 messages = {
-                    "PopMode",
-                    { SwitchModeBuiltin = "quit" },
-                }
-            }
+                    'PopMode',
+                    { SwitchModeBuiltin = 'quit' },
+                },
+            },
         },
         on_alphabet = nil,
         on_number = {
-            help = "go to index",
+            help = 'go to index',
             messages = {
-                "PopMode",
+                'PopMode',
                 {
-                    SwitchModeBuiltin = "number"
+                    SwitchModeBuiltin = 'number',
                 },
-                "UpdateInputBufferFromKey"
-            }
+                'UpdateInputBufferFromKey',
+            },
         },
         on_special_character = nil,
-        default = nil
-    }
+        default = nil,
+    },
 }

@@ -1,11 +1,11 @@
 xplr.config.modes.builtin.delete = {
-    name = "delete",
+    name = 'delete',
     help = nil,
     extra_help = nil,
     key_bindings = {
         on_key = {
-            ["D"] = {
-                help = "force delete",
+            ['D'] = {
+                help = 'force delete',
                 messages = {
                     {
                         BashExec = [===[
@@ -18,20 +18,20 @@ xplr.config.modes.builtin.delete = {
                             done < "${XPLR_PIPE_RESULT_OUT:?}")
                             echo ExplorePwdAsync >> "${XPLR_PIPE_MSG_IN:?}"
                             read -p "[enter to continue]"
-                            ]===]
-                        },
-                        "PopMode",
-                    }
+                            ]===],
+                    },
+                    'PopMode',
                 },
-                ["ctrl-c"] = {
-                    help = "terminate",
-                    messages = {"Terminate"}
-                },
-                ["d"] = {
-                    help = "delete",
-                    messages = {
-                        {
-                            BashExecSilently = [===[
+            },
+            ['ctrl-c'] = {
+                help = 'terminate',
+                messages = { 'Terminate' },
+            },
+            ['d'] = {
+                help = 'delete',
+                messages = {
+                    {
+                        BashExecSilently = [===[
                             (while IFS= read -r line; do
                             if [ -d "$line" ] && [ ! -L "$line" ]; then
                                 if rmdir -v -- "${line:?}"; then
@@ -49,19 +49,19 @@ xplr.config.modes.builtin.delete = {
                                         done < "${XPLR_PIPE_RESULT_OUT:?}")
                                         echo ExplorePwdAsync >> "${XPLR_PIPE_MSG_IN:?}"
                                         # read -p "[enter to continue]"
-                                        ]===]
-                                    },
-                                    "PopMode",
-                                }
-                            },
-                            esc = {
-                                help = "cancel",
-                                messages = {"PopMode"}
-                            }
-                        },
-                        on_alphabet = nil,
-                        on_number = nil,
-                        on_special_character = nil,
-                        default = nil
-                    }
-                }
+                                        ]===],
+                    },
+                    'PopMode',
+                },
+            },
+            esc = {
+                help = 'cancel',
+                messages = { 'PopMode' },
+            },
+        },
+        on_alphabet = nil,
+        on_number = nil,
+        on_special_character = nil,
+        default = nil,
+    },
+}

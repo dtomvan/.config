@@ -29,7 +29,7 @@ require('xpm').setup {
         'dtomvan/icons.xplr',
         after = function()
             require 'general'
-        end
+        end,
     },
     'dtomvan/ouch.xplr',
     'igorepst/context-switch.xplr',

@@ -1,66 +1,66 @@
 xplr.config.modes.builtin.switch_layout = {
-    name = "switch layout",
+    name = 'switch layout',
     help = nil,
     extra_help = nil,
     key_bindings = {
         on_key = {
-            ["1"] = {
-                help = "default",
+            ['1'] = {
+                help = 'default',
                 messages = {
                     {
-                        SwitchLayoutBuiltin = "default"
+                        SwitchLayoutBuiltin = 'default',
                     },
-                    "PopMode",
-                }
+                    'PopMode',
+                },
             },
-            ["2"] = {
-                help = "no help menu",
+            ['2'] = {
+                help = 'no help menu',
                 messages = {
                     {
-                        SwitchLayoutBuiltin = "no_help"
+                        SwitchLayoutBuiltin = 'no_help',
                     },
-                    "PopMode",
-                }
+                    'PopMode',
+                },
             },
-            ["3"] = {
-                help = "no selection panel",
+            ['3'] = {
+                help = 'no selection panel',
                 messages = {
                     {
-                        SwitchLayoutBuiltin = "no_selection"
+                        SwitchLayoutBuiltin = 'no_selection',
                     },
-                    "PopMode",
-                }
+                    'PopMode',
+                },
             },
-            ["4"] = {
-                help = "no help or selection",
+            ['4'] = {
+                help = 'no help or selection',
                 messages = {
                     {
-                        SwitchLayoutBuiltin = "no_help_no_selection"
+                        SwitchLayoutBuiltin = 'no_help_no_selection',
                     },
-                    "PopMode",
-                }
+                    'PopMode',
+                },
             },
-            ["5"] = {
-                help = "Logs Only",
+            ['5'] = {
+                help = 'Logs Only',
                 messages = {
                     {
-                        SwitchLayoutCustom = "logs_only"
+                        SwitchLayoutCustom = 'logs_only',
                     },
-                    "PopMode",
-                }
+                    'PopMode',
+                },
             },
-            ["ctrl-c"] = {
-                help = "terminate",
-                messages = {"Terminate"}
+            ['ctrl-c'] = {
+                help = 'terminate',
+                messages = { 'Terminate' },
             },
             esc = {
-                help = "cancel",
-                messages = {"PopMode"}
-            }
+                help = 'cancel',
+                messages = { 'PopMode' },
+            },
         },
         on_alphabet = nil,
         on_number = nil,
         on_special_character = nil,
-        default = nil
-    }
+        default = nil,
+    },
 }

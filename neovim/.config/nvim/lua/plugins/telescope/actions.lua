@@ -15,8 +15,8 @@ function actions.edit_and_cd(prompt_bufnr)
     local file = actions_state.get_selected_entry().value
 
     tele_actions.close(prompt_bufnr)
-    vim.cmd('e ' .. picker.cwd .. "/" .. file)
-    vim.fn.chdir(vim.fn.expand('%:p:h'))
+    vim.cmd('e ' .. picker.cwd .. '/' .. file)
+    vim.fn.chdir(vim.fn.expand '%:p:h')
 end
 
 function actions.delete_buffer(prompt_bufnr)

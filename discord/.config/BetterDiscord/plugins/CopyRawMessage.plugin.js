@@ -2,7 +2,7 @@
  * @name CopyRawMessage
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 1.1.2
+ * @version 1.1.3
  * @description Allows you to copy the raw Contents of a Message
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -17,25 +17,17 @@ module.exports = (_ => {
 		"info": {
 			"name": "CopyRawMessage",
 			"author": "DevilBro",
-			"version": "1.1.2",
+			"version": "1.1.3",
 			"description": "Allows you to copy the raw Contents of a Message"
 		},
 		"changeLog": {
-			"improved": {
-				"Quick Action": "Added Icon to quick action bar. Holding shift while hovering a message shows the quick action bar"
+			"added": {
+				"Embed JSON": "Can now copy embed in json format"
 			}
 		}
 	};
 
-	return (window.Lightcord && !Node.prototype.isPrototypeOf(window.Lightcord) || window.LightCord && !Node.prototype.isPrototypeOf(window.LightCord) || window.Astra && !Node.prototype.isPrototypeOf(window.Astra)) ? class {
-		getName () {return config.info.name;}
-		getAuthor () {return config.info.author;}
-		getVersion () {return config.info.version;}
-		getDescription () {return "Do not use LightCord!";}
-		load () {BdApi.alert("Attention!", "By using LightCord you are risking your Discord Account, due to using a 3rd Party Client. Switch to an official Discord Client (https://discord.com/) with the proper BD Injection (https://betterdiscord.app/)");}
-		start() {}
-		stop() {}
-	} : !window.BDFDB_Global || (!window.BDFDB_Global.loaded && !window.BDFDB_Global.started) ? class {
+	return !window.BDFDB_Global || (!window.BDFDB_Global.loaded && !window.BDFDB_Global.started) ? class {
 		getName () {return config.info.name;}
 		getAuthor () {return config.info.author;}
 		getVersion () {return config.info.version;}
@@ -95,27 +87,51 @@ module.exports = (_ => {
 						messageString && BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuItem, {
 							label: BDFDB.LanguageUtils.LanguageStrings.COPY_TEXT + " (Raw)",
 							id: BDFDB.ContextMenuUtils.createItemId(this.name, "copy-message"),
-							hint: hint && (_ => {
-								return BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.MenuItems.MenuHint, {
-									hint: hint
-								});
+							type: "Message",
+							hint: hint && (_ => BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.MenuItems.MenuHint, {
+								hint: hint
+							})),
+							icon: _ => BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SvgIcon, {
+								className: BDFDB.disCN.menuicon,
+								name: BDFDB.LibraryComponents.SvgIcon.Names.RAW_TEXT
 							}),
-							action: _ => {
-								BDFDB.LibraryRequires.electron.clipboard.write({text: messageString});
-							}
+							action: _ => BDFDB.LibraryRequires.electron.clipboard.write({text: messageString})
 						}),
 						embedString && BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuItem, {
 							label: BDFDB.LanguageUtils.LanguageStrings.COPY_TEXT + " (Raw Embed)",
 							id: BDFDB.ContextMenuUtils.createItemId(this.name, "copy-embed"),
-							action: _ => {
-								BDFDB.LibraryRequires.electron.clipboard.write({text: embedString});
-							}
+							type: "Embed",
+							icon: _ => BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SvgIcon, {
+								className: BDFDB.disCN.menuicon,
+								name: BDFDB.LibraryComponents.SvgIcon.Names.RAW_TEXT
+							}),
+							action: _ => BDFDB.LibraryRequires.electron.clipboard.write({text: embedString})
+						}),
+						embedData && BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuItem, {
+							label: BDFDB.LanguageUtils.LanguageStrings.COPY_TEXT + " (Embed JSON)",
+							type: "Embed JSON",
+							id: BDFDB.ContextMenuUtils.createItemId(this.name, "copy-embed-json"),
+							icon: _ => BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SvgIcon, {
+								className: BDFDB.disCN.menuicon,
+								name: BDFDB.LibraryComponents.SvgIcon.Names.RAW_TEXT
+							}),
+							action: _ => BDFDB.LibraryRequires.electron.clipboard.write({text: JSON.stringify(embedData)})
 						})
 					].filter(n => n);
 					if (entries.length) {
 						let [children, index] = BDFDB.ContextMenuUtils.findItem(e.returnvalue, {id: "devmode-copy-id", group: true});
+						children.splice(index > -1 ? index : children.length, 0, );
 						children.splice(index > -1 ? index : children.length, 0, BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuGroup, {
-							children: entries
+							children: entries.length > 1 ? BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuItem, {
+								label: BDFDB.LanguageUtils.LanguageStrings.COPY_TEXT,
+								id: BDFDB.ContextMenuUtils.createItemId(this.name, "copy-raw-submenu"),
+								children: entries.map(n => {
+									n.props.label = n.props.type;
+									delete n.props.type;
+									delete n.props.icon;
+									return n;
+								})
+							}) : entries
 						}));
 					}
 				}
@@ -127,15 +143,11 @@ module.exports = (_ => {
 					children.splice(index + 1, 0, BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuItem, {
 						label: BDFDB.LanguageUtils.LanguageStrings.COPY_TEXT + " (Raw)",
 						id: BDFDB.ContextMenuUtils.createItemId(this.name, "copy-message-raw"),
-						icon: _ => {
-							return BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SvgIcon, {
-								className: BDFDB.disCN.menuicon,
-								name: BDFDB.LibraryComponents.SvgIcon.Names.RAW_TEXT
-							});
-						},
-						action: _ => {
-							BDFDB.LibraryRequires.electron.clipboard.write({text: e.instance.props.message.content});
-						}
+						icon: _ => BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SvgIcon, {
+							className: BDFDB.disCN.menuicon,
+							name: BDFDB.LibraryComponents.SvgIcon.Names.RAW_TEXT
+						}),
+						action: _ => BDFDB.LibraryRequires.electron.clipboard.write({text: e.instance.props.message.content})
 					}));
 				}
 			}

@@ -1,51 +1,51 @@
 xplr.config.modes.builtin.quit = {
-    name = "quit",
+    name = 'quit',
     help = nil,
     extra_help = nil,
     key_bindings = {
         on_key = {
             enter = {
-                help = "just quit",
+                help = 'just quit',
                 messages = {
-                    "Quit",
-                }
+                    'Quit',
+                },
             },
             p = {
-                help = "quit printing pwd",
+                help = 'quit printing pwd',
                 messages = {
-                    "PrintPwdAndQuit",
-                }
+                    'PrintPwdAndQuit',
+                },
             },
             f = {
-                help = "quit printing focus",
+                help = 'quit printing focus',
                 messages = {
-                    "PrintFocusPathAndQuit",
-                }
+                    'PrintFocusPathAndQuit',
+                },
             },
             s = {
-                help = "quit printing selection",
+                help = 'quit printing selection',
                 messages = {
-                    "PrintSelectionAndQuit",
-                }
+                    'PrintSelectionAndQuit',
+                },
             },
             r = {
-                help = "quit printing result",
+                help = 'quit printing result',
                 messages = {
-                    "PrintResultAndQuit",
-                }
+                    'PrintResultAndQuit',
+                },
             },
             esc = {
-                help = "cancel",
+                help = 'cancel',
                 messages = {
-                    "PopMode",
-                }
+                    'PopMode',
+                },
             },
-            ["ctrl-c"] = {
-                help = "terminate",
+            ['ctrl-c'] = {
+                help = 'terminate',
                 messages = {
-                    "Terminate",
-                }
-            }
-        }
-    }
+                    'Terminate',
+                },
+            },
+        },
+    },
 }

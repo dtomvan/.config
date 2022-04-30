@@ -110,7 +110,7 @@ au('FileType', {
 
 group('TextYankHighlight', gops)
 au('TextYankPost', {
-    group = "TextYankHighlight",
+    group = 'TextYankHighlight',
     callback = function()
         vim.highlight.on_yank { on_visual = false }
     end,

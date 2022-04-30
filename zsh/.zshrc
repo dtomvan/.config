@@ -18,18 +18,6 @@ export EDITOR=nvim
 
 eval "$(sheldon source)"
 
-sowon() {
-    if [ -n "$argv" ]; then
-        if [ "$1" = "clock" ]; then
-            devour sowon clock
-        else
-            devour sowon $(expr $(date -d"$argv" +%s) - $(date +%s))
-        fi
-    else
-        devour sowon
-    fi
-}
-
 sleept() {
     if [ "$1" = "--help" ]; then
         echo "$0 <DATE>: Sleep until <DATE>"
@@ -282,7 +270,7 @@ alias less='bat'
 alias ls="exa --icons"
 alias ll="ls -lah"
 alias la="ls -a"
-alias luamake=/home/tomvd/.cache/nvim/nlua/sumneko_lua/lua-language-server/3rd/luamake/luamake
+alias luamake=~/.cache/nvim/nlua/sumneko_lua/lua-language-server/3rd/luamake/luamake
 alias openrct2='~/.local/share/flatpak/exports/bin/io.openrct2.OpenRCT2'
 alias srb2='~/.local/share/flatpak/exports/bin/org.srb2.SRB2'
 alias tree="fd | tree --fromfile ."
@@ -291,4 +279,6 @@ alias vim="nvim"
 alias xcd='cd "$(xplr --print-pwd-as-result)"'
 alias x='xplr'
 
-source ~/projects/fucke.rs/shells/zsh/setup.sh
+# These files may not exist on all systems
+source ~/projects/fucke.rs/shells/zsh/setup.sh || true
+source /usr/share/nvm/init-nvm.sh || true

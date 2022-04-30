@@ -1,68 +1,68 @@
 xplr.config.modes.builtin.relative_path_does_contain = {
-    name = "relative path does contain",
+    name = 'relative path does contain',
     help = nil,
     extra_help = nil,
     key_bindings = {
         on_key = {
             backspace = {
-                help = "remove last character",
+                help = 'remove last character',
                 messages = {
                     {
-                        RemoveNodeFilterFromInput = "IRelativePathDoesContain"
+                        RemoveNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
-                    "RemoveInputBufferLastCharacter",
+                    'RemoveInputBufferLastCharacter',
                     {
-                        AddNodeFilterFromInput = "IRelativePathDoesContain"
+                        AddNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
-                    "ExplorePwdAsync"
-                }
+                    'ExplorePwdAsync',
+                },
             },
-            ["ctrl-c"] = {
-                help = "terminate",
-                messages = {"Terminate"}
+            ['ctrl-c'] = {
+                help = 'terminate',
+                messages = { 'Terminate' },
             },
-            ["ctrl-u"] = {
-                help = "remove line",
+            ['ctrl-u'] = {
+                help = 'remove line',
                 messages = {
                     {
-                        RemoveNodeFilterFromInput = "IRelativePathDoesContain"
+                        RemoveNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
                     {
-                        SetInputBuffer = ""
+                        SetInputBuffer = '',
                     },
                     {
-                        AddNodeFilterFromInput = "IRelativePathDoesContain"
+                        AddNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
-                    "ExplorePwdAsync"
-                }
+                    'ExplorePwdAsync',
+                },
             },
-            ["ctrl-w"] = {
-                help = "remove last word",
+            ['ctrl-w'] = {
+                help = 'remove last word',
                 messages = {
                     {
-                        RemoveNodeFilterFromInput = "IRelativePathDoesContain"
+                        RemoveNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
-                    "RemoveInputBufferLastWord",
+                    'RemoveInputBufferLastWord',
                     {
-                        AddNodeFilterFromInput = "IRelativePathDoesContain"
+                        AddNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
-                    "ExplorePwdAsync"
-                }
+                    'ExplorePwdAsync',
+                },
             },
             enter = {
-                help = "apply filter",
-                messages = {"PopMode"}
+                help = 'apply filter',
+                messages = { 'PopMode' },
             },
             esc = {
-                help = "cancel",
+                help = 'cancel',
                 messages = {
                     {
-                        RemoveNodeFilterFromInput = "IRelativePathDoesContain"
+                        RemoveNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
-                    "PopMode",
-                    "ExplorePwdAsync",
-                }
-            }
+                    'PopMode',
+                    'ExplorePwdAsync',
+                },
+            },
         },
         on_alphabet = nil,
         on_number = nil,
@@ -71,14 +71,14 @@ xplr.config.modes.builtin.relative_path_does_contain = {
             help = nil,
             messages = {
                 {
-                    RemoveNodeFilterFromInput = "IRelativePathDoesContain"
+                    RemoveNodeFilterFromInput = 'IRelativePathDoesContain',
                 },
-                "UpdateInputBufferFromKey",
+                'UpdateInputBufferFromKey',
                 {
-                    AddNodeFilterFromInput = "IRelativePathDoesContain"
+                    AddNodeFilterFromInput = 'IRelativePathDoesContain',
                 },
-                "ExplorePwdAsync"
-            }
-        }
-    }
+                'ExplorePwdAsync',
+            },
+        },
+    },
 }

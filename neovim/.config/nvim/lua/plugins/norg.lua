@@ -16,8 +16,7 @@ require('neorg').setup {
             },
         },
         ['core.integrations.nvim-cmp'] = {
-            config = {
-            },
+            config = {},
         },
     },
 }

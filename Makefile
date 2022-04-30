@@ -1,8 +1,8 @@
-dirs = backgrounds bins bspwm deadd discord editorconfig emacs fish git gtk i3lock mpd mpv ncmpcpp neovim picom rofi sxhkd tmux wezterm xorg xplr zellij zsh
+dirs = backgrounds bins bspwm deadd discord emacs fish git gtk i3lock mpd mpv ncmpcpp neovim picom polybar sxhkd tmux wezterm xorg xplr zellij zsh
 root-dirs = xmonad-root
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 
-all: $(dirs) $(root-dirs) st /usr/local/bin/bspwmbar xmonad ~/.local/bin/sheldon ~/.config/rofi rofisettings ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~/.local/bin/xwinwrap
+all: $(dirs) $(root-dirs) st xmonad ~/.local/bin/sheldon ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~/.local/bin/xwinwrap
 	localectl set-x11-keymap us,gr "" "" compose:ralt
 
 /usr/local/bin/dmenu: dmenu/
@@ -28,26 +28,12 @@ xmonad: xmonad/.xmonad
 	stow $@
 	cd xmonad/.xmonad && stack install
 
-/usr/local/bin/bspwmbar: bspwmbar
-	cd bspwmbar && ./configure --prefix=/usr
-	cd bspwmbar && sudo make bspwmbar
-	@cd bspwmbar && sudo make install || echo "Could not copy bspwmbar, continueing"
-
 st: st/
 	cd st && sudo make install
-
-~/.config/rofi: rofi
-	cd rofi && chmod +x setup.sh && ./setup.sh
-
-mvrofi:
-	mv ~/.config/rofi ~/.config/rofi.old
-
-rofisettings:
-	stow --adopt rofisettings
 
 ~/.local/bin/xwinwrap: xwinwrap
 	cd xwinwrap && make
 	cp xwinwrap/xwinwrap ~/.local/bin
 	chmod +x ~/.local/bin/xwinwrap
 
-.PHONY: $(dirs) $(root-dirs) st mvrofi rofisettings /usr/local/bin/dmenu ~/.cargo/bin/dmenu_drun
+.PHONY: $(dirs) $(root-dirs) st /usr/local/bin/dmenu ~/.cargo/bin/dmenu_drun

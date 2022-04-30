@@ -1,102 +1,102 @@
 xplr.config.modes.builtin.search = {
-    name = "search",
+    name = 'search',
     help = nil,
     extra_help = nil,
     key_bindings = {
         on_key = {
             backspace = {
-                help = "remove last character",
+                help = 'remove last character',
                 messages = {
                     {
-                        RemoveNodeFilterFromInput = "IRelativePathDoesContain"
+                        RemoveNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
-                    "RemoveInputBufferLastCharacter",
+                    'RemoveInputBufferLastCharacter',
                     {
-                        AddNodeFilterFromInput = "IRelativePathDoesContain"
+                        AddNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
-                    "ExplorePwdAsync"
-                }
+                    'ExplorePwdAsync',
+                },
             },
-            ["ctrl-c"] = {
-                help = "terminate",
-                messages = {"Terminate"}
+            ['ctrl-c'] = {
+                help = 'terminate',
+                messages = { 'Terminate' },
             },
-            ["ctrl-u"] = {
-                help = "remove line",
+            ['ctrl-u'] = {
+                help = 'remove line',
                 messages = {
                     {
-                        RemoveNodeFilterFromInput = "IRelativePathDoesContain"
+                        RemoveNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
                     {
-                        SetInputBuffer = ""
+                        SetInputBuffer = '',
                     },
                     {
-                        AddNodeFilterFromInput = "IRelativePathDoesContain"
+                        AddNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
-                    "ExplorePwdAsync"
-                }
+                    'ExplorePwdAsync',
+                },
             },
-            ["ctrl-w"] = {
-                help = "remove last word",
+            ['ctrl-w'] = {
+                help = 'remove last word',
                 messages = {
                     {
-                        RemoveNodeFilterFromInput = "IRelativePathDoesContain"
+                        RemoveNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
-                    "RemoveInputBufferLastWord",
+                    'RemoveInputBufferLastWord',
                     {
-                        AddNodeFilterFromInput = "IRelativePathDoesContain"
+                        AddNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
-                    "ExplorePwdAsync"
-                }
+                    'ExplorePwdAsync',
+                },
             },
             down = {
-                help = "down",
-                messages = {"FocusNext"}
+                help = 'down',
+                messages = { 'FocusNext' },
             },
             enter = {
-                help = "focus",
+                help = 'focus',
                 messages = {
                     {
-                        RemoveNodeFilterFromInput = "IRelativePathDoesContain"
+                        RemoveNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
-                    "PopMode",
-                    "ExplorePwdAsync",
-                }
+                    'PopMode',
+                    'ExplorePwdAsync',
+                },
             },
             left = {
-                help = "back",
+                help = 'back',
                 messages = {
                     {
-                        RemoveNodeFilterFromInput = "IRelativePathDoesContain"
+                        RemoveNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
-                    "Back",
+                    'Back',
                     {
-                        SetInputBuffer = ""
+                        SetInputBuffer = '',
                     },
-                    "ExplorePwdAsync"
-                }
+                    'ExplorePwdAsync',
+                },
             },
             right = {
-                help = "enter",
+                help = 'enter',
                 messages = {
                     {
-                        RemoveNodeFilterFromInput = "IRelativePathDoesContain"
+                        RemoveNodeFilterFromInput = 'IRelativePathDoesContain',
                     },
-                    "Enter",
+                    'Enter',
                     {
-                        SetInputBuffer = ""
+                        SetInputBuffer = '',
                     },
-                    "ExplorePwdAsync"
-                }
+                    'ExplorePwdAsync',
+                },
             },
             tab = {
-                help = "toggle selection",
-                messages = {"ToggleSelection", "FocusNext"}
+                help = 'toggle selection',
+                messages = { 'ToggleSelection', 'FocusNext' },
             },
             up = {
-                help = "up",
-                messages = {"FocusPrevious"}
-            }
+                help = 'up',
+                messages = { 'FocusPrevious' },
+            },
         },
         on_alphabet = nil,
         on_number = nil,
@@ -105,18 +105,19 @@ xplr.config.modes.builtin.search = {
             help = nil,
             messages = {
                 {
-                    RemoveNodeFilterFromInput = "IRelativePathDoesContain"
+                    RemoveNodeFilterFromInput = 'IRelativePathDoesContain',
                 },
-                "UpdateInputBufferFromKey",
+                'UpdateInputBufferFromKey',
                 {
-                    AddNodeFilterFromInput = "IRelativePathDoesContain"
+                    AddNodeFilterFromInput = 'IRelativePathDoesContain',
                 },
-                "ExplorePwdAsync"
-            }
-        }
-    }
+                'ExplorePwdAsync',
+            },
+        },
+    },
 }
 
-xplr.config.modes.builtin.search.key_bindings.on_key["esc"] = xplr.config.modes.builtin.search.key_bindings.on_key.enter
-xplr.config.modes.builtin.search.key_bindings.on_key["ctrl-n"] = xplr.config.modes.builtin.search.key_bindings.on_key.down
-xplr.config.modes.builtin.search.key_bindings.on_key["ctrl-p"] = xplr.config.modes.builtin.search.key_bindings.on_key.up
+xplr.config.modes.builtin.search.key_bindings.on_key['esc'] = xplr.config.modes.builtin.search.key_bindings.on_key.enter
+xplr.config.modes.builtin.search.key_bindings.on_key['ctrl-n'] =
+    xplr.config.modes.builtin.search.key_bindings.on_key.down
+xplr.config.modes.builtin.search.key_bindings.on_key['ctrl-p'] = xplr.config.modes.builtin.search.key_bindings.on_key.up

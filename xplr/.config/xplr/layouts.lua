@@ -8,12 +8,12 @@ xplr.config.layouts.builtin.default = {
             vertical_margin = 0,
             constraints = {
                 {
-                    Percentage = 70
+                    Percentage = 70,
                 },
                 {
-                    Percentage = 30
-                }
-            }
+                    Percentage = 30,
+                },
+            },
         },
         splits = {
             {
@@ -24,22 +24,22 @@ xplr.config.layouts.builtin.default = {
                         vertical_margin = nil,
                         constraints = {
                             {
-                                Length = 3
+                                Length = 3,
                             },
                             {
-                                Min = 1
+                                Min = 1,
                             },
                             {
-                                Length = 3
-                            }
-                        }
+                                Length = 3,
+                            },
+                        },
                     },
                     splits = {
-                        "SortAndFilter",
-                        "Table",
-                        "InputAndLogs",
-                    }
-                }
+                        'SortAndFilter',
+                        'Table',
+                        'InputAndLogs',
+                    },
+                },
             },
             {
                 Vertical = {
@@ -49,21 +49,21 @@ xplr.config.layouts.builtin.default = {
                         vertical_margin = nil,
                         constraints = {
                             {
-                                Percentage = 50
+                                Percentage = 50,
                             },
                             {
-                                Percentage = 50
+                                Percentage = 50,
                             },
-                        }
+                        },
                     },
                     splits = {
-                        "Selection",
-                        "HelpMenu",
-                    }
-                }
-            }
-        }
-    }
+                        'Selection',
+                        'HelpMenu',
+                    },
+                },
+            },
+        },
+    },
 }
 
 ------ No help
@@ -75,12 +75,12 @@ xplr.config.layouts.builtin.no_help = {
             vertical_margin = nil,
             constraints = {
                 {
-                    Percentage = 70
+                    Percentage = 70,
                 },
                 {
-                    Percentage = 30
-                }
-            }
+                    Percentage = 30,
+                },
+            },
         },
         splits = {
             {
@@ -91,26 +91,26 @@ xplr.config.layouts.builtin.no_help = {
                         vertical_margin = nil,
                         constraints = {
                             {
-                                Length = 3
+                                Length = 3,
                             },
                             {
-                                Min = 1
+                                Min = 1,
                             },
                             {
-                                Length = 3
-                            }
-                        }
+                                Length = 3,
+                            },
+                        },
                     },
                     splits = {
-                        "SortAndFilter",
-                        "Table",
-                        "InputAndLogs"
-                    }
-                }
+                        'SortAndFilter',
+                        'Table',
+                        'InputAndLogs',
+                    },
+                },
             },
-            "Selection"
-        }
-    }
+            'Selection',
+        },
+    },
 }
 
 ------ No selection
@@ -122,12 +122,12 @@ xplr.config.layouts.builtin.no_selection = {
             vertical_margin = nil,
             constraints = {
                 {
-                    Percentage = 70
+                    Percentage = 70,
                 },
                 {
-                    Percentage = 30
-                }
-            }
+                    Percentage = 30,
+                },
+            },
         },
         splits = {
             {
@@ -138,26 +138,26 @@ xplr.config.layouts.builtin.no_selection = {
                         vertical_margin = nil,
                         constraints = {
                             {
-                                Length = 3
+                                Length = 3,
                             },
                             {
-                                Min = 1
+                                Min = 1,
                             },
                             {
-                                Length = 3
-                            }
-                        }
+                                Length = 3,
+                            },
+                        },
                     },
                     splits = {
-                        "SortAndFilter",
-                        "Table",
-                        "InputAndLogs",
-                    }
-                }
+                        'SortAndFilter',
+                        'Table',
+                        'InputAndLogs',
+                    },
+                },
             },
-            "HelpMenu"
-        }
-    }
+            'HelpMenu',
+        },
+    },
 }
 
 ------ No help, no selection
@@ -169,25 +169,25 @@ xplr.config.layouts.builtin.no_help_no_selection = {
             vertical_margin = nil,
             constraints = {
                 {
-                    Length = 3
+                    Length = 3,
                 },
                 {
-                    Min = 1
+                    Min = 1,
                 },
                 {
-                    Length = 3
-                }
-            }
+                    Length = 3,
+                },
+            },
         },
         splits = {
-            "SortAndFilter",
-            "Table",
-            "InputAndLogs",
-        }
-    }
+            'SortAndFilter',
+            'Table',
+            'InputAndLogs',
+        },
+    },
 }
 
 ---- Custom
 xplr.config.layouts.custom = {}
 
-xplr.config.layouts.custom.logs_only = "InputAndLogs"
+xplr.config.layouts.custom.logs_only = 'InputAndLogs'

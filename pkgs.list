@@ -1,7 +1,7 @@
 alsa-utils
 amd-ucode
-arc-solid-gtk-theme
 arch-install-scripts
+arc-solid-gtk-theme
 aria2
 aura
 awesome
@@ -24,8 +24,8 @@ figlet
 gifsicle
 gimp
 git-filter-repo
-git-lfs
 github-cli
+git-lfs
 gnome-font-viewer
 gpg-tui
 hsetroot
@@ -45,6 +45,7 @@ orchis-theme-git
 pacman-contrib
 paru
 polkit-gnome
+polybar
 prettyping
 procs
 qt5ct
@@ -61,8 +62,8 @@ ttf-hanazono
 ttf-jetbrains-mono
 ttf-linux-libertine
 vi
-volumeicon
 volctl
+volumeicon
 wezterm-git
 wmctrl
 wmname
@@ -70,9 +71,9 @@ xautolock
 xbindkeys
 xorg-bdftopcf
 xorg-docs
-xorg-font-util
 xorg-fonts-100dpi
 xorg-fonts-75dpi
+xorg-font-util
 xorg-iceauth
 xorg-mkfontscale
 xorg-server-xephyr
