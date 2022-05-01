@@ -18,14 +18,14 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 package.loaded.globals = nil
-require 'globals'
-R 'plugins'
-R 'config-xplr'
+require 'dtomvan.globals'
+R 'dtomvan.plugins'
+R 'dtomvan.config-xplr'
+R 'dtomvan.opts'
+R 'dtomvan.lsp'
+R 'dtomvan.keymaps'
+R 'dtomvan.au'
+R 'dtomvan.cmd'
 vim.cmd [[source ~/.config/nvim/autoload/vimscriptstuff.vim]]
-R 'opts'
-R 'lsp'
-R 'keymaps'
-R 'au'
-R 'cmd'
 
 hl(0, 'WinSeparator', { bg = 'NONE' })

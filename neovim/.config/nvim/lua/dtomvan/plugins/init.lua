@@ -64,14 +64,14 @@ require('packer').startup(function()
     use {
         'nvim-telescope/telescope.nvim',
         config = function()
-            R 'plugins.telescope'
+            R 'dtomvan.plugins.telescope'
         end,
     }
     use 'nvim-telescope/telescope-fzy-native.nvim'
     use {
         'tjdevries/express_line.nvim',
         config = function()
-            R 'plugins.express_line'
+            R 'dtomvan.plugins.express_line'
         end,
         requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     }
@@ -128,7 +128,7 @@ require('packer').startup(function()
     use {
         'L3MON4D3/LuaSnip',
         config = function()
-            R 'plugins.luasnip'
+            R 'dtomvan.plugins.luasnip'
         end,
     }
     use 'rafamadriz/friendly-snippets'
@@ -205,7 +205,7 @@ require('packer').startup(function()
     use {
         'nvim-neorg/neorg',
         config = function()
-            require 'plugins.norg'
+            require 'dtomvan.plugins.norg'
         end,
         run = ':TSInstall norg norg_meta norg_table',
         requires = 'nvim-lua/plenary.nvim',

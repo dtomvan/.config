@@ -21,11 +21,11 @@ vim.cmd [[
 
 vim.keymap.set({ 'i', 's' }, '<c-j>', function()
     require('luasnip').jump(-1)
-end, require('keymaps').silent)
+end, require('dtomvan.keymaps').silent)
 
 vim.keymap.set('s', '<c-k>', function()
     require('luasnip').jump(1)
-end, require('keymaps').silent)
+end, require('dtomvan.keymaps').silent)
 
 ls.snippets = {
     all = {

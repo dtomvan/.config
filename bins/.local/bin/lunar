@@ -22,7 +22,7 @@ com.grappenmaker.solarpatcher.util.LunarLauncher \
 --texturesDir "$HOME/.lunarclient/textures" \
 --assetsDir "$HOME/.minecraft/assets" \
 --width 1904 \
---height 1040 2>&1 | tee ~/.lunarclient/logs/1.8-$DATE-$AMOUNT.log
+--height 1033 2>&1 | tee ~/.lunarclient/logs/1.8-$DATE-$AMOUNT.log
 
 TOOK="$SECONDS"
 EPOCH='jan 1 1970'

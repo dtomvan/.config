@@ -161,6 +161,7 @@ cmp.setup {
 
 local lsp_status = require 'lsp-status'
 local lsp_installer = require 'nvim-lsp-installer'
+lsp_installer.setup {}
 
 -- Mappings.
 local on_attach = function(client, bufnr)
@@ -190,7 +191,7 @@ local on_attach = function(client, bufnr)
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end)
     buf_set_keymap('n', '<space>D', vim.lsp.buf.type_definition)
-    buf_set_keymap('n', '<space>rn', require('utils').quick_fix_rename)
+    buf_set_keymap('n', '<space>rn', require('dtomvan.utils').quick_fix_rename)
     buf_set_keymap('n', '<space>a', vim.lsp.buf.code_action)
     buf_set_keymap('n', 'gr', vim.lsp.buf.references)
     buf_set_keymap('n', '<space>e', vim.diagnostic.open_float)
@@ -352,78 +353,71 @@ local function get_lua_runtime()
     return result
 end
 
--- Register a handler that will be called for all installed servers.
--- Alternatively, you may also register handlers on specific server instances instead (see example below).
-lsp_installer.on_server_ready(function(server)
-    local opts = {
-        on_attach = on_attach,
-        capabilities = capabilities,
-    }
+local opts = {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
 
-    -- (optional) Customize the options passed to the server
-    if server.name == 'sumneko_lua' then
-        require('lspconfig').sumneko_lua.setup {
-            settings = {
-                Lua = {
-                    runtime = {
-                        version = 'LuaJIT',
-                    },
-                    completion = {
-                        keywordSnippet = 'Disable',
-                        showWord = 'Disable',
-                    },
-                    diagnostics = {
-                        enable = true,
-                        disable = {
-                            'trailing-space',
-                        },
-                        globals = {
-                            'vim',
-                            'describe',
-                            'it',
-                            'before_each',
-                            'after_each',
-                            'teardown',
-                            'pending',
-                            'clear',
-                            'Color',
-                            'c',
-                            'Group',
-                            'g',
-                            's',
-                            'use',
-                            'xplr',
-                        },
-                    },
-                    workspace = {
-                        library = get_lua_runtime(),
-                        maxPreload = 10000,
-                        preloadFileSize = 10000,
-                    },
+require('lspconfig').sumneko_lua.setup {
+    settings = {
+        Lua = {
+            runtime = {
+                version = 'LuaJIT',
+            },
+            completion = {
+                keywordSnippet = 'Disable',
+                showWord = 'Disable',
+            },
+            diagnostics = {
+                enable = true,
+                disable = {
+                    'trailing-space',
+                },
+                globals = {
+                    'vim',
+                    'describe',
+                    'it',
+                    'before_each',
+                    'after_each',
+                    'teardown',
+                    'pending',
+                    'clear',
+                    'Color',
+                    'c',
+                    'Group',
+                    'g',
+                    's',
+                    'use',
+                    'xplr',
                 },
             },
-            filetypes = { 'lua' },
-            on_attach = on_attach,
-            capabilities = capabilities,
-            root_dir = require('lspconfig.util').find_git_ancestor,
-        }
-    elseif server.name == 'rome' then
-        opts.filetypes = {
-            'javascript',
-            'javascriptreact',
-            'typescript',
-            'typescript.tsx',
-            'typescriptreact',
-        }
-        server:setup(opts)
-    elseif server.name == 'rust_analyzer' then
-        -- Do nothing, you should call rust_tools beforehand
-        -- We are using it's auto-installed path, though.
-    else
-        -- This setup() function is exactly the same as lspconfig's setup function.
-        -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-        server:setup(opts)
+            workspace = {
+                library = get_lua_runtime(),
+                maxPreload = 10000,
+                preloadFileSize = 10000,
+            },
+        },
+    },
+    filetypes = { 'lua' },
+    on_attach = on_attach,
+    capabilities = capabilities,
+    root_dir = require('lspconfig.util').find_git_ancestor,
+}
+
+for _, server in ipairs(lsp_installer_servers.get_installed_server_names()) do
+    if not (server == 'rome' or server == 'rust_analyzer' or server == 'sumneko_lua') then
+        require('lspconfig')[server].setup(opts)
     end
-end)
+end
+
+opts.filetypes = {
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescript.tsx',
+    'typescriptreact',
+}
+require('lspconfig').rome.setup(opts)
 
 require('rust-tools').setup(rust_tools_opts)
+

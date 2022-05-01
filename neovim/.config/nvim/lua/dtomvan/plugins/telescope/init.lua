@@ -1,4 +1,4 @@
-local silent = require('keymaps').silent
+local silent = require('dtomvan.keymaps').silent
 
 require('telescope').setup {
     defaults = {
@@ -24,14 +24,16 @@ require('telescope').setup {
 }
 require('telescope').load_extension 'fzy_native'
 
+local pickers = R 'dtomvan.plugins.telescope.pickers'
+
 -- Custom pickers
-vim.keymap.set('n', '<C-p>', R('plugins.telescope.pickers').grep, silent)
-vim.keymap.set('n', '<leader>b', R('plugins.telescope.pickers').buffers, silent)
-vim.keymap.set('n', '<leader>dd', R('plugins.telescope.pickers').dotfiles, silent)
-vim.keymap.set('n', '<leader>fb', R('plugins.telescope.pickers').current_buffer, silent)
-vim.keymap.set('n', '<leader>fd', R('plugins.telescope.pickers').configs, silent)
-vim.keymap.set('n', '<leader>fp', R('plugins.telescope.pickers').projects, silent)
-vim.keymap.set('n', '<leader>q', R('plugins.telescope.pickers').diagnostics, silent)
+vim.keymap.set('n', '<C-p>', pickers.grep, silent)
+vim.keymap.set('n', '<leader>b', pickers.buffers, silent)
+vim.keymap.set('n', '<leader>dd', pickers.dotfiles, silent)
+vim.keymap.set('n', '<leader>fb', pickers.current_buffer, silent)
+vim.keymap.set('n', '<leader>fd', pickers.configs, silent)
+vim.keymap.set('n', '<leader>fp', pickers.projects, silent)
+vim.keymap.set('n', '<leader>q', pickers.diagnostics, silent)
 -- Builtin pickers
 vim.keymap.set('n', '<leader>ch', require('telescope.builtin').command_history, silent)
 vim.keymap.set('n', '<leader>fc', require('telescope.builtin').commands, silent)

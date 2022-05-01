@@ -115,3 +115,38 @@ au('TextYankPost', {
         vim.highlight.on_yank { on_visual = false }
     end,
 })
+
+group('MarkdownAlign', gops)
+au('FileType', {
+    group = 'MarkdownAlign',
+    pattern = 'markdown',
+    callback = function()
+        vim.keymap.set('v', '<Leader><bslash>', ':EasyAlign*<bar><cr>', {
+            buffer = true,
+            remap = true,
+            silent = true,
+        })
+    end,
+})
+
+group('RestorePosition', gops)
+au('BufReadPost', {
+    callback = function()
+        local ft = vim.bo.filetype
+        if vim.endswith(ft, 'commit') or vim.endswith(ft, 'rebase') then
+            return
+        end
+        vim.schedule(function()
+            local mark = vim.api.nvim_buf_get_mark(0, '"')
+            local row = mark[1]
+            if row <= 0 then
+                return
+            end
+            local lines = vim.api.nvim_buf_line_count(0)
+            if row > lines then
+                return
+            end
+            vim.api.nvim_win_set_cursor(0, mark)
+        end)
+    end,
+})

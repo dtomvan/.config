@@ -3,7 +3,7 @@ local previewers = require 'telescope.previewers'
 local pickers = require 'telescope.pickers'
 local finders = require 'telescope.finders'
 local builtin = require 'telescope.builtin'
-local actions = R 'plugins.telescope.actions'
+local actions = R 'dtomvan.plugins.telescope.actions'
 
 local function preview_list(entry)
     return { 'ls', entry.value }
