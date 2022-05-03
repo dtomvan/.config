@@ -282,3 +282,14 @@ alias x='xplr'
 # These files may not exist on all systems
 source ~/projects/fucke.rs/shells/zsh/setup.sh || true
 source /usr/share/nvm/init-nvm.sh || true
+
+# portal shell completion
+_portal_completions() {
+	args=("${COMP_WORDS[@]:1:$COMP_CWORD}")
+
+	local IFS=$'\n'
+	COMPREPLY=($(GO_FLAGS_COMPLETION=1 ${COMP_WORDS[0]} "${args[@]}"))
+	return 1
+}
+complete -F _portal_completions portal
+

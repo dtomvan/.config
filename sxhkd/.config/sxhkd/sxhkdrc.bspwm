@@ -57,9 +57,13 @@ super + {_,shift + }c
 super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
-# focus the last node/desktop
-super + {grave,Tab}
-	bspc {node,desktop} -f last
+# focus the last node
+super + grave
+	bspc node -f last
+
+# focus the last desktop
+super + Tab
+	~/.config/sxhkd/electronfix.sh last
 
 # focus the older or newer node in the focus history
 super + {o,i}
@@ -69,7 +73,7 @@ super + {o,i}
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}'
+	~/.config/sxhkd/electronfix.sh {goto,move} '^{1-9,10}'
 
 #
 # preselect
