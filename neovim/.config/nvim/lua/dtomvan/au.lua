@@ -150,3 +150,23 @@ au('BufReadPost', {
         end)
     end,
 })
+-- V/# Please enter the commit message/-1<cr>d:call histdel('/', -1)<cr>:r! date +\%Y-\%m-\%d<cr>VK<esc>
+
+local git = 'GitCommitMsg'
+local commit = '*/COMMIT_EDITMSG'
+
+group(git, gops)
+au('BufEnter', {
+    group = git,
+    pattern = commit,
+    callback = function()
+        vim.keymap.set('n', '<leader>0', function()
+            local linenr = vim.fn.search('# Please enter the commit message', 'n')
+            if linenr == 0 then
+                return
+            end
+            local date = os.date '%F'
+            vim.api.nvim_buf_set_lines(0, 0, linenr, true, { date })
+        end, { buffer = true, silent = true })
+    end,
+})

@@ -42,6 +42,15 @@ xplr.config.modes.builtin.action = {
                     },
                 },
             },
+            ['p'] = {
+                help = 'plugins',
+                messages = {
+                    'PopMode',
+                    {
+                        SwitchModeCustom = 'xpm',
+                    },
+                },
+            },
             ['c'] = {
                 help = 'create',
                 messages = {

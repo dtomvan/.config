@@ -190,17 +190,6 @@ require('packer').startup(function()
     use { 'ron-rs/ron.vim', ft = 'ron' }
     use 'Raimondi/vim-transpose-words'
 
-    -- Neogit
-    use {
-        'TimUntersberger/neogit',
-        requires = 'nvim-lua/plenary.nvim',
-        config = function()
-            local neogit = require 'neogit'
-
-            neogit.setup {}
-        end,
-    }
-
     -- Neorg
     use {
         'nvim-neorg/neorg',

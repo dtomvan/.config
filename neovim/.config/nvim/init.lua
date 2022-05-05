@@ -26,6 +26,22 @@ R 'dtomvan.lsp'
 R 'dtomvan.keymaps'
 R 'dtomvan.au'
 R 'dtomvan.cmd'
-vim.cmd [[source ~/.config/nvim/autoload/vimscriptstuff.vim]]
 
 hl(0, 'WinSeparator', { bg = 'NONE' })
+
+-- abbreviations
+local api = vim.api
+
+local ex = setmetatable({}, {
+    __index = function(t, k)
+      local command = k:gsub("_$", "!")
+      local f = function(...)
+        return api.nvim_command(table.concat(vim.tbl_flatten {command, ...}, " "))
+      end
+      rawset(t, k, f)
+      return f
+    end
+  });
+
+ex.noreabbrev("luf", "luafile")
+ex.noreabbrev("fcd", "cd %:p:h")

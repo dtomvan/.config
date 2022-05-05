@@ -16,6 +16,7 @@ os.execute(string.format("[ -e '%s' ] || git clone '%s' '%s'", xpm_path, xpm_url
 require 'layouts'
 -- Modes
 require 'modes'
+require 'general'
 -- Plugins
 require('xpm').setup {
     'dtomvan/xpm.xplr',
