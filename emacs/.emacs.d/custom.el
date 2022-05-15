@@ -3,8 +3,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(mode-line-format
+   '("%e" mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position evil-mode-line-tag
+     (vc-mode vc-mode)
+     "  " mode-line-misc-info mode-line-end-spaces))
  '(org-agenda-files '("~/hw.org"))
- '(undo-tree-history-directory-alist '(("" . "~/.saves"))))
+ '(undo-tree-history-directory-alist '(("" . "~/.saves")))
+ '(warning-suppress-log-types '((use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

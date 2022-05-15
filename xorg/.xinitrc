@@ -38,15 +38,11 @@ fi
 # /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 export AWT_TOOLKIT=MToolkit
 export QT_QPA_PLATFORMTHEME=qt5ct
-wmname LG3D
 xsetroot -cursor_name left_ptr
 xbindkeys
 picom --experimental-backends --xrender-sync-fence --backend glx &
-xautolock -notify 10 -notifier 'notify-send "locking in 10 seconds..."' -locker "systemctl suspend" -nowlocker ./i3lock.sh &
-ckb-next -b &
-emacs --daemon &
+~/i3lock.sh && xautolock -notify 10 -notifier 'notify-send "locking in 10 seconds..."' -locker "systemctl suspend" -nowlocker ./i3lock.sh &
 playerctld daemon &
-keynav &
 echo "RUNNING VOLCTL" && sleep 1 && volctl &
 clipmenud &
 setxkbmap -option grp:alt_caps_toggle -option compose:rwin &

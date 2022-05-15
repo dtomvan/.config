@@ -1,7 +1,6 @@
 local silent = { silent = true, noremap = true }
 local noremap = { noremap = true }
 local expr = { expr = true, silent = true }
-local neogit = require 'neogit'
 
 vim.keymap.set('', '<space>', '<Nop>', silent)
 
@@ -138,14 +137,6 @@ vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', '<C-j>', '<C-w>j')
 vim.keymap.set('n', '<C-k>', '<C-w>k')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
-
-vim.keymap.set('n', '<leader>gs', function()
-    neogit.open { kind = 'split' }
-end)
-
-vim.keymap.set('n', '<leader>gc', function()
-    neogit.open { 'commit' }
-end)
 
 -- neorg
 vim.keymap.set('n', '<leader>no', '<cmd>tabnew<cr>:Neorg workspace <tab>', { remap = true })

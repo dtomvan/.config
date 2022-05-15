@@ -35,7 +35,7 @@ eww daemon &
 hsetroot -solid "#16161D" &
 ~/bg.sh bg.gif &
 deadd-notification-center &
-betterdiscordctl -f canary install || true && discord-canary --no-sandbox \
+discord-canary --no-sandbox \
 --start-minimized \
 --ignore-gpu-blocklist \
 --disable-features=UseOzonePlatform \

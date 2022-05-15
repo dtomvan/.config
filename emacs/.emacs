@@ -114,7 +114,7 @@
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-l")
-  :hook ((rust-mode . lsp))
+  :hook ((rust-mode . lsp) (lua-mode . lsp))
   :commands lsp)
 
 ;; Lua
@@ -279,3 +279,9 @@
 (use-package kotlin-mode)
 
 (put 'dired-find-alternate-file 'disabled nil)
+(setq vc-follow-symlinks t)
+(setq inhibit-startup-screen t)
+(setq initial-scratch-message "")
+
+(use-package restart-emacs)
+

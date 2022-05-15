@@ -3,6 +3,8 @@ if [[ "$(tty)" == "/dev/tty1" ]] ; then
     startx &> /dev/null
 fi
 
+export BROWSER=xdg-open
+
 zle-keymap-select zle-line-init () {
   case $KEYMAP in
     vicmd) print -n '\e[0 q';;
@@ -13,7 +15,7 @@ zle -N zle-keymap-select
 zle -N zle-line-init
 
 export DENO_INSTALL="$HOME/.deno"
-export PATH=~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin:~/go/bin
+export PATH=~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin:~/go/bin:~/.yarn/bin
 export EDITOR=nvim
 
 eval "$(sheldon source)"
@@ -281,15 +283,4 @@ alias x='xplr'
 
 # These files may not exist on all systems
 source ~/projects/fucke.rs/shells/zsh/setup.sh || true
-source /usr/share/nvm/init-nvm.sh || true
-
-# portal shell completion
-_portal_completions() {
-	args=("${COMP_WORDS[@]:1:$COMP_CWORD}")
-
-	local IFS=$'\n'
-	COMPREPLY=($(GO_FLAGS_COMPLETION=1 ${COMP_WORDS[0]} "${args[@]}"))
-	return 1
-}
-complete -F _portal_completions portal
-
+# source /usr/share/nvm/init-nvm.sh || true
