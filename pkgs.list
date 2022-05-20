@@ -101,5 +101,6 @@ xorg-xvinfo
 xorg-xwayland
 xorg-xwd
 xorg-xwud
+zathura
 zellij-git
 zoxide

@@ -31,7 +31,6 @@ bspc desktop='^1' --focus
 $HOME/.config/polybar/launch.sh
 eww daemon &
 
-~/i3lock.sh &
 hsetroot -solid "#16161D" &
 ~/bg.sh bg.gif &
 deadd-notification-center &

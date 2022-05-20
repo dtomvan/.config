@@ -1,0 +1,73 @@
+{
+  "active_profile": 0,
+  "profiles": [
+    {
+      "name": "1.18.2 default",
+      "output_dir": "/home/tomvd/.minecraft/mods",
+      "game_version": "1.18.2",
+      "mod_loader": "Quilt",
+      "mods": [
+        {
+          "name": "sodium-fabric",
+          "identifier": {
+            "GitHubRepository": [
+              "CaffeineMC",
+              "sodium-fabric"
+            ]
+          }
+        },
+        {
+          "name": "lithium-fabric",
+          "identifier": {
+            "GitHubRepository": [
+              "CaffeineMC",
+              "lithium-fabric"
+            ]
+          }
+        },
+        {
+          "name": "Phosphor (Fabric)",
+          "identifier": {
+            "CurseForgeProject": 372124
+          }
+        },
+        {
+          "name": "Lithium (Fabric)",
+          "identifier": {
+            "CurseForgeProject": 360438
+          }
+        },
+        {
+          "name": "Fabric API",
+          "identifier": {
+            "CurseForgeProject": 306612
+          }
+        },
+        {
+          "name": "FerriteCore (Fabric)",
+          "identifier": {
+            "CurseForgeProject": 459857
+          }
+        },
+        {
+          "name": "Mod Menu",
+          "identifier": {
+            "CurseForgeProject": 308702
+          }
+        },
+        {
+          "name": "LazyDFU",
+          "identifier": {
+            "CurseForgeProject": 433518
+          }
+        },
+        {
+          "name": "Krypton",
+          "identifier": {
+            "CurseForgeProject": 428912
+          }
+        }
+      ]
+    }
+  ]
+}

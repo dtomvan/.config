@@ -1,3 +1,5 @@
+eval "$(antidot init)"
+
 alias givefuck="curl -s rage.metroserve.me/\?format=plain"
 if [[ "$(tty)" == "/dev/tty1" ]] ; then
     startx &> /dev/null

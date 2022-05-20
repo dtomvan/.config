@@ -1,4 +1,4 @@
-dirs = backgrounds bins bspwm deadd discord emacs git gtk i3lock mpd mpv ncmpcpp neovim picom polybar sxhkd tmux wezterm xorg xplr zellij zsh
+dirs = backgrounds bins bspwm deadd discord emacs ferium git gtk i3lock mpd mpv ncmpcpp neovim picom polybar sxhkd tmux wezterm xorg xplr zellij zsh
 root-dirs = xmonad-root
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 
