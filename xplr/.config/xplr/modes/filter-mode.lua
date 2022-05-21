@@ -1,64 +1,68 @@
+-- The builtin filter mode.
+--
+-- Type: [Mode](https://xplr.dev/en/mode)
 xplr.config.modes.builtin.filter = {
     name = 'filter',
-    help = nil,
-    extra_help = nil,
     key_bindings = {
         on_key = {
-            ['R'] = {
-                help = 'relative does not contain',
+            ['r'] = {
+                help = 'relative path does match regex',
                 messages = {
+                    { SwitchModeBuiltin = 'relative_path_does_match_regex' },
                     {
-                        SwitchModeBuiltin = 'relative_path_does_not_contain',
+                        SetInputPrompt = xplr.config.general.sort_and_filter_ui.filter_identifiers.RelativePathDoesMatchRegex.format,
                     },
-                    {
-                        SetInputBuffer = '',
-                    },
-                    {
-                        AddNodeFilterFromInput = 'IRelativePathDoesNotContain',
-                    },
+                    { SetInputBuffer = '' },
+                    { AddNodeFilterFromInput = 'RelativePathDoesMatchRegex' },
                     'ExplorePwdAsync',
+                },
+            },
+            ['R'] = {
+                help = 'relative path does not match regex',
+                messages = {
+                    { SwitchModeBuiltin = 'relative_path_does_not_match_regex' },
+                    {
+                        SetInputPrompt = xplr.config.general.sort_and_filter_ui.filter_identifiers.RelativePathDoesNotMatchRegex.format,
+                    },
+                    { SetInputBuffer = '' },
+                    { AddNodeFilterFromInput = 'RelativePathDoesNotMatchRegex' },
+                    'ExplorePwdAsync',
+                },
+            },
+            enter = {
+                help = 'done',
+                messages = {
+                    'PopMode',
                 },
             },
             backspace = {
                 help = 'remove last filter',
-                messages = { 'RemoveLastNodeFilter', 'ExplorePwdAsync' },
-            },
-            ['ctrl-c'] = {
-                help = 'terminate',
-                messages = { 'Terminate' },
-            },
-            ['ctrl-r'] = {
-                help = 'reset filters',
-                messages = { 'ResetNodeFilters', 'ExplorePwdAsync' },
-            },
-            ['ctrl-u'] = {
-                help = 'clear filters',
-                messages = { 'ClearNodeFilters', 'ExplorePwdAsync' },
-            },
-            enter = {
-                help = 'done',
-                messages = { 'PopMode' },
-            },
-            ['r'] = {
-                help = 'relative does contain',
                 messages = {
-                    {
-                        SwitchModeBuiltin = 'relative_path_does_contain',
-                    },
-                    {
-                        SetInputBuffer = '',
-                    },
-                    {
-                        AddNodeFilterFromInput = 'IRelativePathDoesContain',
-                    },
+                    'RemoveLastNodeFilter',
                     'ExplorePwdAsync',
                 },
             },
+            ['ctrl-r'] = {
+                help = 'reset filters',
+                messages = {
+                    'ResetNodeFilters',
+                    'ExplorePwdAsync',
+                },
+            },
+            ['ctrl-u'] = {
+                help = 'clear filters',
+                messages = {
+                    'ClearNodeFilters',
+                    'ExplorePwdAsync',
+                },
+            },
+            ['ctrl-c'] = {
+                help = 'terminate',
+                messages = {
+                    'Terminate',
+                },
+            },
         },
-        on_alphabet = nil,
-        on_number = nil,
-        on_special_character = nil,
-        default = nil,
     },
 }
 

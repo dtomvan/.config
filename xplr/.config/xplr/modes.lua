@@ -32,10 +32,10 @@ require 'quit-mode'
 require 'search-mode'
 ------ Filter
 require 'filter-mode'
------- Relative path does contain
-require 'relative-path-does-contain-mode'
------- Relative path does not contain
-require 'relative-path-does-not-contain-mode'
+------ Relative path does match regex
+require 'relative-path-does-match-regex'
+------ Relative path does not match regex
+require 'relative-path-does-not-match-regex'
 ------ Sort
 require 'sort-mode'
 ------ Switch layout
