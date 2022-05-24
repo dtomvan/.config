@@ -286,3 +286,4 @@ alias x='xplr'
 # These files may not exist on all systems
 source ~/projects/fucke.rs/shells/zsh/setup.sh || true
 # source /usr/share/nvm/init-nvm.sh || true
+eval "$(luarocks path --lua-version 5.1)"

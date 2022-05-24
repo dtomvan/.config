@@ -26,12 +26,6 @@ require('xpm').setup {
             require 'commands'
         end,
     },
-    {
-        'dtomvan/icons.xplr',
-        after = function()
-            require 'general'
-        end,
-    },
     'dtomvan/ouch.xplr',
     'igorepst/context-switch.xplr',
     {
@@ -53,4 +47,20 @@ require('xpm').setup {
     'sayanarijit/xclip.xplr',
     'sayanarijit/zoxide.xplr',
     'dtomvan/paste-rs.xplr',
+    'sayanarijit/zentable.xplr',
+    {
+        'dtomvan/extra-icons.xplr',
+        after = function()
+            xplr.config.general.table.row.cols[1] = { format = 'custom.icons_dtomvan_col_1' }
+        end,
+    },
 }
+--
+-- package.path = package.path ..
+--     ";" .. home .. "/projects/?.xplr/src/init.lua;"
+--
+-- require 'extra-icons'.setup()
+-- xplr.config.general.table.row.cols[1] = { format = 'custom.icons_dtomvan_col_1' }
+
+package.path = ';' .. os.getenv 'LUA_PATH' .. ';' .. package.path
+package.cpath = ';' .. os.getenv 'LUA_CPATH' .. ';' .. package.cpath

@@ -31,7 +31,7 @@ require('packer').startup(function()
     use {
         'numToStr/Comment.nvim',
         config = function()
-            require('Comment').setup()
+            require('Comment').setup {}
         end,
     }
 
@@ -202,6 +202,10 @@ require('packer').startup(function()
 
     -- Profiler
     use 'dstein64/vim-startuptime'
-    -- Developer profiler
-    use 'wakatime/vim-wakatime'
+    -- Only when using on specific machine,
+    -- since I don't want to get prompted on others.
+    if vim.fn.hostname() == "tom-pc" then
+        -- Developer profiler
+        use 'wakatime/vim-wakatime'
+    end
 end)

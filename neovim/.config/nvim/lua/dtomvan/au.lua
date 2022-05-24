@@ -133,7 +133,7 @@ group('RestorePosition', gops)
 au('BufReadPost', {
     callback = function()
         local ft = vim.bo.filetype
-        if vim.endswith(ft, 'commit') or vim.endswith(ft, 'rebase') then
+        if vim.endswith(ft, 'commit') or vim.endswith(ft, 'rebase') or ft == 'help' then
             return
         end
         vim.schedule(function()

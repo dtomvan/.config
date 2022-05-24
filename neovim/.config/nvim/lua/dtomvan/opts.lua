@@ -30,7 +30,7 @@ ops.shiftwidth = 4
 ops.shiftwidth = 4
 -- ops.shortmess = "filnxtToOFc"
 ops.shortmess = ops.shortmess + 'a'
-ops.showtabline = 2
+ops.showtabline = 1
 ops.signcolumn = 'yes'
 ops.smartcase = true
 ops.softtabstop = 4
@@ -48,3 +48,7 @@ ops.wrap = true
 ops.wrap = true
 ops.writebackup = true
 vim.g.mapleader = ' '
+
+if vim.fn.has("nvim-0.8") == 1 then
+    ops.winbar = "%=%m %f"
+end

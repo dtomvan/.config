@@ -10,8 +10,8 @@ require('xplr').setup {
         },
         relative = 'editor',
         size = {
-            width = '80%',
-            height = '30%',
+            width = '100%',
+            height = '50%',
         },
     },
     previewer = {
