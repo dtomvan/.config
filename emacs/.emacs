@@ -49,10 +49,35 @@
   (setq doom-themes-treemacs-theme "doom-atom")
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
+(when window-system
+  (use-package fira-code-mode
+    :custom (fira-code-mode-disabled-ligatures '("#{" "#(" "#_" "#_("))
+    :hook prog-mode)
+  (let* ((variable-tuple
+	  (cond 
+	   ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
+	   ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
+	   ((x-list-fonts "Verdana")         '(:font "Verdana"))
+	   ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
+	   (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+	 )
 
-(use-package fira-code-mode
-  :custom (fira-code-mode-disabled-ligatures '("#{" "#(" "#_" "#_("))
-  :hook prog-mode)
+    `(set-face-attribute 'org-level-8 nil ,@variable-tuple :weight "bold")
+    `(set-face-attribute 'org-level-7 nil ,@variable-tuple :weight "bold")
+    `(set-face-attribute 'org-level-6 nil ,@variable-tuple :weight "bold")
+    `(set-face-attribute 'org-level-5 nil ,@variable-tuple :weight "bold")
+    `(set-face-attribute 'org-level-4 nil ,@variable-tuple :weight "bold" :height 1.1)
+    `(set-face-attribute 'org-level-3 nil ,@variable-tuple :weight "bold" :height 1.15)
+    `(set-face-attribute 'org-level-2 nil ,@variable-tuple :weight "bold" :height 1.2)
+    `(set-face-attribute 'org-level-1 nil ,@variable-tuple :weight "bold" :height 1.25)
+    `(set-face-attribute 'org-document-title nil ,@variable-tuple :height 1.2 :underline t)
+    )
+
+  (custom-theme-set-faces
+   'user
+   '(variable-pitch ((t (:family "Source Sans Pro" :height 150 :weight thin))))
+   '(fixed-pitch ((t ( :family "Fira Code Retina" :height 140)))))
+  )
 
 ;; Get vimmy
 (setq evil-want-keybinding nil)
@@ -182,31 +207,6 @@
    '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
    '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
-
-(let* ((variable-tuple
-        (cond 
-         ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
-         ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
-         ((x-list-fonts "Verdana")         '(:font "Verdana"))
-         ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
-         (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-       )
-
-   `(set-face-attribute 'org-level-8 nil ,@variable-tuple :weight "bold")
-   `(set-face-attribute 'org-level-7 nil ,@variable-tuple :weight "bold")
-   `(set-face-attribute 'org-level-6 nil ,@variable-tuple :weight "bold")
-   `(set-face-attribute 'org-level-5 nil ,@variable-tuple :weight "bold")
-   `(set-face-attribute 'org-level-4 nil ,@variable-tuple :weight "bold" :height 1.1)
-   `(set-face-attribute 'org-level-3 nil ,@variable-tuple :weight "bold" :height 1.15)
-   `(set-face-attribute 'org-level-2 nil ,@variable-tuple :weight "bold" :height 1.2)
-   `(set-face-attribute 'org-level-1 nil ,@variable-tuple :weight "bold" :height 1.25)
-   `(set-face-attribute 'org-document-title nil ,@variable-tuple :height 1.2 :underline t)
-  )
-
-(custom-theme-set-faces
- 'user
- '(variable-pitch ((t (:family "Source Sans Pro" :height 150 :weight thin))))
- '(fixed-pitch ((t ( :family "Fira Code Retina" :height 140)))))
 
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 (add-hook 'org-mode-hook 'visual-line-mode)

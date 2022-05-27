@@ -1,164 +1,5 @@
 local lsp_installer_servers = require 'nvim-lsp-installer.servers'
 
-local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
-
--- These two are optional and provide syntax highlighting
--- for Neorg tables and the @document.meta tag
-parser_configs.norg_meta = {
-    install_info = {
-        url = 'https://github.com/nvim-neorg/tree-sitter-norg-meta',
-        files = { 'src/parser.c' },
-        branch = 'main',
-    },
-}
-
-parser_configs.norg_table = {
-    install_info = {
-        url = 'https://github.com/nvim-neorg/tree-sitter-norg-table',
-        files = { 'src/parser.c' },
-        branch = 'main',
-    },
-}
-
-require('nvim-treesitter.configs').setup {
-    ensure_installed = {
-        -- If you want an easy overview, select all of them and
-        -- type :!column -t -s' '<cr>
-        'bash',
-        'c',
-        'cmake',
-        'comment',
-        'cpp',
-        'c_sharp',
-        'css',
-        'dart',
-        'dockerfile',
-        'fennel',
-        'fish',
-        'gdscript',
-        'go',
-        'gomod',
-        'graphql',
-        'haskell',
-        'help',
-        'hjson',
-        'hocon',
-        'html',
-        'java',
-        'javascript',
-        'jsdoc',
-        'json',
-        'kotlin',
-        'latex',
-        'lua',
-        'make',
-        'markdown',
-        'python',
-        'rasi',
-        'regex',
-        'rust',
-        'scss',
-        'svelte',
-        'toml',
-        'tsx',
-        'typescript',
-        'vue',
-        'yaml',
-    },
-    sync_install = false,
-    ignore_install = {},
-    highlight = {
-        enable = true,
-        disable = { 'vim' },
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
-    },
-}
-
-local cmp = require 'cmp'
-
-cmp.setup {
-    mapping = {
-        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-e>'] = cmp.mapping.close(),
-        ['<c-y>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Insert,
-            select = true,
-        },
-
-        ['<c-space>'] = cmp.mapping.complete(),
-
-        ['<Tab>'] = function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            else
-                fallback()
-            end
-        end,
-        ['<S-Tab>'] = function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            else
-                fallback()
-            end
-        end,
-    },
-
-    -- Youtube:
-    --    the order of your sources matter (by default). That gives them priority
-    --    you can configure:
-    --        keyword_length
-    --        priority
-    --        max_item_count
-    --        (more?)
-    sources = {
-        -- { name = "gh_issues" },
-
-        -- Youtube: Could enable this only for lua, but nvim_lua handles that already.
-        { name = 'neorg' },
-        { name = 'nvim_lsp' },
-        { name = 'nvim_lua' },
-        { name = 'luasnip' },
-        { name = 'zsh' },
-        { name = 'path' },
-        { name = 'buffer', keyword_length = 5 },
-    },
-
-    -- Youtube: mention that you need a separate snippets plugin
-    snippet = {
-        expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-        end,
-    },
-
-    -- formatting = {
-    --     -- Youtube: How to set up nice formatting for your sources.
-    --     format = lspkind.cmp_format {
-    --         with_text = true,
-    --         menu = {
-    --             buffer = '[buf]',
-    --             nvim_lsp = '[LSP]',
-    --             nvim_lua = '[api]',
-    --             path = '[path]',
-    --             luasnip = '[snip]',
-    --             -- gh_issues = "[issues]",
-    --         },
-    --     },
-    -- },
-
-    experimental = {
-        -- I like the new menu better! Nice work hrsh7th
-        native_menu = false,
-
-        -- Let's play with this for a day or two
-        ghost_text = true,
-    },
-}
-
 local lsp_status = require 'lsp-status'
 local lsp_installer = require 'nvim-lsp-installer'
 lsp_installer.setup {}
@@ -167,46 +8,49 @@ lsp_installer.setup {}
 local on_attach = function(client, bufnr)
     lsp_status.on_attach(client)
 
-    local function buf_set_keymap(mode, lhs, rhs)
+    local function buf_map(mode, lhs, rhs)
         vim.keymap.set(mode, lhs, rhs, { silent = true, buffer = bufnr, noremap = true })
     end
-    local function buf_set_option(...)
+
+    local function buf_opt(...)
         vim.api.nvim_buf_set_option(bufnr, ...)
     end
 
     -- Enable completion triggered by <c-x><c-o>
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+    buf_opt('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- Mappings.
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    buf_set_keymap('n', 'gD', vim.lsp.buf.declaration)
-    buf_set_keymap('n', 'gd', vim.lsp.buf.definition)
-    buf_set_keymap('n', 'K', vim.lsp.buf.hover)
-    buf_set_keymap('n', 'gi', vim.lsp.buf.implementation)
-    buf_set_keymap('n', '<C-k>', vim.lsp.buf.signature_help)
-    buf_set_keymap('n', '<space>wa', vim.lsp.buf.add_workspace_folder)
-    buf_set_keymap('n', '<space>wr', vim.lsp.buf.remove_workspace_folder)
-    buf_set_keymap('n', '<space>wl', function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    buf_map('n', 'gD', vim.lsp.buf.declaration)
+    buf_map('n', 'gd', vim.lsp.buf.definition)
+    buf_map('n', 'K', vim.lsp.buf.hover)
+    buf_map('n', 'gi', vim.lsp.buf.implementation)
+    buf_map('n', '<C-k>', vim.lsp.buf.signature_help)
+    buf_map('n', '<space>wa', vim.lsp.buf.add_workspace_folder)
+    buf_map('n', '<space>wr', vim.lsp.buf.remove_workspace_folder)
+    buf_map('n', '<space>wl', function()
+        vim.pretty_print(vim.lsp.buf.list_workspace_folders())
     end)
-    buf_set_keymap('n', '<space>D', vim.lsp.buf.type_definition)
-    buf_set_keymap('n', '<space>rn', require('dtomvan.utils').quick_fix_rename)
-    buf_set_keymap('n', '<space>a', vim.lsp.buf.code_action)
-    buf_set_keymap('n', 'gr', vim.lsp.buf.references)
-    buf_set_keymap('n', '<space>e', vim.diagnostic.open_float)
-    buf_set_keymap('n', '[d', vim.diagnostic.goto_prev)
-    buf_set_keymap('n', ']d', vim.diagnostic.goto_next)
-    buf_set_keymap('n', '<C-f>', vim.lsp.buf.formatting)
+    buf_map('n', '<space>D', vim.lsp.buf.type_definition)
+    buf_map('n', '<space>rn', require('dtomvan.utils').quick_fix_rename)
+    buf_map('n', '<space>a', vim.lsp.buf.code_action)
+    buf_map('n', 'gr', vim.lsp.buf.references)
+    buf_map('n', '<space>e', vim.diagnostic.open_float)
+    buf_map('n', '[d', vim.diagnostic.goto_prev)
+    buf_map('n', ']d', vim.diagnostic.goto_next)
+    buf_map('n', '<C-f>', function()
+        vim.lsp.buf.format { async = true }
+    end)
 
     -- Trouble.nvim
-    buf_set_keymap('n', '<leader>xx', '<cmd>Trouble<cr>')
-    buf_set_keymap('n', '<leader>xc', '<cmd>TroubleClose<cr>')
-    buf_set_keymap('n', '<leader>xw', '<cmd>Trouble workspace_diagnostics<cr>')
-    buf_set_keymap('n', '<leader>xd', '<cmd>Trouble document_diagnostics<cr>')
-    buf_set_keymap('n', '<leader>xl', '<cmd>Trouble loclist<cr>')
-    buf_set_keymap('n', '<leader>xq', '<cmd>Trouble quickfix<cr>')
-    buf_set_keymap('n', 'gR', '<cmd>Trouble lsp_references<cr>')
+    buf_map('n', '<leader>xx', '<cmd>Trouble<cr>')
+    buf_map('n', '<leader>xc', '<cmd>TroubleClose<cr>')
+    buf_map('n', '<leader>xw', '<cmd>Trouble workspace_diagnostics<cr>')
+    buf_map('n', '<leader>xd', '<cmd>Trouble document_diagnostics<cr>')
+    buf_map('n', '<leader>xl', '<cmd>Trouble loclist<cr>')
+    buf_map('n', '<leader>xq', '<cmd>Trouble quickfix<cr>')
+    buf_map('n', 'gR', '<cmd>Trouble lsp_references<cr>')
 end
 
 lsp_status.register_progress()
@@ -420,4 +264,3 @@ opts.filetypes = {
 require('lspconfig').rome.setup(opts)
 
 require('rust-tools').setup(rust_tools_opts)
-

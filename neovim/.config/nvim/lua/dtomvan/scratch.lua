@@ -1,0 +1,2 @@
+-- File to quickly write up ideas in lua without having to put it in some
+-- specific file.

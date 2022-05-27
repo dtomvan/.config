@@ -52,4 +52,30 @@ function M.quick_fix_rename()
     end)
 end
 
+function M.file_icon(name, ext)
+    local ret, _ = require('nvim-web-devicons').get_icon_color(name, ext, { default = true })
+    return ret
+end
+
+function M.fmt_file_name(name)
+    return vim.fn.pathshorten(vim.fn.fnamemodify(name, ':~:.'), 3)
+end
+
+function M.winbar()
+    local filename = vim.api.nvim_buf_get_name(0)
+    local name = M.fmt_file_name(filename)
+
+    local ok, _ = pcall(require, 'nvim-web-devicons')
+    if not ok then
+        return '%=%m ' .. name
+    end
+
+    local ext_split = vim.split(filename, '.', { plain = true })
+    local len = #ext_split
+    local extension = ext_split[len]
+    local icon = M.file_icon(filename, extension) or ''
+
+    return '%=%m ' .. icon .. ' ' .. name
+end
+
 return M

@@ -35,16 +35,40 @@ require('packer').startup(function()
         end,
     }
 
+    -- Color scheme
     use {
         'rebelot/kanagawa.nvim',
         config = function()
+            local hl = vim.api.nvim_set_hl
             vim.o.background = 'dark'
-            vim.cmd 'colorscheme kanagawa'
+            EX.colorscheme 'kanagawa'
             vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
+            -- Neovim 0.7 'laststatus' specific
+            if vim.fn.has 'nvim-0.7' then
+                hl(0, 'WinSeparator', { bg = 'NONE' })
+            end
+            -- Kanagawa specific
+            vim.cmd 'hi Pmenu guibg=#1f1f29'
         end,
     }
+
+    -- After opening a file, return to the last position
+    use {
+        'ethanholz/nvim-lastplace',
+        config = function()
+            require('nvim-lastplace').setup()
+        end,
+    }
+
     -- Status line
     use 'nvim-lua/lsp-status.nvim'
+    use {
+        'tjdevries/express_line.nvim',
+        config = function()
+            R 'dtomvan.plugins.express_line'
+        end,
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    }
 
     -- Prime goodness
     use 'ThePrimeagen/harpoon'
@@ -68,13 +92,7 @@ require('packer').startup(function()
         end,
     }
     use 'nvim-telescope/telescope-fzy-native.nvim'
-    use {
-        'tjdevries/express_line.nvim',
-        config = function()
-            R 'dtomvan.plugins.express_line'
-        end,
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-    }
+
     -- Use Telescope as vim.ui.select
     -- and a fancy prompt for vim.ui.input
     use {
@@ -85,6 +103,7 @@ require('packer').startup(function()
     }
 
     -- Rust or Bust
+    use { 'ron-rs/ron.vim', ft = 'ron' }
     use { 'rust-lang/rust.vim', ft = 'rust' }
     use { 'cespare/vim-toml', ft = 'toml' }
     use 'simrat39/rust-tools.nvim'
@@ -93,20 +112,26 @@ require('packer').startup(function()
     use {
         'nvim-treesitter/nvim-treesitter',
         run = function()
-            vim.cmd [[ TSUpdate ]]
+            EX.TSUpdate()
+            R 'dtomvan.plugins.treesitter'
         end,
     }
     use 'neovim/nvim-lspconfig'
-    use 'onsails/lspkind-nvim'
     use 'nvim-lua/lsp_extensions.nvim'
-    use 'glepnir/lspsaga.nvim'
     use 'tjdevries/nlua.nvim'
     use {
         'williamboman/nvim-lsp-installer',
         run = function()
-            vim.cmd [[LspInstall rust_analyzer taplo pylsp kotlin_language_server]]
+            local servers = {
+                'rust_analyzer',
+                -- 'taplo',
+                'pylsp',
+                'kotlin_language_server',
+            }
+            EX.LspInstall(servers)
         end,
     }
+
     use {
         'jose-elias-alvarez/null-ls.nvim',
         config = function()
@@ -122,16 +147,24 @@ require('packer').startup(function()
     }
 
     -- Autocompletion
-    use 'hrsh7th/nvim-cmp'
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'saadparwaiz1/cmp_luasnip'
     use {
-        'L3MON4D3/LuaSnip',
+        'hrsh7th/nvim-cmp',
+        requires = {
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-cmdline',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-path',
+            'hrsh7th/nvim-cmp',
+            'L3MON4D3/LuaSnip',
+            'onsails/lspkind-nvim',
+            'saadparwaiz1/cmp_luasnip',
+            { 'rafamadriz/friendly-snippets', opt = true },
+        },
         config = function()
             R 'dtomvan.plugins.luasnip'
+            R 'dtomvan.plugins.cmp'
         end,
     }
-    use 'rafamadriz/friendly-snippets'
 
     -- Auto pairs
     use 'rstacruz/vim-closer'
@@ -145,6 +178,7 @@ require('packer').startup(function()
         'fhill2/xplr.nvim',
         run = function()
             require('xplr').install { hide = true }
+            R 'dtomvan.plugins.xplr'
         end,
         requires = { { 'nvim-lua/plenary.nvim' }, { 'MunifTanjim/nui.nvim' } },
     }
@@ -157,16 +191,12 @@ require('packer').startup(function()
                 stages = 'fade_in_slide_out',
                 on_open = nil,
                 on_close = nil,
-
-                -- Render function for notifications. See notify-render()
                 render = 'default',
                 timeout = 5000,
-                --[[
-                WARN: Do not remove this line, otherwise the plugin will think
-                that there is no background color and it'll throw a bunch of
-                errors.
-                ]]
                 background_colour = '#000000',
+                max_width = function()
+                    return math.floor(vim.opt.columns:get() / 4)
+                end,
             }
 
             -- Default vim notify + the plugin
@@ -182,19 +212,20 @@ require('packer').startup(function()
             end
         end,
     }
+
+    -- Misc
     use 'tversteeg/registers.nvim'
     use 'junegunn/vim-easy-align'
     use 'andymass/vim-matchup'
     use 'stefandtw/quickfix-reflector.vim'
     use 'ggandor/lightspeed.nvim'
-    use { 'ron-rs/ron.vim', ft = 'ron' }
     use 'Raimondi/vim-transpose-words'
 
     -- Neorg
     use {
         'nvim-neorg/neorg',
         config = function()
-            require 'dtomvan.plugins.norg'
+            R 'dtomvan.plugins.norg'
         end,
         run = ':TSInstall norg norg_meta norg_table',
         requires = 'nvim-lua/plenary.nvim',
@@ -204,7 +235,7 @@ require('packer').startup(function()
     use 'dstein64/vim-startuptime'
     -- Only when using on specific machine,
     -- since I don't want to get prompted on others.
-    if vim.fn.hostname() == "tom-pc" then
+    if vim.fn.hostname() == 'tom-pc' then
         -- Developer profiler
         use 'wakatime/vim-wakatime'
     end

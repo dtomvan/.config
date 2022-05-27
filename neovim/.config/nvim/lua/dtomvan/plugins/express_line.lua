@@ -2,12 +2,10 @@ local builtin = require 'el.builtin'
 local extensions = require 'el.extensions'
 local sections = require 'el.sections'
 local subscribe = require 'el.subscribe'
+local utils = require 'dtomvan.utils'
 
 local function icon(_, buf)
-    local filename = buf.name
-    local extension = buf.extension
-    local icon_str, _ = require('nvim-web-devicons').get_icon_color(filename, extension, { default = true })
-    return icon_str
+    return utils.file_icon(buf.name, buf.extension)
 end
 
 local lsp_current_status = function(win, _)
@@ -15,7 +13,7 @@ local lsp_current_status = function(win, _)
     if type(status) == 'string' then
         if win.is_active then
             -- Hacky way to get rid of extra characters from
-            -- rust_analyzer
+            -- the LSP protocol
             local result, _ = string.gsub(status, '\240\159\135\187', '')
             return result
         end
@@ -33,7 +31,7 @@ local mode_wrapper = function(win, buf)
 end
 
 local relative_file_name = function(_, buf)
-    return vim.fn.pathshorten(vim.fn.fnamemodify(buf.name, ':~:.'), 3)
+    return utils.fmt_file_name(buf.name)
 end
 
 local generator = function(win)
@@ -65,7 +63,6 @@ local generator = function(win)
                 ']',
             }
         )
-        table.insert(segs, builtin.quickfix)
 
         table.insert(segs, lsp_current_status)
         table.insert(

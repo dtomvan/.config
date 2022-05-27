@@ -12,14 +12,11 @@ ops.copyindent = true
 ops.cursorline = true
 ops.expandtab = true
 ops.expandtab = true
--- ops.guifont = "Hack,FiraCode\\ Nerd\\ Font"
 ops.hidden = true
 ops.ignorecase = true
-ops.laststatus = 2
 ops.lazyredraw = true
 ops.listchars = 'trail:·,tab:>--,lead:-,nbsp:~'
 ops.list = true
-ops.ls = 3
 ops.mouse = 'a'
 ops.number = true
 ops.number = true
@@ -28,7 +25,6 @@ ops.rnu = true
 ops.scrolloff = 8
 ops.shiftwidth = 4
 ops.shiftwidth = 4
--- ops.shortmess = "filnxtToOFc"
 ops.shortmess = ops.shortmess + 'a'
 ops.showtabline = 1
 ops.signcolumn = 'yes'
@@ -49,6 +45,10 @@ ops.wrap = true
 ops.writebackup = true
 vim.g.mapleader = ' '
 
-if vim.fn.has("nvim-0.8") == 1 then
-    ops.winbar = "%=%m %f"
+if vim.fn.has 'nvim-0.7' == 1 then
+    ops.ls = 3
+end
+if vim.fn.has 'nvim-0.8' == 1 then
+    ops.winbar = '%!luaeval("require\\"dtomvan.utils\\".winbar()")'
+    -- ops.winbar = '%=%m %f'
 end

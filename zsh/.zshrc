@@ -280,8 +280,7 @@ alias srb2='~/.local/share/flatpak/exports/bin/org.srb2.SRB2'
 alias tree="fd | tree --fromfile ."
 alias t="tmux"
 alias vim="nvim"
-alias xcd='cd "$(xplr --print-pwd-as-result)"'
-alias x='xplr'
+alias x='cd "$(xplr --print-pwd-as-result)"'
 
 # These files may not exist on all systems
 source ~/projects/fucke.rs/shells/zsh/setup.sh || true

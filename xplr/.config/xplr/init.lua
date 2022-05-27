@@ -54,6 +54,7 @@ require('xpm').setup {
             xplr.config.general.table.row.cols[1] = { format = 'custom.icons_dtomvan_col_1' }
         end,
     },
+    'sayanarijit/registers.xplr',
 }
 --
 -- package.path = package.path ..

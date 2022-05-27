@@ -71,7 +71,9 @@ au('BufEnter', {
 -- au('BufWritePre', {
 --     group = 'Formatting',
 --     callback = function()
---         vim.lsp.buf.formatting()
+--         if not vim.tbl_isempty(vim.lsp.buf_get_clients()) then
+--             vim.lsp.buf.format { async = false }
+--         end
 --     end,
 -- })
 
@@ -129,29 +131,6 @@ au('FileType', {
     end,
 })
 
-group('RestorePosition', gops)
-au('BufReadPost', {
-    callback = function()
-        local ft = vim.bo.filetype
-        if vim.endswith(ft, 'commit') or vim.endswith(ft, 'rebase') or ft == 'help' then
-            return
-        end
-        vim.schedule(function()
-            local mark = vim.api.nvim_buf_get_mark(0, '"')
-            local row = mark[1]
-            if row <= 0 then
-                return
-            end
-            local lines = vim.api.nvim_buf_line_count(0)
-            if row > lines then
-                return
-            end
-            vim.api.nvim_win_set_cursor(0, mark)
-        end)
-    end,
-})
--- V/# Please enter the commit message/-1<cr>d:call histdel('/', -1)<cr>:r! date +\%Y-\%m-\%d<cr>VK<esc>
-
 local git = 'GitCommitMsg'
 local commit = '*/COMMIT_EDITMSG'
 
@@ -170,3 +149,28 @@ au('BufEnter', {
         end, { buffer = true, silent = true })
     end,
 })
+
+if vim.fn.has 'nvim-0.8' == 1 then
+    local winbar = 'WinBar'
+    group(winbar, gops)
+    au('BufEnter', {
+        group = winbar,
+        callback = function()
+            local winbar_exclude = {
+                'help',
+                'packer',
+                'neogitstatus',
+                'NvimTree',
+                'Trouble',
+                'alpha',
+                'lir',
+                'Outline',
+                'spectre_panel',
+                'toggleterm',
+            }
+            if vim.tbl_contains(winbar_exclude, vim.bo.filetype) then
+                vim.wo.winbar = nil
+            end
+        end,
+    })
+end

@@ -97,7 +97,7 @@ local function open_term(cmd, tmode, bufnr)
     if bufnr == nil then
         local job = vim.fn.termopen(cmd)
         if tmode then
-            vim.cmd 'start'
+            EX.start()
         end
         vim.keymap.set('n', '<esc>', function()
             require('plenary.window').try_close(window.win_id)
@@ -105,15 +105,16 @@ local function open_term(cmd, tmode, bufnr)
         end, { buffer = window.bufnr })
 
         vim.keymap.set({ 'n', 't' }, '<a-q>', function()
-            vim.cmd 'winc J'
+            EX.winc 'J'
         end, { buffer = window.bufnr })
 
         vim.keymap.set({ 'n', 't' }, '<a-f>', function()
             open_term(cmd, tmode, window.bufnr)
         end, { buffer = window.bufnr })
     end
-    vim.cmd 'autocmd! WinLeave <buffer>'
+    EX['autocmd!']('WinLeave', '<buffer>')
 end
+
 vim.keymap.set('n', '<leader>cl', function()
     open_term(vim.env.SHELL, true)
 end)

@@ -19,13 +19,13 @@ cmd('Rg', function(i)
         end
     end
     vim.fn.setqflist({}, ' ', { title = 'rg ' .. args, items = items })
-    vim.cmd 'cope'
+    EX.cope()
 end, {
     nargs = '+',
     force = true,
     desc = 'Open ripgrep output in the quickfix list.',
     complete = function(lead, _, _)
-        local flags = require 'rg_flags'
+        local flags = require 'dtomvan.rg_flags'
         local possible = {}
         for _, flag in ipairs(flags) do
             if vim.startswith(flag, lead) then

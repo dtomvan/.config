@@ -1,3 +1,7 @@
+-- This file is a non-exhaustive, hardcoded list of options you can pass in
+-- rg(1). This is used for autocompletion with the :Rg command.
+--
+-- This is made by manually extracting options from the ZSH autocomplete file.
 return {
     '-.',
     '-0',
