@@ -9,7 +9,7 @@ local s = ls.snippet
 ls.add_snippets('lua', {
     s(
         'req',
-        fmt([[local {} = require "{}"]], {
+        fmt([[local {} = require '{}']], {
             c(
                 2,
                 {

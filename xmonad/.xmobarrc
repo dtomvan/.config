@@ -1,5 +1,5 @@
 Config { overrideRedirect = False
-       , font     = "xft:Hack-9"
+       , font     = "xft:FiraCode Nerd Font-12"
        , bgColor  = "#4a4c53"
        , fgColor  = "#f8f8f2"
        , position = TopW L 90

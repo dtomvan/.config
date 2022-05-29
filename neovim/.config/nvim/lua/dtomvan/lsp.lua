@@ -1,11 +1,14 @@
 local lsp_installer_servers = require 'nvim-lsp-installer.servers'
 
+local lsp_signature = require 'lsp_signature'
 local lsp_status = require 'lsp-status'
 local lsp_installer = require 'nvim-lsp-installer'
 lsp_installer.setup {}
+lsp_signature.setup {}
 
 -- Mappings.
 local on_attach = function(client, bufnr)
+    lsp_signature.on_attach()
     lsp_status.on_attach(client)
 
     local function buf_map(mode, lhs, rhs)
@@ -202,11 +205,16 @@ local opts = {
     capabilities = capabilities,
 }
 
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
+
 require('lspconfig').sumneko_lua.setup {
     settings = {
         Lua = {
             runtime = {
                 version = 'LuaJIT',
+                path = runtime_path,
             },
             completion = {
                 keywordSnippet = 'Disable',

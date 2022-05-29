@@ -49,5 +49,18 @@ setxkbmap -option grp:alt_caps_toggle -option compose:rwin &
 sleep 10 && check-updates &
 discord-notify &
 source ~/.profile
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-exec dbus-launch $HOME/.local/bin/bspwm-start
+lxsession &
+eww daemon &
+hsetroot -solid "#16161D" &
+~/bg.sh bg.gif &
+deadd-notification-center &
+discord-canary --no-sandbox \
+--start-minimized \
+--ignore-gpu-blocklist \
+--disable-features=UseOzonePlatform \
+--enable-features=VaapiVideoDecoder \
+--use-gl=desktop \
+--enable-gpu-rasterization \
+--enable-zero-copy &
+# exec dbus-launch $HOME/.local/bin/bspwm-start
+exec dbus-launch $HOME/.local/bin/xmonad-start

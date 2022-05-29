@@ -26,6 +26,7 @@ require('packer').startup(function()
     use 'tpope/vim-unimpaired'
     use 'tpope/vim-repeat'
     use 'tpope/vim-vinegar'
+    use 'tpope/vim-sleuth'
 
     -- Commenting
     use {
@@ -131,6 +132,7 @@ require('packer').startup(function()
             EX.LspInstall(servers)
         end,
     }
+    use 'ray-x/lsp_signature.nvim'
 
     use {
         'jose-elias-alvarez/null-ls.nvim',
@@ -220,6 +222,21 @@ require('packer').startup(function()
     use 'stefandtw/quickfix-reflector.vim'
     use 'ggandor/lightspeed.nvim'
     use 'Raimondi/vim-transpose-words'
+    use {
+        'numToStr/FTerm.nvim',
+        config = function()
+            require('FTerm').setup {
+                border = 'rounded',
+                dimensions = {
+                    height = 0.9,
+                    width = 0.9,
+                },
+                blend = 20,
+            }
+
+            vim.keymap.set({ 'n', 't' }, '<A-i>', require('FTerm').toggle)
+        end,
+    }
 
     -- Neorg
     use {
