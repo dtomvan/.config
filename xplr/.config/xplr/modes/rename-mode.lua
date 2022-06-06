@@ -4,10 +4,6 @@ xplr.config.modes.builtin.rename = {
     extra_help = nil,
     key_bindings = {
         on_key = {
-            backspace = {
-                help = 'remove last character',
-                messages = { 'RemoveInputBufferLastCharacter' },
-            },
             ['ctrl-c'] = {
                 help = 'terminate',
                 messages = { 'Terminate' },

@@ -4,7 +4,7 @@ local lsp_signature = require 'lsp_signature'
 local lsp_status = require 'lsp-status'
 local lsp_installer = require 'nvim-lsp-installer'
 lsp_installer.setup {}
-lsp_signature.setup {}
+lsp_signature.setup { floating_window = false }
 
 -- Mappings.
 local on_attach = function(client, bufnr)
@@ -178,6 +178,11 @@ local rust_tools_opts = {
         standalone = true,
         cmd = rust_command(),
         capabilities = capabilities,
+        settings = {
+            ['rust-analyzer'] = {
+                diagnostics = { disabled = { 'inactive-code' } },
+            },
+        },
     },
 }
 

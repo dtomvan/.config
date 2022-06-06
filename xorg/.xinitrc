@@ -43,7 +43,7 @@ xbindkeys
 picom --experimental-backends --xrender-sync-fence --backend glx &
 ~/i3lock.sh && xautolock -notify 10 -notifier 'notify-send "locking in 10 seconds..."' -locker "systemctl suspend" -nowlocker ./i3lock.sh &
 playerctld daemon &
-echo "RUNNING VOLCTL" && sleep 1 && volctl &
+# echo "RUNNING VOLCTL" && sleep 1 && volctl &
 clipmenud &
 setxkbmap -option grp:alt_caps_toggle -option compose:rwin &
 sleep 10 && check-updates &
@@ -62,5 +62,4 @@ discord-canary --no-sandbox \
 --use-gl=desktop \
 --enable-gpu-rasterization \
 --enable-zero-copy &
-# exec dbus-launch $HOME/.local/bin/bspwm-start
-exec dbus-launch $HOME/.local/bin/xmonad-start
+exec dbus-launch $HOME/.local/bin/bspwm-start

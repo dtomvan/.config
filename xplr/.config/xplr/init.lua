@@ -43,7 +43,6 @@ require('xpm').setup {
     'sayanarijit/dragon.xplr',
     'sayanarijit/dual-pane.xplr',
     'sayanarijit/fzf.xplr',
-    'sayanarijit/map.xplr',
     'sayanarijit/xclip.xplr',
     'sayanarijit/zoxide.xplr',
     'dtomvan/paste-rs.xplr',
@@ -55,6 +54,14 @@ require('xpm').setup {
         end,
     },
     'sayanarijit/registers.xplr',
+    {
+        'sayanarijit/map.xplr',
+        setup = function()
+            require('map').setup {
+                -- key = "m"
+            }
+        end
+    }
 }
 --
 -- package.path = package.path ..

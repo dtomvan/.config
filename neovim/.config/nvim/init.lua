@@ -27,3 +27,4 @@ R 'dtomvan.cmd'
 
 -- abbreviations
 EX.noreabbrev('fcd', 'cd %:p:h')
+EX.noreabbrev('help', 'Telescope help_tags')
