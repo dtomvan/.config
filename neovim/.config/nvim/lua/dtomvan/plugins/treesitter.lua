@@ -51,6 +51,7 @@ require('nvim-treesitter.configs').setup {
         'lua',
         'make',
         'markdown',
+        'nix',
         'python',
         'rasi',
         'regex',
@@ -75,3 +76,5 @@ require('nvim-treesitter.configs').setup {
         additional_vim_regex_highlighting = false,
     },
 }
+
+require('nvim-treesitter.configs').commands.TSEnable.run 'highlight'

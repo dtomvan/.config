@@ -5,7 +5,7 @@ ln -s ~/.minecraft/versions/1.8.9/1.8.9.jar ~/.minecraft/versions/1.8/1.8.jar ||
 ln -s ~/.minecraft/versions/1.17.1 ~/.minecraft/versions/1.17 || true
 ln -s ~/.minecraft/versions/1.17.1/1.17.1.jar ~/.minecraft/versions/1.17/1.17.jar || true
 
-for version in 1.8 1.17 1.18.2; do
+for version in 1.8 1.17 1.18.2 1.19; do
     java -cp ~/lunar-util.jar \
     com.grappenmaker.solarpatcher.util.LunarMapper \
     ~/.lunarclient/offline/$version/lunar-prod-optifine.jar \

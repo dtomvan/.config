@@ -24,3 +24,5 @@ xwinwrap/xwinwrap
 ncmpcpp/.config/ncmpcpp/patterns.list
 discord/.config/BetterDiscord/plugins/EditUsers.config.json
 neovim/.config/nvim/plugin/packer_compiled.lua
+# managed by home-manager
+neovim/.config/nvim/init.vim

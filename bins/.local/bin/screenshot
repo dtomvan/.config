@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-selection=$(slop)  # add hacksaw arguments inside as you wish
+selection=$(slop || hacksaw)  # add hacksaw arguments inside as you wish
 mkdir -p ~/screenshots
 filename="$HOME/screenshots/screenshot.$(date +%Y%m%d_%H%M%S).png"
 shotgun -g "$selection" "$filename"

@@ -1,19 +1,21 @@
-dirs = backgrounds bins bspwm deadd discord emacs ferium git gtk i3lock mpd mpv ncmpcpp neovim picom polybar sxhkd tmux wezterm xorg xplr zellij zsh
-root-dirs = xmonad-root
+dirs = backgrounds bins bspwm deadd discord emacs git gtk i3lock minecraft mpd mpv ncmpcpp neovim nix picom polybar sxhkd tmux wezterm xmonad xorg xplr zellij zsh
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 
-all: $(dirs) $(root-dirs) st xmonad ~/.local/bin/sheldon ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~/.local/bin/xwinwrap
+all: $(dirs) st ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~/.local/bin/xwinwrap
+	yay -S --needed - < pkgs.list
+	nix-channel --list | grep home-manager || nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+	nix-channel --update
+	nix-shell '<home-manager>' -A install
+	home-manager build
+	home-manager switch
+	nvim --headless -c PackerClean -c PackerInstall -c PackerCompile -c "qa!"
 	localectl set-x11-keymap us,gr "" "" compose:ralt
 
 /usr/local/bin/dmenu: dmenu/
 	cd dmenu && sudo make install
 
-~/.cargo/bin/dmenu_drun: dmenu_drun/
-	cargo install --path dmenu_drun
-
-~/.local/bin/sheldon:
-	curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
-    | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
+~/.cargo/bin/dmenu_drun:
+	cargo install dmenu_drun
 
 $(dirs):
 	stow $@
@@ -23,10 +25,6 @@ $(root-dirs):
 
 $(submodules):
 	git submodule update --init --recursive
-
-xmonad: xmonad/.xmonad
-	stow $@
-	cd xmonad/.xmonad && stack install
 
 st: st/
 	cd st && sudo make install

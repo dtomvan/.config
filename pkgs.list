@@ -36,11 +36,13 @@ i3lock-color
 intel-ucode
 jq
 lxappearance
-lxsession
+lxsession-gtk3
 maim
 man-pages
+mcfly
 mold
 newsboat
+nix
 noto-fonts-emoji
 orchis-theme-git
 pacman-contrib

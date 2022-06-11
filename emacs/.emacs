@@ -139,6 +139,7 @@
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-l")
+  (setq lsp-rust-analyzer-server-command '("/home/tomvd/.local/share/nvim/lsp_servers/rust_analyzer/rust-analyzer"))
   :hook ((rust-mode . lsp) (lua-mode . lsp))
   :commands lsp)
 

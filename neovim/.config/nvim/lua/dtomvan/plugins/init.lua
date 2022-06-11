@@ -1,6 +1,7 @@
 require('packer').startup(function()
     -- Packer
-    use 'wbthomason/packer.nvim'
+    -- Unused, as managed by home-manager
+    -- use 'wbthomason/packer.nvim'
 
     -- Startup time improvements
     use {
@@ -14,27 +15,6 @@ require('packer').startup(function()
     -- Plenary
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
-
-    -- Discord presence
-    use 'andweeb/presence.nvim'
-
-    -- Tpope goodness
-    use 'tpope/vim-surround'
-    use 'tpope/vim-git'
-    use 'tpope/vim-fugitive'
-    use 'tpope/vim-eunuch'
-    use 'tpope/vim-unimpaired'
-    use 'tpope/vim-repeat'
-    use 'tpope/vim-vinegar'
-    use 'tpope/vim-sleuth'
-
-    -- Commenting
-    use {
-        'numToStr/Comment.nvim',
-        config = function()
-            require('Comment').setup {}
-        end,
-    }
 
     -- Color scheme
     use {
@@ -117,8 +97,7 @@ require('packer').startup(function()
             R 'dtomvan.plugins.treesitter'
         end,
     }
-    use 'neovim/nvim-lspconfig'
-    use 'nvim-lua/lsp_extensions.nvim'
+
     use 'tjdevries/nlua.nvim'
     use {
         'williamboman/nvim-lsp-installer',
@@ -182,7 +161,10 @@ require('packer').startup(function()
             require('xplr').install { hide = true }
             R 'dtomvan.plugins.xplr'
         end,
-        requires = { { 'nvim-lua/plenary.nvim' }, { 'MunifTanjim/nui.nvim' } },
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'MunifTanjim/nui.nvim',
+        },
     }
 
     -- Misc

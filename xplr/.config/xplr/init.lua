@@ -1,5 +1,5 @@
 ---@diagnostic disable-next-line: lowercase-global
-version = '0.18.0'
+version = '0.19.0'
 
 local home = os.getenv 'HOME'
 
@@ -50,7 +50,7 @@ require('xpm').setup {
     {
         'dtomvan/extra-icons.xplr',
         after = function()
-            xplr.config.general.table.row.cols[1] = { format = 'custom.icons_dtomvan_col_1' }
+            xplr.config.general.table.row.cols[2] = { format = 'custom.icons_dtomvan_col_1' }
         end,
     },
     'sayanarijit/registers.xplr',
@@ -63,12 +63,6 @@ require('xpm').setup {
         end
     }
 }
---
--- package.path = package.path ..
---     ";" .. home .. "/projects/?.xplr/src/init.lua;"
---
--- require 'extra-icons'.setup()
--- xplr.config.general.table.row.cols[1] = { format = 'custom.icons_dtomvan_col_1' }
 
 package.path = ';' .. os.getenv 'LUA_PATH' .. ';' .. package.path
 package.cpath = ';' .. os.getenv 'LUA_CPATH' .. ';' .. package.cpath
