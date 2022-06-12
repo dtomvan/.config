@@ -14,8 +14,6 @@
     home.sessionVariables.EDITOR = "nvim";
 
     home.packages = [
-        pkgs.tree-sitter
-        pkgs.gcc
     ];
 
     programs.neovim = {
@@ -42,24 +40,28 @@
         EOF
         '';
         package = pkgs.neovim-nightly;
-        plugins = with pkgs; [
-            vimPlugins.packer-nvim
-            vimPlugins.nvim-lspconfig
-            vimPlugins.lsp_extensions-nvim
-            vimPlugins.nvim-treesitter
-            vimPlugins.impatient-nvim
-            vimPlugins.popup-nvim
-            vimPlugins.plenary-nvim
-            vimPlugins.vim-surround
-            vimPlugins.vim-git
-            vimPlugins.vim-fugitive
-            vimPlugins.vim-eunuch
-            vimPlugins.vim-unimpaired
-            vimPlugins.vim-repeat
-            vimPlugins.vim-vinegar
-            vimPlugins.vim-sleuth
-            vimPlugins.comment-nvim
-            vimPlugins.presence-nvim
+        extraPackages = with pkgs; [
+            pkgs.tree-sitter
+            pkgs.gccStdenv
+        ];
+        plugins = with pkgs.vimPlugins; [
+            (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
+            packer-nvim
+            nvim-lspconfig
+            lsp_extensions-nvim
+            impatient-nvim
+            popup-nvim
+            plenary-nvim
+            vim-surround
+            vim-git
+            vim-fugitive
+            vim-eunuch
+            vim-unimpaired
+            vim-repeat
+            vim-vinegar
+            vim-sleuth
+            comment-nvim
+            presence-nvim
         ];
     };
 

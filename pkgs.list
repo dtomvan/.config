@@ -53,6 +53,7 @@ prettyping
 procs
 qt5ct
 reflector
+rustup
 rust-analyzer
 shotgun
 slock

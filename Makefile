@@ -1,13 +1,14 @@
-dirs = backgrounds bins bspwm deadd discord emacs git gtk i3lock minecraft mpd mpv ncmpcpp neovim nix picom polybar sxhkd tmux wezterm xmonad xorg xplr zellij zsh
+dirs = backgrounds bins bspwm deadd discord emacs git gtk i3lock minecraft mpd mpv ncmpcpp neovim nix picom polybar sxhkd tmux wezterm xmonad xorg xplr zsh
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 
-all: $(dirs) st ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~/.local/bin/xwinwrap
-	yay -S --needed - < pkgs.list
+all: pkgs rust $(dirs) install-st ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~/.local/bin/xwinwrap
 	nix-channel --list | grep home-manager || nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+	nix-channel --list | grep nixpkgs-unstable || nix-channel --add https://nixos.org/channels/nixpkgs-unstable
 	nix-channel --update
 	nix-shell '<home-manager>' -A install
 	home-manager build
 	home-manager switch
+	nix-shell -p gcc
 	nvim --headless -c PackerClean -c PackerInstall -c PackerCompile -c "qa!"
 	localectl set-x11-keymap us,gr "" "" compose:ralt
 
@@ -20,18 +21,21 @@ all: $(dirs) st ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~/.local/bin/xwinwr
 $(dirs):
 	stow $@
 
-$(root-dirs):
-	sudo stow $@ -t /usr/share
-
 $(submodules):
 	git submodule update --init --recursive
 
-st: st/
-	cd st && sudo make install
+install-st: st
+	cd st && make && sudo make install
 
 ~/.local/bin/xwinwrap: xwinwrap
 	cd xwinwrap && make
 	cp xwinwrap/xwinwrap ~/.local/bin
 	chmod +x ~/.local/bin/xwinwrap
 
-.PHONY: $(dirs) $(root-dirs) st /usr/local/bin/dmenu ~/.cargo/bin/dmenu_drun
+pkgs:
+	yay -S --needed --norebuild - < pkgs.list
+
+rust:
+	which rustc || rustup default nightly
+
+.PHONY: pkgs rust $(dirs) /usr/local/bin/dmenu ~/.cargo/bin/dmenu_drun

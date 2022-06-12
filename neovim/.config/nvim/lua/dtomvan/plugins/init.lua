@@ -94,8 +94,10 @@ require('packer').startup(function()
         'nvim-treesitter/nvim-treesitter',
         run = function()
             EX.TSUpdate()
-            R 'dtomvan.plugins.treesitter'
         end,
+        config = function()
+            R 'dtomvan.plugins.treesitter'
+        end
     }
 
     use 'tjdevries/nlua.nvim'

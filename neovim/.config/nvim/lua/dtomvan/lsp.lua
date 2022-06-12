@@ -242,6 +242,7 @@ require('lspconfig').sumneko_lua.setup {
                     's',
                     'use',
                     'xplr',
+                    'package',
                 },
             },
             workspace = {

@@ -37,18 +37,18 @@
 (add-hook 'fundamental-mode-hook 'hl-line-mode)
 (add-hook 'prog-mode-hook 'hl-line-mode)
 
-(use-package doom-themes
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t)
-  (load-theme 'doom-tokyo-night t)
-
-  (doom-themes-visual-bell-config)
-  (doom-themes-neotree-config)
-  (setq doom-themes-treemacs-theme "doom-atom")
-  (doom-themes-treemacs-config)
-  (doom-themes-org-config))
+;; (use-package doom-themes
+;;   :config
+;;   ;; Global settings (defaults)
+;;   (setq doom-themes-enable-bold t
+;;         doom-themes-enable-italic t)
+;;   (load-theme 'doom-tokyo-night t)
+;; 
+;;   (doom-themes-visual-bell-config)
+;;   (doom-themes-neotree-config)
+;;   (setq doom-themes-treemacs-theme "doom-atom")
+;;   (doom-themes-treemacs-config)
+;;   (doom-themes-org-config))
 (when window-system
   (use-package fira-code-mode
     :custom (fira-code-mode-disabled-ligatures '("#{" "#(" "#_" "#_("))
@@ -123,7 +123,6 @@
 (use-package lispy)
 (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
 
-;; Tree sitter = free color schemes
 (use-package tree-sitter
   :hook ((rust-mode . tree-sitter-hl-mode))
   )
@@ -286,3 +285,6 @@
 
 (use-package restart-emacs)
 
+(add-to-list 'load-path (concat user-emacs-directory "lisp"))
+(require 'base16-kanagawa-theme)
+(load-theme 'base16-kanagawa t)
