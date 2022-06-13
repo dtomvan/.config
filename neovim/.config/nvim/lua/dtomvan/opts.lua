@@ -5,6 +5,7 @@ ops.background = 'dark'
 ops.backup = false
 ops.clipboard = 'unnamedplus'
 ops.cmdheight = 1
+ops.conceallevel = 2
 ops.compatible = false
 ops.completeopt = 'menuone'
 ops.completeopt = { 'menuone', 'noinsert', 'noselect' }

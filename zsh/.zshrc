@@ -1,6 +1,21 @@
+[ -z "$ZPROF" ] || zmodload zsh/zprof
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 alias givefuck="curl -s rage.metroserve.me/\?format=plain"
 
 export BROWSER=xdg-open
+export EDITOR=nvim
+export PATH=~/.nix-profile/bin/:~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin:~/go/bin:~/.yarn/bin
+export DENO_INSTALL="$HOME/.deno"
+export RUSTC_WRAPPER=sccache
+export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
+export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
 zle-keymap-select zle-line-init () {
   case $KEYMAP in
@@ -11,32 +26,14 @@ zle-keymap-select zle-line-init () {
 zle -N zle-keymap-select
 zle -N zle-line-init
 
-export EDITOR=nvim
-export PATH=~/.nix-profile/bin/:~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin:~/go/bin:~/.yarn/bin
-export DENO_INSTALL="$HOME/.deno"
-export RUSTC_WRAPPER=sccache
-export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
-export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
-
-sleept() {
-    if [ "$1" = "--help" ]; then
-        echo "$0 <DATE>: Sleep until <DATE>"
-    else
-        current_epoch=$(date +%s)
-        target_epoch=$(date -d "$1" +%s)
-
-        sleep_seconds=$(( $target_epoch - $current_epoch ))
-
-        sleep $sleep_seconds
-    fi
-}
-
 export HISTFILE=~/.histfile
 export HISTSIZE=500000
 export SAVEHIST=500000
 setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt EXTENDED_HISTORY
+
+[[ $(fgconsole 2>/dev/null) == 1 ]] && exec startx -- vt1 &> /dev/null || true
 
 setopt autocd extendedglob notify globdots noflowcontrol
 unsetopt beep
@@ -104,11 +101,11 @@ key[Shift-Tab]="${terminfo[kcbt]}"
 [[ -n "${key[Shift-Tab]}" ]] && bindkey -- "${key[Shift-Tab]}"  reverse-menu-complete
 
 if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
-	autoload -Uz add-zle-hook-widget
-	function zle_application_mode_start { echoti smkx }
-	function zle_application_mode_stop { echoti rmkx }
-	add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
-	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
+    autoload -Uz add-zle-hook-widget
+    function zle_application_mode_start { echoti smkx }
+    function zle_application_mode_stop { echoti rmkx }
+    add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
+    add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
 
 autoload edit-command-line; zle -N edit-command-line
@@ -131,7 +128,6 @@ zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
 # ALIASES
-alias rm='echo "This is not the command you are looking for."; false'
 alias aoc="~/projects/aoc-2021"
 alias athenaeum '~/.local/share/flatpak/exports/bin/com.gitlab.librebob.Athenaeum'
 alias cargo="mold -run cargo"
@@ -162,7 +158,6 @@ alias gcb="git checkout -b"
 alias gcf="git config --list"
 alias gcfx="git commit --fixup"
 alias gc="git commit -v"
-# alias gclea="\\!\\!"
 alias gclean="git clean -di"
 alias gcl="git clone"
 alias gcm="git commit -m"
@@ -191,7 +186,6 @@ alias gf="git fetch"
 alias gfh="git flow hotfix"
 alias gfhs="git flow hotfix start"
 alias gfht="git flow hotfix track"
-alias gfm="git fetch origin (__git.default_branch) --prune; and git merge FETCH_HEAD"
 alias gfo="git fetch origin"
 alias gfp="git flow publish"
 alias gfr="git flow release"
@@ -209,7 +203,6 @@ alias gll="git pull origin"
 alias glod="git log --oneline --decorate --color develop.."
 alias glog="git log --oneline --decorate --color --graph"
 alias glo="git log --oneline --decorate --color"
-alias glom="git log --oneline --decorate --color (__git.default_branch).."
 alias gloo="git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short"
 alias glr="git pull --rebase"
 alias gm="git merge"
@@ -226,9 +219,6 @@ alias grbdia="git rebase develop --interactive --autosquash"
 alias grbdi="git rebase develop --interactive"
 alias grb="git rebase"
 alias grbi="git rebase --interactive"
-alias grbm="git rebase (__git.default_branch)"
-alias grbmia="git rebase (__git.default_branch) --interactive --autosquash"
-alias grbmi="git rebase (__git.default_branch) --interactive"
 alias grbs="git rebase --skip"
 alias grev="git revert"
 alias gr="git remote -vv"
@@ -281,45 +271,25 @@ alias vim="nvim"
 alias x='cd "$(xplr --print-pwd-as-result)"'
 
 # These files may not exist on all systems
-source ~/projects/fucke.rs/shells/zsh/setup.sh || true
+# source ~/projects/fucke.rs/shells/zsh/setup.sh || true
 # source /usr/share/nvm/init-nvm.sh || true
 
-eval "$(luarocks path --lua-version 5.1)"
+# eval "$(luarocks path --lua-version 5.1)"
 eval "$(antidot init)"
 eval "$(zoxide init zsh --cmd d)"
 
 export MCFLY_FUZZY=2
 eval "$(mcfly init zsh)"
 
-[[ $(fgconsole 2>/dev/null) == 1 ]] && exec startx -- vt1 &> /dev/null || true
+source ~/.zsh/antigen.zsh
+antigen theme romkatv/powerlevel10k
 
-### Added by Zinit's installer
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
-fi
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen bundle zdharma-continuum/fast-syntax-highlighting
+antigen apply
 
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust \
-    sindresorhus/pure
-
-zinit ice wait lucid
-zinit load zsh-users/zsh-autosuggestions
-zinit ice wait lucid
-zinit load zsh-users/zsh-completions
-zinit ice wait lucid
-zinit load zdharma-continuum/fast-syntax-highlighting
-
-### End of Zinit's installer chunk
+[ -z "$ZPROF" ] || zprof

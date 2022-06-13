@@ -64,5 +64,5 @@ require('xpm').setup {
     }
 }
 
-package.path = ';' .. os.getenv 'LUA_PATH' .. ';' .. package.path
-package.cpath = ';' .. os.getenv 'LUA_CPATH' .. ';' .. package.cpath
+-- package.path = ';' .. os.getenv 'LUA_PATH' .. ';' .. package.path
+-- package.cpath = ';' .. os.getenv 'LUA_CPATH' .. ';' .. package.cpath

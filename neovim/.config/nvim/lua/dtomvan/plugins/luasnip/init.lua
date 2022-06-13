@@ -29,7 +29,7 @@ vim.keymap.set('s', '<c-k>', function()
 end, silent)
 
 -- TODO: Do this better
-for _, name in ipairs { 'all', 'rust', 'lua' } do
+for _, name in ipairs { 'all', 'rust', 'lua', 'md' } do
     require('dtomvan.plugins.luasnip.' .. name)
 end
 
