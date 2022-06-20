@@ -33,26 +33,23 @@ vim.keymap.set('n', '<leader>y', 'mpggyG`p', silent)
 vim.keymap.set('n', '<leader>j', ':cnext<CR>', silent)
 vim.keymap.set('n', '<leader>k', ':cprev<CR>', silent)
 
--- TODO: Actually use it
 -- harpoon
--- vim.keymap.set('n', '\\a', function()
---     require('harpoon.mark').add_file()
--- end, silent)
--- vim.keymap.set('n', '<F1>', function()
---     require('harpoon.ui').toggle_quick_menu()
--- end, silent)
--- vim.keymap.set('n', '<F2>', function()
---     require('harpoon.ui').nav_file(1)
--- end, silent)
--- vim.keymap.set('n', '<F3>', function()
---     require('harpoon.ui').nav_file(2)
--- end, silent)
--- vim.keymap.set('n', '<C-y>', function()
---     require('harpoon.ui').nav_file(3)
--- end, silent)
--- vim.keymap.set('n', '<C-\\>', function()
---     require('harpoon.ui').nav_file(4)
--- end, silent)
+local function nav(n)
+    return function()
+        require('harpoon.ui').nav_file(n)
+    end
+end
+
+for i in ipairs { 1, 2, 3, 4 } do
+    vim.keymap.set('n', string.format('<leader>%d', i), nav(i), silent)
+end
+
+vim.keymap.set('n', '<leader>m', function()
+    require('harpoon.mark').add_file()
+end, silent)
+vim.keymap.set('n', '<F1>', function()
+    require('harpoon.ui').toggle_quick_menu()
+end, silent)
 
 -- Make current file executable
 vim.keymap.set('n', '<leader>x', ':silent !chmod +x %<CR>', silent)
