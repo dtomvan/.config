@@ -42,7 +42,13 @@ require('packer').startup(function()
     }
 
     -- Status line
-    use 'nvim-lua/lsp-status.nvim'
+    use {
+        'j-hui/fidget.nvim',
+        config = function()
+            require('fidget').setup {}
+        end,
+        requires = 'nvim-lua/lsp-status.nvim',
+    }
     use {
         'tjdevries/express_line.nvim',
         config = function()
@@ -97,7 +103,7 @@ require('packer').startup(function()
         end,
         config = function()
             R 'dtomvan.plugins.treesitter'
-        end
+        end,
     }
 
     use 'tjdevries/nlua.nvim'

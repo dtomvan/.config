@@ -8,20 +8,6 @@ local function icon(_, buf)
     return utils.file_icon(buf.name, buf.extension)
 end
 
-local lsp_current_status = function(win, _)
-    local status = require('lsp-status').status()
-    if type(status) == 'string' then
-        if win.is_active then
-            -- Hacky way to get rid of extra characters from
-            -- the LSP protocol
-            local result, _ = string.gsub(status, '\240\159\135\187', '')
-            return result
-        end
-    else
-        return ' '
-    end
-end
-
 local mode_wrapper = function(win, buf)
     if win.is_active then
         return extensions.mode(win, buf)
@@ -64,7 +50,6 @@ local generator = function(win)
             }
         )
 
-        table.insert(segs, lsp_current_status)
         table.insert(
             segs,
             subscribe.buf_autocmd('el_git_branch', 'BufEnter', function(window, buffer)

@@ -15,67 +15,66 @@
 
   home.packages = with pkgs; [
     bat
-    gnupg
   ];
 
-  programs.gh = {
-    enable = true;
-    enableGitCredentialHelper = true;
-    settings = {
-      git_protocol = "https";
-      editor = "nvim";
-      prompt = "enabled";
-      pager = "bat";
-    };
-  };
-
-  programs.git = {
-    enable = true;
-    package = pkgs.gitAndTools.gitFull;
-    delta = { enable = true; };
-    signing = {
-       key = "7A984C8207ADBA51";
-       signByDefault = true;
-    };
-    userEmail = "18gatenmaker6@gmail.com";
-    userName = "Tom van Dijk";
-    extraConfig = {
-      diff = {
-        tool = "nvimdiff";
-      };
-      merge = {
-        conflictStyle = "diff3";
-        tool = "nvimdiff";
-      };
-      diff = {
-        colorMoved = "default";
-      };
-      pull = {
-        rebase = true;
-      };
-      rebase = {
-        autosquash = true;
-      };
-      format = {
-        pretty = "fuller";
-      };
-      sendemail = {
-        smtpserver = "smtp-mail.outlook.com";
-        smtpuser = "129102@dr.nassaucollege.nl";
-        smtpencryption = "tls";
-        smtpserverport = "587";
-      };
-      commit = {
-        template = "~/.gitmessage";
-      };
-      advice = {
-        detachedHead = false;
-      };
-      init = {
-        defaultBranch = "main";
-      };
-    };
-  };
+  # programs.gh = {
+  #   enable = true;
+  #   enableGitCredentialHelper = true;
+  #   settings = {
+  #     git_protocol = "https";
+  #     editor = "nvim";
+  #     prompt = "enabled";
+  #     pager = "bat";
+  #   };
+  # };
+  #
+  # programs.git = {
+  #   enable = true;
+  #   package = pkgs.gitAndTools.gitFull;
+  #   delta = { enable = true; };
+  #   signing = {
+  #      key = "7A984C8207ADBA51";
+  #      signByDefault = true;
+  #   };
+  #   userEmail = "18gatenmaker6@gmail.com";
+  #   userName = "Tom van Dijk";
+  #   extraConfig = {
+  #     diff = {
+  #       tool = "nvimdiff";
+  #     };
+  #     merge = {
+  #       conflictStyle = "diff3";
+  #       tool = "nvimdiff";
+  #     };
+  #     diff = {
+  #       colorMoved = "default";
+  #     };
+  #     pull = {
+  #       rebase = true;
+  #     };
+  #     rebase = {
+  #       autosquash = true;
+  #     };
+  #     format = {
+  #       pretty = "fuller";
+  #     };
+  #     sendemail = {
+  #       smtpserver = "smtp-mail.outlook.com";
+  #       smtpuser = "129102@dr.nassaucollege.nl";
+  #       smtpencryption = "tls";
+  #       smtpserverport = "587";
+  #     };
+  #     commit = {
+  #       template = "~/.gitmessage";
+  #     };
+  #     advice = {
+  #       detachedHead = false;
+  #     };
+  #     init = {
+  #       defaultBranch = "main";
+  #     };
+  #   };
+  # };
 
   programs.neovim = {
     enable = true;
