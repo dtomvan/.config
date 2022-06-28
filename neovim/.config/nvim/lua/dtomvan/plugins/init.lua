@@ -28,8 +28,6 @@ require('packer').startup(function()
             if vim.fn.has 'nvim-0.7' then
                 hl(0, 'WinSeparator', { bg = 'NONE' })
             end
-            -- Kanagawa specific
-            vim.cmd 'hi Pmenu guibg=#1f1f29'
         end,
     }
 

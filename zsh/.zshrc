@@ -11,7 +11,7 @@ alias givefuck="curl -s rage.metroserve.me/\?format=plain"
 
 export BROWSER=xdg-open
 export EDITOR=nvim
-export PATH=~/.nix-profile/bin/:~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin:~/go/bin:~/.yarn/bin
+export PATH=~/.local/bin/neovim/:~/.nix-profile/bin/:~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin:~/go/bin:~/.yarn/bin
 export DENO_INSTALL="$HOME/.deno"
 export RUSTC_WRAPPER=sccache
 export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}

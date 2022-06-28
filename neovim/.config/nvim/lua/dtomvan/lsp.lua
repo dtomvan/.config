@@ -58,11 +58,116 @@ end
 
 lsp_status.register_progress()
 
+local ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+if not ok then
+    cmp_nvim_lsp = {}
+    cmp_nvim_lsp.update_capabilities = function(input)
+        return input
+    end
+end
+
 local capabilities = vim.tbl_extend(
     'keep',
-    require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities()),
     lsp_status.capabilities
 )
+
+local function get_lua_runtime()
+    local result = {}
+    for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+        local lua_path = path .. '/lua/'
+        if vim.fn.isdirectory(lua_path) then
+            result[lua_path] = true
+        end
+    end
+
+    -- This loads the `lua` files from nvim into the runtime.
+    result[vim.fn.expand '$VIMRUNTIME/lua'] = true
+
+    -- TODO: Figure out how to get these to work...
+    --  Maybe we need to ship these instead of putting them in `src`?...
+    result[vim.fn.expand '~/build/neovim/src/nvim/lua'] = true
+
+    return result
+end
+
+local opts = {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
+
+require('lspconfig').sumneko_lua.setup {
+    settings = {
+        Lua = {
+            runtime = {
+                version = 'LuaJIT',
+                path = runtime_path,
+            },
+            completion = {
+                keywordSnippet = 'Disable',
+                showWord = 'Disable',
+            },
+            diagnostics = {
+                enable = true,
+                disable = {
+                    'trailing-space',
+                },
+                globals = {
+                    'vim',
+                    'describe',
+                    'it',
+                    'before_each',
+                    'after_each',
+                    'teardown',
+                    'pending',
+                    'clear',
+                    'Color',
+                    'c',
+                    'Group',
+                    'g',
+                    's',
+                    'use',
+                    'xplr',
+                    'package',
+                },
+            },
+            workspace = {
+                library = get_lua_runtime(),
+                maxPreload = 10000,
+                preloadFileSize = 10000,
+            },
+        },
+    },
+    filetypes = { 'lua' },
+    on_attach = on_attach,
+    capabilities = capabilities,
+    root_dir = require('lspconfig.util').find_git_ancestor,
+}
+
+for _, server in ipairs(lsp_installer_servers.get_installed_server_names()) do
+    if not (server == 'rome' or server == 'rust_analyzer' or server == 'sumneko_lua') then
+        require('lspconfig')[server].setup(opts)
+    end
+end
+
+opts.filetypes = {
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescript.tsx',
+    'typescriptreact',
+}
+
+require('lspconfig').rome.setup(opts)
+
+local ok, _ = pcall(require, 'rust-tools')
+if not ok then
+    return
+end
 
 -- Rust
 local rust_tools_opts = {
@@ -181,97 +286,5 @@ local rust_tools_opts = {
         },
     },
 }
-
-local function get_lua_runtime()
-    local result = {}
-    for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-        local lua_path = path .. '/lua/'
-        if vim.fn.isdirectory(lua_path) then
-            result[lua_path] = true
-        end
-    end
-
-    -- This loads the `lua` files from nvim into the runtime.
-    result[vim.fn.expand '$VIMRUNTIME/lua'] = true
-
-    -- TODO: Figure out how to get these to work...
-    --  Maybe we need to ship these instead of putting them in `src`?...
-    result[vim.fn.expand '~/build/neovim/src/nvim/lua'] = true
-
-    return result
-end
-
-local opts = {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
-
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
-
-require('lspconfig').sumneko_lua.setup {
-    settings = {
-        Lua = {
-            runtime = {
-                version = 'LuaJIT',
-                path = runtime_path,
-            },
-            completion = {
-                keywordSnippet = 'Disable',
-                showWord = 'Disable',
-            },
-            diagnostics = {
-                enable = true,
-                disable = {
-                    'trailing-space',
-                },
-                globals = {
-                    'vim',
-                    'describe',
-                    'it',
-                    'before_each',
-                    'after_each',
-                    'teardown',
-                    'pending',
-                    'clear',
-                    'Color',
-                    'c',
-                    'Group',
-                    'g',
-                    's',
-                    'use',
-                    'xplr',
-                    'package',
-                },
-            },
-            workspace = {
-                library = get_lua_runtime(),
-                maxPreload = 10000,
-                preloadFileSize = 10000,
-            },
-        },
-    },
-    filetypes = { 'lua' },
-    on_attach = on_attach,
-    capabilities = capabilities,
-    root_dir = require('lspconfig.util').find_git_ancestor,
-}
-
-for _, server in ipairs(lsp_installer_servers.get_installed_server_names()) do
-    if not (server == 'rome' or server == 'rust_analyzer' or server == 'sumneko_lua') then
-        require('lspconfig')[server].setup(opts)
-    end
-end
-
-opts.filetypes = {
-    'javascript',
-    'javascriptreact',
-    'typescript',
-    'typescript.tsx',
-    'typescriptreact',
-}
-
-require('lspconfig').rome.setup(opts)
 
 require('rust-tools').setup(rust_tools_opts)

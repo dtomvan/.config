@@ -27,6 +27,7 @@ bspc rule -a mind desktop='^3'
 bspc rule -a i3lock layer=above
 bspc rule -a powermenu state=floating
 bspc rule -a activate-linux layer=above
+bspc rule -a Mechvibes hidden=on
 
 bspc desktop='^1' --focus
 $HOME/.config/polybar/launch.sh
