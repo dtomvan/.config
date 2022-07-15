@@ -1,0 +1,33 @@
+{
+  "autoAttachOnNewTabCommand": 3,
+  "autoAttachOnOpenedFromExternal": 0,
+  "cachedExternalAddons": [
+    "tst-more-tree-commands@piro.sakura.ne.jp"
+  ],
+  "chunkedUserStyleRules0": "LyogU2hvdyB0aXRsZSBvZiB1bnJlYWQgdGFicyB3aXRoIHJlZCBhbmQgaXRhbGljIGZvbnQgKi8KLyoKOnJvb3Quc2lkZWJhciB0YWItaXRlbS51bnJlYWQgLmxhYmVsLWNvbnRlbnQgewogIGNvbG9yOiByZWQgIWltcG9ydGFudDsKICBmb250LXN0eWxlOiBpdGFsaWMgIWltcG9ydGFudDsKfQoqLwoKLyogQWRkIHByaXZhdGUgYnJvd3NpbmcgaW5kaWNhdG9yIHBlciB0YWIgKi8KLyoKOnJvb3Quc2lkZWJhciB0YWItaXRlbS5wcml2YXRlLWJyb3dzaW5nIHRhYi1sYWJlbDpiZWZvcmUgewogIGNvbnRlbnQ6ICLwn5W2IjsKfQoqLw==",
+  "configsVersion": 25,
+  "context_openAllBookmarksWithStructureRecursively": true,
+  "incognitoAllowedExternalAddons": [
+    "tst-more-tree-commands@piro.sakura.ne.jp"
+  ],
+  "inheritContextualIdentityToChildTabMode": 2,
+  "inheritContextualIdentityToTabsFromExternalMode": 2,
+  "notifiedFeaturesVersion": 9,
+  "optionsExpandedSections": [
+    "section-appearance",
+    "section-debug",
+    "section-addons"
+  ],
+  "parentTabOperationBehaviorMode": 1,
+  "skipCollapsedTabsForTabSwitchingShortcuts": true,
+  "syncDevices": {
+    "device-1656667357902-66": {
+      "id": "device-1656667357902-66",
+      "name": "Waterfox on Linux",
+      "icon": "device-desktop",
+      "timestamp": 1656667358544
+    }
+  },
+  "userStyleRules": "",
+  "userStyleRulesFieldHeight": "146.6666717529297px"
+}

@@ -284,6 +284,10 @@ eval "$(mcfly init zsh)"
 source ~/.zsh/antigen.zsh
 antigen theme romkatv/powerlevel10k
 
+# Bun
+export BUN_INSTALL="/home/tomvd/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 

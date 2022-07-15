@@ -62,4 +62,5 @@ discord-canary --no-sandbox \
 --use-gl=desktop \
 --enable-gpu-rasterization \
 --enable-zero-copy &
+XINIT=1 bash ~/.profile || true &
 exec dbus-launch $HOME/.local/bin/bspwm-start

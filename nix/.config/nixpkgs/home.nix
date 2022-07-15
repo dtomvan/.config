@@ -101,11 +101,9 @@
     '';
     package = pkgs.neovim-nightly;
     extraPackages = with pkgs; [
-      pkgs.tree-sitter
       pkgs.gccStdenv
     ];
     plugins = with pkgs.vimPlugins; [
-      (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
       packer-nvim
       nvim-lspconfig
       lsp_extensions-nvim
