@@ -1,5 +1,10 @@
 {
-    "BetterDefaultGlasscord": false,
+    "BetterDefaultGlasscord": true,
     "MinimalMode": false,
-    "Quarrel": false
+    "Quarrel": false,
+    "Fluent": false,
+    "Dark+": false,
+    "SoftX": false,
+    "Dark Matter": false,
+    "BasicBackground": false
 }

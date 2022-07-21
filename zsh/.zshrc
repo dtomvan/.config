@@ -7,9 +7,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-alias givefuck="curl -s rage.metroserve.me/\?format=plain"
-
-export BROWSER=xdg-open
+export BROWSER=waterfox-current
 export EDITOR=nvim
 export PATH=~/.local/bin/neovim/:~/.nix-profile/bin/:~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin:~/go/bin:~/.yarn/bin
 export DENO_INSTALL="$HOME/.deno"
@@ -23,6 +21,12 @@ zle-keymap-select zle-line-init () {
     viins|main) print -n '\e[4 q';;
   esac
 }
+
+tere() {
+    local result=$(command tere "$@")
+    [ -n "$result" ] && cd -- "$result"
+}
+
 zle -N zle-keymap-select
 zle -N zle-line-init
 
@@ -270,15 +274,8 @@ alias t="tmux"
 alias vim="nvim"
 alias x='cd "$(xplr --print-pwd-as-result)"'
 
-# These files may not exist on all systems
-# source ~/projects/fucke.rs/shells/zsh/setup.sh || true
-# source /usr/share/nvm/init-nvm.sh || true
-
-# eval "$(luarocks path --lua-version 5.1)"
 eval "$(antidot init)"
 eval "$(zoxide init zsh --cmd d)"
-
-export MCFLY_FUZZY=2
 eval "$(mcfly init zsh)"
 
 source ~/.zsh/antigen.zsh

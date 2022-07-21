@@ -1,6 +1,6 @@
 {
     "BDFDB": true,
-    "AccountDetailsPlus": true,
+    "AccountDetailsPlus": false,
     "BetterCodeblocks": false,
     "BetterFriendList": false,
     "CallTimeCounter": true,
@@ -8,8 +8,9 @@
     "EditUsers": true,
     "GuildProfile": true,
     "PluginRepo": false,
-    "SplitLargeMessages": true,
+    "SplitLargeMessages": false,
     "SubtleDevicePrompt": true,
     "TypingUsersAvatars": false,
-    "ZeresPluginLibrary": false
+    "ZeresPluginLibrary": false,
+    "ThemeRepo": true
 }

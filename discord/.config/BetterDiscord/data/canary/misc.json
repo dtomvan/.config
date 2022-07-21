@@ -3,7 +3,7 @@
     "emoteVersion": "v1.5.2",
     "drawerStates": {
         "settings": {
-            "addons": false,
+            "addons": true,
             "window": true,
             "developer": true
         }
