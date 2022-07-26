@@ -1,11 +1,12 @@
 local buffer = { buffer = true, noremap = true }
-local group = vim.api.nvim_create_augroup
 local au = vim.api.nvim_create_autocmd
 local gops = { clear = true }
+local group = function(name)
+    vim.api.nvim_create_augroup(name, gops)
+end
 
 local bp = '*.bin'
-local bin = 'Binary'
-group(bin, gops)
+local bin = group 'Binary'
 
 au('BufReadPre', {
     group = bin,
@@ -44,8 +45,7 @@ au('BufWritePost', {
     end,
 })
 
-local term = 'Terminal-g'
-group(term, gops)
+local term = group 'Terminal-g'
 au('TermOpen', {
     group = term,
     callback = function()
@@ -55,8 +55,7 @@ au('TermOpen', {
 })
 
 local rsp = '*.rs'
-local rs = 'RustBufs'
-group(rs, gops)
+local rs = group 'RustBufs'
 au('BufEnter', {
     pattern = rsp,
     callback = function()
@@ -67,7 +66,7 @@ au('BufEnter', {
     group = rs,
 })
 
--- group('Formatting', gops)
+-- group('Formatting')
 -- au('BufWritePre', {
 --     group = 'Formatting',
 --     callback = function()
@@ -77,9 +76,9 @@ au('BufEnter', {
 --     end,
 -- })
 
-group('Regels.md', gops)
+local regels = group 'Regels.md'
 au('BufWritePre', {
-    group = 'Regels.md',
+    group = regels,
     callback = function()
         if vim.fn.expand '%:p' == '/home/tomvd/regels.md' then
             local line = 'Laatst bijgewerkt op: ' .. os.date '%F %T'
@@ -89,8 +88,7 @@ au('BufWritePre', {
 })
 
 local hsp = '*.hs'
-local hs = 'HaskBufs'
-group(hs, gops)
+local hs = group 'HaskBufs'
 au('BufEnter', {
     pattern = hsp,
     callback = function()
@@ -99,18 +97,17 @@ au('BufEnter', {
     group = hs,
 })
 
-local help = 'vim help'
-group(help, gops)
+local help = group 'vim help'
 au('FileType', {
     pattern = 'help',
+    group = help,
     callback = function()
         vim.wo.nu = true
         vim.wo.rnu = true
     end,
-    group = help,
 })
 
-group('TextYankHighlight', gops)
+group 'TextYankHighlight'
 au('TextYankPost', {
     group = 'TextYankHighlight',
     callback = function()
@@ -118,9 +115,9 @@ au('TextYankPost', {
     end,
 })
 
-group('MarkdownAlign', gops)
+local mda = group 'MarkdownAlign'
 au('FileType', {
-    group = 'MarkdownAlign',
+    group = mda,
     pattern = 'markdown',
     callback = function()
         vim.keymap.set('v', '<Leader><bslash>', ':EasyAlign*<bar><cr>', {
@@ -131,10 +128,8 @@ au('FileType', {
     end,
 })
 
-local git = 'GitCommitMsg'
 local commit = '*/COMMIT_EDITMSG'
-
-group(git, gops)
+local git = group 'GitCommitMsg'
 au('BufEnter', {
     group = git,
     pattern = commit,
@@ -145,14 +140,13 @@ au('BufEnter', {
                 return
             end
             local date = os.date '%F'
-            vim.api.nvim_buf_set_lines(0, 0, linenr, true, { date })
+            vim.api.nvim_buf_set_lines(0, 0, linenr - 1, true, { date })
         end, { buffer = true, silent = true })
     end,
 })
 
 if vim.fn.has 'nvim-0.8' == 1 then
-    local winbar = 'WinBar'
-    group(winbar, gops)
+    local winbar = group 'WinBar'
     au('BufEnter', {
         group = winbar,
         callback = function()
