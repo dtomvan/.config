@@ -2,6 +2,8 @@ local silent = { silent = true, noremap = true }
 local noremap = { noremap = true }
 local expr = { expr = true, silent = true }
 
+require('dtomvan.tere').setup()
+
 vim.keymap.set('', '<space>', '<Nop>', silent)
 
 local breakpoints = { ',', '!', '.', '?', ';' }

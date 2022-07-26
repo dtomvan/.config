@@ -12,5 +12,6 @@
     "SubtleDevicePrompt": true,
     "TypingUsersAvatars": false,
     "ZeresPluginLibrary": false,
-    "ThemeRepo": true
+    "ThemeRepo": false,
+    "BetterAnimations": false
 }

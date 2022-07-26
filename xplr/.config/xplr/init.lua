@@ -60,8 +60,42 @@ require('xpm').setup {
             require('map').setup {
                 -- key = "m"
             }
-        end
-    }
+        end,
+    },
+    {
+        'Junker/nuke.xplr',
+        setup = function()
+            require('nuke').setup {
+                open = {
+                    run_executables = true, -- default: false
+                    custom = {
+                        { mime_regex = '^image/.*', command = 'sxiv {}' },
+                        { mime_regex = '^video/.*', command = 'mpv {}' },
+                        { mime_regex = '^inode/directory$', command = 'mpv {}' },
+                        { mime_regex = '.*', command = 'xdg-open {}' },
+                    },
+                },
+                view = {
+                    show_line_numbers = true, -- default: false
+                },
+                smart_view = {
+                    custom = {
+                        { extension = 'so', command = 'ldd -r {} | less' },
+                    },
+                },
+            }
+        end,
+        after = function()
+            local key = xplr.config.modes.builtin.default.key_bindings.on_key
+
+            key.v = {
+                help = 'nuke',
+                messages = { 'PopMode', { SwitchModeCustom = 'nuke' } },
+            }
+            key['f3'] = xplr.config.modes.custom.nuke.key_bindings.on_key.v
+            key['enter'] = xplr.config.modes.custom.nuke.key_bindings.on_key.o
+        end,
+    },
 }
 
 -- package.path = ';' .. os.getenv 'LUA_PATH' .. ';' .. package.path

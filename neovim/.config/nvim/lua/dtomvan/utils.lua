@@ -78,4 +78,12 @@ function M.winbar()
     return '%=%m ' .. icon .. ' ' .. name
 end
 
+local winbuf = function(ty)
+    return function(fn, ...)
+        return vim.api['nvim_' + ty + '_' + fn](...)
+    end
+end
+M.buf = winbuf 'buf'
+M.win = winbuf 'win'
+
 return M

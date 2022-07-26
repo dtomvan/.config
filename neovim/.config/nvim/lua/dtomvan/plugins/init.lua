@@ -26,7 +26,7 @@ require('packer').startup(function()
             vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
             -- Neovim 0.7 'laststatus' specific
             if vim.fn.has 'nvim-0.7' then
-                hl(0, 'WinSeparator', { bg = 'NONE' })
+                hl(0, 'WinSeparator', { bg = 'NONE', ctermbg = 'NONE' })
             end
         end,
     }
