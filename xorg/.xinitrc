@@ -63,4 +63,5 @@ discord-canary --no-sandbox \
 --enable-gpu-rasterization \
 --enable-zero-copy &
 XINIT=1 bash ~/.profile || true &
+~/obs-sinks.sh &
 exec dbus-launch $HOME/.local/bin/bspwm-start
