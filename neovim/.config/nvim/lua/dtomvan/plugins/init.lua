@@ -23,7 +23,9 @@ require('packer').startup(function()
             local hl = vim.api.nvim_set_hl
             vim.o.background = 'dark'
             EX.colorscheme 'kanagawa'
-            vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
+            if vim.g.neovide == nil then
+                vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
+            end
             -- Neovim 0.7 'laststatus' specific
             if vim.fn.has 'nvim-0.7' then
                 hl(0, 'WinSeparator', { bg = 'NONE', ctermbg = 'NONE' })
