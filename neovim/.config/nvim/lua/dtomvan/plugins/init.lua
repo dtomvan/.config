@@ -1,7 +1,23 @@
 require('packer').startup(function()
     -- Packer
-    -- Unused, as managed by home-manager
-    -- use 'wbthomason/packer.nvim'
+    use 'wbthomason/packer.nvim'
+
+    -- Tpope stuff (reintroduced as home-manager broke my config for some reason)
+    use 'tpope/vim-surround'
+    use 'tpope/vim-git'
+    use 'tpope/vim-fugitive'
+    use 'tpope/vim-eunuch'
+    use 'tpope/vim-unimpaired'
+    use 'tpope/vim-repeat'
+    use 'tpope/vim-vinegar'
+    use 'tpope/vim-sleuth'
+    use 'tpope/vim-endwise'
+
+    -- Idem
+    use 'neovim/nvim-lspconfig'
+    use 'nvim-lua/lsp_extensions.nvim'
+    use 'numToStr/Comment.nvim'
+    use 'andweeb/presence.nvim'
 
     -- Startup time improvements
     use {
@@ -156,7 +172,6 @@ require('packer').startup(function()
     }
 
     -- Auto pairs
-    use 'rstacruz/vim-closer'
     use 'Krasjet/auto.pairs'
 
     -- Kotlin
@@ -228,14 +243,27 @@ require('packer').startup(function()
         end,
     }
 
-    -- Neorg
+    -- I'm finally using a filetree :)
     use {
-        'nvim-neorg/neorg',
+        'ms-jpq/chadtree',
+        branch = 'chad',
+        run = 'python3 -m chadtree deps',
         config = function()
-            R 'dtomvan.plugins.norg'
+            vim.keymap.set({ 'n', 'i', 's', 'x' }, '<f1>', '<cmd>CHADopen<cr>')
         end,
-        run = ':TSInstall norg norg_meta norg_table',
-        requires = 'nvim-lua/plenary.nvim',
+    }
+
+    use {
+        'nvim-orgmode/orgmode',
+        run = function()
+            EX.TSUpdate 'org'
+        end,
+        config = function()
+            require('orgmode').setup {
+                org_agenda_files = { '~/Dropbox/org/*', '~/projects/**/*', '~/notes/**/*' },
+                org_default_notes_file = '~/Dropbox/org/refile.org',
+            }
+        end,
     }
 
     -- Profiler

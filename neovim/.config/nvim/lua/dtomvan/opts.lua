@@ -53,3 +53,15 @@ if vim.fn.has 'nvim-0.8' == 1 then
     ops.winbar = '%!luaeval("require\\"dtomvan.utils\\".winbar()")'
     -- ops.winbar = '%=%m %f'
 end
+
+local g = vim.g
+if g.neovide ~= nil then
+    g.neovide_transparency = 0.8
+    -- Monitor's refresh rate + 30
+    g.neovide_refresh_rate = 115
+    g.neovide_floating_blur_amount_x = 2.0
+    g.neovide_floating_blur_amount_y = 2.0
+    g.neovide_cursor_antialiasing = true
+    g.neovide_cursor_vfx_mode = "railgun"
+    g.neovide_scroll_animation_length = 0.3
+end

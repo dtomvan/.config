@@ -117,6 +117,7 @@
       vim-repeat
       vim-vinegar
       vim-sleuth
+      vim-endwise
       comment-nvim
       presence-nvim
     ];

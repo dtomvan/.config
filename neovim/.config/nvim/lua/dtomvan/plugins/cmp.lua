@@ -40,7 +40,7 @@ cmp.setup {
         end, { 'i', 's' }),
     },
     sources = cmp.config.sources({
-        { name = 'neorg' },
+        { name = 'orgmode' },
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'nvim_lua' },
@@ -78,12 +78,4 @@ cmp.setup.cmdline('/', {
     sources = {
         { name = 'buffer' },
     },
-})
-
-cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-        { name = 'path' },
-    }, {
-        { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=], keyword_length = 3 },
-    }),
 })

@@ -86,7 +86,7 @@ local function get_lua_runtime()
 
     -- TODO: Figure out how to get these to work...
     --  Maybe we need to ship these instead of putting them in `src`?...
-    result[vim.fn.expand '~/build/neovim/src/nvim/lua'] = true
+    result[vim.fn.expand '~/repos/neovim/src/nvim/lua'] = true
 
     return result
 end
@@ -149,7 +149,7 @@ require('lspconfig').sumneko_lua.setup {
 }
 
 for _, server in ipairs(lsp_installer_servers.get_installed_server_names()) do
-    if not (server == 'rome' or server == 'rust_analyzer' or server == 'sumneko_lua') then
+    if not (server == 'rome' or server == 'rust_tools' or server == 'sumneko_lua') then
         require('lspconfig')[server].setup(opts)
     end
 end
@@ -164,8 +164,8 @@ opts.filetypes = {
 
 require('lspconfig').rome.setup(opts)
 
-local ok, _ = pcall(require, 'rust-tools')
-if not ok then
+local rust_tools, _ = pcall(require, 'rust-tools')
+if not rust_tools then
     return
 end
 
@@ -174,10 +174,6 @@ local rust_tools_opts = {
     tools = { -- rust-tools options
         -- Automatically set inlay hints (type hints)
         autoSetHints = true,
-
-        -- Whether to show hover actions inside the hover window
-        -- This overrides the default hover handler
-        hover_with_actions = true,
 
         -- how to execute terminal commands
         -- options right now: termopen / quickfix
@@ -276,7 +272,10 @@ local rust_tools_opts = {
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
     -- rust-analyer options
     server = {
-        on_attach = on_attach,
+        on_attach = function(...)
+            on_attach(...)
+            vim.keymap.set('n', 'K', '<cmd>RustHoverActions<cr>', { buffer = true })
+        end,
         standalone = true,
         capabilities = capabilities,
         settings = {

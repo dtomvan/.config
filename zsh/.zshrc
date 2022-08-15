@@ -27,6 +27,26 @@ tere() {
     [ -n "$result" ] && cd -- "$result"
 }
 
+# Pad = dutch for path
+dmv() {
+  name="$(command ls -t ~/Downloads | head -n 1)"
+  pad="$HOME/Downloads/$name"
+  mv "$pad" .
+}
+dcp() {
+    name="$(command ls -t ~/Downloads | head -n 1)"
+    pad="$HOME/Downloads/$name"
+    cp -a "$pad" .
+}
+
+m() {
+  python3 -c "from math import *; print($*)"
+}
+
+aoc() {
+  tmux-sess ~/projects/aoc/$(date +%Y)
+}
+
 zle -N zle-keymap-select
 zle -N zle-line-init
 
@@ -132,7 +152,6 @@ zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
 # ALIASES
-alias aoc="~/projects/aoc-2021"
 alias athenaeum '~/.local/share/flatpak/exports/bin/com.gitlab.librebob.Athenaeum'
 alias cargo="mold -run cargo"
 alias cat="bat"

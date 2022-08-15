@@ -49,7 +49,7 @@ end
 vim.keymap.set('n', '<leader>m', function()
     require('harpoon.mark').add_file()
 end, silent)
-vim.keymap.set('n', '<F1>', function()
+vim.keymap.set('n', '<F2>', function()
     require('harpoon.ui').toggle_quick_menu()
 end, silent)
 
@@ -110,6 +110,16 @@ local function open_term(cmd, tmode, bufnr)
     EX['autocmd!']('WinLeave', '<buffer>')
 end
 
+local spterm = function(type)
+    return string.format('<cmd>%s term://%s<cr>', type, os.getenv 'SHELL')
+end
+vim.keymap.set('n', '<leader>cv', function()
+    return spterm 'vs'
+end, { expr = true })
+vim.keymap.set('n', '<leader>cx', function()
+    return spterm 'sp'
+end, { expr = true })
+
 vim.keymap.set('n', '<leader>cl', function()
     open_term(vim.env.SHELL, true)
 end)
@@ -135,8 +145,5 @@ vim.keymap.set('n', '<C-k>', '<C-w>k')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr)
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr)
-
--- neorg
-vim.keymap.set('n', '<leader>or', '<cmd>tabnew<cr>:Neorg workspace <tab>', { remap = true })
 
 return { silent = silent, noremap = noremap, expr = expr }

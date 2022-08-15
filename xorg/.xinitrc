@@ -37,7 +37,7 @@ fi
 
 # /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 export AWT_TOOLKIT=MToolkit
-export QT_QPA_PLATFORMTHEME=qt5ct
+export QT_QPA_PLATFORMTHEME=qt6ct
 xsetroot -cursor_name left_ptr
 xbindkeys
 picom --experimental-backends --xrender-sync-fence --backend glx &
@@ -64,4 +64,5 @@ discord-canary --no-sandbox \
 --enable-zero-copy &
 XINIT=1 bash ~/.profile || true &
 ~/obs-sinks.sh &
+sh -c 'pactl unload-module module-switch-on-connect; pactl load-module module-switch-on-connect;' &
 exec dbus-launch $HOME/.local/bin/bspwm-start
