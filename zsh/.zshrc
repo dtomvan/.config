@@ -24,7 +24,7 @@ zle-keymap-select zle-line-init () {
 
 tere() {
     local result=$(command tere "$@")
-    [ -n "$result" ] && cd -- "$result"
+    [ -n "$result" ] && pushd -q -- "$result"
 }
 
 # Pad = dutch for path
@@ -150,6 +150,69 @@ fancy-ctrl-z () {
 }
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
+
+alias cd='pushd -q'
+
+DIR_STACK=()
+prevd () {
+  length=${#DIR_STACK[@]}
+  next=$(($length + 1))
+
+  if [[ `dirs -lp | wc -l` -ne 1 ]]; then
+    DIR_STACK[$next]=`dirs -lp | head -n1`
+    popd -q
+  else
+    echo "\nNo previous directory"
+  fi
+}
+nextd () {
+  length=${#DIR_STACK[@]}
+
+  if [[ $length -ne 0 ]]; then
+    pushd -q $DIR_STACK[$length]
+    DIR_STACK[$length]=()
+  else
+    echo "\nNo next directory"
+  fi
+}
+showhist() {
+  echo
+  length=${#DIR_STACK[@]}
+
+  if [[ $length -ne 0 ]]; then
+    echo 'Stack:'
+  fi
+  for i ("$DIR_STACK[@]"); do
+    echo "$i" | sed "s/^${HOME//\//\\/}/~/"
+  done
+  echo 'You are here:'
+  dirs -p
+}
+upd () {
+  pushd -q ..
+  showhist
+}
+
+wrapd () {
+  $@
+  zle push-line
+  zle accept-line
+}
+
+wrap-prevd () { wrapd prevd }
+wrap-nextd () { wrapd nextd }
+wrap-upd () { wrapd upd }
+wrap-downd () { wrapd showhist }
+
+zle -N wrapd
+zle -N wrap-prevd
+zle -N wrap-nextd
+zle -N wrap-upd
+zle -N wrap-downd
+bindkey '^[[1;3D' 'wrap-prevd'
+bindkey '^[[1;3C' 'wrap-nextd'
+bindkey '^[[1;3A' 'wrap-upd'
+bindkey '^[[1;3B' 'wrap-downd'
 
 # ALIASES
 alias athenaeum '~/.local/share/flatpak/exports/bin/com.gitlab.librebob.Athenaeum'

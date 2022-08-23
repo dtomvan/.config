@@ -27,3 +27,4 @@ neovim/.config/nvim/plugin/packer_compiled.lua
 # managed by home-manager
 neovim/.config/nvim/init.vim
 mpv/.config/mpv/watch_later
+mpd/.config/mpd/database

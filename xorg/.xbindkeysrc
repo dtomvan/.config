@@ -50,7 +50,7 @@
 
 # Playerctl
 "playerctl play-pause"
-   XF86AudioPlay
+  XF86AudioPlay
 "playerctl previous"
   XF86AudioPrev
 "playerctl next"
