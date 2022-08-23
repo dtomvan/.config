@@ -219,9 +219,7 @@ alias athenaeum '~/.local/share/flatpak/exports/bin/com.gitlab.librebob.Athenaeu
 alias cargo="mold -run cargo"
 alias cat="bat"
 alias c="clear"
-alias c=clear
 alias e="nvim"
-alias e=nvim
 alias gaa="git add --all"
 alias ga="git add"
 alias gapa="git add --patch"
@@ -344,7 +342,6 @@ alias gup="git pull --rebase"
 alias gupv="git pull --rebase -v"
 alias gwch="git whatchanged -p --alias=commit --pretty=medium"
 alias less="bat"
-alias less='bat'
 alias ls="exa --icons"
 alias ll="ls -lah"
 alias la="ls -a"
