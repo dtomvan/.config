@@ -6,10 +6,30 @@ local lsp_installer = require 'nvim-lsp-installer'
 lsp_installer.setup {}
 lsp_signature.setup { floating_window = false }
 
+require('nvim-semantic-tokens').setup {
+    preset = 'default',
+    -- highlighters is a list of modules following the interface of nvim-semantic-tokens.table-highlighter or
+    -- function with the signature: highlight_token(ctx, token, highlight) where
+    --        ctx (as defined in :h lsp-handler)
+    --        token  (as defined in :h vim.lsp.semantic_tokens.on_full())
+    --        highlight (a helper function that you can call (also multiple times) with the determined highlight group(s) as the only parameter)
+    highlighters = { require 'nvim-semantic-tokens.table-highlighter' },
+}
+
 -- Mappings.
 local on_attach = function(client, bufnr)
     lsp_signature.on_attach()
     lsp_status.on_attach(client)
+
+    local caps = client.server_capabilities
+    if
+        caps.semanticTokensProvider
+        and caps.semanticTokensProvider.full
+        and type(vim.lsp.buf.semantic_tokens_full) == 'function'
+    then
+        vim.cmd [[autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.buf.semantic_tokens_full()]]
+        vim.notify 'Support for semantic tokens enabled'
+    end
 
     local function buf_map(mode, lhs, rhs)
         vim.keymap.set(mode, lhs, rhs, { silent = true, buffer = bufnr, noremap = true })

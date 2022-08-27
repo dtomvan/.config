@@ -151,6 +151,7 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
+# Stuff from DT's fish shell vid https://www.youtube.com/watch?v=8GN9D-OnG-A
 alias cd='pushd -q'
 
 DIR_STACK=()
@@ -213,6 +214,55 @@ bindkey '^[[1;3D' 'wrap-prevd'
 bindkey '^[[1;3C' 'wrap-nextd'
 bindkey '^[[1;3A' 'wrap-upd'
 bindkey '^[[1;3B' 'wrap-downd'
+
+alt-l () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="ls"
+    zle accept-line -w
+  fi
+}
+zle -N alt-l
+bindkey '^[l' alt-l
+
+alt-p () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    zle up-history -w
+  else
+    old_cursor="$CURSOR"
+    BUFFER="$BUFFER |& less"
+    CURSOR="$old_cursor"
+  fi
+}
+zle -N alt-p
+bindkey '^[p' alt-p
+
+alt-w () {
+  cmd="$LBUFFER"
+  zle push-line
+  zle accept-line
+  whence -v "$cmd" && whatis "$cmd"
+}
+zle -N alt-w
+bindkey '^[w' alt-w
+
+alt-e () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    $EDITOR
+  fi
+}
+zle -N alt-e
+bindkey '^[e' alt-e
+
+alt-s () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    zle up-history -w
+  fi
+  BUFFER="sudo $BUFFER"
+  zle end-of-line -w
+}
+zle -N alt-s
+bindkey '^[s' alt-s
+bindkey '^[h' run-help
 
 # ALIASES
 alias athenaeum '~/.local/share/flatpak/exports/bin/com.gitlab.librebob.Athenaeum'
@@ -373,3 +423,4 @@ antigen bundle zdharma-continuum/fast-syntax-highlighting
 antigen apply
 
 [ -z "$ZPROF" ] || zprof
+[[ $- == *i* ]] && instantterminalhelp

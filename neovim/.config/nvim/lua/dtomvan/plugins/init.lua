@@ -42,6 +42,7 @@ require('packer').startup(function()
             if vim.g.neovide == nil then
                 vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
             end
+            hl(0, 'LspComment', { link = "Comment" })
             -- Neovim 0.7 'laststatus' specific
             if vim.fn.has 'nvim-0.7' then
                 hl(0, 'WinSeparator', { bg = 'NONE', ctermbg = 'NONE' })
@@ -121,6 +122,7 @@ require('packer').startup(function()
             R 'dtomvan.plugins.treesitter'
         end,
     }
+    use 'theHamsta/nvim-semantic-tokens'
 
     use 'tjdevries/nlua.nvim'
     use {
@@ -254,15 +256,10 @@ require('packer').startup(function()
     }
 
     use {
-        'nvim-orgmode/orgmode',
-        run = function()
-            EX.TSUpdate 'org'
-        end,
+        'phaazon/mind.nvim',
+        branch = 'v2.1',
         config = function()
-            require('orgmode').setup {
-                org_agenda_files = { '~/Dropbox/org/*', '~/projects/**/*', '~/notes/**/*' },
-                org_default_notes_file = '~/Dropbox/org/refile.org',
-            }
+            require('mind').setup {}
         end,
     }
 
