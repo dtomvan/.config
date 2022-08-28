@@ -1,9 +1,6 @@
-local lsp_installer_servers = require 'nvim-lsp-installer.servers'
-
+local mason_lspconfig = require 'mason-lspconfig'
 local lsp_signature = require 'lsp_signature'
 local lsp_status = require 'lsp-status'
-local lsp_installer = require 'nvim-lsp-installer'
-lsp_installer.setup {}
 lsp_signature.setup { floating_window = false }
 
 require('nvim-semantic-tokens').setup {
@@ -168,7 +165,7 @@ require('lspconfig').sumneko_lua.setup {
     root_dir = require('lspconfig.util').find_git_ancestor,
 }
 
-for _, server in ipairs(lsp_installer_servers.get_installed_server_names()) do
+for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
     if not (server == 'rome' or server == 'rust_tools' or server == 'sumneko_lua') then
         require('lspconfig')[server].setup(opts)
     end

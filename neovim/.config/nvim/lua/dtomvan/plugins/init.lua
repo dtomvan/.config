@@ -14,7 +14,12 @@ require('packer').startup(function()
     use 'tpope/vim-endwise'
 
     -- Idem
-    use 'neovim/nvim-lspconfig'
+    use {
+        'neovim/nvim-lspconfig',
+        requires = {
+            'williamboman/mason.nvim',
+        },
+    }
     use 'nvim-lua/lsp_extensions.nvim'
     use 'numToStr/Comment.nvim'
     use 'andweeb/presence.nvim'
@@ -42,7 +47,7 @@ require('packer').startup(function()
             if vim.g.neovide == nil then
                 vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
             end
-            hl(0, 'LspComment', { link = "Comment" })
+            hl(0, 'LspComment', { link = 'Comment' })
             -- Neovim 0.7 'laststatus' specific
             if vim.fn.has 'nvim-0.7' then
                 hl(0, 'WinSeparator', { bg = 'NONE', ctermbg = 'NONE' })
@@ -107,9 +112,9 @@ require('packer').startup(function()
     }
 
     -- Rust or Bust
-    use { 'ron-rs/ron.vim', ft = 'ron' }
-    use { 'rust-lang/rust.vim', ft = 'rust' }
-    use { 'cespare/vim-toml', ft = 'toml' }
+    use 'ron-rs/ron.vim'
+    use 'rust-lang/rust.vim'
+    use 'cespare/vim-toml'
     use 'simrat39/rust-tools.nvim'
 
     -- Lsp
@@ -126,15 +131,39 @@ require('packer').startup(function()
 
     use 'tjdevries/nlua.nvim'
     use {
-        'williamboman/nvim-lsp-installer',
+        'williamboman/mason.nvim',
+        requires = {
+            'williamboman/mason-lspconfig.nvim',
+        },
+        config = function()
+            require('mason').setup()
+            require('mason-lspconfig').setup {
+                ensure_installed = {
+                    'clangd',
+                    'emmet_ls',
+                    'gopls',
+                    'html',
+                    'jsonls',
+                    'kotlin_language_server',
+                    'lemminx',
+                    'pylsp',
+                    'rnix',
+                    'rust_analyzer',
+                    'sumneko_lua',
+                    'svelte',
+                    -- 'taplo',
+                    'tsserver',
+                    'volar',
+                },
+            }
+        end,
         run = function()
             local servers = {
-                'rust_analyzer',
-                -- 'taplo',
-                'pylsp',
-                'kotlin_language_server',
+                'black',
+                'stylua',
+                'shellcheck',
             }
-            EX.LspInstall(servers)
+            require('mason.api.command').MasonInstall(servers)
         end,
     }
     use 'ray-x/lsp_signature.nvim'
@@ -169,7 +198,7 @@ require('packer').startup(function()
         },
         config = function()
             R 'dtomvan.plugins.luasnip'
-            R 'dtomvan.plugins.cmp'
+            -- R 'dtomvan.plugins.cmp'
         end,
     }
 

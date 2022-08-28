@@ -66,4 +66,5 @@ XINIT=1 bash ~/.profile || true &
 ~/obs-sinks.sh &
 sh -c 'pactl unload-module module-switch-on-connect; pactl load-module module-switch-on-connect;' &
 birdtray &
+mpd-rpc &
 exec dbus-launch $HOME/.local/bin/bspwm-start
