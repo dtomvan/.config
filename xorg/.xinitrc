@@ -39,7 +39,6 @@ fi
 export AWT_TOOLKIT=MToolkit
 export QT_QPA_PLATFORMTHEME=qt6ct
 xsetroot -cursor_name left_ptr
-xbindkeys
 picom --experimental-backends --xrender-sync-fence --backend glx &
 ~/i3lock.sh && xautolock -notify 10 -notifier 'notify-send "locking in 10 seconds..."' -locker "systemctl suspend" -nowlocker ./i3lock.sh &
 playerctld daemon &

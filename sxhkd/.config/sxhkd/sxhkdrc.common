@@ -46,3 +46,15 @@ super + control + r
 
 super + shift + r
  close-bar
+
+XF86Audio{Play,Prev,Next,Stop}
+ playerctl {play-pause,previous,next,stop}
+
+super + a : XF86AudioStop
+ playerctl -a stop
+
+XF86Audio{Raise,Lower}Volume
+ pactl set-sink-volume @DEFAULT_SINK@ {+,-}1000
+
+XF86AudioMute
+ amixer set Master toggle

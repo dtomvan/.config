@@ -292,6 +292,13 @@ require('packer').startup(function()
         end,
     }
 
+    use {
+        'gaoDean/autolist.nvim',
+        config = function()
+            require('autolist').setup {}
+        end
+    }
+
     -- Profiler
     use 'dstein64/vim-startuptime'
     -- Only when using on specific machine,
