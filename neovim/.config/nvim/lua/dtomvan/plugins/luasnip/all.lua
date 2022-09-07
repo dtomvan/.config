@@ -4,6 +4,7 @@ local fmt = require('luasnip.extras.fmt').fmt
 local s = ls.snippet
 local f = ls.function_node
 local i = ls.insert_node
+local c = ls.choice_node
 
 local function bash(_, _, command)
     local file = io.popen(command, 'r')
@@ -60,9 +61,9 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
 IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ]],
-            { f(function()
+            { c(1, { f(function()
                 return os.date '%Y'
-            end) }
+            end), i(nil, 'Custom year here') }) }
         )
     ),
 })

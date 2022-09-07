@@ -40,17 +40,20 @@ require('packer').startup(function()
     -- Color scheme
     use {
         'rebelot/kanagawa.nvim',
+        requires = { 'levouh/tint.nvim' },
         config = function()
             local hl = vim.api.nvim_set_hl
             vim.o.background = 'dark'
             EX.colorscheme 'kanagawa'
-            if vim.g.neovide == nil then
-                vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
-            end
             hl(0, 'LspComment', { link = 'Comment' })
             -- Neovim 0.7 'laststatus' specific
             if vim.fn.has 'nvim-0.7' then
-                hl(0, 'WinSeparator', { bg = 'NONE', ctermbg = 'NONE' })
+                local tint = require 'tint'
+                if vim.api.nvim_win_set_hl_ns then
+                    ---@diagnostic disable-next-line: missing-parameter
+                    tint.setup()
+                    -- tint.refresh()
+                end
             end
         end,
     }
@@ -76,7 +79,7 @@ require('packer').startup(function()
         config = function()
             R 'dtomvan.plugins.express_line'
         end,
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+        requires = { 'kyazdani42/nvim-web-devicons' },
     }
 
     -- Prime goodness
@@ -126,6 +129,7 @@ require('packer').startup(function()
         config = function()
             R 'dtomvan.plugins.treesitter'
         end,
+        requires = { 'nvim-treesitter/playground', 'nvim-treesitter/nvim-treesitter-textobjects' },
     }
     use 'theHamsta/nvim-semantic-tokens'
 
@@ -198,7 +202,7 @@ require('packer').startup(function()
         },
         config = function()
             R 'dtomvan.plugins.luasnip'
-            -- R 'dtomvan.plugins.cmp'
+            R 'dtomvan.plugins.cmp'
         end,
     }
 
@@ -296,7 +300,7 @@ require('packer').startup(function()
         'gaoDean/autolist.nvim',
         config = function()
             require('autolist').setup {}
-        end
+        end,
     }
 
     -- Profiler

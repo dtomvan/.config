@@ -9,6 +9,7 @@ all: pkgs rust $(dirs) install-st ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~
 	home-manager build
 	home-manager switch
 	nix-shell -p gcc
+	pip install sqlparse
 	nvim --headless -c PackerClean -c PackerInstall -c PackerCompile -c "qa!"
 	localectl set-x11-keymap us,gr "" "" compose:ralt
 

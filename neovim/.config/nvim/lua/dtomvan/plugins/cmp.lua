@@ -5,13 +5,22 @@ end
 local cmp = require 'cmp'
 local ls = require 'luasnip'
 
+local sources = {
+    { name = 'orgmode' },
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+    { name = 'nvim_lua' },
+    { name = 'zsh' },
+    { name = 'path' },
+}
+
 cmp.setup {
     window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
     },
     mapping = {
-        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-e>'] = cmp.mapping.close(),
         ['<c-y>'] = cmp.mapping.confirm { select = true },
@@ -39,14 +48,7 @@ cmp.setup {
             end
         end, { 'i', 's' }),
     },
-    sources = cmp.config.sources({
-        { name = 'orgmode' },
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        { name = 'nvim_lua' },
-        { name = 'zsh' },
-        { name = 'path' },
-    }, { name = 'buffer' }),
+    sources = cmp.config.sources(sources, { name = 'buffer' }),
 
     snippet = {
         expand = function(args)
@@ -68,14 +70,8 @@ cmp.setup {
     },
 
     experimental = {
-        native_menu = false,
         ghost_text = true,
     },
 }
 
-cmp.setup.cmdline('/', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-        { name = 'buffer' },
-    },
-})
+return sources

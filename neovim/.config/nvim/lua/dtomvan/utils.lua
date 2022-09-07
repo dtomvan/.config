@@ -62,20 +62,17 @@ function M.fmt_file_name(name)
 end
 
 function M.winbar()
-    local filename = vim.api.nvim_buf_get_name(0)
-    local name = M.fmt_file_name(filename)
+    local filename = vim.fn.expand('%:t')
+    local file_type = vim.fn.expand('%:e')
 
     local ok, _ = pcall(require, 'nvim-web-devicons')
     if not ok then
-        return '%=%m ' .. name
+        return '%=%m %f'
     end
 
-    local ext_split = vim.split(filename, '.', { plain = true })
-    local len = #ext_split
-    local extension = ext_split[len]
-    local icon = M.file_icon(filename, extension) or ''
+    local icon = M.file_icon(filename, file_type) or ''
 
-    return '%=%m ' .. icon .. ' ' .. name
+    return '%=%m ' .. icon .. ' %f'
 end
 
 local winbuf = function(ty)

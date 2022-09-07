@@ -146,4 +146,13 @@ vim.keymap.set('n', '<C-l>', '<C-w>l')
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr)
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr)
 
+vim.keymap.set('n', '<c-s>', function()
+    local ft = vim.bo.filetype
+    if ft == "lua" or ft == "vim" then
+        return '<cmd>w<cr><cmd>so<cr>'
+    else
+        return ''
+    end
+end, expr)
+
 return { silent = silent, noremap = noremap, expr = expr }

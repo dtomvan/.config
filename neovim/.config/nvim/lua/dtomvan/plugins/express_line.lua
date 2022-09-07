@@ -28,7 +28,10 @@ local generator = function(win)
     end
 
     table.insert(segs, sections.split)
-    table.insert(segs, subscribe.buf_autocmd('el_file_icon', 'BufRead', icon))
+    local ok, mod = pcall(require, 'nvim-web-devicons')
+    if ok and mod.has_loaded() == true then
+        table.insert(segs, subscribe.buf_autocmd('el_file_icon', 'BufRead', icon))
+    end
     table.insert(segs, ' ')
     table.insert(segs, relative_file_name)
     table.insert(segs, sections.split)

@@ -49,10 +49,6 @@ vim.g.mapleader = ' '
 if vim.fn.has 'nvim-0.7' == 1 then
     ops.ls = 3
 end
-if vim.fn.has 'nvim-0.8' == 1 then
-    ops.winbar = '%!luaeval("require\\"dtomvan.utils\\".winbar()")'
-    -- ops.winbar = '%=%m %f'
-end
 
 local g = vim.g
 if g.neovide ~= nil then
