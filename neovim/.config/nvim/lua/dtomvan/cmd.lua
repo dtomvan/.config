@@ -37,16 +37,16 @@ end, {
     end,
 })
 
-cmd('Scratch', function(_)
-    local function bail(msg)
-        vim.notify(msg, vim.log.levels.ERROR)
-    end
+local function bail(msg)
+    vim.notify(msg, vim.log.levels.ERROR)
+end
 
+cmd('Scratch', function(_)
     local home = os.getenv 'HOME'
     if not home then
         return bail 'Cannot find home dir'
     end
-    local scratch_dir = string.format('%s/.config/nvim/scratch/', home)
+    local scratch_dir = string.format('%s/.config/nvim/scratch', home)
     vim.fn.mkdir(scratch_dir, 'p')
 
     local scratch_files = {}
@@ -79,3 +79,33 @@ cmd('Scratch', function(_)
         end
     end)
 end, { desc = 'Create new scratch file in ~/.config/nvim', force = true })
+
+local function thisft()
+    local home = os.getenv 'HOME'
+    if not home then
+        return bail 'Cannot find home dir'
+    end
+    local ftplugindir = string.format('%s/.config/nvim/ftplugin', home)
+    vim.fn.mkdir(ftplugindir, 'p')
+    local has_lua = false
+    local has_vim = false
+    local cur_ft = vim.bo.filetype
+    for filename in vim.fs.dir(ftplugindir) do
+        if string.match(filename, '^' .. cur_ft .. '%.lua') then
+            has_lua = true
+            break
+        elseif string.match(filename, '^' .. cur_ft .. '%.vim') then
+            has_vim = true
+            break
+        end
+    end
+    if has_vim and not has_lua then
+        EX.edit(string.format('%s/%s.vim', ftplugindir, cur_ft))
+        return
+    end
+    EX.edit(string.format('%s/%s.lua', ftplugindir, cur_ft))
+    EX.Mkdir()
+end
+
+cmd('GoFt', thisft, { desc = 'Open current ftplugin', force = true })
+vim.keymap.set('n', '<space>gft', thisft)

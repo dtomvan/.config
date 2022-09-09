@@ -103,8 +103,8 @@ local function get_lua_runtime()
 
     -- TODO: Figure out how to get these to work...
     --  Maybe we need to ship these instead of putting them in `src`?...
-    -- result[vim.fn.expand '~/repos/neovim/src/nvim/lua'] = true
-    result['/usr/share/nvim/runtime/lua'] = true
+    result[vim.fn.expand '~/repos/neovim/src/nvim/lua'] = true
+    -- result['/usr/share/nvim/runtime/lua'] = true
 
     return result
 end

@@ -1,39 +1,40 @@
 local silent = { silent = true, noremap = true }
 local noremap = { noremap = true }
 local expr = { expr = true, silent = true }
+local map = vim.keymap.set
 
-require('dtomvan.tere').setup()
+R('dtomvan.tere').setup()
 
-vim.keymap.set('', '<space>', '<Nop>', silent)
+map('', '<space>', '<Nop>', silent)
 
 local breakpoints = { ',', '!', '.', '?', ';' }
 for _, point in ipairs(breakpoints) do
-    vim.keymap.set('i', point, point .. '<c-g>u', silent)
+    map('i', point, point .. '<c-g>u', silent)
 end
 
 -- Utils
-vim.keymap.set('n', '<leader><CR>', '<C-w>w', silent)
-vim.keymap.set('n', '<leader><leader>', ':<up>')
+map('n', '<leader><CR>', '<C-w>w', silent)
+map('n', '<leader><leader>', ':<up>')
 
 -- Window management
-vim.keymap.set('n', '<C-Down>', ':resize +2<CR>', silent)
-vim.keymap.set('n', '<C-Up>', ':resize -2<CR>', silent)
-vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', silent)
-vim.keymap.set('n', '<C-Left>', ':vertical resize -2<CR>', silent)
-vim.keymap.set('n', '<C-S-Right>', '<C-w><C-L>', silent)
-vim.keymap.set('n', '<C-S-Up>', '<C-w><C-K>', silent)
-vim.keymap.set('n', '<C-S-Down>', '<C-w><C-J>', silent)
-vim.keymap.set('n', '<C-S-Left>', '<C-w><C-H>', silent)
+map('n', '<C-Down>', ':resize +2<CR>', silent)
+map('n', '<C-Up>', ':resize -2<CR>', silent)
+map('n', '<C-Right>', ':vertical resize +2<CR>', silent)
+map('n', '<C-Left>', ':vertical resize -2<CR>', silent)
+map('n', '<C-S-Right>', '<C-w><C-L>', silent)
+map('n', '<C-S-Up>', '<C-w><C-K>', silent)
+map('n', '<C-S-Down>', '<C-w><C-J>', silent)
+map('n', '<C-S-Left>', '<C-w><C-H>', silent)
 
 -- Join lines correctly
-vim.keymap.set('n', 'J', 'mzJ`z', silent)
+map('n', 'J', 'mzJ`z', silent)
 
 -- copy entire file
-vim.keymap.set('n', '<leader>y', 'mpggyG`p', silent)
+map('n', '<leader>y', 'mpggyG`p', silent)
 
 -- quickfix list
-vim.keymap.set('n', '<leader>j', ':cnext<CR>', silent)
-vim.keymap.set('n', '<leader>k', ':cprev<CR>', silent)
+map('n', '<leader>j', ':cnext<CR>', silent)
+map('n', '<leader>k', ':cprev<CR>', silent)
 
 -- harpoon
 local function nav(n)
@@ -43,38 +44,38 @@ local function nav(n)
 end
 
 for i in ipairs { 1, 2, 3, 4 } do
-    vim.keymap.set('n', string.format('<leader>%d', i), nav(i), silent)
+    map('n', string.format('<leader>%d', i), nav(i), silent)
 end
 
-vim.keymap.set('n', '<leader>m', function()
+map('n', '<leader>m', function()
     require('harpoon.mark').add_file()
 end, silent)
-vim.keymap.set('n', '<F2>', function()
+map('n', '<F2>', function()
     require('harpoon.ui').toggle_quick_menu()
 end, silent)
 
 -- Make current file executable
-vim.keymap.set('n', '<leader>x', ':silent !chmod +x %<CR>', silent)
+map('n', '<leader>x', ':silent !chmod +x %<CR>', silent)
 
 -- no highlight
-vim.keymap.set('n', '<leader>n', ':noh<cr>', silent)
+map('n', '<leader>n', ':noh<cr>', silent)
 
 -- shout out the file
-vim.keymap.set('n', '<leader>s', '<cr>so <cr>', silent)
+map('n', '<leader>s', '<cr>so <cr>', silent)
 
-vim.keymap.set('n', '<left>', require('jvim').to_parent, silent)
-vim.keymap.set('n', '<right>', require('jvim').descend, silent)
-vim.keymap.set('n', '<up>', require('jvim').prev_sibling, silent)
-vim.keymap.set('n', '<down>', require('jvim').next_sibling, silent)
+map('n', '<left>', require('jvim').to_parent, silent)
+map('n', '<right>', require('jvim').descend, silent)
+map('n', '<up>', require('jvim').prev_sibling, silent)
+map('n', '<down>', require('jvim').next_sibling, silent)
 
 -- Sort selection
-vim.keymap.set('v', '<leader>s', ':!sort<cr>', silent)
+map('v', '<leader>s', ':!sort<cr>', silent)
 
 -- Move lines
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", silent)
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", silent)
-vim.keymap.set('v', '<leader>k', ':m-2<CR>gv=gv', silent)
-vim.keymap.set('v', '<leader>j', ":m'>+<CR>gv=gv", silent)
+map('v', 'J', ":m '>+1<CR>gv=gv", silent)
+map('v', 'K', ":m '<-2<CR>gv=gv", silent)
+map('v', '<leader>k', ':m-2<CR>gv=gv', silent)
+map('v', '<leader>j', ":m'>+<CR>gv=gv", silent)
 
 -- TODO: Use toggleterm
 -- Quick terminals
@@ -94,61 +95,55 @@ local function open_term(cmd, tmode, bufnr)
         if tmode then
             EX.start()
         end
-        vim.keymap.set('n', '<esc>', function()
+        map('n', '<esc>', function()
             require('plenary.window').try_close(window.win_id)
             vim.fn.jobstop(job)
         end, { buffer = window.bufnr })
 
-        vim.keymap.set({ 'n', 't' }, '<a-q>', function()
+        map({ 'n', 't' }, '<a-q>', function()
             EX.winc 'J'
         end, { buffer = window.bufnr })
 
-        vim.keymap.set({ 'n', 't' }, '<a-f>', function()
+        map({ 'n', 't' }, '<a-f>', function()
             open_term(cmd, tmode, window.bufnr)
         end, { buffer = window.bufnr })
     end
     EX['autocmd!']('WinLeave', '<buffer>')
 end
 
-local spterm = function(type)
-    return string.format('<cmd>%s term://%s<cr>', type, os.getenv 'SHELL')
+local function termbind(bind, mode, cmd, tmode, bufnr)
+    local is_ok, _ = pcall(map, bind, mode, function()
+        open_term(cmd, tmode, bufnr)
+    end)
+    return is_ok
 end
-vim.keymap.set('n', '<leader>cv', function()
-    return spterm 'vs'
-end, { expr = true })
-vim.keymap.set('n', '<leader>cx', function()
-    return spterm 'sp'
-end, { expr = true })
 
-vim.keymap.set('n', '<leader>cl', function()
-    open_term(vim.env.SHELL, true)
-end)
-vim.keymap.set('n', '<leader>cb', function()
-    open_term('mold -run cargo b', false)
-end)
-vim.keymap.set('n', '<leader>cc', function()
-    open_term('mold -run cargo clippy', false)
-end)
-vim.keymap.set('n', '<leader>cr', function()
-    open_term('mold -run cargo r', false)
-end)
-vim.keymap.set('n', '<leader>ct', function()
-    open_term('mold -run cargo t', false)
-end)
-vim.keymap.set('n', '<leader>tl', function()
-    open_term('mold -run cargo t --lib', false)
-end)
+local function spterm(bind, mode, type)
+    local is_ok =
+        pcall(map, bind, mode, string.format('<cmd>%s term://%s<cr>', type, os.getenv 'SHELL'), { expr = true })
+    return is_ok
+end
 
-vim.keymap.set('n', '<C-h>', '<C-w>h')
-vim.keymap.set('n', '<C-j>', '<C-w>j')
-vim.keymap.set('n', '<C-k>', '<C-w>k')
-vim.keymap.set('n', '<C-l>', '<C-w>l')
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr)
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr)
+spterm('n', '<leader>cv', 'vs')
+spterm('n', '<leader>cx', 'sp')
 
-vim.keymap.set('n', '<c-s>', function()
+termbind('n', '<leader>cl', vim.env.SHELL, true)
+termbind('n', '<leader>cb', 'mold -run cargo b', false)
+termbind('n', '<leader>cc', 'mold -run cargo clippy', false)
+termbind('n', '<leader>cr', 'mold -run cargo r', false)
+termbind('n', '<leader>ct', 'mold -run cargo t', false)
+termbind('n', '<leader>tl', 'mold -run cargo t --lib', false)
+
+map('n', '<C-h>', '<C-w>h')
+map('n', '<C-j>', '<C-w>j')
+map('n', '<C-k>', '<C-w>k')
+map('n', '<C-l>', '<C-w>l')
+map('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr)
+map('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr)
+
+map('n', '<c-s>', function()
     local ft = vim.bo.filetype
-    if ft == "lua" or ft == "vim" then
+    if ft == 'lua' or ft == 'vim' then
         return '<cmd>w<cr><cmd>so<cr>'
     else
         return ''

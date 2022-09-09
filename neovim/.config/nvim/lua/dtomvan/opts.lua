@@ -1,56 +1,69 @@
-local ops = vim.opt
+local opt = vim.opt
+local g = vim.g
 
-ops.autoindent = true
-ops.background = 'dark'
-ops.backup = false
-ops.clipboard = 'unnamedplus'
-ops.cmdheight = 1
-ops.conceallevel = 2
-ops.compatible = false
-ops.completeopt = 'menuone'
-ops.completeopt = { 'menuone', 'noinsert', 'noselect' }
-ops.copyindent = true
-ops.cursorline = true
-ops.expandtab = true
-ops.expandtab = true
-ops.hidden = true
-ops.ignorecase = true
-ops.lazyredraw = true
-ops.listchars = 'trail:·,tab:>--,lead:-,nbsp:~'
-ops.list = true
-ops.mouse = 'a'
-ops.number = true
-ops.number = true
-ops.relativenumber = true
-ops.rnu = true
-ops.scrolloff = 8
-ops.shiftwidth = 4
-ops.shiftwidth = 4
-ops.shortmess = ops.shortmess + 'a'
-ops.showtabline = 1
-ops.signcolumn = 'yes'
-ops.smartcase = true
-ops.softtabstop = 4
-ops.swapfile = true
-ops.tabstop = 4
-ops.tabstop = 4
-ops.termguicolors = true
-ops.textwidth = 120
-ops.textwidth = 80
-ops.timeoutlen = 500
-ops.title = true
-ops.undofile = true
-ops.updatetime = 300
-ops.wrap = true
-ops.wrap = true
-ops.writebackup = true
-vim.g.mapleader = ' '
+opt.autoindent = true
+opt.background = 'dark'
+opt.backup = false
+opt.clipboard = 'unnamedplus'
+opt.cmdheight = 1
+opt.conceallevel = 2
+opt.compatible = false
+opt.completeopt = 'menuone'
+opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
+opt.copyindent = true
+opt.cursorline = true
+opt.expandtab = true
+opt.expandtab = true
+opt.hidden = true
+opt.ignorecase = true
+opt.lazyredraw = true
+opt.listchars = 'trail:·,tab:>--,lead:-,nbsp:~'
+opt.list = true
+opt.mouse = 'a'
+opt.number = true
+opt.number = true
+opt.relativenumber = true
+opt.rnu = true
+opt.scrolloff = 8
+opt.shiftwidth = 4
+opt.shiftwidth = 4
+opt.shortmess = opt.shortmess + 'a'
+opt.showtabline = 1
+opt.signcolumn = 'yes'
+opt.smartcase = true
+opt.softtabstop = 4
+opt.swapfile = true
+opt.tabstop = 4
+opt.tabstop = 4
+opt.termguicolors = true
+opt.textwidth = 120
+opt.textwidth = 80
+opt.timeoutlen = 500
+opt.title = true
+opt.undofile = true
+opt.updatetime = 300
+opt.wrap = true
+opt.wrap = true
+opt.writebackup = true
+g.mapleader = ' '
 
-if vim.fn.has 'nvim-0.7' == 1 then
-    ops.ls = 3
+local utils = require 'dtomvan.utils'
+
+-- `gf` mapping
+_G.include_expr = function(fname)
+    local f = ''
+    if type(fname) == 'string' then
+        f = fname
+    else
+        f = vim.v.fname
+    end
+    return string.gsub(f, '%.', '/')
 end
 
-local g = vim.g
+if vim.fn.has 'nvim-0.7' == 1 then
+    opt.ls = 3
+end
+
 if g.neovide ~= nil then
     g.neovide_transparency = 0.8
     -- Monitor's refresh rate + 30
@@ -58,6 +71,6 @@ if g.neovide ~= nil then
     g.neovide_floating_blur_amount_x = 2.0
     g.neovide_floating_blur_amount_y = 2.0
     g.neovide_cursor_antialiasing = true
-    g.neovide_cursor_vfx_mode = "railgun"
+    g.neovide_cursor_vfx_mode = 'railgun'
     g.neovide_scroll_animation_length = 0.3
 end

@@ -254,6 +254,7 @@ require('packer').startup(function()
             end
         end,
     }
+    -- use 'simrat39/desktop-notify.nvim'
 
     -- Misc
     use 'tversteeg/registers.nvim'

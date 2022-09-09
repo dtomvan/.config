@@ -121,7 +121,7 @@ if vim.fn.has 'nvim-0.8' == 1 then
                 'toggleterm',
                 'Trouble',
             }
-            vim.schedule_wrap(function()
+            vim.schedule(function()
                 if vim.tbl_contains(winbar_exclude, vim.bo.filetype) then
                     return
                 end
