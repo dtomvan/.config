@@ -42,19 +42,38 @@ require('nvim-treesitter.configs').setup {
 
             keymaps = {
                 -- You can use the capture groups defined in textobjects.scm
+                ['ic'] = '@call.inner',
+                ['ac'] = '@call.outer',
                 ['af'] = '@function.outer',
+                ['ap'] = '@parameter.outer',
                 ['if'] = '@function.inner',
-                ['ac'] = '@class.outer',
-                -- you can optionally set descriptions to the mappings (used in the desc parameter of nvim_buf_set_keymap
-                ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
             },
             -- You can choose the select mode (default is charwise 'v')
             selection_modes = {
-                ['@parameter.outer'] = 'v', -- charwise
                 ['@function.outer'] = 'V', -- linewise
-                ['@class.outer'] = '<c-v>', -- blockwise
             },
             include_surrounding_whitespace = true,
         },
     },
+    refactor = {
+        navigation = {
+            enable = true,
+            keymaps = {
+                goto_definition_lsp_fallback = 'gd',
+                list_definitions = 'gD',
+                list_definitions_toc = 'gO',
+                goto_next_usage = '<a-*>',
+                goto_previous_usage = '<a-#>',
+            },
+        },
+    },
+}
+
+require('treesitter-context').setup {
+    max_lines = 5,
+    trim_scope = 'outer',
+    mode = 'topline', -- Line used to calculate context. Choices: 'cursor', 'topline'
+    -- Separator between context and content. Should be a single character string, like '-'.
+    -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+    separator = nil,
 }

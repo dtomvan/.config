@@ -12,6 +12,7 @@ local sources = {
     { name = 'nvim_lua' },
     { name = 'zsh' },
     { name = 'path' },
+    -- { name = 'spell' },
 }
 
 cmp.setup {

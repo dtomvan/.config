@@ -28,9 +28,8 @@ vim.keymap.set('s', '<c-k>', function()
     require('luasnip').jump(1)
 end, silent)
 
--- TODO: Do this better
-for _, name in ipairs { 'all', 'rust', 'lua', 'md' } do
-    require('dtomvan.plugins.luasnip.' .. name)
+for _, source in ipairs(vim.api.nvim_get_runtime_file('lua/dtomvan/plugins/luasnip/*.lua', true)) do
+    loadfile(source)()
 end
 
 ls.config.set_config {

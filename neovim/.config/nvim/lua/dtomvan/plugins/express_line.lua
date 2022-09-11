@@ -2,7 +2,7 @@ local builtin = require 'el.builtin'
 local extensions = require 'el.extensions'
 local sections = require 'el.sections'
 local subscribe = require 'el.subscribe'
-local utils = require 'dtomvan.utils'
+local utils = R 'dtomvan.utils'
 
 local function icon(_, buf)
     return utils.file_icon(buf.name, buf.extension)

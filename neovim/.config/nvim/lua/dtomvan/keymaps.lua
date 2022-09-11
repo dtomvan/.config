@@ -31,6 +31,8 @@ map('n', 'J', 'mzJ`z', silent)
 
 -- copy entire file
 map('n', '<leader>y', 'mpggyG`p', silent)
+-- paste into _
+map('x', '<leader>p', '"_dP', silent)
 
 -- quickfix list
 map('n', '<leader>j', ':cnext<CR>', silent)

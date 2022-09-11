@@ -21,7 +21,12 @@ require('packer').startup(function()
         },
     }
     use 'nvim-lua/lsp_extensions.nvim'
-    use 'numToStr/Comment.nvim'
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup {}
+        end,
+    }
     use 'andweeb/presence.nvim'
 
     -- Startup time improvements
@@ -129,7 +134,12 @@ require('packer').startup(function()
         config = function()
             R 'dtomvan.plugins.treesitter'
         end,
-        requires = { 'nvim-treesitter/playground', 'nvim-treesitter/nvim-treesitter-textobjects' },
+        requires = {
+            'nvim-treesitter/nvim-treesitter-context',
+            'nvim-treesitter/nvim-treesitter-textobjects',
+            'nvim-treesitter/playground',
+            'nvim-treesitter/nvim-treesitter-refactor',
+        },
     }
     use 'theHamsta/nvim-semantic-tokens'
 
@@ -175,13 +185,7 @@ require('packer').startup(function()
     use {
         'jose-elias-alvarez/null-ls.nvim',
         config = function()
-            require('null-ls').setup {
-                sources = {
-                    require('null-ls').builtins.formatting.stylua,
-                    require('null-ls').builtins.formatting.taplo,
-                    require('null-ls').builtins.formatting.black,
-                },
-            }
+            require 'dtomvan.plugins.null-ls'
         end,
         requires = { 'nvim-lua/plenary.nvim' },
     }
@@ -195,6 +199,7 @@ require('packer').startup(function()
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-path',
             'hrsh7th/nvim-cmp',
+            'f3fora/cmp-spell',
             'L3MON4D3/LuaSnip',
             'onsails/lspkind-nvim',
             'saadparwaiz1/cmp_luasnip',

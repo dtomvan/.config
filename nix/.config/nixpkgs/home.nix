@@ -1,11 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-    }))
-  ];
+  # nixpkgs.overlays = [
+  #   (import (builtins.fetchTarball {
+  #     url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+  #   }))
+  # ];
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -76,52 +76,52 @@
   #   };
   # };
 
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    vimdiffAlias = true;
-    extraConfig = ''
-      let g:did_load_filetypes=1
-      lua << EOF
-      package.loaded.globals = nil
-      require 'dtomvan.globals'
-      R 'dtomvan.plugins'
-      R 'dtomvan.opts'
-      R 'dtomvan.lsp'
-      R 'dtomvan.keymaps'
-      R 'dtomvan.au'
-      R 'dtomvan.cmd'
-
-      -- abbreviations
-      EX.noreabbrev('fcd', 'cd %:p:h')
-      require('Comment').setup {}
-      EOF
-    '';
-    package = pkgs.neovim-nightly;
-    extraPackages = with pkgs; [
-      pkgs.gccStdenv
-    ];
-    plugins = with pkgs.vimPlugins; [
-      packer-nvim
-      nvim-lspconfig
-      lsp_extensions-nvim
-      impatient-nvim
-      popup-nvim
-      plenary-nvim
-      vim-surround
-      vim-git
-      vim-fugitive
-      vim-eunuch
-      vim-unimpaired
-      vim-repeat
-      vim-vinegar
-      vim-sleuth
-      vim-endwise
-      comment-nvim
-      presence-nvim
-    ];
-  };
+  # programs.neovim = {
+  #   enable = true;
+  #   viAlias = true;
+  #   vimAlias = true;
+  #   vimdiffAlias = true;
+  #   extraConfig = ''
+  #     let g:did_load_filetypes=1
+  #     lua << EOF
+  #     package.loaded.globals = nil
+  #     require 'dtomvan.globals'
+  #     R 'dtomvan.plugins'
+  #     R 'dtomvan.opts'
+  #     R 'dtomvan.lsp'
+  #     R 'dtomvan.keymaps'
+  #     R 'dtomvan.au'
+  #     R 'dtomvan.cmd'
+  #
+  #     -- abbreviations
+  #     EX.noreabbrev('fcd', 'cd %:p:h')
+  #     require('Comment').setup {}
+  #     EOF
+  #   '';
+  #   package = pkgs.neovim-nightly;
+  #   extraPackages = with pkgs; [
+  #     pkgs.gccStdenv
+  #   ];
+  #   plugins = with pkgs.vimPlugins; [
+  #     packer-nvim
+  #     nvim-lspconfig
+  #     lsp_extensions-nvim
+  #     impatient-nvim
+  #     popup-nvim
+  #     plenary-nvim
+  #     vim-surround
+  #     vim-git
+  #     vim-fugitive
+  #     vim-eunuch
+  #     vim-unimpaired
+  #     vim-repeat
+  #     vim-vinegar
+  #     vim-sleuth
+  #     vim-endwise
+  #     comment-nvim
+  #     presence-nvim
+  #   ];
+  # };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -134,7 +134,7 @@
   home.stateVersion = "22.05";
 
   # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  programs.home-manager.enable = false /* true */;
 }
 
 # vim:shiftwidth=4

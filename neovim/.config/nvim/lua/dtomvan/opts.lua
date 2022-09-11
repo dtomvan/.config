@@ -6,10 +6,10 @@ opt.background = 'dark'
 opt.backup = false
 opt.clipboard = 'unnamedplus'
 opt.cmdheight = 1
-opt.conceallevel = 2
 opt.compatible = false
 opt.completeopt = 'menuone'
 opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
+opt.conceallevel = 2
 opt.copyindent = true
 opt.cursorline = true
 opt.expandtab = true
@@ -32,6 +32,7 @@ opt.showtabline = 1
 opt.signcolumn = 'yes'
 opt.smartcase = true
 opt.softtabstop = 4
+opt.spelllang = 'en_us,nl'
 opt.swapfile = true
 opt.tabstop = 4
 opt.tabstop = 4
@@ -46,8 +47,6 @@ opt.wrap = true
 opt.wrap = true
 opt.writebackup = true
 g.mapleader = ' '
-
-local utils = require 'dtomvan.utils'
 
 -- `gf` mapping
 _G.include_expr = function(fname)

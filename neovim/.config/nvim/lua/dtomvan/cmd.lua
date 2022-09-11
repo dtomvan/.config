@@ -46,7 +46,7 @@ cmd('Scratch', function(_)
     if not home then
         return bail 'Cannot find home dir'
     end
-    local scratch_dir = string.format('%s/.config/nvim/scratch', home)
+    local scratch_dir = string.format('%s/.config/nvim/scratch/', home)
     vim.fn.mkdir(scratch_dir, 'p')
 
     local scratch_files = {}
@@ -74,7 +74,7 @@ cmd('Scratch', function(_)
         completion = 'customlist,v:lua.scratch_comp',
     }, function(a)
         if a then
-            EX.edit(string.format('%s/%s', scratch_dir, a))
+            EX.edit(string.format('%s%s', scratch_dir, a))
             EX.Mkdir()
         end
     end)
