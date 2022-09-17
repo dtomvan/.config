@@ -122,7 +122,7 @@ end
 
 local function spterm(bind, mode, type)
     local is_ok =
-        pcall(map, bind, mode, string.format('<cmd>%s term://%s<cr>', type, os.getenv 'SHELL'), { expr = true })
+        pcall(map, bind, mode, string.format('<cmd>%s term://%s<cr>', type, os.getenv 'SHELL'))
     return is_ok
 end
 

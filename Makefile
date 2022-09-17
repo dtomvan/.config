@@ -2,13 +2,6 @@ dirs = backgrounds bins bspwm deadd discord emacs git gtk i3lock minecraft mpd m
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 
 all: pkgs rust $(dirs) install-st ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~/.local/bin/xwinwrap
-	nix-channel --list | grep home-manager || nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-	nix-channel --list | grep nixpkgs-unstable || nix-channel --add https://nixos.org/channels/nixpkgs-unstable
-	nix-channel --update
-	nix-shell '<home-manager>' -A install
-	home-manager build
-	home-manager switch
-	nix-shell -p gcc
 	pip install sqlparse
 	nvim --headless -c PackerClean -c PackerInstall -c PackerCompile -c "qa!"
 	localectl set-x11-keymap us,gr "" "" compose:ralt
@@ -37,6 +30,6 @@ pkgs:
 	yay -S --needed --norebuild - < pkgs.list
 
 rust:
-	which rustc || rustup default nightly
+	which rustc || rustup default nightly || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 .PHONY: pkgs rust $(dirs) /usr/local/bin/dmenu ~/.cargo/bin/dmenu_drun
