@@ -1,4 +1,4 @@
-dirs = backgrounds bins bspwm deadd discord emacs git gtk i3lock minecraft mpd mpv ncmpcpp neovim nix picom polybar sxhkd tmux wezterm xmonad xonotic xorg xplr zsh
+dirs = backgrounds bins bspwm deadd discord emacs git gtk i3lock minecraft mpd mpv ncmpcpp neovim picom polybar sxhkd tmux wezterm xmonad xonotic xorg xplr zsh
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 
 all: pkgs rust $(dirs) install-st ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~/.local/bin/xwinwrap
