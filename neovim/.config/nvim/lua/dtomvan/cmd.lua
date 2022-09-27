@@ -2,6 +2,7 @@ local uv = vim.loop
 local cmd = vim.api.nvim_create_user_command
 local system = vim.fn.system
 local flags = require 'dtomvan.rg_flags'
+local noremap = require('dtomvan.keymaps').noremap
 
 cmd('Rg', function(i)
     local args = i.args
@@ -108,4 +109,4 @@ local function thisft()
 end
 
 cmd('GoFt', thisft, { desc = 'Open current ftplugin', force = true })
-vim.keymap.set('n', '<space>gft', thisft)
+vim.keymap.set('n', '<space>gft', thisft, noremap 'Open ftplugin for current :set filetype')

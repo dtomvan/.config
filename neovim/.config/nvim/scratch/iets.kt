@@ -1,5 +1,5 @@
 @Query("SELECT * FROM Table WHERE field = 1")
-val this = 1
+val l = 1
 
 @Query("SELECT * FROM ")
 val a = 1
@@ -12,7 +12,7 @@ val c = 1
 
 @Entity
 class This {
-  val a = 1
-  val this: int
+  val a: Int = 1
+  val b: Int
   val that: String
 }

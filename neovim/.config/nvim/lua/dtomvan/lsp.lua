@@ -242,7 +242,7 @@ local rust_tools_opts = {
     server = {
         on_attach = function(...)
             on_attach(...)
-            vim.keymap.set('n', 'K', '<cmd>RustHoverActions<cr>', { buffer = true })
+            vim.keymap.set('n', 'K', '<cmd>RustHoverActions<cr>', { buffer = true, desc = 'Rust hover actions' })
         end,
         standalone = true,
         capabilities = capabilities,

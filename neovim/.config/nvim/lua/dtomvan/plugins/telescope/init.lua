@@ -22,27 +22,33 @@ require('telescope').setup {
 }
 require('telescope').load_extension 'fzy_native'
 
+local noremap = require('dtomvan.keymaps').noremap
 local pickers = R 'dtomvan.plugins.telescope.pickers'
 local ivy = require('telescope.themes').get_ivy {}
 
 -- Custom pickers
-vim.keymap.set('n', '<C-p>', pickers.grep)
-vim.keymap.set('n', '<leader>b', pickers.buffers)
-vim.keymap.set('n', '<leader>dd', pickers.dotfiles)
-vim.keymap.set('n', '<leader>fb', pickers.current_buffer)
-vim.keymap.set('n', '<leader>fd', pickers.configs)
-vim.keymap.set('n', '<leader>fp', pickers.projects)
-vim.keymap.set('n', '<leader>q', pickers.diagnostics)
+vim.keymap.set('n', '<C-p>', pickers.grep, noremap 'Grep over CWD files')
+vim.keymap.set('n', '<leader>b', pickers.buffers, noremap 'Select a buffer')
+vim.keymap.set('n', '<leader>dd', pickers.dotfiles, noremap 'Search through ~/Dotfiles')
+vim.keymap.set('n', '<leader>fb', pickers.current_buffer, noremap 'Current buffer fuzzy')
+vim.keymap.set('n', '<leader>fd', pickers.configs, noremap 'Search hidden files')
+vim.keymap.set('n', '<leader>fp', pickers.projects, noremap 'Telescope a directory')
+vim.keymap.set('n', '<leader>q', pickers.diagnostics, noremap 'Search through (LSP) diagnostics')
 -- Builtin pickers
 vim.keymap.set('n', '<leader>:', function()
     require('telescope.builtin').command_history(ivy)
-end)
-vim.keymap.set('n', '<leader>fc', require('telescope.builtin').commands)
-vim.keymap.set('n', '<leader>ft', require('telescope.builtin').lsp_workspace_symbols)
-vim.keymap.set('n', '<C-e>', require('telescope.builtin').fd)
-vim.keymap.set('n', '<leader>h', require('telescope.builtin').help_tags)
+end, noremap 'Command history')
+vim.keymap.set('n', '<leader>fc', require('telescope.builtin').commands, noremap 'Telescope EX commands')
+vim.keymap.set(
+    'n',
+    '<leader>ft',
+    require('telescope.builtin').lsp_workspace_symbols,
+    noremap 'Telescope workspace symbols'
+)
+vim.keymap.set('n', '<C-e>', require('telescope.builtin').fd, noremap 'File search')
+vim.keymap.set('n', '<leader>h', require('telescope.builtin').help_tags, noremap 'Telescope help files')
 
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles)
+vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, noremap 'File history')
 vim.keymap.set('n', '<leader>/', function()
     require('telescope.builtin').current_buffer_fuzzy_find(ivy)
-end)
+end, noremap 'Swiper')

@@ -9,9 +9,10 @@ M.generator = {
     fn = function(params, done)
         local split = vim.split(string.sub(params.content[params.row], 0, params.col + 1), '%s')
         local word_before_cursor = split[#split]
-        if vim.api.nvim_buf_call(params.bufnr, function()
-            return #vim.spell.check(word_before_cursor) == 0
-        end) or #word_before_cursor < 4
+        if
+            vim.api.nvim_buf_call(params.bufnr, function()
+                return #vim.spell.check(word_before_cursor) == 0
+            end) or #word_before_cursor < 4
         then
             return done { { items = {}, isIncomplete = true } }
         end

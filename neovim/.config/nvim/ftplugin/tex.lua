@@ -1,3 +1,4 @@
+local noremap = require('dtomvan.keymaps').noremap
 local user_cmd = vim.api.nvim_buf_create_user_command
 
 local M = {}
@@ -56,7 +57,7 @@ M.viewers = {
     },
 }
 
----@param infile fun(infile: string): string
+---@param infile nil | fun(infile: string): string
 ---@param cmdprompt fun(name: string, cmpname: string): string
 ---@param compiler tex.Compiler
 ---@param job boolean
@@ -65,7 +66,9 @@ local function run(infile, cmdprompt, compiler, job, done)
     if not compiler then
         return
     end
-    local name = infile(vim.fn.expand '%:.:~')
+    local name = (infile or function(...)
+        return ...
+    end)(vim.fn.expand '%:.:~')
     local cmd = string.gsub(compiler.cmd, '{}', name)
     cmd = string.gsub(cmd, '{out}', name:gsub('.tex$', '.pdf'))
     vim.ui.input({ prompt = cmdprompt(name, compiler.name), default = cmd }, function(c)
@@ -98,7 +101,7 @@ end
 ---@param collection table
 ---@param selprompt string
 ---@param cmdprompt fun(name: string, cmpname: string): string
----@param infile fun(infile: string): string
+---@param infile nil | fun(infile: string): string
 ---@param desc string
 ---@param jobstart boolean
 local function view_compile(cmdname, collection, selprompt, cmdprompt, infile, desc, jobstart)
@@ -125,6 +128,7 @@ local function view_compile(cmdname, collection, selprompt, cmdprompt, infile, d
             run(infile, cmdprompt, compiler, jobstart, done)
         end
     end
+
     user_cmd(0, cmdname, handler, {
         bar = true,
         nargs = '*',
@@ -135,9 +139,7 @@ end
 
 M.compile = view_compile('Compile', M.compilers, 'Select which LaTeX compiler to use: ', function(name, cmpname)
     return string.format('Compile %s with %s: ', name, cmpname)
-end, function(infile)
-    return infile
-end, 'Compile current LaTeX document.', false)
+end, nil, 'Compile current LaTeX document.', false)
 
 M.view = view_compile('View', M.viewers, 'Select which PDF viewer to use: ', function(name, cmpname)
     return string.format('View %s using %s: ', name, cmpname)
@@ -153,6 +155,6 @@ user_cmd(0, 'CView', function(_)
     end)
 end, { desc = ':Compile and :View' })
 
-vim.keymap.set('n', '<leader>cb', '<cmd>Compile<cr>')
-vim.keymap.set('n', '<leader>ct', '<cmd>View<cr>')
-vim.keymap.set('n', '<leader>cr', '<cmd>CView<cr>')
+vim.keymap.set('n', '<leader>cb', '<cmd>Compile<cr>', noremap 'Compile current LaTeX document')
+vim.keymap.set('n', '<leader>ct', '<cmd>View<cr>', noremap 'View compiled LaTeX PDF')
+vim.keymap.set('n', '<leader>cr', '<cmd>CView<cr>', noremap 'Compile and run current LaTeX document (like `cargo run`)')

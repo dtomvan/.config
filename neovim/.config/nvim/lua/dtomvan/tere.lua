@@ -53,7 +53,7 @@ M.setup = function(opts)
     opts = opts or {}
     opts = vim.tbl_extend('keep', opts, default_opts)
 
-    vim.keymap.set(opts.mode, opts.key, M.run, { silent = true })
+    vim.keymap.set(opts.mode, opts.key, M.run, { silent = true, desc = 'Change directory' })
 end
 
 return M

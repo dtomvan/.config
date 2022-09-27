@@ -10,31 +10,35 @@ local function preview_list(entry)
 end
 
 function M.projects()
-    pickers.new({
-        prompt_title = 'Projects',
-        finder = finders.new_oneshot_job({ 'fd', '--type', 'd' }, {}),
-        previewer = previewers.new_termopen_previewer {
-            get_command = preview_list,
-        },
-        attach_mappings = function(_, map)
-            map('i', '<CR>', actions.cd_into_dir)
-            return true
-        end,
-    }, {}):find()
+    pickers
+        .new({
+            prompt_title = 'Projects',
+            finder = finders.new_oneshot_job({ 'fd', '--type', 'd' }, {}),
+            previewer = previewers.new_termopen_previewer {
+                get_command = preview_list,
+            },
+            attach_mappings = function(_, map)
+                map('i', '<CR>', actions.cd_into_dir)
+                return true
+            end,
+        }, {})
+        :find()
 end
 
 function M.configs()
-    pickers.new({
-        prompt_title = 'Fd hidden',
-        finder = finders.new_oneshot_job({ 'fd', '--type', 'd', '--hidden' }, {}),
-        previewer = previewers.new_termopen_previewer {
-            get_command = preview_list,
-        },
-        attach_mappings = function(_, map)
-            map('i', '<CR>', actions.cd_into_dir)
-            return true
-        end,
-    }, {}):find()
+    pickers
+        .new({
+            prompt_title = 'Fd hidden',
+            finder = finders.new_oneshot_job({ 'fd', '--type', 'd', '--hidden' }, {}),
+            previewer = previewers.new_termopen_previewer {
+                get_command = preview_list,
+            },
+            attach_mappings = function(_, map)
+                map('i', '<CR>', actions.cd_into_dir)
+                return true
+            end,
+        }, {})
+        :find()
 end
 
 function M.buffers()

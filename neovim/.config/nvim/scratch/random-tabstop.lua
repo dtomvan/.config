@@ -18,7 +18,7 @@ vim.keymap.set('i', '<tab>', function()
         vim.bo.ci = false
         return string.rep(' ', random)
     end
-end, { expr = true })
+end, { desc = 'Evil tabstop', expr = true })
 
 vim.api.nvim_create_user_command('ToggleTabstop', function(_)
     if _G._random_tabstop then

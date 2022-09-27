@@ -280,7 +280,7 @@ require('packer').startup(function()
                 blend = 20,
             }
 
-            vim.keymap.set({ 'n', 't' }, '<A-i>', require('FTerm').toggle)
+            vim.keymap.set({ 'n', 't' }, '<A-i>', require('FTerm').toggle, { desc = 'Toggle terminal' })
         end,
     }
 
@@ -290,7 +290,7 @@ require('packer').startup(function()
         branch = 'chad',
         run = 'python3 -m chadtree deps',
         config = function()
-            vim.keymap.set({ 'n', 'i', 's', 'x' }, '<f1>', '<cmd>CHADopen<cr>')
+            vim.keymap.set({ 'n', 'i', 's', 'x' }, '<f1>', '<cmd>CHADopen<cr>', { desc = 'CHADopen' })
         end,
     }
 
@@ -317,4 +317,12 @@ require('packer').startup(function()
         -- Developer profiler
         use 'wakatime/vim-wakatime'
     end
+
+    -- Which key functionality
+    use {
+        'folke/which-key.nvim',
+        config = function()
+            require('which-key').setup {}
+        end,
+    }
 end)

@@ -10,7 +10,7 @@ vim.keymap.set('i', '<enter>', function()
     else
         return '<tab>'
     end
-end, { buffer = true, expr = true, remap = false })
+end, { desc = 'Super enter', buffer = true, expr = true, remap = false })
 
 vim.b.autopairs_enabled = false
 vim.b.autopairs_loaded = true

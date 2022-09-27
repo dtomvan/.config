@@ -1,5 +1,4 @@
-local keymaps = require 'dtomvan.keymaps'
-local silent = keymaps.silent
+local silent = require('dtomvan.keymaps').silent
 
 local ls = require 'luasnip'
 local types = require 'luasnip.util.types'
@@ -13,20 +12,21 @@ vim.keymap.set('i', '<C-k>', function()
     if ls.expand_or_jumpable() then
         ls.expand_or_jump()
     end
-end, silent)
+end, silent 'Expand snippet')
+
 vim.keymap.set({ 'i', 's' }, '<C-l>', function()
     if ls.choice_active() then
         ls.change_choice(1)
     end
-end, silent)
+end, silent 'Cycle between choices in choice node')
 
 vim.keymap.set({ 'i', 's' }, '<c-j>', function()
     require('luasnip').jump(-1)
-end, silent)
+end, silent 'Jump back')
 
 vim.keymap.set('s', '<c-k>', function()
     require('luasnip').jump(1)
-end, silent)
+end, silent 'Jump forward')
 
 for _, source in ipairs(vim.api.nvim_get_runtime_file('lua/dtomvan/plugins/luasnip/*.lua', true)) do
     loadfile(source)()

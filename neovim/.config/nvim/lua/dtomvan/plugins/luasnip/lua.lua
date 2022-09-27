@@ -10,16 +10,13 @@ ls.add_snippets('lua', {
     s(
         'req',
         fmt([[local {} = require '{}']], {
-            c(
-                2,
-                {
-                    f(function(name)
-                        local split = vim.split(name[1][1], '.', true)
-                        return split[#split] or ''
-                    end, { 1 }),
-                    i(1)
-                }
-            ),
+            c(2, {
+                f(function(name)
+                    local split = vim.split(name[1][1], '.', true)
+                    return split[#split] or ''
+                end, { 1 }),
+                i(1),
+            }),
             i(1),
         })
     ),

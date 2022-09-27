@@ -11,7 +11,7 @@ null_ls.setup {
         formatting.taplo,
         formatting.black,
     },
-    on_attach = R('dtomvan.lsp.attach'),
+    on_attach = R 'dtomvan.lsp.attach',
 }
 
 for _, source in ipairs(vim.api.nvim_get_runtime_file('lua/dtomvan/plugins/null-ls/*.lua', true)) do
