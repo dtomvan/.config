@@ -52,27 +52,23 @@ function M.quick_fix_rename()
     end)
 end
 
-function M.file_icon(name, ext)
-    local ret, _ = require('nvim-web-devicons').get_icon_color(name, ext, { default = true })
-    return ret
-end
-
 function M.fmt_file_name(name)
     return vim.fn.pathshorten(vim.fn.fnamemodify(name, ':~:.'), 3)
 end
 
 function M.winbar()
     local filename = vim.fn.expand '%:t'
-    local file_type = vim.fn.expand '%:e'
+    local ft = vim.fn.expand '%:e'
 
     local ok, _ = pcall(require, 'nvim-web-devicons')
     if not ok then
         return '%=%m %f'
     end
 
-    local icon = M.file_icon(filename, file_type) or ''
+    local char, hl = require('nvim-web-devicons').get_icon(filename, ft, { default = true })
+    local icon = string.format('%%#%s#%s%%*', hl, char)
 
-    return '%=%m ' .. icon .. ' %f'
+    return '%m ' .. icon .. " %f > %{%v:lua.require'nvim-navic'.get_location()%}"
 end
 
 local winbuf = function(ty)

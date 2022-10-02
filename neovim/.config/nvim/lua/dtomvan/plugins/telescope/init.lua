@@ -52,3 +52,4 @@ vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, noremap 
 vim.keymap.set('n', '<leader>/', function()
     require('telescope.builtin').current_buffer_fuzzy_find(ivy)
 end, noremap 'Swiper')
+vim.keymap.set('n', '<leader>;', require('telescope.builtin').resume, noremap 'Reopen prev Telescope')

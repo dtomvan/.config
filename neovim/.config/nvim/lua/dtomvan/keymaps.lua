@@ -9,6 +9,7 @@ local M = {}
 M.silent = tbl_extend_opt { silent = true, noremap = true }
 M.noremap = tbl_extend_opt { noremap = true }
 M.expr = tbl_extend_opt { expr = true, silent = true }
+M.buffer = tbl_extend_opt { buffer = true, noremap = true }
 local map = vim.keymap.set
 
 R('dtomvan.tere').setup()
@@ -99,7 +100,7 @@ local function open_term(cmd, tmode, bufnr)
     if bufnr == nil then
         local job = vim.fn.termopen(cmd)
         if tmode then
-            EX.start()
+            vim.cmd.start()
         end
         map('n', '<esc>', function()
             require('plenary.window').try_close(window.win_id)
@@ -107,7 +108,7 @@ local function open_term(cmd, tmode, bufnr)
         end, { buffer = window.bufnr })
 
         map({ 'n', 't' }, '<a-q>', function()
-            EX.winc 'J'
+            vim.cmd.winc 'J'
         end, { buffer = window.bufnr })
 
         map({ 'n', 't' }, '<a-f>', function()
@@ -163,5 +164,8 @@ wk.register({
     t = { name = 'Transpose/Term' },
     w = { name = 'LSP Workspace' },
 }, { prefix = '<leader>' })
+
+-- map('n', 'q:', '<nop>', M.silent "Don't trigger history, bug in noice.nvim")
+map('n', 'ZZ', '<cmd>update<cr>')
 
 return M

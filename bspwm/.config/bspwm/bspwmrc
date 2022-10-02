@@ -26,6 +26,7 @@ bspc rule -a discord desktop='^8'
 bspc rule -a mind desktop='^3'
 bspc rule -a i3lock layer=above
 bspc rule -a powermenu state=floating
+bspc rule -a BTOP state=floating
 bspc rule -a activate-linux layer=above
 bspc rule -a Mechvibes hidden=on
 

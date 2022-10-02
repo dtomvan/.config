@@ -1,0 +1,34 @@
+#!/bin/sh
+
+cd ~
+source ~/.profile
+
+export _JAVA_AWT_WM_NONREPARENTING=1
+export XCURSOR_SIZE=24
+export LIBVA_DRIVER_NAME=nvidia
+export XDG_SESSION_TYPE=wayland
+export GBM_BACKEND=nvidia-drm
+export __GLX_VENDOR_LIBRARY_NAME=nvidia
+export WLR_NO_HARDWARE_CURSORS=1
+export XDG_CURRENT_DESKTOP=Unity
+
+sleep 10 && check-updates &
+playerctld daemon &
+waybar &
+hyprpaper &
+lxsession &
+deadd-notification-center &
+discord-canary --no-sandbox \
+--start-minimized \
+--ignore-gpu-blocklist \
+--disable-features=UseOzonePlatform \
+--enable-features=VaapiVideoDecoder \
+--use-gl=desktop \
+--enable-gpu-rasterization \
+--enable-zero-copy &
+~/obs-sinks.sh &
+sh -c 'pactl unload-module module-switch-on-connect; pactl load-module module-switch-on-connect;' &
+birdtray &
+mpd-rpc &
+
+exec Hyprland

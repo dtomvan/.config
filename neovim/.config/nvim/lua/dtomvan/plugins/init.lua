@@ -2,7 +2,7 @@ require('packer').startup(function()
     -- Packer
     use 'wbthomason/packer.nvim'
 
-    -- Tpope stuff (reintroduced as home-manager broke my config for some reason)
+    -- Tpope stuff
     use 'tpope/vim-surround'
     use 'tpope/vim-git'
     use 'tpope/vim-fugitive'
@@ -13,20 +13,13 @@ require('packer').startup(function()
     use 'tpope/vim-sleuth'
     use 'tpope/vim-endwise'
 
-    -- Idem
-    use {
-        'neovim/nvim-lspconfig',
-        requires = {
-            'williamboman/mason.nvim',
-        },
-    }
-    use 'nvim-lua/lsp_extensions.nvim'
     use {
         'numToStr/Comment.nvim',
         config = function()
             require('Comment').setup {}
         end,
     }
+    -- Discord RPC for extra flexing
     use 'andweeb/presence.nvim'
 
     -- Startup time improvements
@@ -36,32 +29,14 @@ require('packer').startup(function()
             require 'impatient'
         end,
     }
-    use 'nathom/filetype.nvim'
 
     -- Plenary
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
 
     -- Color scheme
-    use {
-        'rebelot/kanagawa.nvim',
-        requires = { 'levouh/tint.nvim' },
-        config = function()
-            local hl = vim.api.nvim_set_hl
-            vim.o.background = 'dark'
-            EX.colorscheme 'kanagawa'
-            hl(0, 'LspComment', { link = 'Comment' })
-            -- Neovim 0.7 'laststatus' specific
-            if vim.fn.has 'nvim-0.7' then
-                local tint = require 'tint'
-                if vim.api.nvim_win_set_hl_ns then
-                    ---@diagnostic disable-next-line: missing-parameter
-                    tint.setup()
-                    -- tint.refresh()
-                end
-            end
-        end,
-    }
+    use 'levouh/tint.nvim'
+    require 'dtomvan.colors'.use_themes(use)
 
     -- After opening a file, return to the last position
     use {
@@ -85,6 +60,13 @@ require('packer').startup(function()
             R 'dtomvan.plugins.express_line'
         end,
         requires = { 'kyazdani42/nvim-web-devicons' },
+    }
+    use {
+        'SmiteshP/nvim-navic',
+        requires = 'neovim/nvim-lspconfig',
+        config = function()
+            require 'dtomvan.plugins.gps'
+        end,
     }
 
     -- Prime goodness
@@ -127,9 +109,17 @@ require('packer').startup(function()
 
     -- Lsp
     use {
+        'neovim/nvim-lspconfig',
+        requires = {
+            'williamboman/mason.nvim',
+        },
+    }
+    use 'nvim-lua/lsp_extensions.nvim'
+
+    use {
         'nvim-treesitter/nvim-treesitter',
         run = function()
-            EX.TSUpdate()
+            vim.cmd.TSUpdate()
         end,
         config = function()
             R 'dtomvan.plugins.treesitter'
@@ -245,8 +235,6 @@ require('packer').startup(function()
                     return math.floor(vim.opt.columns:get() / 4)
                 end,
             }
-
-            -- Default vim notify + the plugin
             vim.notify = function(msg, level)
                 require 'notify'(msg, level)
                 if level == vim.log.levels.ERROR then
@@ -259,9 +247,52 @@ require('packer').startup(function()
             end
         end,
     }
-    -- use 'simrat39/desktop-notify.nvim'
+
+    -- Keep this for later, too early in development
+    use {
+        'folke/noice.nvim',
+        event = 'VimEnter',
+        config = function()
+            -- require('noice').setup()
+        end,
+    }
+
+    use {
+        'ghillb/cybu.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', 'nvim-lua/plenary.nvim' },
+        config = function()
+            local cybu = require 'cybu'
+            cybu.setup {
+                style = {
+                    highlights = {
+                        current_buffer = 'CybuFocus',
+                        adjacent_buffers = 'NormalFloat',
+                        background = 'NormalFloat',
+                        border = 'WinSeparator',
+                    },
+                },
+            }
+            local function c(dir)
+                return function()
+                    cybu.cycle(dir)
+                end
+            end
+
+            vim.keymap.set({ 'n', 'v' }, '<s-tab>', c 'prev')
+            vim.keymap.set({ 'n', 'v' }, '<tab>', c 'next')
+        end,
+    }
 
     -- Misc
+    use {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function()
+            require('indent_blankline').setup {
+                show_current_context = true,
+                show_current_context_start = true,
+            }
+        end,
+    }
     use 'tversteeg/registers.nvim'
     use 'junegunn/vim-easy-align'
     use 'andymass/vim-matchup'

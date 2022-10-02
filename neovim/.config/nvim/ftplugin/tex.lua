@@ -84,11 +84,11 @@ local function run(infile, cmdprompt, compiler, job, done)
         if job then
             vim.fn.jobstart(c, opts)
         else
-            EX.vnew()
+            vim.cmd.vnew()
             local bufnr = vim.api.nvim_get_current_buf()
             opts.on_exit = function(_, code)
                 if code == 0 then
-                    EX.bdelete(bufnr)
+                    vim.cmd.bdelete(bufnr)
                 end
                 pcall(done or function() end, code)
             end
@@ -112,7 +112,7 @@ local function view_compile(cmdname, collection, selprompt, cmdprompt, infile, d
         if not opts.args then
             opts.args = ''
         end
-        EX.update()
+        vim.cmd.update()
         ---@type tex.Compiler
         local compiler = { name = opts.args, cmd = tostring(opts.args) .. ' {}' }
         if #opts.args == 0 then

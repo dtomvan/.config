@@ -49,7 +49,7 @@ end)
 return {
     colors = colors,
     font = font,
-    font_size = 13.5,
+    font_size = 13,
     use_fancy_tab_bar = false,
     hide_tab_bar_if_only_one_tab = true,
     keys = {
@@ -57,6 +57,6 @@ return {
         {key="n", mods="ALT", action=wezterm.action{SwitchWorkspaceRelative=1}},
         {key="p", mods="ALT", action=wezterm.action{SwitchWorkspaceRelative=-1}},
     },
-    window_background_opacity = 0.98,
+    window_background_opacity = 1,
     check_for_updates = false,
 }

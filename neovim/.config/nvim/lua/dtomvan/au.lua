@@ -122,6 +122,10 @@ if vim.fn.has 'nvim-0.8' == 1 then
                 'Trouble',
             }
             vim.schedule(function()
+                local cfg = vim.api.nvim_win_get_config(0)
+                if cfg.relative > '' or cfg.external then
+                    return ''
+                end
                 if vim.tbl_contains(winbar_exclude, vim.bo.filetype) then
                     return
                 end

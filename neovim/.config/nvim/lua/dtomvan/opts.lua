@@ -1,51 +1,50 @@
-local opt = vim.opt
+local o = vim.o
 local g = vim.g
 
-opt.autoindent = true
-opt.background = 'dark'
-opt.backup = false
-opt.clipboard = 'unnamedplus'
-opt.cmdheight = 1
-opt.compatible = false
-opt.completeopt = 'menuone'
-opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
-opt.conceallevel = 2
-opt.copyindent = true
-opt.cursorline = true
-opt.expandtab = true
-opt.expandtab = true
-opt.hidden = true
-opt.ignorecase = true
-opt.lazyredraw = true
-opt.listchars = 'trail:·,tab:>--,lead:-,nbsp:~'
-opt.list = true
-opt.mouse = 'a'
-opt.number = true
-opt.number = true
-opt.relativenumber = true
-opt.rnu = true
-opt.scrolloff = 8
-opt.shiftwidth = 4
-opt.shiftwidth = 4
-opt.shortmess = opt.shortmess + 'a'
-opt.showtabline = 1
-opt.signcolumn = 'yes'
-opt.smartcase = true
-opt.softtabstop = 4
-opt.spelllang = 'en_us,nl'
-opt.swapfile = true
-opt.tabstop = 4
-opt.tabstop = 4
-opt.termguicolors = true
-opt.textwidth = 120
-opt.textwidth = 80
-opt.timeoutlen = 500
-opt.title = true
-opt.undofile = true
-opt.updatetime = 300
-opt.wrap = true
-opt.wrap = true
-opt.writebackup = true
+o.autoindent = true
+o.background = 'dark'
+o.backup = false
+o.clipboard = 'unnamedplus'
+o.cmdheight = 1
+o.compatible = false
+vim.opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
+o.conceallevel = 2
+o.copyindent = true
+o.cursorline = true
+o.expandtab = true
+o.expandtab = true
+o.hidden = true
+o.ignorecase = true
+o.lazyredraw = true
+o.listchars = 'trail:·,nbsp:~'
+o.list = true
+o.mouse = 'a'
+o.number = true
+o.number = true
+o.relativenumber = true
+o.rnu = true
+o.scrolloff = 8
+o.shiftwidth = 4
+o.shiftwidth = 4
+vim.opt.shortmess:append 'at'
+o.showtabline = 1
+o.signcolumn = 'yes'
+o.smartcase = true
+o.softtabstop = 4
+o.spelllang = 'en_us,nl'
+o.swapfile = true
+o.tabstop = 4
+o.tabstop = 4
+o.termguicolors = true
+o.textwidth = 120
+o.textwidth = 80
+o.timeoutlen = 500
+o.title = true
+o.undofile = true
+o.updatetime = 300
+o.wrap = true
+o.wrap = true
+o.writebackup = true
 g.mapleader = ' '
 
 -- `gf` mapping
@@ -60,7 +59,7 @@ _G.include_expr = function(fname)
 end
 
 if vim.fn.has 'nvim-0.7' == 1 then
-    opt.ls = 3
+    o.ls = 3
 end
 
 if g.neovide ~= nil then

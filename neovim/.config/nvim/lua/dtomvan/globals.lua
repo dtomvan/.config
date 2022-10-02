@@ -15,8 +15,15 @@ end
 EX = setmetatable({}, {
     __index = function(t, k)
         local command = k:gsub('_$', '!')
-        local f = function(...)
-            return vim.api.nvim_command(table.concat(vim.tbl_flatten { command, ... }, ' '))
+        ---@type function
+        local f
+
+        if vim.fn.has 'nvim-0.8' == 1 then
+            f = vim.cmd[command]
+        else
+            f = function(...)
+                return vim.api.nvim_command(table.concat(vim.tbl_flatten { command, ... }, ' '))
+            end
         end
         rawset(t, k, f)
         return f

@@ -58,3 +58,6 @@ XF86Audio{Raise,Lower}Volume
 
 XF86AudioMute
  amixer set Master toggle
+
+control + shift + Escape
+ st -c BTOP -e btop

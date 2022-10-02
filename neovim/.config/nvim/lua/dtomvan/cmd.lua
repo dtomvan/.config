@@ -22,7 +22,7 @@ cmd('Rg', function(i)
         end
     end
     vim.fn.setqflist({}, ' ', { title = 'rg ' .. args, items = items })
-    EX.cope()
+    vim.cmd.cope()
 end, {
     nargs = '+',
     force = true,
@@ -75,8 +75,8 @@ cmd('Scratch', function(_)
         completion = 'customlist,v:lua.scratch_comp',
     }, function(a)
         if a then
-            EX.edit(string.format('%s%s', scratch_dir, a))
-            EX.Mkdir()
+            vim.cmd.edit(string.format('%s%s', scratch_dir, a))
+            vim.cmd.Mkdir()
         end
     end)
 end, { desc = 'Create new scratch file in ~/.config/nvim', force = true })
@@ -101,12 +101,16 @@ local function thisft()
         end
     end
     if has_vim and not has_lua then
-        EX.edit(string.format('%s/%s.vim', ftplugindir, cur_ft))
+        vim.cmd.edit(string.format('%s/%s.vim', ftplugindir, cur_ft))
         return
     end
-    EX.edit(string.format('%s/%s.lua', ftplugindir, cur_ft))
-    EX.Mkdir()
+    vim.cmd.edit(string.format('%s/%s.lua', ftplugindir, cur_ft))
+    vim.cmd.Mkdir()
 end
 
 cmd('GoFt', thisft, { desc = 'Open current ftplugin', force = true })
 vim.keymap.set('n', '<space>gft', thisft, noremap 'Open ftplugin for current :set filetype')
+
+cmd('Temple', function()
+    vim.cmd [[colorscheme templeos]]
+end, { desc = 'Reboot into TempleOS', force = true })

@@ -26,7 +26,8 @@ require('nvim-treesitter.configs').setup {
     ignore_install = {},
     highlight = {
         enable = true,
-        disable = { 'vim' },
+        -- help highlighting is currently broken
+        disable = { 'vim', 'help' },
         -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
         -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
         -- Using this option may slow down your editor, and you may see some duplicate highlights.
@@ -45,7 +46,8 @@ require('nvim-treesitter.configs').setup {
                 ['ic'] = '@call.inner',
                 ['ac'] = '@call.outer',
                 ['af'] = '@function.outer',
-                ['ap'] = '@parameter.outer',
+                ['aP'] = '@parameter.outer',
+                ['iP'] = '@parameter.inner',
                 ['if'] = '@function.inner',
             },
             -- You can choose the select mode (default is charwise 'v')
