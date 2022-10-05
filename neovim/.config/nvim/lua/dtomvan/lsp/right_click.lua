@@ -93,7 +93,7 @@ M.set_filetree_rclick_menu = function()
         { 'New File', '<space>fn' },
         { 'Rename', '<F2>' },
     }, function()
-        return vim.bo.ft == 'NvimTree' or vim.bo.ft == 'CHADtree'
+        return vim.bo.ft == 'NvimTree' or vim.bo.ft == 'CHADTree'
     end)
 end
 

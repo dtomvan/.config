@@ -36,7 +36,7 @@ require('packer').startup(function()
 
     -- Color scheme
     use 'levouh/tint.nvim'
-    require 'dtomvan.colors'.use_themes(use)
+    require('dtomvan.colors').use_themes(use)
 
     -- After opening a file, return to the last position
     use {
@@ -221,39 +221,14 @@ require('packer').startup(function()
     }
 
     -- Misc
-    use {
-        'rcarriga/nvim-notify',
-        config = function()
-            require('notify').setup {
-                stages = 'fade_in_slide_out',
-                on_open = nil,
-                on_close = nil,
-                render = 'default',
-                timeout = 5000,
-                background_colour = '#000000',
-                max_width = function()
-                    return math.floor(vim.opt.columns:get() / 4)
-                end,
-            }
-            vim.notify = function(msg, level)
-                require 'notify'(msg, level)
-                if level == vim.log.levels.ERROR then
-                    vim.api.nvim_err_writeln(msg)
-                elseif level == vim.log.levels.WARN then
-                    vim.api.nvim_echo({ { msg, 'WarningMsg' } }, true, {})
-                else
-                    vim.api.nvim_echo({ { msg } }, true, {})
-                end
-            end
-        end,
-    }
+    use 'rcarriga/nvim-notify'
 
     -- Keep this for later, too early in development
     use {
         'folke/noice.nvim',
         event = 'VimEnter',
         config = function()
-            -- require('noice').setup()
+            require 'dtomvan.plugins.noice'
         end,
     }
 
@@ -326,10 +301,9 @@ require('packer').startup(function()
     }
 
     use {
-        'phaazon/mind.nvim',
-        branch = 'v2.1',
+        'gbprod/substitute.nvim',
         config = function()
-            require('mind').setup {}
+            require 'dtomvan.plugins.substitute'
         end,
     }
 

@@ -21,6 +21,8 @@ local generator = function(win)
     table.insert(segs, '%#Normal#')
     table.insert(segs, sections.split)
 
+    table.insert(segs, sections.split)
+
     if win.is_active then
         table.insert(segs, '[')
         table.insert(segs, builtin.line)

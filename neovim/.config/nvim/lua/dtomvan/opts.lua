@@ -26,7 +26,7 @@ o.rnu = true
 o.scrolloff = 8
 o.shiftwidth = 4
 o.shiftwidth = 4
-vim.opt.shortmess:append 'at'
+-- vim.opt.shortmess:append 'at'
 o.showtabline = 1
 o.signcolumn = 'yes'
 o.smartcase = true
