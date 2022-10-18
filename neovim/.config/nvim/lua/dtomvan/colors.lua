@@ -8,6 +8,10 @@ M.my_themes = {
 
 ---@param use fun(plugin: string): any
 M.use_themes = function(use)
+    vim.validate { use = { use, 'function', true } }
+    if not use then
+        return
+    end
     for _, repo in pairs(M.my_themes) do
         use(repo)
     end

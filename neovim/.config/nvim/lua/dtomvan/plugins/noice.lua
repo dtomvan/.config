@@ -8,6 +8,10 @@ require('noice').setup {
             filter = { event = "msg_show", min_height = 20 },
         },
         {
+            view = "cmdline",
+            filter = { event = "msg_show", find = '<bs> go up one level <esc> close' },
+        },
+        {
             filter = {
                 event = 'msg_show',
                 kind = '',

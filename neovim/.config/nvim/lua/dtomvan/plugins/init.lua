@@ -19,8 +19,6 @@ require('packer').startup(function()
             require('Comment').setup {}
         end,
     }
-    -- Discord RPC for extra flexing
-    use 'andweeb/presence.nvim'
 
     -- Startup time improvements
     use {
@@ -103,8 +101,6 @@ require('packer').startup(function()
 
     -- Rust or Bust
     use 'ron-rs/ron.vim'
-    use 'rust-lang/rust.vim'
-    use 'cespare/vim-toml'
     use 'simrat39/rust-tools.nvim'
 
     -- Lsp
@@ -271,7 +267,13 @@ require('packer').startup(function()
     use 'tversteeg/registers.nvim'
     use 'junegunn/vim-easy-align'
     use 'andymass/vim-matchup'
-    use 'stefandtw/quickfix-reflector.vim'
+    use {
+        'kevinhwang91/nvim-bqf',
+        ft = 'qf',
+        config = function()
+            require('bqf').setup {}
+        end,
+    }
     use 'ggandor/lightspeed.nvim'
     use 'Raimondi/vim-transpose-words'
     use {
@@ -328,6 +330,13 @@ require('packer').startup(function()
         'folke/which-key.nvim',
         config = function()
             require('which-key').setup {}
+        end,
+    }
+
+    use {
+        'echasnovski/mini.nvim',
+        config = function()
+            require 'dtomvan.plugins.mini'
         end,
     }
 end)

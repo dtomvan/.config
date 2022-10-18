@@ -114,3 +114,23 @@ vim.keymap.set('n', '<space>gft', thisft, noremap 'Open ftplugin for current :se
 cmd('Temple', function()
     vim.cmd [[colorscheme templeos]]
 end, { desc = 'Reboot into TempleOS', force = true })
+
+cmd('Loc', function(args)
+    if args.bang then
+        vim.cmd.vsp 'term://loc --files'
+    else
+        vim.cmd.vsp 'term://loc'
+    end
+    vim.cmd 'vert res 82'
+end, { desc = 'run loc in a terminal', force = true, bang = true })
+
+local function hi_there(i)
+    local out = vim.fn.trim(vim.fn.execute('hi ' .. i.args))
+    print(out)
+    if string.find(out, 'links to') then
+        local a = vim.fn.split(out, ' ')
+        hi_there({ args = a[#a] })
+    end
+end
+
+cmd('Hit', hi_there, { desc = 'Follow highlights automatically', nargs = 1, complete = 'highlight', force = true })
