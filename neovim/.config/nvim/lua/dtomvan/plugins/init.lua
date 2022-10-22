@@ -45,13 +45,13 @@ require('packer').startup(function()
     }
 
     -- Status line
-    use {
-        'j-hui/fidget.nvim',
-        config = function()
-            require('fidget').setup {}
-        end,
-        requires = 'nvim-lua/lsp-status.nvim',
-    }
+    -- use {
+    --     'j-hui/fidget.nvim',
+    --     config = function()
+    --         require('fidget').setup {}
+    --     end,
+    --     requires = 'nvim-lua/lsp-status.nvim',
+    -- }
     use {
         'tjdevries/express_line.nvim',
         config = function()
@@ -178,6 +178,15 @@ require('packer').startup(function()
 
     -- Autocompletion
     use {
+        'L3MON4D3/LuaSnip',
+        requires = {
+            'rafamadriz/friendly-snippets',
+        },
+        config = function()
+            R 'dtomvan.plugins.luasnip'
+        end,
+    }
+    use {
         'hrsh7th/nvim-cmp',
         requires = {
             'hrsh7th/cmp-buffer',
@@ -186,13 +195,10 @@ require('packer').startup(function()
             'hrsh7th/cmp-path',
             'hrsh7th/nvim-cmp',
             'f3fora/cmp-spell',
-            'L3MON4D3/LuaSnip',
             'onsails/lspkind-nvim',
             'saadparwaiz1/cmp_luasnip',
-            { 'rafamadriz/friendly-snippets', opt = true },
         },
         config = function()
-            R 'dtomvan.plugins.luasnip'
             R 'dtomvan.plugins.cmp'
         end,
     }
@@ -226,6 +232,7 @@ require('packer').startup(function()
         config = function()
             require 'dtomvan.plugins.noice'
         end,
+        requires = 'nvim-lua/lsp-status.nvim',
     }
 
     use {
@@ -337,6 +344,17 @@ require('packer').startup(function()
         'echasnovski/mini.nvim',
         config = function()
             require 'dtomvan.plugins.mini'
+        end,
+    }
+
+    -- LaTeX
+    use {
+        'lervag/vimtex',
+        config = function()
+            vim.g.tex_conceal = 'abdmg'
+            vim.g.tex_flavor = 'latex'
+            vim.g.vimtex_quickfix_mode = 0
+            vim.g.vimtex_view_method = 'zathura'
         end,
     }
 end)

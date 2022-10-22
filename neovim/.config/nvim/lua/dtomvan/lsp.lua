@@ -61,6 +61,29 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
+local snip_env = require('luasnip').session.config.snip_env
+local lua_globals = {
+    'vim',
+    'describe',
+    'it',
+    'before_each',
+    'after_each',
+    'teardown',
+    'pending',
+    'clear',
+    'Color',
+    'c',
+    'Group',
+    'g',
+    's',
+    'use',
+    'xplr',
+    'package',
+}
+for k, _ in pairs(snip_env) do
+    table.insert(lua_globals, k)
+end
+
 require('lspconfig').sumneko_lua.setup {
     settings = {
         Lua = {
@@ -84,24 +107,7 @@ require('lspconfig').sumneko_lua.setup {
                 disable = {
                     'trailing-space',
                 },
-                globals = {
-                    'vim',
-                    'describe',
-                    'it',
-                    'before_each',
-                    'after_each',
-                    'teardown',
-                    'pending',
-                    'clear',
-                    'Color',
-                    'c',
-                    'Group',
-                    'g',
-                    's',
-                    'use',
-                    'xplr',
-                    'package',
-                },
+                globals = lua_globals,
             },
             workspace = {
                 library = get_lua_runtime(),

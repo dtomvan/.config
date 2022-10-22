@@ -1,6 +1,6 @@
 local wezterm = require 'wezterm'
 
-local font = wezterm.font 'Fira Code'
+local font = wezterm.font 'Iosevka Nerd Font'
 
 -- Kanagawa
 local colors = {

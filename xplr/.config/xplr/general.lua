@@ -305,3 +305,22 @@ xplr.fn.builtin.fmt_general_table_row_cols_0 = function(m)
 
     return '  ' .. index
 end
+
+-- Use it to define a set of key bindings that are available by default in
+-- every [mode](https://xplr.dev/en/mode). They can be overwritten.
+--
+-- Type: [Key Bindings](https://xplr.dev/en/configure-key-bindings#key-bindings)
+xplr.config.general.global_key_bindings = {
+    on_key = {
+        ['esc'] = {
+            messages = {
+                'PopMode',
+            },
+        },
+        ['ctrl-c'] = {
+            messages = {
+                'Terminate',
+            },
+        },
+    },
+}

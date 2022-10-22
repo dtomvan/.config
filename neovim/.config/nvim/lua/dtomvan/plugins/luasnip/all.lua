@@ -1,24 +1,6 @@
-local ls = require 'luasnip'
-local fmt = require('luasnip.extras.fmt').fmt
+local utils = require 'dtomvan.lsutils'
 
-local s = ls.snippet
-local f = ls.function_node
-local i = ls.insert_node
-local c = ls.choice_node
-
-local function bash(_, _, command)
-    local file = io.popen(command, 'r')
-    local res = {}
-    if file == nil then
-        return ''
-    end
-    for line in file:lines() do
-        table.insert(res, line)
-    end
-    return res
-end
-
-ls.add_snippets('all', {
+return {
     s(
         'time',
         f(function()
@@ -37,7 +19,7 @@ ls.add_snippets('all', {
             return os.date '%F %T'
         end)
     ),
-    s('filelist', f(bash, {}, { user_args = { 'ls' } })),
+    s('filelist', f(utils.bash, {}, { user_args = { 'ls' } })),
     s(
         'mit',
         fmt(
@@ -66,4 +48,16 @@ SOFTWARE.
             end), i(nil, 'Custom year here') }) }
         )
     ),
-})
+    s('box', fmt('┌{}┐\n| {} |\n└{}┘', { f(utils.lenrep, { 1 }), i(1), f(utils.lenrep, { 1 }) })),
+    s('bang', {
+        t '#!/usr/bin/env ',
+        c(1, {
+            t 'sh',
+            t 'zsh',
+            t 'bash',
+            t 'python',
+            t 'node',
+        }),
+        i(0),
+    }),
+}, { key = 'all' }

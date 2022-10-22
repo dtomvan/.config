@@ -4,9 +4,7 @@ local ls = require 'luasnip'
 local types = require 'luasnip.util.types'
 local ft_fns = require 'luasnip.extras.filetype_functions'
 
-require('luasnip/loaders/from_vscode').lazy_load {
-    paths = { '/.local/share/nvim/site/pack/packer/opt/friendly-snippets/' },
-}
+require('luasnip.loaders.from_vscode').lazy_load()
 
 vim.keymap.set('i', '<C-k>', function()
     if ls.expand_or_jumpable() then
@@ -28,9 +26,7 @@ vim.keymap.set('s', '<c-k>', function()
     require('luasnip').jump(1)
 end, silent 'Jump forward')
 
-for _, source in ipairs(vim.api.nvim_get_runtime_file('lua/dtomvan/plugins/luasnip/*.lua', true)) do
-    loadfile(source)()
-end
+require('luasnip.loaders.from_lua').load { paths = './lua/dtomvan/plugins/luasnip/' }
 
 ls.config.set_config {
     history = true,
@@ -55,4 +51,5 @@ ls.config.set_config {
     },
     store_selection_keys = '<Tab>',
     ft_func = ft_fns.from_cursor,
+    enable_autosnippets = true,
 }

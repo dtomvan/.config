@@ -6,11 +6,38 @@ local tbl_extend_opt = function(tbl)
 end
 
 local M = {}
-M.silent = tbl_extend_opt { silent = true, noremap = true }
+M.silent = tbl_extend_opt { silent = true, remap = false }
 M.noremap = tbl_extend_opt { noremap = true }
 M.expr = tbl_extend_opt { expr = true, silent = true }
-M.buffer = tbl_extend_opt { buffer = true, noremap = true }
+M.norexpr = tbl_extend_opt { expr = true, remap = false }
+M.buffer = tbl_extend_opt { buffer = true, remap = false }
+
+M.confusing = function(modes, k, v, opts)
+    _G.confusing_maps_set = _G.confusing_maps_set or {}
+    _G.confusing_maps_set[k] = { map = vim.inspect(v), desc = opts.desc }
+    if type(opts.desc) == "string" then
+        opts.desc = "confusing: " .. opts.desc
+    end
+    vim.keymap.set(modes, k, function()
+        -- can be nil
+        if _G.confusing_maps ~= false then
+            if type(v) == "function" then
+                v()
+                return ""
+            else
+                return v
+            end
+        else
+            return k
+        end
+    end, opts)
+end
+
 local map = vim.keymap.set
+
+-- Swap ; and :
+M.confusing({ 'n', 'v' }, ';', ':', M.norexpr 'swapped with :')
+M.confusing({ 'n', 'v' }, ':', ';', M.norexpr 'swapped with ;')
 
 R('dtomvan.tere').setup()
 
@@ -22,6 +49,7 @@ end
 -- Utils
 map('n', '<leader><CR>', '<C-w>w', M.silent 'Switch windows')
 map('n', '<leader><leader>', ':<up>', M.noremap 'Last command')
+map('i', '<C-l>', '<c-g>u<Esc>[s1z=`]a<c-g>u', M.noremap "Fix last 'spell' mistake")
 
 -- Window management
 map('n', '<C-Down>', ':resize +2<CR>', M.silent 'Resize +2')
@@ -34,8 +62,8 @@ map('n', '<C-S-Down>', '<C-w><C-J>', M.silent 'Winmove down')
 map('n', '<C-S-Left>', '<C-w><C-H>', M.silent 'Winmove left')
 
 -- Join lines correctly
-map('n', 'J', 'mzJ`z', M.silent "Join lines 'n stay where you are")
-map('n', 'gJ', 'mzJ`z', M.silent "Join lines 'n not stay where you are")
+M.confusing('n', 'J', 'mzJ`z', M.norexpr "Join lines 'n stay where you are")
+M.confusing('n', 'gJ', 'mzJ`z', M.norexpr "Join lines 'n not stay where you are")
 
 -- copy entire file
 map('n', '<leader>y', 'mpggyG`p', M.silent 'Copy entire buffer')
@@ -71,10 +99,10 @@ map('n', '<leader>n', ':noh<cr>', M.silent 'Disable search highlight')
 map('n', '<leader>s', '<cr>so<cr>', M.silent 'Source current file')
 map('n', '<leader>S', ':so ', M.noremap 'Source...')
 
-map('n', '<left>', require('jvim').to_parent, M.silent 'Goto parent')
-map('n', '<right>', require('jvim').descend, M.silent 'Goto child')
-map('n', '<up>', require('jvim').prev_sibling, M.silent 'Previous sibling')
-map('n', '<down>', require('jvim').next_sibling, M.silent 'Next sibling')
+M.confusing('n', '<left>', require('jvim').to_parent, M.silent 'Goto parent')
+M.confusing('n', '<right>', require('jvim').descend, M.silent 'Goto child')
+M.confusing('n', '<up>', require('jvim').prev_sibling, M.silent 'Previous sibling')
+M.confusing('n', '<down>', require('jvim').next_sibling, M.silent 'Next sibling')
 
 map('v', '<leader>s', ':!sort<cr>', M.silent 'Sort visual selection')
 

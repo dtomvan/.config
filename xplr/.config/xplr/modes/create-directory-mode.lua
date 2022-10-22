@@ -1,61 +1,38 @@
 xplr.config.modes.builtin.create_directory = {
     name = 'create directory',
-    help = nil,
-    extra_help = nil,
+    prompt = (xplr.config.node_types.directory.meta.icon or 'F') .. ' ❯ ',
     key_bindings = {
         on_key = {
-            backspace = {
-                help = 'remove last character',
-                messages = { 'RemoveInputBufferLastCharacter' },
-            },
-            ['ctrl-c'] = {
-                help = 'terminate',
-                messages = { 'Terminate' },
-            },
-            ['ctrl-u'] = {
-                help = 'remove line',
+            ['tab'] = {
+                help = 'try complete',
                 messages = {
-                    {
-                        SetInputBuffer = '',
-                    },
+                    { CallLuaSilently = 'builtin.try_complete_path' },
                 },
             },
-            ['ctrl-w'] = {
-                help = 'remove last word',
-                messages = { 'RemoveInputBufferLastWord' },
-            },
-            enter = {
-                help = 'create directory',
+            ['enter'] = {
+                help = 'submit',
                 messages = {
                     {
                         BashExecSilently = [===[
-                        PTH="$XPLR_INPUT_BUFFER"
-                        if [ "${PTH}" ]; then
-                            mkdir -p -- "${PTH:?}" \
-                            && echo "SetInputBuffer: ''" >> "${XPLR_PIPE_MSG_IN:?}" \
-                            && echo ExplorePwd >> "${XPLR_PIPE_MSG_IN:?}" \
-                            && echo LogSuccess: $PTH created >> "${XPLR_PIPE_MSG_IN:?}" \
-                            && echo FocusByFileName: "'"$PTH"'" >> "${XPLR_PIPE_MSG_IN:?}"
-                        else
-                            echo PopMode >> "${XPLR_PIPE_MSG_IN:?}"
-                            fi
-                            ]===],
+              PTH="$XPLR_INPUT_BUFFER"
+              if [ "${PTH}" ]; then
+                mkdir -p -- "${PTH:?}" \
+                && echo "SetInputBuffer: ''" >> "${XPLR_PIPE_MSG_IN:?}" \
+                && echo ExplorePwd >> "${XPLR_PIPE_MSG_IN:?}" \
+                && echo LogSuccess: $PTH created >> "${XPLR_PIPE_MSG_IN:?}" \
+                && echo FocusPath: "'"$PTH"'" >> "${XPLR_PIPE_MSG_IN:?}"
+              else
+                echo PopMode >> "${XPLR_PIPE_MSG_IN:?}"
+              fi
+            ]===],
                     },
                 },
             },
-            esc = {
-                help = 'cancel',
-                messages = {
-                    'PopMode',
-                },
-            },
         },
-        on_alphabet = nil,
-        on_number = nil,
-        on_special_character = nil,
         default = {
-            help = nil,
-            messages = { 'UpdateInputBufferFromKey' },
+            messages = {
+                'UpdateInputBufferFromKey',
+            },
         },
     },
 }

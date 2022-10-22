@@ -46,14 +46,13 @@ playerctld daemon &
 clipmenud &
 setxkbmap -option grp:alt_caps_toggle -option compose:rwin &
 sleep 10 && check-updates &
-discord-notify &
 source ~/.profile
 lxsession &
 eww daemon &
 hsetroot -solid "#16161D" &
 ~/bg.sh bg.gif &
 deadd-notification-center &
-discord-canary --no-sandbox \
+discord --no-sandbox \
 --start-minimized \
 --ignore-gpu-blocklist \
 --disable-features=UseOzonePlatform \

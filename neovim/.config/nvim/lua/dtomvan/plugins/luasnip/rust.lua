@@ -1,13 +1,3 @@
-local ls = require 'luasnip'
-local fmt = require('luasnip.extras.fmt').fmt
-local fmta = require('luasnip.extras.fmt').fmta
-
-local i = ls.insert_node
-local s = ls.snippet
-local t = ls.text_node
-local f = ls.function_node
-local c = ls.choice_node
-
 local function ok_if_result(index)
     return f(function(arg)
         if arg[1][1]:match 'Result' then
@@ -18,7 +8,7 @@ local function ok_if_result(index)
     end, { index })
 end
 
-ls.add_snippets('rust', {
+return {
     s('enum', {
         t { '#[derive(Debug, Clone, Copy)]', 'enum ' },
         i(1, 'Name'),
@@ -69,4 +59,4 @@ mod test {{
             }
         )
     ),
-})
+}, { key = 'rust' }

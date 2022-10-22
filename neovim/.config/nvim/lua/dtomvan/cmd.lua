@@ -129,8 +129,21 @@ local function hi_there(i)
     print(out)
     if string.find(out, 'links to') then
         local a = vim.fn.split(out, ' ')
-        hi_there({ args = a[#a] })
+        hi_there { args = a[#a] }
     end
 end
 
 cmd('Hit', hi_there, { desc = 'Follow highlights automatically', nargs = 1, complete = 'highlight', force = true })
+
+cmd('Unconfuse', function()
+    _G.confusing_maps = false
+end, { desc = 'Remove confusing map', force = true })
+
+cmd('Confusing', function()
+    local bufnr = vim.api.nvim_create_buf(false, true)
+    vim.cmd.vs()
+    vim.cmd.buffer(bufnr)
+    for k, v in pairs(_G.confusing_maps_set) do
+        vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, { string.format('%s: %s described as %s', k, v.map, v.desc or "nothing") })
+    end
+end, { desc = 'Show confusing mappings', force = true })

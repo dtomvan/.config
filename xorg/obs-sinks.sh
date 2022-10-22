@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEVICE="alsa_output.pci-0000_0b_00.3.analog-stereo"
+DEVICE="alsa_output.pci-0000_0b_00.3.pro-output-0"
 
 pactl load-module module-remap-sink sink_name="OBS_output" \
 master="$DEVICE" channels=2 \
