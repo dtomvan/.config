@@ -1,3 +1,6 @@
+if vim.g._no_noice then
+    return
+end
 require('noice').setup {
     -- cmdline = {
     --     view = 'cmdline',

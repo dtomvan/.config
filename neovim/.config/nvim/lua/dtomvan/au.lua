@@ -86,42 +86,45 @@ au('TextYankPost', {
 })
 
 if vim.fn.has 'nvim-0.8' == 1 then
+    local winbar_exclude = {
+        '',
+        'alpha',
+        'dap-repl',
+        'dap-terminal',
+        'dapui_breakpoints',
+        'dapui_console',
+        'dapui_scopes',
+        'dapui_stacks',
+        'dapui_watches',
+        'dashboard',
+        'DressingSelect',
+        'DressingInput',
+        'harpoon',
+        'help',
+        'Jaq',
+        'lab',
+        'lir',
+        'Markdown',
+        'neogitstatus',
+        'notify',
+        'NvimTree',
+        'Outline',
+        'packer',
+        'spectre_panel',
+        'startify',
+        '[Scratch]',
+        'toggleterm',
+        'Trouble',
+    }
     local winbar = 'UserWinbar'
     group(winbar)
     au({ 'BufWinEnter', 'WinEnter' }, {
         group = winbar,
         callback = function()
-            local winbar_exclude = {
-                '',
-                'alpha',
-                'dap-repl',
-                'dap-terminal',
-                'dapui_breakpoints',
-                'dapui_console',
-                'dapui_scopes',
-                'dapui_stacks',
-                'dapui_watches',
-                'dashboard',
-                'DressingSelect',
-                'DressingInput',
-                'harpoon',
-                'help',
-                'Jaq',
-                'lab',
-                'lir',
-                'Markdown',
-                'neogitstatus',
-                'notify',
-                'NvimTree',
-                'Outline',
-                'packer',
-                'spectre_panel',
-                'startify',
-                '[Scratch]',
-                'toggleterm',
-                'Trouble',
-            }
             vim.schedule(function()
+                if vim.g._no_winbar then
+                    return
+                end
                 local cfg = vim.api.nvim_win_get_config(0)
                 if cfg.relative > '' or cfg.external then
                     return ''

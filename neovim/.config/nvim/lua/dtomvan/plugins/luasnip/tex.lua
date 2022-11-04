@@ -5,9 +5,16 @@ local no_word = function(trig)
 end
 
 local rec_ls = utils.make_rec '\t\\item '
-local pak_ls = utils.make_rec('\\usepackage{', '}')
 
 local frac_nodes = fmta('\\frac{<>}{<>}', { i(1), i(2) })
+
+local opt_eq = function(name)
+    return { name = name, eq = true }
+end
+
+local opt = function(name)
+    return { name = name, eq = false }
+end
 
 local opt_choice
 opt_choice = function(_, snip, old_state, ...)
@@ -23,13 +30,9 @@ opt_choice = function(_, snip, old_state, ...)
         local new_options = vim.deepcopy(options)
         table.remove(new_options, opt_i)
 
-        local comma
-        if old_state.comma then
-            comma = ','
-        else
-            comma = ''
-        end
-        local new_nodes = { t(comma .. option .. '='), i(1) }
+        local comma = old_state.comma and ',' or ''
+        local eq = option.eq and '=' or ''
+        local new_nodes = { t(comma .. option.name .. eq), i(1) }
         if #options > 1 then
             table.insert(new_nodes, d(2, opt_choice, {}, { user_args = new_options }))
         end
@@ -41,6 +44,38 @@ opt_choice = function(_, snip, old_state, ...)
     end
     return sn(nil, { c(1, option_nodes) })
 end
+
+local package_opts = function(pkgname, opts, abbr, fix)
+    fix = fix or {}
+    return s(
+        abbr or pkgname,
+        fmta((fix.pre or '') .. '\\usepackage<>{<>}' .. (fix.post or ''), {
+            c(1, {
+                t '',
+                sn(nil, {
+                    t '[',
+                    d(1, opt_choice, {}, { user_args = opts }),
+                    t ']',
+                }),
+            }),
+            t(pkgname),
+        })
+    )
+end
+
+local parse_ok, font_query = pcall(
+    vim.treesitter.parse_query,
+    'latex',
+    [[
+(package_include
+  options:
+  (brack_group_key_value
+    pair: (key_value_pair key: (text) @_key (#eq? @_key "T1")))
+  paths: (curly_group_path_list
+           path: (path) @_packagename
+           (#eq? @_packagename "fontenc"))) @capture
+]]
+)
 
 local normal = {
     -- rec_ls is self-referencing. That makes this snippet 'infinite' eg. have as many
@@ -81,10 +116,8 @@ local normal = {
 \author{<>}
 \date{<>}
 
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage{enumitem}
-\usepackage{listings}<>
+<>
+<>
 
 \begin{document}
 
@@ -99,8 +132,12 @@ local normal = {
                 i(2, 'Insert title here'),
                 c(3, { t 'Tom van Dijk', i(nil) }),
                 i(4),
-                d(5, pak_ls, {}),
+                c(5, {
+                    t '\\input{../preamble.tex}',
+                    t '',
+                }),
                 i(6),
+                i(7),
             }
         )
     ),
@@ -117,12 +154,96 @@ local normal = {
     s('latex', t '\\LaTeX{}'),
     s('use', fmta('\\usepackage{<>}', { i(1) })),
     s('lstlst', t '\\lstlistoflistings'),
+    -- TODO: DRY
     s(
         'lst',
-        fmta('\\begin{lstlisting}[<>]\n<>\n\\end{lstlisting}', {
-            d(1, opt_choice, {}, { user_args = { 'language', 'caption' } }),
+        fmta('\\begin{lstlisting}<>\n<>\n\\end{lstlisting}', {
+            c(1, {
+                t '',
+                sn(
+                    nil,
+                    { t '[', d(1, opt_choice, {}, { user_args = { opt_eq 'language', opt_eq 'caption' } }), t ']' }
+                ),
+            }),
             i(2),
         })
+    ),
+    -- Imports for hyperref
+    package_opts('hyperref', { opt_eq 'colorlinks', opt 'hidelinks', opt 'linktocpage' }, 'hyper'),
+    package_opts(
+        'carlito',
+        { opt 'sfdefault', opt 'lf' },
+        'calibri',
+        { post = '\n\\renewcommand*\\oldstylenums[1]{\\carlitoOsF #1}' }
+    ),
+    -- Use treesitter to determine wether the fontenc stuff needs to be
+    -- reincluded
+    s(
+        'font',
+        fmta('<>\\usepackage{<>}', {
+            f(function()
+                local def = { '\\usepackage[T1]{fontenc}', '' }
+                if not parse_ok then
+                    return def
+                end
+                local bufnr = vim.api.nvim_get_current_buf()
+                local condition = false
+                local parser = vim.treesitter.get_parser(bufnr, 'latex')
+                if not parser then
+                    return def
+                end
+                local tree = parser:parse()
+                if not tree then
+                    return def
+                end
+                for id in font_query:iter_captures(tree[1]:root(), bufnr) do
+                    if font_query.captures[id] == 'capture' then
+                        condition = true
+                        break
+                    end
+                end
+                if condition then
+                    return ''
+                else
+                    return def
+                end
+            end),
+            c(1, {
+                i(nil, 'mathptmx'),
+                i(nil, 'lmodern'),
+                i(nil, 'palatino'),
+                i(nil, 'charter'),
+                i(nil, 'helvet'),
+                i(nil, 'courier'),
+            }),
+        })
+    ),
+    s(
+        'chft',
+        fmta('{\\fontfamily{<>}\\selectfont\n<>\n}', {
+            c(1, {
+                i(nil, 'ptm'),
+                i(nil, 'lmr'),
+                i(nil, 'ppl'),
+                i(nil, 'bch'),
+                i(nil, 'phv'),
+                i(nil, 'pcr'),
+            }),
+            i(2),
+        })
+    ),
+    s('code', fmta('\\begin{verbatim}\n<>\n\\end{verbatim}', i(1))),
+    s(
+        'date',
+        fmta(
+            '\\date{<>}',
+            c(1, {
+                f(function()
+                    return os.date '%F'
+                end),
+                i(nil),
+            })
+        )
     ),
 }
 
@@ -144,5 +265,17 @@ local autotrig = {
     s(no_word 'td', fmta('^{<>}', { i(1) })),
     s('//', frac_nodes),
 }
+
+-- TODO: See L3MON4D3/LuaSnip#637
+for i, _ in ipairs(autotrig) do
+    local normal_snip = vim.deepcopy(autotrig[i])
+    autotrig[i].condition = function()
+        return vim.fn['vimtex#syntax#in_mathzone']() == 1
+    end
+    normal_snip.condition = function()
+        return vim.fn['vimtex#syntax#in_mathzone']() == 0
+    end
+    table.insert(normal, normal_snip)
+end
 
 return normal, autotrig

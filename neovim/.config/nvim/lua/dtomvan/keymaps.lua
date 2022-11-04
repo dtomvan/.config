@@ -15,15 +15,15 @@ M.buffer = tbl_extend_opt { buffer = true, remap = false }
 M.confusing = function(modes, k, v, opts)
     _G.confusing_maps_set = _G.confusing_maps_set or {}
     _G.confusing_maps_set[k] = { map = vim.inspect(v), desc = opts.desc }
-    if type(opts.desc) == "string" then
-        opts.desc = "confusing: " .. opts.desc
+    if type(opts.desc) == 'string' then
+        opts.desc = 'confusing: ' .. opts.desc
     end
     vim.keymap.set(modes, k, function()
         -- can be nil
         if _G.confusing_maps ~= false then
-            if type(v) == "function" then
+            if type(v) == 'function' then
                 v()
-                return ""
+                return ''
             else
                 return v
             end
@@ -192,6 +192,7 @@ wk.register({
     t = { name = 'Transpose/Term' },
     w = { name = 'LSP Workspace' },
 }, { prefix = '<leader>' })
+wk.register({}, { prefix = '\\' })
 
 -- map('n', 'q:', '<nop>', M.silent "Don't trigger history, bug in noice.nvim")
 map('n', 'ZZ', '<cmd>update<cr>')

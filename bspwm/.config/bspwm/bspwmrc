@@ -29,6 +29,7 @@ bspc rule -a powermenu state=floating
 bspc rule -a BTOP state=floating
 bspc rule -a activate-linux layer=above
 bspc rule -a Mechvibes hidden=on
+bspc rule -a Floaterm state=floating
 
 bspc desktop='^1' --focus
 $HOME/.config/polybar/launch.sh

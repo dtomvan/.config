@@ -281,7 +281,12 @@ require('packer').startup(function()
             require('bqf').setup {}
         end,
     }
-    use 'ggandor/lightspeed.nvim'
+    use {
+        'ggandor/leap.nvim',
+        config = function()
+            require('leap').add_default_mappings()
+        end
+    }
     use 'Raimondi/vim-transpose-words'
     use {
         'numToStr/FTerm.nvim',
@@ -350,6 +355,10 @@ require('packer').startup(function()
     -- LaTeX
     use {
         'lervag/vimtex',
+        cond = function()
+            return not vim.g._no_vimtex
+        end,
+        ft = 'tex',
         config = function()
             vim.g.tex_conceal = 'abdmg'
             vim.g.tex_flavor = 'latex'
