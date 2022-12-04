@@ -1,11 +1,9 @@
-local lsp_signature = require 'lsp_signature'
 local lsp_status = require 'lsp-status'
 local navic = require 'nvim-navic'
 local right_click = require 'dtomvan.lsp.right_click'
 
 return function(client, bufnr)
     right_click.set_lsp_rclick_menu()
-    lsp_signature.on_attach()
     lsp_status.on_attach(client)
 
     local caps = client.server_capabilities
@@ -14,20 +12,20 @@ return function(client, bufnr)
         navic.attach(client, bufnr)
     end
 
-    if
-        caps.semanticTokensProvider
-        and caps.semanticTokensProvider.full
-        and type(vim.lsp.buf.semantic_tokens_full) == 'function'
-    then
-        local augroup = vim.api.nvim_create_augroup('SemanticTokens', {})
-        vim.api.nvim_create_autocmd('TextChanged', {
-            group = augroup,
-            buffer = bufnr,
-            callback = vim.lsp.buf.semantic_tokens_full,
-        })
-        -- fire it first time on load as well
-        vim.lsp.buf.semantic_tokens_full()
-    end
+    -- if
+    --     caps.semanticTokensProvider
+    --     and caps.semanticTokensProvider.full
+    --     and type(vim.lsp.buf.semantic_tokens_full) == 'function'
+    -- then
+    --     local augroup = vim.api.nvim_create_augroup('SemanticTokens', {})
+    --     vim.api.nvim_create_autocmd('TextChanged', {
+    --         group = augroup,
+    --         buffer = bufnr,
+    --         callback = vim.lsp.buf.semantic_tokens_full,
+    --     })
+    --     -- fire it first time on load as well
+    --     vim.lsp.buf.semantic_tokens_full()
+    -- end
 
     local function buf_map(mode, lhs, rhs, desc)
         vim.keymap.set(mode, lhs, rhs, { silent = true, buffer = bufnr, noremap = true, desc = desc })

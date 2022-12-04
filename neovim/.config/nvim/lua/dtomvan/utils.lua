@@ -57,8 +57,8 @@ function M.fmt_file_name(name)
 end
 
 function M.winbar()
-    local filename = vim.fn.expand '%:t'
-    local ft = vim.fn.expand '%:e'
+    local filename = vim.api.nvim_buf_get_name(0)
+    local ft = vim.bo.filetype
 
     local ok, _ = pcall(require, 'nvim-web-devicons')
     if not ok then

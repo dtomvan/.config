@@ -6,7 +6,7 @@ mkdir -p $HOME/.lunarclient/logs/
 DATE=$(date +%F)
 AMOUNT=$(ls ~/.lunarclient/logs/1.8*.log -1 | wc -l)
 
-~/.lunarclient/jre/1.8/zulu16.30.15-ca-fx-jdk16.0.1-linux_x64/bin/java \
+java \
 -javaagent:"$HOME/solar-patcher.jar=$HOME/config.example.json" \
 -Xms3072m -Xmx3072m \
 -Djava.library.path="$HOME/.lunarclient/offline/1.8/natives" \

@@ -44,14 +44,6 @@ require('packer').startup(function()
         end,
     }
 
-    -- Status line
-    -- use {
-    --     'j-hui/fidget.nvim',
-    --     config = function()
-    --         require('fidget').setup {}
-    --     end,
-    --     requires = 'nvim-lua/lsp-status.nvim',
-    -- }
     use {
         'tjdevries/express_line.nvim',
         config = function()
@@ -134,6 +126,7 @@ require('packer').startup(function()
         'williamboman/mason.nvim',
         requires = {
             'williamboman/mason-lspconfig.nvim',
+            'jayp0521/mason-null-ls.nvim',
         },
         config = function()
             require('mason').setup()
@@ -156,6 +149,9 @@ require('packer').startup(function()
                     'volar',
                 },
             }
+            require('mason-null-ls').setup {
+                automatic_setup = true,
+            }
         end,
         run = function()
             local servers = {
@@ -166,7 +162,6 @@ require('packer').startup(function()
             require('mason.api.command').MasonInstall(servers)
         end,
     }
-    use 'ray-x/lsp_signature.nvim'
 
     use {
         'jose-elias-alvarez/null-ls.nvim',
@@ -285,7 +280,7 @@ require('packer').startup(function()
         'ggandor/leap.nvim',
         config = function()
             require('leap').add_default_mappings()
-        end
+        end,
     }
     use 'Raimondi/vim-transpose-words'
     use {
@@ -336,14 +331,6 @@ require('packer').startup(function()
         -- Developer profiler
         use 'wakatime/vim-wakatime'
     end
-
-    -- Which key functionality
-    use {
-        'folke/which-key.nvim',
-        config = function()
-            require('which-key').setup {}
-        end,
-    }
 
     use {
         'echasnovski/mini.nvim',

@@ -1,23 +1,14 @@
 local mason_lspconfig = require 'mason-lspconfig'
-local lsp_signature = require 'lsp_signature'
 local lsp_status = require 'lsp-status'
 local on_attach = require 'dtomvan.lsp.attach'
-lsp_signature.setup { floating_window = false }
 
 local M = {}
 
-require('nvim-semantic-tokens').setup {
-    preset = 'default',
-    -- highlighters is a list of modules following the interface of nvim-semantic-tokens.table-highlighter or
-    -- function with the signature: highlight_token(ctx, token, highlight) where
-    --        ctx (as defined in :h lsp-handler)
-    --        token  (as defined in :h vim.lsp.semantic_tokens.on_full())
-    --        highlight (a helper function that you can call (also multiple times) with the determined highlight group(s) as the only parameter)
-    highlighters = { require 'nvim-semantic-tokens.table-highlighter' },
-}
-
-lsp_status.register_progress()
-
+-- require('nvim-semantic-tokens').setup {
+--     preset = 'default',
+--     highlighters = { require 'nvim-semantic-tokens.table-highlighter' },
+-- }
+--
 local ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not ok then
     cmp_nvim_lsp = {}
@@ -41,13 +32,7 @@ local function get_lua_runtime()
         end
     end
 
-    -- This loads the `lua` files from nvim into the runtime.
-    result[vim.fn.expand '$VIMRUNTIME/lua'] = true
-
-    -- TODO: Figure out how to get these to work...
-    --  Maybe we need to ship these instead of putting them in `src`?...
-    result[vim.fn.expand '~/repos/neovim/src/nvim/lua'] = true
-    -- result['/usr/share/nvim/runtime/lua'] = true
+    -- result[vim.fn.expand '$VIMRUNTIME/lua'] = true
 
     return result
 end

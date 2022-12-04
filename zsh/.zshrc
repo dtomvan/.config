@@ -9,11 +9,43 @@ fi
 
 export BROWSER=waterfox-current
 export EDITOR=nvim
-export PATH=~/.local/bin/neovim/:~/.nix-profile/bin/:~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin:~/go/bin:~/.yarn/bin
+export NPM_CONFIG_PREFIX=~/.npm-global
+export PATH=$NPM_CONFIG_PREFIX/bin:~/.local/bin/neovim/:~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin:~/go/bin:~/.yarn/bin
 export DENO_INSTALL="$HOME/.deno"
 export RUSTC_WRAPPER=sccache
-export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
+
+fire() {
+    cd "$(git rev-parse --show-toplevel)"
+    cur_branch="$(git branch --show-current)"
+
+    name="fire-$(date +%D)-$(git config user.email)-$(date +%N)"
+    echo "Pushing current branch"
+    git push origin $cur_branch
+    echo "Stashing uncommitted changes"
+    git add -A
+    git stash push -m "$name"
+    echo "Switching to new branch $name"
+    git checkout -b $name
+    echo "Applying stash"
+    git stash apply
+    echo "Emergency committing all changes"
+    git commit -m "Fire at $(date). All changes have been committed to a seperate branch." \
+      --no-verify -a
+    echo "Press enter to push to new branch $name..."
+    read
+
+    for remote in $(git remote); do
+      git push $remote --set-upstream --no-verify $(git branch --show-current)
+      git push $remote --tags
+    done
+
+    if [ "$(git stash list)" != '' ]; then
+      for sha in $(git rev-list -g stash); do
+        git push --no-verify origin "$sha":refs/heads/"$cur_branch"-stash-"$sha"
+      done
+    fi
+}
 
 zle-keymap-select zle-line-init () {
   case $KEYMAP in
@@ -44,7 +76,15 @@ m() {
 }
 
 aoc() {
-  tmux-sess ~/projects/aoc/$(date +%Y)
+  tmuxinator aoc
+}
+
+filehere() {
+  printf "%s/%s" $(pwd) "$1"
+}
+
+cppath() {
+  filehere $@ | xsel -b
 }
 
 zle -N zle-keymap-select
@@ -80,8 +120,12 @@ zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*:functions' ignored-patterns '_*'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
-autoload -Uz compinit
-compinit
+autoload -Uz compinit 
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+  compinit;
+else
+  compinit -C;
+fi;
 
 rationalise-dot() {
 if [[ $LBUFFER = *.. ]]; then
@@ -264,6 +308,11 @@ zle -N alt-s
 bindkey '^[s' alt-s
 bindkey '^[h' run-help
 
+tex() {
+  pushd ~/projects/tex/
+  cd $(fd --type d | sk --preview='ls -la {}' -1 -0 || echo .)
+}
+
 # ALIASES
 alias athenaeum '~/.local/share/flatpak/exports/bin/com.gitlab.librebob.Athenaeum'
 alias cargo="mold -run cargo"
@@ -392,9 +441,6 @@ alias gup="git pull --rebase"
 alias gupv="git pull --rebase -v"
 alias gwch="git whatchanged -p --alias=commit --pretty=medium"
 alias less="bat"
-alias ls="exa --icons"
-alias ll="ls -lah"
-alias la="ls -a"
 alias luamake=~/.cache/nvim/nlua/sumneko_lua/lua-language-server/3rd/luamake/luamake
 alias openrct2='~/.local/share/flatpak/exports/bin/io.openrct2.OpenRCT2'
 alias srb2='~/.local/share/flatpak/exports/bin/org.srb2.SRB2'
@@ -403,24 +449,28 @@ alias t="tmux"
 alias vim="nvim"
 alias x='cd "$(xplr --print-pwd-as-result)"'
 
+alias templeos="printf '\\33]50;%s\\007' 'xft:TempleOS-12,Iosevka Nerd Font-18' && nvim +Temple && printf '\\33]50;%s\\007' 'xft:Iosevka Nerd Font-15'"
+
 eval "$(antidot init)"
 eval "$(zoxide init zsh --cmd d)"
 eval "$(mcfly init zsh)"
-
-source ~/.zsh/antigen.zsh
-antigen theme romkatv/powerlevel10k
 
 # Bun
 export BUN_INSTALL="/home/tomvd/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+[ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh" || exit
+
+plug "zap-zsh/supercharge"
+plug "romkatv/powerlevel10k"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-completions
-antigen bundle zdharma-continuum/fast-syntax-highlighting
-antigen apply
+plug "zsh-users/zsh-autosuggestions"
+plug "zsh-users/zsh-syntax-highlighting"
 
 [ -z "$ZPROF" ] || zprof
-[[ $- == *i* ]] && instantterminalhelp
+
+alias ls="exa --icons"
+alias ll="ls -lah"
+alias la="ls -a"

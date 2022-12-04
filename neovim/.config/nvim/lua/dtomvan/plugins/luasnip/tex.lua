@@ -126,7 +126,7 @@ local normal = {
 <>
 
 \end{document}
-]],
+]]           ,
             {
                 i(1, '\\documentclass[11pt,a4paper]{article}'),
                 i(2, 'Insert title here'),
@@ -245,6 +245,7 @@ local normal = {
             })
         )
     ),
+    s('lang', fmta('\\usepackage[<>]{babel}', c(1, { i(nil, 'dutch'), i(nil, 'english') }))),
 }
 
 local autotrig = {

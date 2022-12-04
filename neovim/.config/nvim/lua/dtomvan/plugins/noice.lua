@@ -1,4 +1,4 @@
-if vim.g._no_noice then
+if vim.g._no_noice or vim.g.goneovim == 1 then
     return
 end
 require('noice').setup {

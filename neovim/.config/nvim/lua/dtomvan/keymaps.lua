@@ -1,4 +1,3 @@
-local wk = require 'which-key'
 local tbl_extend_opt = function(tbl)
     return function(desc)
         return vim.tbl_extend('keep', tbl, { desc = desc })
@@ -143,7 +142,6 @@ local function open_term(cmd, tmode, bufnr)
             open_term(cmd, tmode, window.bufnr)
         end, { buffer = window.bufnr })
     end
-    EX['autocmd!']('WinLeave', '<buffer>')
 end
 
 local function termbind(bind, mode, cmd, tmode, bufnr, desc)
@@ -160,12 +158,19 @@ end
 spterm('n', '<leader>cv', 'vs')
 spterm('n', '<leader>cx', 'sp')
 
+local aoc
+if vim.g._aoc == true then
+    aoc = string.format(' -p aoc_%s %s', os.date('%Y'), tonumber(os.date('%d')))
+else
+    aoc = ''
+end
+
 termbind('n', '<leader>cl', vim.env.SHELL, true)
 termbind('n', '<leader>cb', 'mold -run cargo b', false)
-termbind('n', '<leader>cc', 'mold -run cargo clippy', false)
-termbind('n', '<leader>cr', 'mold -run cargo r', false)
-termbind('n', '<leader>ct', 'mold -run cargo t', false)
-termbind('n', '<leader>tl', 'mold -run cargo t --lib', false)
+termbind('n', '<leader>cc', 'mold -run cargo clippy' .. aoc, false)
+termbind('n', '<leader>cr', 'mold -run cargo r' .. aoc, false)
+termbind('n', '<leader>ct', 'mold -run cargo t' .. aoc, false)
+termbind('n', '<leader>tl', 'mold -run cargo t --lib' .. aoc, false)
 
 map('n', '<C-h>', '<C-w>h', M.silent 'Winmove left')
 map('n', '<C-j>', '<C-w>j', M.silent 'Winmove down')
@@ -183,16 +188,17 @@ map('n', '<c-s>', function()
     end
 end, M.expr 'Write and source')
 
-wk.register({
-    c = { name = 'Terminal' },
-    d = { name = 'Dot' },
-    f = { name = 'Find' },
-    g = { name = 'Goto', f = 'File' },
-    r = { name = 'Re...' },
-    t = { name = 'Transpose/Term' },
-    w = { name = 'LSP Workspace' },
-}, { prefix = '<leader>' })
-wk.register({}, { prefix = '\\' })
+-- local wk = require'which-key'
+-- wk.register({
+--     c = { name = 'Terminal' },
+--     d = { name = 'Dot' },
+--     f = { name = 'Find' },
+--     g = { name = 'Goto', f = 'File' },
+--     r = { name = 'Re...' },
+--     t = { name = 'Transpose/Term' },
+--     w = { name = 'LSP Workspace' },
+-- }, { prefix = '<leader>' })
+-- wk.register({}, { prefix = '\\' })
 
 -- map('n', 'q:', '<nop>', M.silent "Don't trigger history, bug in noice.nvim")
 map('n', 'ZZ', '<cmd>update<cr>')
