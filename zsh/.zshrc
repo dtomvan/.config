@@ -459,7 +459,7 @@ eval "$(mcfly init zsh)"
 export BUN_INSTALL="/home/tomvd/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-[ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh" || exit
+[ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh" || true
 
 plug "zap-zsh/supercharge"
 plug "romkatv/powerlevel10k"

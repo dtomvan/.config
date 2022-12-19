@@ -51,7 +51,7 @@ polkit-gnome
 polybar
 prettyping
 procs
-python3-pip
+python-pip
 qt5ct
 reflector
 rust-analyzer

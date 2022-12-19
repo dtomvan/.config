@@ -140,7 +140,6 @@ require('packer').startup(function()
                     'kotlin_language_server',
                     'lemminx',
                     'pylsp',
-                    'rnix',
                     'rust_analyzer',
                     'sumneko_lua',
                     'svelte',
