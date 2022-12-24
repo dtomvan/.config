@@ -46,6 +46,7 @@ startup_window: run
 
 windows:
   - editor: nvim --cmd 'lua vim.g._no_noice = true' --cmd 'lua vim.g._aoc = true' --listen /run/user/1000/nvim-aoc src/*.rs
-  - run: cargo b && cargo b --release && echo "sleep 10 && cargo day && nvim --server /run/user/1000/nvim-aoc --remote src/days/day$(date +%d | bc).rs && nvim --server /run/user/1000/nvim-aoc-input inputs/days/day-$(date +%d | bc).txt && cargo r$(date +%Y) $(date +%d | bc)" | xsel -b
+  - run: cargo b && cargo b --release && echo "sleep 10 && cargo day && nvim --server /run/user/1000/nvim-aoc --remote src/days/day$(date +%d | bc).rs && nvim --server /run/user/1000/nvim-aoc-input --remote inputs/day-$(date +%d | bc).txt && tmux selectw -t 1 && cargo r$(date +%Y) $(date +%d | bc)" | xsel -b
   - test:
   - input: nvim --listen /run/user/1000/nvim-aoc-input
+  - test-input: nvim inputs/day-$(date +%d | bc).test

@@ -1,130 +1,124 @@
-require('packer').startup(function()
-    -- Packer
-    use 'wbthomason/packer.nvim'
-
+return {
     -- Tpope stuff
-    use 'tpope/vim-surround'
-    use 'tpope/vim-git'
-    use 'tpope/vim-fugitive'
-    use 'tpope/vim-eunuch'
-    use 'tpope/vim-unimpaired'
-    use 'tpope/vim-repeat'
-    use 'tpope/vim-vinegar'
-    use 'tpope/vim-sleuth'
-    use 'tpope/vim-endwise'
+    'tpope/vim-surround',
+    'tpope/vim-git',
+    'tpope/vim-fugitive',
+    'tpope/vim-eunuch',
+    'tpope/vim-unimpaired',
+    'tpope/vim-repeat',
+    -- use 'tpope/vim-vinegar'
+    'tpope/vim-sleuth',
+    'tpope/vim-endwise',
 
-    use {
+    {
         'numToStr/Comment.nvim',
         config = function()
             require('Comment').setup {}
         end,
-    }
+    },
+    {
+        'numToStr/Navigator.nvim',
+        config = function()
+            local Navigator = require 'Navigator'
+            Navigator.setup()
+            vim.keymap.set('n', '<A-h>', Navigator.left)
+            vim.keymap.set('n', '<A-l>', Navigator.right)
+            vim.keymap.set('n', '<A-k>', Navigator.up)
+            vim.keymap.set('n', '<A-j>', Navigator.down)
+            vim.keymap.set('n', '<A-p>', Navigator.previous)
+        end,
+    },
 
     -- Startup time improvements
-    use {
+    {
         'lewis6991/impatient.nvim',
         config = function()
             require 'impatient'
         end,
-    }
+    },
 
     -- Plenary
-    use 'nvim-lua/popup.nvim'
-    use 'nvim-lua/plenary.nvim'
+    'nvim-lua/popup.nvim',
+    'nvim-lua/plenary.nvim',
 
     -- Color scheme
-    use 'levouh/tint.nvim'
-    require('dtomvan.colors').use_themes(use)
+    'levouh/tint.nvim',
+    require('dtomvan.colors').theme(),
 
     -- After opening a file, return to the last position
-    use {
+    {
         'ethanholz/nvim-lastplace',
         config = function()
             require('nvim-lastplace').setup()
         end,
-    }
-
-    use {
-        'tjdevries/express_line.nvim',
-        config = function()
-            R 'dtomvan.plugins.express_line'
-        end,
-        requires = { 'kyazdani42/nvim-web-devicons' },
-    }
-    use {
-        'SmiteshP/nvim-navic',
-        requires = 'neovim/nvim-lspconfig',
-        config = function()
-            require 'dtomvan.plugins.gps'
-        end,
-    }
+    },
 
     -- Prime goodness
-    use 'ThePrimeagen/harpoon'
-    use 'ThePrimeagen/refactoring.nvim'
-    use { 'ThePrimeagen/vim-be-good', cmd = 'VimBeGood' }
-    use 'theprimeagen/jvim.nvim'
+    'ThePrimeagen/harpoon',
+    'ThePrimeagen/refactoring.nvim',
+    { 'ThePrimeagen/vim-be-good', cmd = 'VimBeGood' },
+    'theprimeagen/jvim.nvim',
 
     -- Git signs
-    use {
+    {
         'lewis6991/gitsigns.nvim',
         config = function()
             require('gitsigns').setup {}
         end,
-    }
+    },
 
     -- TJ telescope Johnson
-    use {
+    {
         'nvim-telescope/telescope.nvim',
         config = function()
-            R 'dtomvan.plugins.telescope'
+            require 'dtomvan.config.telescope'
         end,
-    }
-    use 'nvim-telescope/telescope-fzy-native.nvim'
+    },
+    'nvim-telescope/telescope-fzy-native.nvim',
 
     -- Use Telescope as vim.ui.select
     -- and a fancy prompt for vim.ui.input
-    use {
+    {
         'stevearc/dressing.nvim',
         config = function()
             require('dressing').setup {}
         end,
-    }
+    },
 
     -- Rust or Bust
-    use 'ron-rs/ron.vim'
-    use 'simrat39/rust-tools.nvim'
+    'ron-rs/ron.vim',
+    'simrat39/rust-tools.nvim',
 
     -- Lsp
-    use {
+    {
         'neovim/nvim-lspconfig',
-        requires = {
+        dependencies = {
             'williamboman/mason.nvim',
         },
-    }
-    use 'nvim-lua/lsp_extensions.nvim'
+    },
+    'nvim-lua/lsp_extensions.nvim',
 
-    use {
+    {
         'nvim-treesitter/nvim-treesitter',
-        run = function()
+        build = function()
             vim.cmd.TSUpdate()
         end,
         config = function()
-            R 'dtomvan.plugins.treesitter'
+            require 'dtomvan.config.treesitter'
         end,
-        requires = {
+        dependencies = {
             'nvim-treesitter/nvim-treesitter-context',
             'nvim-treesitter/nvim-treesitter-textobjects',
             'nvim-treesitter/playground',
             'nvim-treesitter/nvim-treesitter-refactor',
         },
-    }
-    use 'theHamsta/nvim-semantic-tokens'
+    },
+    'theHamsta/nvim-semantic-tokens',
 
-    use 'tjdevries/nlua.nvim'
-    use {
+    'tjdevries/nlua.nvim',
+    {
         'williamboman/mason.nvim',
-        requires = {
+        dependencies = {
             'williamboman/mason-lspconfig.nvim',
             'jayp0521/mason-null-ls.nvim',
         },
@@ -153,7 +147,7 @@ require('packer').startup(function()
                 automatic_setup = true,
             }
         end,
-        run = function()
+        build = function()
             local servers = {
                 'black',
                 'stylua',
@@ -161,103 +155,28 @@ require('packer').startup(function()
             }
             require('mason.api.command').MasonInstall(servers)
         end,
-    }
-
-    use {
-        'jose-elias-alvarez/null-ls.nvim',
-        config = function()
-            require 'dtomvan.plugins.null-ls'
-        end,
-        requires = { 'nvim-lua/plenary.nvim' },
-    }
+    },
 
     -- Autocompletion
-    use {
+    {
         'L3MON4D3/LuaSnip',
-        requires = {
+        dependencies = {
             'rafamadriz/friendly-snippets',
         },
         config = function()
-            R 'dtomvan.plugins.luasnip'
+            R 'dtomvan.config.luasnip'
         end,
-    }
-    use {
-        'hrsh7th/nvim-cmp',
-        requires = {
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-cmdline',
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-path',
-            'hrsh7th/nvim-cmp',
-            'f3fora/cmp-spell',
-            'onsails/lspkind-nvim',
-            'saadparwaiz1/cmp_luasnip',
-        },
-        config = function()
-            R 'dtomvan.plugins.cmp'
-        end,
-    }
+    },
 
     -- Auto pairs
-    use 'Krasjet/auto.pairs'
+    'Krasjet/auto.pairs',
 
     -- Kotlin
-    use 'udalov/kotlin-vim'
-
-    -- xplr
-    use {
-        'fhill2/xplr.nvim',
-        run = function()
-            require('xplr').install { hide = true }
-            R 'dtomvan.plugins.xplr'
-        end,
-        requires = {
-            'nvim-lua/plenary.nvim',
-            'MunifTanjim/nui.nvim',
-        },
-    }
+    'udalov/kotlin-vim',
 
     -- Misc
-    use 'rcarriga/nvim-notify'
-
-    -- Keep this for later, too early in development
-    use {
-        'folke/noice.nvim',
-        event = 'VimEnter',
-        config = function()
-            require 'dtomvan.plugins.noice'
-        end,
-        requires = 'nvim-lua/lsp-status.nvim',
-    }
-
-    use {
-        'ghillb/cybu.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons', 'nvim-lua/plenary.nvim' },
-        config = function()
-            local cybu = require 'cybu'
-            cybu.setup {
-                style = {
-                    highlights = {
-                        current_buffer = 'CybuFocus',
-                        adjacent_buffers = 'NormalFloat',
-                        background = 'NormalFloat',
-                        border = 'WinSeparator',
-                    },
-                },
-            }
-            local function c(dir)
-                return function()
-                    cybu.cycle(dir)
-                end
-            end
-
-            vim.keymap.set({ 'n', 'v' }, '<s-tab>', c 'prev')
-            vim.keymap.set({ 'n', 'v' }, '<tab>', c 'next')
-        end,
-    }
-
-    -- Misc
-    use {
+    'rcarriga/nvim-notify',
+    {
         'lukas-reineke/indent-blankline.nvim',
         config = function()
             require('indent_blankline').setup {
@@ -265,25 +184,25 @@ require('packer').startup(function()
                 show_current_context_start = true,
             }
         end,
-    }
-    use 'tversteeg/registers.nvim'
-    use 'junegunn/vim-easy-align'
-    use 'andymass/vim-matchup'
-    use {
+    },
+    'tversteeg/registers.nvim',
+    'junegunn/vim-easy-align',
+    'andymass/vim-matchup',
+    {
         'kevinhwang91/nvim-bqf',
         ft = 'qf',
         config = function()
             require('bqf').setup {}
         end,
-    }
-    use {
+    },
+    {
         'ggandor/leap.nvim',
         config = function()
             require('leap').add_default_mappings()
         end,
-    }
-    use 'Raimondi/vim-transpose-words'
-    use {
+    },
+    'Raimondi/vim-transpose-words',
+    {
         'numToStr/FTerm.nvim',
         config = function()
             require('FTerm').setup {
@@ -297,50 +216,50 @@ require('packer').startup(function()
 
             vim.keymap.set({ 'n', 't' }, '<A-i>', require('FTerm').toggle, { desc = 'Toggle terminal' })
         end,
-    }
+    },
 
-    -- I'm finally using a filetree :)
-    use {
-        'ms-jpq/chadtree',
-        branch = 'chad',
-        run = 'python3 -m chadtree deps',
+    {
+        'prichrd/netrw.nvim',
         config = function()
-            vim.keymap.set({ 'n', 'i', 's', 'x' }, '<f1>', '<cmd>CHADopen<cr>', { desc = 'CHADopen' })
+            require('netrw').setup {}
         end,
-    }
+    },
 
-    use {
-        'gbprod/substitute.nvim',
+    {
+        'j-morano/buffer_manager.nvim',
         config = function()
-            require 'dtomvan.plugins.substitute'
+            vim.g.buffer_manager_log_level = 'fatal'
+            vim.keymap.set('n', '<c-b>', require('buffer_manager.ui').toggle_quick_menu)
         end,
-    }
+    },
 
-    use {
+    {
         'gaoDean/autolist.nvim',
         config = function()
             require('autolist').setup {}
         end,
-    }
+    },
 
     -- Profiler
-    use 'dstein64/vim-startuptime'
+    'dstein64/vim-startuptime',
     -- Only when using on specific machine,
     -- since I don't want to get prompted on others.
-    if vim.fn.hostname() == 'tom-pc' then
-        -- Developer profiler
-        use 'wakatime/vim-wakatime'
-    end
+    {
+        'wakatime/vim-wakatime',
+        enabled = function()
+            return vim.fn.hostname() == 'tom-pc'
+        end,
+    },
 
-    use {
+    {
         'echasnovski/mini.nvim',
         config = function()
-            require 'dtomvan.plugins.mini'
+            require 'dtomvan.config.mini'
         end,
-    }
+    },
 
     -- LaTeX
-    use {
+    {
         'lervag/vimtex',
         cond = function()
             return not vim.g._no_vimtex
@@ -352,5 +271,5 @@ require('packer').startup(function()
             vim.g.vimtex_quickfix_mode = 0
             vim.g.vimtex_view_method = 'zathura'
         end,
-    }
-end)
+    },
+}

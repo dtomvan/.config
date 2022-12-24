@@ -23,7 +23,7 @@ require('telescope').setup {
 require('telescope').load_extension 'fzy_native'
 
 local noremap = require('dtomvan.keymaps').noremap
-local pickers = R 'dtomvan.plugins.telescope.pickers'
+local pickers = R 'dtomvan.config.telescope.pickers'
 local ivy = require('telescope.themes').get_ivy {}
 
 -- Custom pickers

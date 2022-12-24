@@ -90,6 +90,8 @@ cppath() {
 zle -N zle-keymap-select
 zle -N zle-line-init
 
+export MOAR='-statusbar bold -wrap'
+export PAGER=moar
 export HISTFILE=~/.histfile
 export HISTSIZE=500000
 export SAVEHIST=500000

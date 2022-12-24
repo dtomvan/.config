@@ -7,6 +7,7 @@ return function(client, bufnr)
     lsp_status.on_attach(client)
 
     local caps = client.server_capabilities
+    client.server_capabilities.semanticTokensProvider = nil
 
     if caps.documentSymbolProvider then
         navic.attach(client, bufnr)

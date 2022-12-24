@@ -1,21 +1,7 @@
 local M = {}
 
-M.my_themes = {
-    kanagawa = 'rebelot/kanagawa.nvim',
-    -- templeos = 'LunarVim/templeos.nvim',
-    -- horizon = 'LunarVim/horizon.nvim',
-}
-
----@param use fun(plugin: string|table): any
-M.use_themes = function(use)
-    vim.validate { use = { use, 'function', true } }
-    if not use then
-        return
-    end
-    for _, repo in pairs(M.my_themes) do
-        use(repo)
-    end
-    use { 'catppuccin/nvim', as = 'catppuccin' }
+M.theme = function()
+    return { 'catppuccin/nvim', name = 'catppuccin' }
 end
 
 ---@param theme string | nil
@@ -25,8 +11,9 @@ M.load_theme = function(theme)
     local hl = vim.api.nvim_set_hl
     vim.cmd.colorscheme(theme)
 
-    hl(0, 'WinSeparator', { bg = 'NONE' })
-    -- hl(0, 'NormalFloat', { bg = 'NONE' })
+    hl(0, 'WinSeparator', { bg = 'none' })
+    -- hl(0, 'Normal', { bg = 'none' })
+    -- hl(0, 'NormalFloat', { bg = 'none' })
     hl(0, 'LspComment', { link = 'Comment' })
     -- hl(0, 'TreesitterContext', { link = 'TabLine' })
     hl(0, 'CybuBackground', { link = 'Normal' })

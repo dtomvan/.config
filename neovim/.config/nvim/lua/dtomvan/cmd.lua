@@ -147,3 +147,11 @@ cmd('Confusing', function()
         vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, { string.format('%s: %s described as %s', k, v.map, v.desc or "nothing") })
     end
 end, { desc = 'Show confusing mappings', force = true })
+
+cmd('Jq', function()
+    vim.ui.input({ prompt = "filename for jq script -> ", completion = 'files' }, function(input)
+        vim.cmd.edit(input)
+        vim.api.nvim_buf_set_lines(0, 0, 0, false, { "# jq script" })
+        vim.api.nvim_buf_set_lines(0, -1, -1, false, { "# vim:ft=jq" })
+    end)
+end, { desc = 'Make a JQ file', force = true })

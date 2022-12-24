@@ -12,6 +12,8 @@ package.path = package.path .. ';' .. xpm_path .. '/?.lua;' .. xpm_path .. '/?/i
 
 os.execute(string.format("[ -e '%s' ] || git clone '%s' '%s'", xpm_path, xpm_url, xpm_path))
 
+package.path = package.path .. ';' .. home .. '/projects' .. '/?.xplr/init.lua'
+
 -- General
 require 'general'
 -- Layouts
@@ -19,6 +21,7 @@ require 'layouts'
 -- Modes
 require 'modes'
 -- Plugins
+
 require('xpm').setup {
     'dtomvan/xpm.xplr',
     {

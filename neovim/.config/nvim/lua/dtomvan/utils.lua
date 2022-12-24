@@ -79,4 +79,28 @@ end
 M.buf = winbuf 'buf'
 M.win = winbuf 'win'
 
+function M.yes_or_no(prompt, default, cb)
+    local p
+    vim.validate {
+        prompt = { prompt, 's' },
+        default = { default, 'b' },
+        callback = { cb, 'f' },
+    }
+    if default then
+        p = '[Y/n]'
+    else
+        p = '[y/N]'
+    end
+
+    vim.ui.input({ prompt = string.format('%s? %s ->', prompt, p) }, function(input)
+        if input == 'y' or input == 'Y' then
+            cb(true)
+        elseif input == 'n' or input == 'N' then
+            cb(false)
+        else
+            cb(default)
+        end
+    end)
+end
+
 return M

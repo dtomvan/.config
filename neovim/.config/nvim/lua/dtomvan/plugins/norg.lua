@@ -1,22 +1,29 @@
-require('neorg').setup {
-    load = {
-        ['core.defaults'] = {},
-        ['core.norg.dirman'] = {
-            config = {
-                workspaces = {
-                    work = '~/norg/school',
-                    home = '~/norg/code',
+return {
+    'nvim-neorg/neorg',
+    enabled = false,
+    build = ':Neorg sync-parsers',
+    config = function()
+        require('neorg').setup {
+            load = {
+                ['core.defaults'] = {},
+                ['core.norg.dirman'] = {
+                    config = {
+                        workspaces = {
+                            work = '~/norg/school',
+                            home = '~/norg/code',
+                        },
+                    },
+                },
+                ['core.norg.concealer'] = {},
+                ['core.norg.completion'] = {
+                    config = {
+                        engine = 'nvim-cmp',
+                    },
+                },
+                ['core.integrations.nvim-cmp'] = {
+                    config = {},
                 },
             },
-        },
-        ['core.norg.concealer'] = {},
-        ['core.norg.completion'] = {
-            config = {
-                engine = 'nvim-cmp',
-            },
-        },
-        ['core.integrations.nvim-cmp'] = {
-            config = {},
-        },
-    },
+        }
+    end,
 }
