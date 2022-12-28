@@ -1,4 +1,3 @@
-local uv = vim.loop
 local cmd = vim.api.nvim_create_user_command
 local system = vim.fn.system
 local flags = require 'dtomvan.rg_flags'
@@ -155,3 +154,6 @@ cmd('Jq', function()
         vim.api.nvim_buf_set_lines(0, -1, -1, false, { "# vim:ft=jq" })
     end)
 end, { desc = 'Make a JQ file', force = true })
+
+-- Weird abbreviation I got used to
+vim.cmd.noreabbrev('fcd', 'cd %:p:h')

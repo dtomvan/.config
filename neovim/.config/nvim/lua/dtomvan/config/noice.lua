@@ -2,32 +2,44 @@ if vim.g._no_noice or vim.g.goneovim == 1 then
     return
 end
 require('noice').setup {
-    -- cmdline = {
-    --     view = 'cmdline',
-    -- },
+    presets = {
+        bottom_search = true,
+    },
+    lsp = {
+        override = {
+            ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+            ['vim.lsp.util.stylize_markdown'] = true,
+            ['cmp.entry.get_documentation'] = true,
+        },
+    },
+    cmdline = {
+        view = 'cmdline',
+    },
     routes = {
         {
-            view = "split",
-            filter = { event = "msg_show", min_height = 20 },
+            view = 'notify',
+            filter = { event = 'msg_show', find = '(mini.starter)' },
+            opts = { replace = true },
         },
         {
-            view = "cmdline",
-            filter = { event = "msg_show", find = '<bs> go up one level <esc> close' },
+            filter = { event = 'msg_show', find = '<bs> go up one level <esc> close' },
+            opts = { skip = true },
         },
         {
+            view = 'split',
+            filter = { event = 'msg_show', min_height = 10 },
+        },
+        {
+            view = 'mini',
+            filter = { event = 'msg_show', max_height = 1 },
+        },
+        {
+            view = 'mini',
             filter = {
                 event = 'msg_show',
                 kind = '',
                 find = 'written',
             },
-            opts = { skip = true },
-        },
-        {
-            filter = {
-                event = 'cmdline',
-                find = '^%s*[/?]',
-            },
-            view = 'cmdline',
         },
     },
     views = {

@@ -1,4 +1,7 @@
 require('nvim-treesitter.configs').setup {
+    matchup = {
+        enable = true
+    },
     playground = {
         enable = true,
         disable = {},

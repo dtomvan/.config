@@ -1,5 +1,6 @@
 local M = {
     'tjdevries/express_line.nvim',
+    event = 'UIEnter',
     dependencies = { 'kyazdani42/nvim-web-devicons' },
 }
 
@@ -17,7 +18,11 @@ M.config = function()
         end
     end
 
-    local generator = function(win)
+    local generator = function(win, buf)
+        if buf.filetype == 'starter' then
+            return {}
+        end
+
         local segs = {}
 
         if win.is_active then

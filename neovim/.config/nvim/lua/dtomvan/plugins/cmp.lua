@@ -13,4 +13,5 @@ return {
     config = function()
         require 'dtomvan.config.cmp'
     end,
+    event = "InsertEnter",
 }

@@ -1,26 +1,17 @@
 return {
-    -- Tpope stuff
-    'tpope/vim-surround',
-    'tpope/vim-git',
-    'tpope/vim-fugitive',
-    'tpope/vim-eunuch',
-    'tpope/vim-unimpaired',
-    'tpope/vim-repeat',
-    -- use 'tpope/vim-vinegar'
-    'tpope/vim-sleuth',
-    'tpope/vim-endwise',
+    -- Plenary
+    'nvim-lua/popup.nvim',
+    'nvim-lua/plenary.nvim',
 
     {
         'numToStr/Comment.nvim',
-        config = function()
-            require('Comment').setup {}
-        end,
+        config = {},
     },
     {
         'numToStr/Navigator.nvim',
         config = function()
             local Navigator = require 'Navigator'
-            Navigator.setup()
+            Navigator.setup {}
             vim.keymap.set('n', '<A-h>', Navigator.left)
             vim.keymap.set('n', '<A-l>', Navigator.right)
             vim.keymap.set('n', '<A-k>', Navigator.up)
@@ -28,22 +19,6 @@ return {
             vim.keymap.set('n', '<A-p>', Navigator.previous)
         end,
     },
-
-    -- Startup time improvements
-    {
-        'lewis6991/impatient.nvim',
-        config = function()
-            require 'impatient'
-        end,
-    },
-
-    -- Plenary
-    'nvim-lua/popup.nvim',
-    'nvim-lua/plenary.nvim',
-
-    -- Color scheme
-    'levouh/tint.nvim',
-    require('dtomvan.colors').theme(),
 
     -- After opening a file, return to the last position
     {
@@ -57,96 +32,41 @@ return {
     'ThePrimeagen/harpoon',
     'ThePrimeagen/refactoring.nvim',
     { 'ThePrimeagen/vim-be-good', cmd = 'VimBeGood' },
-    'theprimeagen/jvim.nvim',
+    {
+        'theprimeagen/jvim.nvim',
+        ft = 'json',
+    },
 
     -- Git signs
     {
         'lewis6991/gitsigns.nvim',
+        event = 'BufEnter',
         config = function()
             require('gitsigns').setup {}
         end,
     },
 
-    -- TJ telescope Johnson
-    {
-        'nvim-telescope/telescope.nvim',
-        config = function()
-            require 'dtomvan.config.telescope'
-        end,
-    },
-    'nvim-telescope/telescope-fzy-native.nvim',
-
     -- Use Telescope as vim.ui.select
     -- and a fancy prompt for vim.ui.input
     {
         'stevearc/dressing.nvim',
-        config = function()
-            require('dressing').setup {}
-        end,
+        event = 'VeryLazy',
+        config = {},
     },
 
     -- Rust or Bust
-    'ron-rs/ron.vim',
+    { 'ron-rs/ron.vim', ft = 'ron' },
     'simrat39/rust-tools.nvim',
 
     -- Lsp
     {
-        'neovim/nvim-lspconfig',
-        dependencies = {
-            'williamboman/mason.nvim',
-        },
-    },
-    'nvim-lua/lsp_extensions.nvim',
-
-    {
-        'nvim-treesitter/nvim-treesitter',
-        build = function()
-            vim.cmd.TSUpdate()
-        end,
-        config = function()
-            require 'dtomvan.config.treesitter'
-        end,
-        dependencies = {
-            'nvim-treesitter/nvim-treesitter-context',
-            'nvim-treesitter/nvim-treesitter-textobjects',
-            'nvim-treesitter/playground',
-            'nvim-treesitter/nvim-treesitter-refactor',
-        },
-    },
-    'theHamsta/nvim-semantic-tokens',
-
-    'tjdevries/nlua.nvim',
-    {
         'williamboman/mason.nvim',
+        lazy = true,
         dependencies = {
-            'williamboman/mason-lspconfig.nvim',
-            'jayp0521/mason-null-ls.nvim',
+            'neovim/nvim-lspconfig',
+            'nvim-lua/lsp_extensions.nvim',
         },
-        config = function()
-            require('mason').setup()
-            require('mason-lspconfig').setup {
-                ensure_installed = {
-                    'clangd',
-                    'emmet_ls',
-                    'gopls',
-                    'html',
-                    'jsonls',
-                    'kotlin_language_server',
-                    'lemminx',
-                    'pylsp',
-                    'rnix',
-                    'rust_analyzer',
-                    'sumneko_lua',
-                    'svelte',
-                    -- 'taplo',
-                    'tsserver',
-                    'volar',
-                },
-            }
-            require('mason-null-ls').setup {
-                automatic_setup = true,
-            }
-        end,
+        config = {},
         build = function()
             local servers = {
                 'black',
@@ -156,23 +76,61 @@ return {
             require('mason.api.command').MasonInstall(servers)
         end,
     },
+    {
+        'williamboman/mason-lspconfig.nvim',
+        lazy = true,
+        config = {
+            ensure_installed = {
+                'clangd',
+                'emmet_ls',
+                'gopls',
+                'html',
+                'jsonls',
+                'kotlin_language_server',
+                'lemminx',
+                'pylsp',
+                'rnix',
+                'rust_analyzer',
+                'sumneko_lua',
+                'svelte',
+                -- 'taplo',
+                'tsserver',
+                'volar',
+            },
+        },
+    },
+    {
+        'jayp0521/mason-null-ls.nvim',
+        lazy = true,
+        config = {
+            automatic_setup = true,
+        },
+    },
+    {
+        'theHamsta/nvim-semantic-tokens',
+        disable = true,
+        config = function()
+            require('nvim-semantic-tokens').setup {
+                preset = 'default',
+                highlighters = { require 'nvim-semantic-tokens.table-highlighter' },
+            }
+        end,
+    },
 
-    -- Autocompletion
+    -- Snippets
     {
         'L3MON4D3/LuaSnip',
+        event = 'InsertEnter',
         dependencies = {
             'rafamadriz/friendly-snippets',
         },
         config = function()
-            R 'dtomvan.config.luasnip'
+            require 'dtomvan.config.luasnip'
         end,
     },
 
-    -- Auto pairs
-    'Krasjet/auto.pairs',
-
     -- Kotlin
-    'udalov/kotlin-vim',
+    { 'udalov/kotlin-vim', ft = 'kotlin' },
 
     -- Misc
     'rcarriga/nvim-notify',
@@ -187,7 +145,10 @@ return {
     },
     'tversteeg/registers.nvim',
     'junegunn/vim-easy-align',
-    'andymass/vim-matchup',
+    {
+        'andymass/vim-matchup',
+        event = 'InsertEnter',
+    },
     {
         'kevinhwang91/nvim-bqf',
         ft = 'qf',

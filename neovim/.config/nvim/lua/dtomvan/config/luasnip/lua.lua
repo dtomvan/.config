@@ -1,6 +1,6 @@
 return {
     s(
-        'req',
+        { trig = 'req', priority = 1000000 },
         fmt([[local {} = require '{}']], {
             c(2, {
                 f(function(name)

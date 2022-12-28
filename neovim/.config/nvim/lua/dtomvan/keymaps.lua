@@ -98,10 +98,10 @@ map('n', '<leader>n', ':noh<cr>', M.silent 'Disable search highlight')
 map('n', '<leader>s', '<cr>so<cr>', M.silent 'Source current file')
 map('n', '<leader>S', ':so ', M.noremap 'Source...')
 
-M.confusing('n', '<left>', require('jvim').to_parent, M.silent 'Goto parent')
-M.confusing('n', '<right>', require('jvim').descend, M.silent 'Goto child')
-M.confusing('n', '<up>', require('jvim').prev_sibling, M.silent 'Previous sibling')
-M.confusing('n', '<down>', require('jvim').next_sibling, M.silent 'Next sibling')
+M.confusing('n', '<up>', function() require('jvim').prev_sibling() end, M.silent 'Previous sibling')
+M.confusing('n', '<down>', function() require('jvim').next_sibling() end, M.silent 'Next sibling')
+M.confusing('n', '<left>', function() require('jvim').to_parent() end, M.silent 'Goto parent')
+M.confusing('n', '<right>', function() require('jvim').descend() end, M.silent 'Goto child')
 
 map('v', '<leader>s', ':!sort<cr>', M.silent 'Sort visual selection')
 

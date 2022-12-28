@@ -15,10 +15,10 @@ return {
                 formatting.taplo,
                 formatting.black,
             },
-            on_attach = R 'dtomvan.lsp.attach',
+            on_attach = require 'dtomvan.lsp.opts'.on_attach,
         }
 
-        for _, source in ipairs(vim.api.nvim_get_runtime_file('lua/dtomvan/plugins/null-ls/*.lua', true)) do
+        for _, source in ipairs(vim.api.nvim_get_runtime_file('lua/dtomvan/config/null-ls/*.lua', true)) do
             loadfile(source)()
         end
     end,

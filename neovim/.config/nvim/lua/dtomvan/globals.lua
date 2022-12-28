@@ -3,8 +3,13 @@ P = function(v)
     return v
 end
 
+local ok, reload = pcall(require, 'plenary.reload')
 RELOAD = function(...)
-    return require('plenary.reload').reload_module(...)
+    if ok then
+	return require('plenary.reload').reload_module(...)
+    else
+	return
+    end
 end
 
 R = function(name)
