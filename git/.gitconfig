@@ -23,6 +23,7 @@
     a = add
     r = rm
     res = restore
+    root = rev-parse --show-toplevel
 [commit]
     gpgsign = true
     template = ~/.gitmessage

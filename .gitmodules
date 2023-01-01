@@ -37,3 +37,6 @@
 [submodule "xwinwrap"]
 	path = xwinwrap
 	url = https://github.com/Baitinq/xwinwrap
+[submodule "visidata/.visidata/vdplus"]
+	path = visidata/.visidata/vdplus
+	url = https://github.com/visidata/vdplus

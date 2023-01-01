@@ -91,7 +91,7 @@ map('n', '<F2>', function()
     require('harpoon.ui').toggle_quick_menu()
 end, M.silent 'Show harpoon UI')
 
-map('n', '<leader>x', ':silent !chmod +x %<CR>', M.silent 'Make current file executable')
+map('n', '<leader>xo', ':silent !chmod +x %<CR>', M.silent 'Make current file executable')
 
 map('n', '<leader>n', ':noh<cr>', M.silent 'Disable search highlight')
 

@@ -45,6 +45,7 @@ return {
 
         local opts = require 'dtomvan.lsp.opts'
         require('lspconfig').sumneko_lua.setup {
+            single_file_support = true,
             settings = {
                 Lua = {
                     format = {
@@ -61,6 +62,8 @@ return {
                     completion = {
                         keywordSnippet = 'Disable',
                         showWord = 'Disable',
+                        workspaceWord = true,
+                        callSnippet = "Both",
                     },
                     diagnostics = {
                         enable = true,
@@ -68,18 +71,43 @@ return {
                             'trailing-space',
                         },
                         globals = lua_globals,
+                        groupSeverity = {
+                            strong = "Warning",
+                            strict = "Warning",
+                        },
+                        groupFileStatus = {
+                            ["ambiguity"] = "Opened",
+                            ["await"] = "Opened",
+                            ["codestyle"] = "None",
+                            ["duplicate"] = "Opened",
+                            ["global"] = "Opened",
+                            ["luadoc"] = "Opened",
+                            ["redefined"] = "Opened",
+                            ["strict"] = "Opened",
+                            ["strong"] = "Opened",
+                            ["type-check"] = "Opened",
+                            ["unbalanced"] = "Opened",
+                            ["unused"] = "Opened",
+                        },
+                        unusedLocalExclude = { "_*" },
                     },
                     workspace = {
                         library = get_lua_runtime(),
                         maxPreload = 10000,
                         preloadFileSize = 10000,
+                        checkThirdParty = false,
+                    },
+                    misc = {
+                        parameters = {
+                            "--log-level=trace",
+                        },
                     },
                 },
             },
             filetypes = { 'lua' },
             on_attach = opts.on_attach,
             capabilities = opts.capabilities,
-            root_dir = require('lspconfig.util').find_git_ancestor,
+            -- root_dir = require('lspconfig.util').find_git_ancestor,
         }
     end,
 }

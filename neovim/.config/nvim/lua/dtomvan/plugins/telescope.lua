@@ -19,6 +19,7 @@ return {
             '<leader>/',
             '<leader>;',
         },
+        cmd = 'Telescope',
         config = function()
             require 'dtomvan.config.telescope'
         end,

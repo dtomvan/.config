@@ -1,5 +1,20 @@
 require('nvim-treesitter.configs').setup {
+    ensure_installed = {
+        "bash",
+        "c",
+        "kotlin",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "regex",
+        "rust",
+        "vim",
+    },
+
     matchup = {
+        enable = true
+    },
+    indent = {
         enable = true
     },
     playground = {

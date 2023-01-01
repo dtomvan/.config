@@ -5,13 +5,6 @@ require('noice').setup {
     presets = {
         bottom_search = true,
     },
-    lsp = {
-        override = {
-            ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-            ['vim.lsp.util.stylize_markdown'] = true,
-            ['cmp.entry.get_documentation'] = true,
-        },
-    },
     cmdline = {
         view = 'cmdline',
     },
@@ -28,10 +21,6 @@ require('noice').setup {
         {
             view = 'split',
             filter = { event = 'msg_show', min_height = 10 },
-        },
-        {
-            view = 'mini',
-            filter = { event = 'msg_show', max_height = 1 },
         },
         {
             view = 'mini',
@@ -70,6 +59,30 @@ require('noice').setup {
             win_options = {
                 winhighlight = { Normal = 'Normal', FloatBorder = 'DiagnosticInfo' },
             },
+        },
+    },
+    lsp = {
+        progress = {
+            format = {
+                {
+                    "{progress} ",
+                    key = "progress.percentage",
+                    contents = {
+                        -- { "{data.progress.message} " },
+                    },
+                },
+                { "{spinner} ", hl_group = "NoiceLspProgressSpinner" },
+                { "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
+            },
+            format_done = {
+                { "✔ ", hl_group = "NoiceLspProgressSpinner" },
+                { "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
+            },
+        },
+        override = {
+            ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+            ['vim.lsp.util.stylize_markdown'] = true,
+            ['cmp.entry.get_documentation'] = true,
         },
     },
 }

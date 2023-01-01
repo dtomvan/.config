@@ -1,5 +1,11 @@
+local trouble = require('trouble.providers.telescope').open_with_trouble
+
 require('telescope').setup {
     defaults = {
+        mappings = {
+            i = { ['<c-t>'] = trouble },
+            n = { ['<c-t>'] = trouble },
+        },
         vimgrep_arguments = {
             'rg',
             '--color=never',

@@ -26,7 +26,7 @@ vim.keymap.set('s', '<c-k>', function()
     require('luasnip').jump(1)
 end, silent 'Jump forward')
 
-require('luasnip.loaders.from_lua').load { paths = './lua/dtomvan/config/luasnip/' }
+require('luasnip.loaders.from_lua').lazy_load { paths = './lua/dtomvan/config/luasnip/' }
 
 ls.config.set_config {
     history = true,

@@ -4,22 +4,40 @@ return {
     lazy = false,
     priority = 1000,
     dependencies = 'levouh/tint.nvim',
+    build = ':CatppuccinCompile',
     config = function()
-        local hl = vim.api.nvim_set_hl
-        vim.cmd.colorscheme 'catppuccin-mocha'
+        require 'catppuccin'.setup {
+            flavour = 'mocha',
+            custom_highlights = function()
+                return {
+                    WinSeparator = { bg = 'none' },
+                    LspComment = { link = 'Comment' },
+                    CybuBackground = { link = 'Normal' },
+                    StatusLine = { link = 'Normal' },
+                }
+            end,
+            native_lsp = {
+                enabled = true,
+                virtual_text = {
+                    errors = { "italic" },
+                    hints = { "italic" },
+                    warnings = { "italic" },
+                    information = { "italic" },
+                },
+                underlines = {
+                    errors = { "underline" },
+                    hints = { "underline" },
+                    warnings = { "underline" },
+                    information = { "underline" },
+                },
+            },
+        }
 
-        hl(0, 'WinSeparator', { bg = 'none' })
-        -- hl(0, 'Normal', { bg = 'none' })
-        -- hl(0, 'NormalFloat', { bg = 'none' })
-        -- hl(0, 'TreesitterContext', { link = 'TabLine' })
-        hl(0, 'LspComment', { link = 'Comment' })
-        hl(0, 'CybuBackground', { link = 'Normal' })
-        hl(0, 'StatusLine', { link = 'Normal' })
-
+        vim.cmd.colorscheme 'catppuccin'
         if vim.fn.has 'nvim-0.8' then
             local ok, tint = pcall(require, 'tint')
             if vim.api.nvim_win_set_hl_ns and ok then
-                tint.setup { tint = -20, saturation = 0.6 }
+                tint.setup { tint = -23, saturation = 0.6 }
             end
         end
     end,

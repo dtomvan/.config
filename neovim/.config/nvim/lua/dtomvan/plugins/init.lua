@@ -6,18 +6,26 @@ return {
     {
         'numToStr/Comment.nvim',
         config = {},
+        keys = {
+            { 'gcc', nil },
+            { 'gbc', nil },
+            { 'gc', nil, mode = { 'n', 'v' } },
+            { 'gb', nil, mode = { 'n', 'v' } },
+            { 'gcO', nil },
+            { 'gco', nil },
+            { 'gcA', nil },
+        },
     },
     {
         'numToStr/Navigator.nvim',
-        config = function()
-            local Navigator = require 'Navigator'
-            Navigator.setup {}
-            vim.keymap.set('n', '<A-h>', Navigator.left)
-            vim.keymap.set('n', '<A-l>', Navigator.right)
-            vim.keymap.set('n', '<A-k>', Navigator.up)
-            vim.keymap.set('n', '<A-j>', Navigator.down)
-            vim.keymap.set('n', '<A-p>', Navigator.previous)
-        end,
+        config = {},
+        keys = {
+            { '<A-h>', '<cmd>NavigatorLeft<cr>' },
+            { '<A-j>', '<cmd>NavigatorDown<cr>' },
+            { '<A-k>', '<cmd>NavigatorUp<cr>' },
+            { '<A-l>', '<cmd>NavigatorRight<cr>' },
+            { '<A-p>', '<cmd>NavigatorPrevious<cr>' },
+        },
     },
 
     -- After opening a file, return to the last position
@@ -29,7 +37,10 @@ return {
     },
 
     -- Prime goodness
-    'ThePrimeagen/harpoon',
+    {
+        'ThePrimeagen/harpoon',
+        lazy = true,
+    },
     'ThePrimeagen/refactoring.nvim',
     { 'ThePrimeagen/vim-be-good', cmd = 'VimBeGood' },
     {
@@ -40,10 +51,8 @@ return {
     -- Git signs
     {
         'lewis6991/gitsigns.nvim',
-        event = 'BufEnter',
-        config = function()
-            require('gitsigns').setup {}
-        end,
+        event = 'BufReadPre',
+        config = true,
     },
 
     -- Use Telescope as vim.ui.select
@@ -108,7 +117,7 @@ return {
     },
     {
         'theHamsta/nvim-semantic-tokens',
-        disable = true,
+        event = 'LspAttach',
         config = function()
             require('nvim-semantic-tokens').setup {
                 preset = 'default',
@@ -120,7 +129,7 @@ return {
     -- Snippets
     {
         'L3MON4D3/LuaSnip',
-        event = 'InsertEnter',
+        event = 'BufReadPost',
         dependencies = {
             'rafamadriz/friendly-snippets',
         },
@@ -143,11 +152,24 @@ return {
             }
         end,
     },
-    'tversteeg/registers.nvim',
-    'junegunn/vim-easy-align',
+    {
+        'tversteeg/registers.nvim',
+        cmd = 'Registers',
+        keys = {
+            { '"', nil, 'n' },
+            { '<c-r>', nil, 'i' },
+        },
+    },
+    {
+        'junegunn/vim-easy-align',
+        keys = {
+            { "ga", "<plug>(EasyAlign)", mode = { "n", 'x' }, remap = true },
+            { "gA", "<plug>(LiveEasyAlign)", mode = { "n", 'x' }, remap = true }
+        }
+    },
     {
         'andymass/vim-matchup',
-        event = 'InsertEnter',
+        event = 'BufReadPost',
     },
     {
         'kevinhwang91/nvim-bqf',
@@ -165,48 +187,64 @@ return {
     'Raimondi/vim-transpose-words',
     {
         'numToStr/FTerm.nvim',
-        config = function()
-            require('FTerm').setup {
-                border = 'rounded',
-                dimensions = {
-                    height = 0.9,
-                    width = 0.9,
-                },
-                blend = 20,
-            }
-
-            vim.keymap.set({ 'n', 't' }, '<A-i>', require('FTerm').toggle, { desc = 'Toggle terminal' })
-        end,
+        config = {
+            border = 'rounded',
+            dimensions = {
+                height = 0.9,
+                width = 0.9,
+            },
+            blend = 20,
+        },
+        keys = {
+            {
+                '<A-i>',
+                function()
+                    require 'FTerm'.toggle()
+                end,
+                mode = { 'n', 't' },
+                desc = 'Toggle terminal',
+            },
+        },
     },
 
     {
         'prichrd/netrw.nvim',
-        config = function()
-            require('netrw').setup {}
-        end,
+        config = {},
     },
 
     {
         'j-morano/buffer_manager.nvim',
         config = function()
             vim.g.buffer_manager_log_level = 'fatal'
-            vim.keymap.set('n', '<c-b>', require('buffer_manager.ui').toggle_quick_menu)
         end,
+        keys = {
+            {
+                '<c-b>',
+                function()
+                    require('buffer_manager.ui').toggle_quick_menu()
+                end,
+                desc = 'Buffer manager',
+            },
+        },
     },
 
     {
         'gaoDean/autolist.nvim',
-        config = function()
-            require('autolist').setup {}
-        end,
+        config = {},
+        event = {
+            'FileType text',
+            'FileType markdown',
+            'FileType tex',
+            'FileType plaintex',
+        },
     },
 
-    -- Profiler
-    'dstein64/vim-startuptime',
+
     -- Only when using on specific machine,
     -- since I don't want to get prompted on others.
     {
         'wakatime/vim-wakatime',
+        event = 'VeryLazy',
         enabled = function()
             return vim.fn.hostname() == 'tom-pc'
         end,
