@@ -6,25 +6,13 @@ return function(client, bufnr)
     right_click.set_lsp_rclick_menu()
     lsp_status.on_attach(client)
 
+    if vim.tbl_contains({ "lua", "rust", "python" }, vim.bo.ft) then
+        client.server_capabilities.semanticTokensProvider = nil
+    end
     local caps = client.server_capabilities
 
     if caps.documentSymbolProvider then
         navic.attach(client, bufnr)
-    end
-
-    if
-        caps.semanticTokensProvider
-        and caps.semanticTokensProvider.full
-        and type(vim.lsp.buf.semantic_tokens_full) == 'function'
-    then
-        local augroup = vim.api.nvim_create_augroup('SemanticTokens', {})
-        vim.api.nvim_create_autocmd('TextChanged', {
-            group = augroup,
-            buffer = bufnr,
-            callback = vim.lsp.buf.semantic_tokens_full,
-        })
-        -- fire it first time on load as well
-        vim.lsp.buf.semantic_tokens_full()
     end
 
     local function buf_map(mode, lhs, rhs, desc)
@@ -62,13 +50,4 @@ return function(client, bufnr)
     buf_map('n', '<C-f>', function()
         vim.lsp.buf.format { async = true }
     end, 'Format buffer')
-
-    -- Trouble.nvim
-    -- buf_map('n', '<leader>xx', '<cmd>Trouble<cr>')
-    -- buf_map('n', '<leader>xc', '<cmd>TroubleClose<cr>')
-    -- buf_map('n', '<leader>xw', '<cmd>Trouble workspace_diagnostics<cr>')
-    -- buf_map('n', '<leader>xd', '<cmd>Trouble document_diagnostics<cr>')
-    -- buf_map('n', '<leader>xl', '<cmd>Trouble loclist<cr>')
-    -- buf_map('n', '<leader>xq', '<cmd>Trouble quickfix<cr>')
-    -- buf_map('n', 'gR', '<cmd>Trouble lsp_references<cr>')
 end

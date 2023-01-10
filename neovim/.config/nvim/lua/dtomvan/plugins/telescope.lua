@@ -4,13 +4,13 @@ return {
         'nvim-telescope/telescope.nvim',
         keys = {
             '<c-p>',
-            '<leader>b',
+            '<leader>B',
             '<leader>dd',
             '<leader>fb',
             '<leader>fp',
             '<leader>q',
             '<leader>:',
-            '<leader>fc',
+            '<m-x>',
             '<leader>ft',
             '<C-e>',
             '<leader>h',
@@ -25,4 +25,16 @@ return {
         end,
     },
     'nvim-telescope/telescope-fzy-native.nvim',
+    {
+        'nvim-telescope/telescope-file-browser.nvim',
+        lazy = true,
+        keys = {
+            {
+                '<leader>fb',
+                function()
+                    require('telescope').extensions.file_browser.file_browser()
+                end,
+            },
+        },
+    },
 }

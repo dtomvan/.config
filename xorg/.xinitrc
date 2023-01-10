@@ -52,14 +52,16 @@ eww daemon &
 hsetroot -solid "#16161D" &
 ~/bg.sh bg.gif &
 deadd-notification-center &
-discord --no-sandbox \
---start-minimized \
---ignore-gpu-blocklist \
---disable-features=UseOzonePlatform \
---enable-features=VaapiVideoDecoder \
---use-gl=desktop \
---enable-gpu-rasterization \
---enable-zero-copy &
+DISCOCSS_DISCORD_BIN=/usr/bin/discord discocss   \
+--ignore-gpu-blocklist                           \
+--disable-features=UseOzonePlatform              \
+--enable-features=VaapiVideoDecoder              \
+--use-gl=desktop                                 \
+--enable-gpu-rasterization                       \
+--enable-zero-copy                               \
+--enable-features=VaapiIgnoreDriverChecks        \
+--disable-features=UseChromeOSDirectVideoDecoder \
+--start-minimized &
 XINIT=1 bash ~/.profile || true &
 ~/obs-sinks.sh &
 sh -c 'pactl unload-module module-switch-on-connect; pactl load-module module-switch-on-connect;' &

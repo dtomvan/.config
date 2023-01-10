@@ -43,6 +43,7 @@ man-pages
 mcfly
 mold
 newsboat
+noto-fonts-cjk
 noto-fonts-emoji
 orchis-theme-git
 pacman-contrib
@@ -68,6 +69,7 @@ ttf-hanazono
 ttf-iosevka-nerd
 ttf-jetbrains-mono
 ttf-linux-libertine
+ttf-symbola
 vi
 volctl
 volumeicon

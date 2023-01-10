@@ -52,14 +52,15 @@ local rust_tools_opts = {
         inlay_hints = {
 
             -- Only show inlay hints for the current line
-            only_current_line = false,
+            only_current_line = true,
 
             -- Event which triggers a refersh of the inlay hints.
             -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
             -- not that this may cause  higher CPU usage.
             -- This option is only respected when only_current_line and
             -- autoSetHints both are true.
-            only_current_line_autocmd = 'CursorHold',
+            -- old value: CursorHold
+            only_current_line_autocmd = 'CursorMoved',
 
             -- wheter to show parameter hints with the inlay hints or not
             show_parameter_hints = true,
@@ -128,11 +129,11 @@ local rust_tools_opts = {
     -- rust-analyer options
     server = {
         on_attach = function(...)
-            on_attach(...)
+            opts.on_attach(...)
             vim.keymap.set('n', 'K', '<cmd>RustHoverActions<cr>', { buffer = true, desc = 'Rust hover actions' })
         end,
         standalone = true,
-        capabilities = capabilities,
+        capabilities = opts.capabilities,
         settings = {
             ['rust-analyzer'] = {
                 diagnostics = { disabled = { 'inactive-code' } },

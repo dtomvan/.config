@@ -1,6 +1,6 @@
 return {
     'jose-elias-alvarez/null-ls.nvim',
-    lazy = true,
+    event = "BufReadPost",
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
         local ok, null_ls = pcall(require, 'null-ls')

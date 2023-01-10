@@ -57,10 +57,54 @@ local get_startuptime = function()
         return ('\nLoaded %d packages in %dms'):format(stats.loaded, stats.startuptime)
     end
 end
+local bd_msg = 'Happy Birthday!'
+local birthday = function()
+    if os.date '%d%m' == '2012' then
+        return {
+            {
+                action = function()
+                    local bufnr = vim.api.nvim_create_buf(false, true)
+                    vim.cmd.b(bufnr)
+                    vim.api.nvim_buf_set_lines(0, 0, 0, false, require('dtomvan.ascii_art').birthday)
+                end,
+                name = bd_msg,
+                section = '20th of december!',
+            },
+        }
+    else
+        return {}
+    end
+end
+local birthday_hl = function(content)
+    local coords = MiniStarter.content_coords(content, 'item')
+    for _, c in ipairs(coords) do
+        local unit = content[c.line][c.unit]
+        local item = unit.item
+        local hl = {
+            'Error',
+            'Float',
+            'WarningMsg',
+            'String',
+            'Function',
+            'Exception',
+        }
+        if item.name == bd_msg then
+            table.remove(content[c.line], c.unit)
+            for i = #item.name, 1, -1 do
+                table.insert(content[c.line], c.unit, {
+                    string = item.name:sub(i, i),
+                    hl = hl[(i - 1) % #hl + 1],
+                })
+            end
+            table.insert(content[c.line], c.unit, { string = '', type = 'item', item = item })
+        end
+    end
+    return content
+end
 starter.setup {
     autoopen = false,
     header = function()
-        local hour = tonumber(vim.fn.strftime '%H')
+        local hour = tonumber(os.date '%H')
         -- [04:00, 12:00) - morning, [12:00, 20:00) - day, [20:00, 04:00) - evening
         local part_id = math.floor((hour + 4) / 8) + 1
         local day_part = ({ 'evening', 'morning', 'afternoon', 'evening' })[part_id]
@@ -70,15 +114,15 @@ starter.setup {
     end,
     footer = '',
     items = {
+        birthday(),
         starter.sections.telescope(),
         starter.sections.sessions(),
         starter.sections.recent_files(),
         starter.sections.builtin_actions(),
     },
     content_hooks = {
+        birthday_hl,
         starter.gen_hook.adding_bullet(),
         starter.gen_hook.aligning('center', 'center'),
     },
 }
-
-require('mini.pairs').setup {}

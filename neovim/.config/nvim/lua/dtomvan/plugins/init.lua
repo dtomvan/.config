@@ -1,24 +1,28 @@
 return {
     -- Plenary
-    'nvim-lua/popup.nvim',
-    'nvim-lua/plenary.nvim',
+    { 'nvim-lua/plenary.nvim', lazy = true },
+    { 'nvim-lua/popup.nvim', lazy = true },
+    {
+        'rcarriga/nvim-notify',
+        lazy = true,
+    },
 
     {
         'numToStr/Comment.nvim',
-        config = {},
+        config = true,
         keys = {
-            { 'gcc', nil },
-            { 'gbc', nil },
-            { 'gc', nil, mode = { 'n', 'v' } },
-            { 'gb', nil, mode = { 'n', 'v' } },
-            { 'gcO', nil },
-            { 'gco', nil },
-            { 'gcA', nil },
+            'gcc',
+            'gbc',
+            { 'gc', mode = { 'n', 'v' } },
+            { 'gb', mode = { 'n', 'v' } },
+            'gcO',
+            'gco',
+            'gcA',
         },
     },
     {
         'numToStr/Navigator.nvim',
-        config = {},
+        config = true,
         keys = {
             { '<A-h>', '<cmd>NavigatorLeft<cr>' },
             { '<A-j>', '<cmd>NavigatorDown<cr>' },
@@ -27,13 +31,9 @@ return {
             { '<A-p>', '<cmd>NavigatorPrevious<cr>' },
         },
     },
-
-    -- After opening a file, return to the last position
     {
-        'ethanholz/nvim-lastplace',
-        config = function()
-            require('nvim-lastplace').setup()
-        end,
+        'mg979/vim-visual-multi',
+        event = 'BufReadPost',
     },
 
     -- Prime goodness
@@ -43,15 +43,12 @@ return {
     },
     'ThePrimeagen/refactoring.nvim',
     { 'ThePrimeagen/vim-be-good', cmd = 'VimBeGood' },
-    {
-        'theprimeagen/jvim.nvim',
-        ft = 'json',
-    },
+    { 'ThePrimeagen/jvim.nvim', ft = 'json' },
 
     -- Git signs
     {
         'lewis6991/gitsigns.nvim',
-        event = 'BufReadPre',
+        event = 'BufReadPost',
         config = true,
     },
 
@@ -60,7 +57,18 @@ return {
     {
         'stevearc/dressing.nvim',
         event = 'VeryLazy',
-        config = {},
+        init = function()
+            ---@diagnostic disable-next-line: duplicate-set-field
+            vim.ui.select = function(...)
+                require('lazy').load { plugins = { 'dressing.nvim' } }
+                return vim.ui.select(...)
+            end
+            ---@diagnostic disable-next-line: duplicate-set-field
+            vim.ui.input = function(...)
+                require('lazy').load { plugins = { 'dressing.nvim' } }
+                return vim.ui.input(...)
+            end
+        end,
     },
 
     -- Rust or Bust
@@ -75,39 +83,31 @@ return {
             'neovim/nvim-lspconfig',
             'nvim-lua/lsp_extensions.nvim',
         },
-        config = {},
+        config = true,
         build = function()
-            local servers = {
+            require('mason.api.command').MasonInstall {
                 'black',
                 'stylua',
                 'shellcheck',
             }
-            require('mason.api.command').MasonInstall(servers)
         end,
     },
+
     {
         'williamboman/mason-lspconfig.nvim',
         lazy = true,
         config = {
             ensure_installed = {
                 'clangd',
-                'emmet_ls',
                 'gopls',
-                'html',
-                'jsonls',
                 'kotlin_language_server',
-                'lemminx',
                 'pylsp',
-                'rnix',
                 'rust_analyzer',
                 'sumneko_lua',
-                'svelte',
-                -- 'taplo',
-                'tsserver',
-                'volar',
             },
         },
     },
+
     {
         'jayp0521/mason-null-ls.nvim',
         lazy = true,
@@ -115,17 +115,6 @@ return {
             automatic_setup = true,
         },
     },
-    {
-        'theHamsta/nvim-semantic-tokens',
-        event = 'LspAttach',
-        config = function()
-            require('nvim-semantic-tokens').setup {
-                preset = 'default',
-                highlighters = { require 'nvim-semantic-tokens.table-highlighter' },
-            }
-        end,
-    },
-
     -- Snippets
     {
         'L3MON4D3/LuaSnip',
@@ -142,30 +131,27 @@ return {
     { 'udalov/kotlin-vim', ft = 'kotlin' },
 
     -- Misc
-    'rcarriga/nvim-notify',
     {
         'lukas-reineke/indent-blankline.nvim',
-        config = function()
-            require('indent_blankline').setup {
-                show_current_context = true,
-                show_current_context_start = true,
-            }
-        end,
+        config = {
+            show_current_context = true,
+            show_current_context_start = true,
+        },
     },
     {
         'tversteeg/registers.nvim',
         cmd = 'Registers',
         keys = {
-            { '"', nil, 'n' },
-            { '<c-r>', nil, 'i' },
+            { '"', mode = 'n' },
+            { '<c-r>', mode = 'i' },
         },
     },
     {
         'junegunn/vim-easy-align',
         keys = {
-            { "ga", "<plug>(EasyAlign)", mode = { "n", 'x' }, remap = true },
-            { "gA", "<plug>(LiveEasyAlign)", mode = { "n", 'x' }, remap = true }
-        }
+            { 'ga', '<plug>(EasyAlign)', mode = { 'n', 'x' }, remap = true },
+            { 'gA', '<plug>(LiveEasyAlign)', mode = { 'n', 'x' }, remap = true },
+        },
     },
     {
         'andymass/vim-matchup',
@@ -174,17 +160,12 @@ return {
     {
         'kevinhwang91/nvim-bqf',
         ft = 'qf',
-        config = function()
-            require('bqf').setup {}
-        end,
+        config = true,
     },
     {
-        'ggandor/leap.nvim',
-        config = function()
-            require('leap').add_default_mappings()
-        end,
+        'Raimondi/vim-transpose-words',
+        cmd = 'TransposeWords',
     },
-    'Raimondi/vim-transpose-words',
     {
         'numToStr/FTerm.nvim',
         config = {
@@ -199,7 +180,7 @@ return {
             {
                 '<A-i>',
                 function()
-                    require 'FTerm'.toggle()
+                    require('FTerm').toggle()
                 end,
                 mode = { 'n', 't' },
                 desc = 'Toggle terminal',
@@ -209,7 +190,7 @@ return {
 
     {
         'prichrd/netrw.nvim',
-        config = {},
+        config = true,
     },
 
     {
@@ -230,7 +211,7 @@ return {
 
     {
         'gaoDean/autolist.nvim',
-        config = {},
+        config = true,
         event = {
             'FileType text',
             'FileType markdown',
@@ -239,7 +220,6 @@ return {
         },
     },
 
-
     -- Only when using on specific machine,
     -- since I don't want to get prompted on others.
     {
@@ -247,13 +227,6 @@ return {
         event = 'VeryLazy',
         enabled = function()
             return vim.fn.hostname() == 'tom-pc'
-        end,
-    },
-
-    {
-        'echasnovski/mini.nvim',
-        config = function()
-            require 'dtomvan.config.mini'
         end,
     },
 
@@ -270,5 +243,52 @@ return {
             vim.g.vimtex_quickfix_mode = 0
             vim.g.vimtex_view_method = 'zathura'
         end,
+    },
+
+    {
+        'stevearc/oil.nvim',
+        config = true,
+        keys = {
+            {
+                '-',
+                function()
+                    require('oil').open()
+                end,
+                { desc = 'Open parent directory' },
+            },
+        },
+    },
+    {
+        'folke/zen-mode.nvim',
+        dependencies = { {
+            'folke/twilight.nvim',
+            config = true,
+        } },
+        cmd = 'ZenMode',
+        config = {
+            window = {
+                options = {
+                    concealcursor = 'n',
+                    conceallevel = 3,
+                    cursorcolumn = false,
+                    cursorline = false,
+                    foldcolumn = '0',
+                    list = false,
+                    number = false,
+                    relativenumber = false,
+                    signcolumn = 'no',
+                    statusline = ' ',
+                },
+            },
+            on_open = function()
+                _G.rerun_noice = require('noice.config').is_running()
+                require('noice').disable()
+            end,
+            on_close = function()
+                if _G.rerun_noice then
+                    require('noice').enable()
+                end
+            end,
+        },
     },
 }

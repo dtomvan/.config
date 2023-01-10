@@ -71,10 +71,10 @@ return {
                             'trailing-space',
                         },
                         globals = lua_globals,
-                        groupSeverity = {
-                            strong = "Warning",
-                            strict = "Warning",
-                        },
+                        -- groupSeverity = {
+                        --     strong = "Warning",
+                        --     strict = "Warning",
+                        -- },
                         groupFileStatus = {
                             ["ambiguity"] = "Opened",
                             ["await"] = "Opened",

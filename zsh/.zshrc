@@ -87,11 +87,15 @@ cppath() {
   filehere $@ | xsel -b
 }
 
+glogg() {
+  nu -m thin -c 'git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD | lines | split column "»¦«" commit subject name email date | upsert date {|d| $d.date | into datetime} | reject name' | bat --style 'header,grid,snip' --file-name 'git-log'
+}
+
 zle -N zle-keymap-select
 zle -N zle-line-init
 
 export MOAR='-statusbar bold -wrap'
-export PAGER=moar
+export PAGER=less
 export HISTFILE=~/.histfile
 export HISTSIZE=500000
 export SAVEHIST=500000
@@ -461,7 +465,7 @@ eval "$(mcfly init zsh)"
 export BUN_INSTALL="/home/tomvd/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-[ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh" || exit
+[ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh" || return
 
 plug "zap-zsh/supercharge"
 plug "romkatv/powerlevel10k"

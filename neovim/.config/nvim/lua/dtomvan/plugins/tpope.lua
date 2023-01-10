@@ -20,12 +20,9 @@ return {
     'tpope/vim-eunuch',
     {
         'tpope/vim-unimpaired',
-        event = 'InsertEnter',
+        event = 'VeryLazy',
     },
-    {
-        'tpope/vim-repeat',
-        keys = { 'u', 'U', '.', '<c-r>' },
-    },
+    'tpope/vim-repeat',
     { 'tpope/vim-fugitive', cmd = 'G' },
     {
         'tpope/vim-sleuth',

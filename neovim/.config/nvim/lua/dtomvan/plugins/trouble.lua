@@ -4,7 +4,7 @@ return {
     {
         'folke/todo-comments.nvim',
         dependencies = 'nvim-lua/plenary.nvim',
-        config = {},
+        event = 'BufReadPost',
         lazy = true,
         cmd = {
             'TodoQuickFix',
@@ -42,7 +42,7 @@ return {
     {
         'folke/trouble.nvim',
         dependencies = 'kyazdani42/nvim-web-devicons',
-        config = {},
+        config = true,
         lazy = true,
         cmd = {
             'Trouble',

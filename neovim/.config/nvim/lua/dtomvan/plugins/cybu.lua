@@ -17,12 +17,12 @@ return {
     },
     keys = {
         {
-            '<s-tab>',
+            '[b',
             '<cmd>Cybu prev<cr>',
             { 'n', 'v' },
         },
         {
-            '<tab>',
+            ']b',
             '<cmd>Cybu next<cr>',
             { 'n', 'v' },
         },
