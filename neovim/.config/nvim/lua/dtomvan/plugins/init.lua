@@ -96,7 +96,7 @@ return {
     {
         'williamboman/mason-lspconfig.nvim',
         lazy = true,
-        config = {
+        opts = {
             ensure_installed = {
                 'clangd',
                 'gopls',
@@ -109,11 +109,20 @@ return {
     },
 
     {
-        'jayp0521/mason-null-ls.nvim',
+        'jay-babu/mason-null-ls.nvim',
         lazy = true,
-        config = {
-            automatic_setup = true,
-        },
+        config = function()
+            require 'mason-null-ls'.setup {
+                automatic_setup = true,
+            }
+            require 'null-ls'.setup {
+                on_attach = require('dtomvan.lsp.opts').on_attach,
+            }
+            require 'mason-null-ls'.setup_handlers()
+            for _, source in ipairs(vim.api.nvim_get_runtime_file('lua/dtomvan/config/null-ls/*.lua', true)) do
+                loadfile(source)()
+            end
+        end
     },
     -- Snippets
     {
@@ -133,7 +142,7 @@ return {
     -- Misc
     {
         'lukas-reineke/indent-blankline.nvim',
-        config = {
+        opts = {
             show_current_context = true,
             show_current_context_start = true,
         },
@@ -168,7 +177,7 @@ return {
     },
     {
         'numToStr/FTerm.nvim',
-        config = {
+        opts = {
             border = 'rounded',
             dimensions = {
                 height = 0.9,
@@ -265,7 +274,7 @@ return {
             config = true,
         } },
         cmd = 'ZenMode',
-        config = {
+        opts = {
             window = {
                 options = {
                     concealcursor = 'n',

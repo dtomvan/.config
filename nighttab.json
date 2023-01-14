@@ -14,11 +14,11 @@
                 }
             },
             "alignment": "center-center",
-            "order": "bookmark-header",
+            "order": "header-bookmark",
             "direction": "vertical",
             "size": 100,
             "width": 60,
-            "padding": 60,
+            "padding": 40,
             "gutter": 20,
             "breakpoint": "lg",
             "scrollbar": "thin",
@@ -39,7 +39,7 @@
                 "newLine": false
             },
             "transitional": {
-                "show": true,
+                "show": false,
                 "type": "its",
                 "size": 100,
                 "newLine": false
@@ -103,7 +103,7 @@
             "search": {
                 "show": true,
                 "width": {
-                    "by": "custom",
+                    "by": "auto",
                     "size": 30
                 },
                 "engine": {
@@ -118,12 +118,12 @@
                     "justify": "center"
                 },
                 "size": 100,
-                "newLine": false,
-                "newTab": false
+                "newLine": true,
+                "newTab": false,
+                "string": "note"
             },
             "order": [
                 "greeting",
-                "transitional",
                 "clock",
                 "date",
                 "search"
@@ -131,7 +131,7 @@
             "edit": false
         },
         "bookmark": {
-            "size": 100,
+            "size": 96,
             "url": {
                 "show": true
             },
@@ -197,14 +197,14 @@
             },
             "accent": {
                 "hsl": {
-                    "h": 280,
+                    "h": 140,
                     "s": 50,
                     "l": 80
                 },
                 "rgb": {
-                    "r": 213,
-                    "g": 179,
-                    "b": 230
+                    "r": 179,
+                    "g": 230,
+                    "b": 196
                 },
                 "random": {
                     "active": true,
@@ -316,7 +316,7 @@
                     "opacity": 10
                 },
                 "divider": {
-                    "size": 0
+                    "size": 1
                 }
             },
             "header": {
@@ -370,7 +370,7 @@
             "radius": 133,
             "shadow": 0,
             "shade": {
-                "opacity": 6,
+                "opacity": 0,
                 "blur": 0
             },
             "custom": {
@@ -385,7 +385,7 @@
     "bookmark": [
         {
             "name": {
-                "text": "Cool stuff",
+                "text": "General",
                 "show": true
             },
             "collapse": false,
@@ -394,7 +394,7 @@
                     "show": true
                 },
                 "collapse": {
-                    "show": true
+                    "show": false
                 }
             },
             "items": [
@@ -645,7 +645,7 @@
                     "timestamp": 1626298022303
                 },
                 {
-                    "url": "https://drive.google.com/drive/",
+                    "url": "https://youtube.com",
                     "display": {
                         "alignment": "center-center",
                         "direction": "vertical",
@@ -658,20 +658,20 @@
                         "gutter": 25,
                         "name": {
                             "show": true,
-                            "text": "Drive",
+                            "text": "Youtube",
                             "size": 7
                         },
                         "visual": {
                             "show": true,
-                            "type": "letter",
+                            "type": "icon",
                             "size": 25,
                             "letter": {
-                                "text": "DR"
+                                "text": ""
                             },
                             "icon": {
-                                "name": "google-drive",
+                                "name": "youtube",
                                 "prefix": "fab",
-                                "label": "Drive"
+                                "label": "YouTube"
                             },
                             "image": {
                                 "url": ""
@@ -724,7 +724,89 @@
                         "wide": false,
                         "tall": false
                     },
-                    "timestamp": 1626298028996
+                    "timestamp": 1673388806899
+                },
+                {
+                    "url": "https://keep.google.com",
+                    "display": {
+                        "alignment": "center-center",
+                        "direction": "vertical",
+                        "order": "visual-name",
+                        "rotate": 0,
+                        "translate": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "gutter": 25,
+                        "name": {
+                            "show": true,
+                            "text": "Quick Notes",
+                            "size": 7
+                        },
+                        "visual": {
+                            "show": true,
+                            "type": "icon",
+                            "size": 25,
+                            "letter": {
+                                "text": ""
+                            },
+                            "icon": {
+                                "name": "sticky-note",
+                                "prefix": "fas",
+                                "label": "Sticky Note"
+                            },
+                            "image": {
+                                "url": ""
+                            },
+                            "shadow": {
+                                "size": 0
+                            }
+                        }
+                    },
+                    "accent": {
+                        "by": "theme",
+                        "hsl": {
+                            "h": 0,
+                            "s": 0,
+                            "l": 0
+                        },
+                        "rgb": {
+                            "r": 0,
+                            "g": 0,
+                            "b": 0
+                        }
+                    },
+                    "color": {
+                        "by": "theme",
+                        "hsl": {
+                            "h": 0,
+                            "s": 0,
+                            "l": 0
+                        },
+                        "rgb": {
+                            "r": 0,
+                            "g": 0,
+                            "b": 0
+                        },
+                        "opacity": 100
+                    },
+                    "background": {
+                        "show": false,
+                        "type": "image",
+                        "opacity": 100,
+                        "image": {
+                            "url": ""
+                        },
+                        "video": {
+                            "url": ""
+                        }
+                    },
+                    "border": 0,
+                    "shape": {
+                        "wide": false,
+                        "tall": false
+                    },
+                    "timestamp": 1673610557452
                 }
             ]
         },
@@ -739,7 +821,7 @@
                     "show": true
                 },
                 "collapse": {
-                    "show": true
+                    "show": false
                 }
             },
             "items": [
@@ -906,6 +988,106 @@
                         "tall": false
                     },
                     "timestamp": 1673289401538
+                }
+            ]
+        },
+        {
+            "name": {
+                "text": "Chess",
+                "show": true
+            },
+            "collapse": false,
+            "toolbar": {
+                "size": 100,
+                "openAll": {
+                    "show": true
+                },
+                "collapse": {
+                    "show": false
+                }
+            },
+            "items": [
+                {
+                    "url": "https://chess.com",
+                    "display": {
+                        "alignment": "center-center",
+                        "direction": "vertical",
+                        "order": "visual-name",
+                        "rotate": 0,
+                        "translate": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "gutter": 25,
+                        "name": {
+                            "show": true,
+                            "text": "Chess.com",
+                            "size": 7
+                        },
+                        "visual": {
+                            "show": true,
+                            "type": "icon",
+                            "size": 25,
+                            "letter": {
+                                "text": ""
+                            },
+                            "icon": {
+                                "name": "chess-pawn",
+                                "prefix": "fas",
+                                "label": "Chess Pawn"
+                            },
+                            "image": {
+                                "url": ""
+                            },
+                            "shadow": {
+                                "size": 0
+                            }
+                        }
+                    },
+                    "accent": {
+                        "by": "theme",
+                        "hsl": {
+                            "h": 0,
+                            "s": 0,
+                            "l": 0
+                        },
+                        "rgb": {
+                            "r": 0,
+                            "g": 0,
+                            "b": 0
+                        }
+                    },
+                    "color": {
+                        "by": "theme",
+                        "hsl": {
+                            "h": 0,
+                            "s": 0,
+                            "l": 0
+                        },
+                        "rgb": {
+                            "r": 0,
+                            "g": 0,
+                            "b": 0
+                        },
+                        "opacity": 100
+                    },
+                    "background": {
+                        "show": false,
+                        "type": "image",
+                        "opacity": 100,
+                        "image": {
+                            "url": ""
+                        },
+                        "video": {
+                            "url": ""
+                        }
+                    },
+                    "border": 0,
+                    "shape": {
+                        "wide": false,
+                        "tall": false
+                    },
+                    "timestamp": 1673382393405
                 }
             ]
         }

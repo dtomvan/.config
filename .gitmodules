@@ -40,3 +40,6 @@
 [submodule "visidata/.visidata/vdplus"]
 	path = visidata/.visidata/vdplus
 	url = https://github.com/visidata/vdplus
+[submodule "cursor-catpuccin"]
+	path = cursor-catpuccin
+	url = https://github.com/catppuccin/cursors

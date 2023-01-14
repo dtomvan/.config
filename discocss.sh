@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TARGET="${DISCOCSS_PATH:-~/.local/bin/discocss}"
+TARGET="${DISCOCSS_PATH:-$HOME/.local/bin/discocss}"
 mkdir -p "$(dirname $TARGET)"
 rm -f "$TARGET"
 curl -fsSL \

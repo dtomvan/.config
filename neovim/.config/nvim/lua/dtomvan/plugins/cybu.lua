@@ -5,7 +5,7 @@ return {
         'nvim-lua/plenary.nvim',
     },
     cmd = 'Cybu',
-    config = {
+    opts = {
         style = {
             highlights = {
                 current_buffer = 'CybuFocus',

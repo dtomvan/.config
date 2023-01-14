@@ -2,7 +2,7 @@ return {
     "ggandor/leap.nvim",
     event = "BufReadPost",
     dependencies = {
-        { "ggandor/flit.nvim", config = { labeled_modes = "nv" } },
+        { "ggandor/flit.nvim", opts = { labeled_modes = "nv" } },
         { "ggandor/leap-spooky.nvim", config = true },
         {
             "ggandor/leap-ast.nvim",

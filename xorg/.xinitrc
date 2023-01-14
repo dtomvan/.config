@@ -38,6 +38,8 @@ fi
 # /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 export AWT_TOOLKIT=MToolkit
 export QT_QPA_PLATFORMTHEME=qt6ct
+export MOZ_ENABLE_WAYLAND=0
+export GDK_BACKEND=x11
 xsetroot -cursor_name left_ptr
 picom --experimental-backends --xrender-sync-fence --backend glx &
 ~/i3lock.sh && xautolock -notify 10 -notifier 'notify-send "locking in 10 seconds..."' -locker "systemctl suspend" -nowlocker ./i3lock.sh &
@@ -49,7 +51,7 @@ sleep 10 && check-updates &
 source ~/.profile
 lxsession &
 eww daemon &
-hsetroot -solid "#16161D" &
+hsetroot -solid "#181825" &
 ~/bg.sh bg.gif &
 deadd-notification-center &
 DISCOCSS_DISCORD_BIN=/usr/bin/discord discocss   \

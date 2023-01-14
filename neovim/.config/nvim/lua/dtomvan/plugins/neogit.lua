@@ -20,7 +20,7 @@ return {
             desc = 'Neogit help',
         },
     },
-    config = {
+    opts = {
         integrations = {
             diffview = true,
         },

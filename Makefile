@@ -1,14 +1,14 @@
-dirs = backgrounds bins bspwm deadd discord emacs git gtk i3lock inkscape  \
-    minecraft mpd mpv ncmpcpp neovim picom polybar prismlaunchersxhkd tmux \
-    visidatawezterm xmonad xonotic xorg xplr zsh
+dirs = backgrounds bat bins bspwm cursors deadd discord emacs git gtk i3lock       \
+       inkscape minecraft mpd mpv ncmpcpp neovim picom polybar prismlauncher sxhkd \
+       tmux visidata wezterm xmonad xonotic xorg xplr zathura zsh
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 
 all: pkgs rust $(dirs) install-st ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~/.local/bin/xwinwrap
 	mkdir -p ~/projects/ ~/repos/
 	pip install sqlparse inkscape-figures
-	nvim --headless -c PackerClean -c PackerInstall -c PackerCompile -c "qa!"
 	localectl set-x11-keymap us,gr "" "" compose:ralt
 	git clone https://github.com/gillescastel/inkscape-shortcut-manager.git ~/repos/inkscape-shortcuts/
+	bat cache --build
 
 /usr/local/bin/dmenu: dmenu/
 	cd dmenu && sudo make install

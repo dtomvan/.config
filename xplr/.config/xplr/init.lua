@@ -6,6 +6,8 @@ local home = os.getenv 'HOME'
 package.path = package.path .. ';' .. home .. '/.config/xplr/?.lua;' .. home .. '/.config/xplr/modes/?.lua;'
 
 local xpm_path = home .. '/.local/share/xplr/dtomvan/xpm.xplr'
+-- Uncomment when testing locally
+-- xpm_path = home .. '/projects/xpm/'
 local xpm_url = 'https://github.com/dtomvan/xpm.xplr'
 
 package.path = package.path .. ';' .. xpm_path .. '/?.lua;' .. xpm_path .. '/?/init.lua'

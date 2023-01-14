@@ -115,10 +115,8 @@ starter.setup {
     footer = '',
     items = {
         birthday(),
-        starter.sections.telescope(),
         starter.sections.sessions(),
-        starter.sections.recent_files(),
-        starter.sections.builtin_actions(),
+        starter.sections.recent_files(10),
     },
     content_hooks = {
         birthday_hl,
