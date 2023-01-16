@@ -27,26 +27,17 @@ dependencies=(
     util-linux
 )
 
-var() {
-    printf '%s' "${!1}"
-}
-
 get_submodules() {
     git submodule |
         awk '{print $2}' |
-        ack -v "$(var submodule_excludes | paste -sd'|')" |
+        ack -v "$(printf "%s" "${submodule_excludes[@]}" | paste -sd'|')" |
         paste -sd'|'
 }
 
-# shellcheck disable=2046
-# deliberate
-if ! pacman -Qi $(var dependencies) 2>/dev/null >/dev/null; then
-    echo 'Installing dependencies...'
-    sudo pacman -Syu --needed $(var dependencies)
-fi
+archdeps "${dependencies[@]}"
 
 fd -H --type f |
-    ack -v '^(st|dmenu)\/(?!config.def.h)|^.git|discord|cursors' |
+    ack -v '^(st|dmenu)\/(?!config.def.h)|^.git|discord|cursors|mpv/.config/mpv/scripts/uosc.lua' |
     ack -v "$(get_submodules)" |
     xargs tokei -C -o json -- |
     jq 'to_entries | map({Language: .key, "Lines Of Code": .value.code})' |

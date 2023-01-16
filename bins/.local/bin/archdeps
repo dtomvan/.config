@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -euo pipefail
+
+dependencies=("$@")
+
+if ! pacman pacman -Qi "${dependencies[@]}" 2>/dev/null >/dev/null; then
+    echo 'Installing dependencies...'
+    sudo pacman -Syu --needed "${dependencies[@]}"
+fi

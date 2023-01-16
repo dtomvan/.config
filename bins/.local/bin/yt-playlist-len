@@ -1,0 +1,9 @@
+#!/bin/bash
+
+archdeps bc jq yt-dlp
+s=$(yt-dlp --verbose -j --flat-playlist "$1" |
+	jq -sr 'map(.duration) | add')
+h=$(echo "$s/3600" | bc -l)
+m=$(echo "rem=$s % 3600; scale=5; rem / 60" | bc)
+
+printf "Result: playlist will take %.0f hours and %.5g minutes" "$h" "$m"
