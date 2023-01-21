@@ -123,7 +123,7 @@ if vim.fn.has 'nvim-0.8' == 1 then
         group = winbar,
         callback = function()
             vim.schedule(function()
-                if vim.g._no_winbar then
+                if vim.g._no_winbar or vim.g.started_by_firenvim then
                     return
                 end
                 local cfg = vim.api.nvim_win_get_config(0)
@@ -150,3 +150,13 @@ au('BufReadPost', {
         end
     end,
 })
+
+if vim.g.started_by_firenvim then
+    local firenvimoldfiles = group 'FireNvimOldFiles'
+    au('BufReadPost', {
+        group = firenvimoldfiles,
+        callback = function(ev)
+            vim.fn.filter(vim.v.oldfiles, 'v:val !=# "' .. ev.file .. '"')
+        end,
+    })
+end

@@ -1,3 +1,6 @@
+if vim.g.started_by_firenvim then
+    return
+end
 local mason_lspconfig = require 'mason-lspconfig'
 local opts = require 'dtomvan.lsp.opts'
 

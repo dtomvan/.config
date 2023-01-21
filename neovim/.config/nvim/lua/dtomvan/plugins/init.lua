@@ -140,6 +140,7 @@ return {
     { 'udalov/kotlin-vim', ft = 'kotlin' },
 
     -- Misc
+    'michaeljsmith/vim-indent-object',
     {
         'lukas-reineke/indent-blankline.nvim',
         opts = {
@@ -243,7 +244,7 @@ return {
     {
         'lervag/vimtex',
         cond = function()
-            return not vim.g._no_vimtex
+            return (not vim.g._no_vimtex) and (not vim.g.started_by_firenvim)
         end,
         ft = 'tex',
         config = function()

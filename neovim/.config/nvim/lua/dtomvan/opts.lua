@@ -20,6 +20,9 @@ o.mouse = 'a'
 o.nu = true
 o.rnu = true
 o.scrolloff = 8
+vim.opt.shada:append('r*://')
+vim.opt.shada:append('r/run/user/*')
+vim.opt.shada:append('rmain.shada')
 o.shiftwidth = 4
 o.showtabline = 1
 o.signcolumn = 'yes'

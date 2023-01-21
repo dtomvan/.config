@@ -10,9 +10,8 @@ require('noice').setup {
     },
     routes = {
         {
-            view = 'notify',
             filter = { event = 'msg_show', find = '(mini.starter)' },
-            opts = { replace = true },
+            opts = { skip = true },
         },
         {
             filter = { event = 'msg_show', find = '<bs> go up one level <esc> close' },

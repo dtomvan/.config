@@ -4,3 +4,4 @@ vim.keymap.set('v', '<Leader><bslash>', '<cmd>EasyAlign*<bar><cr>', {
     remap = true,
     silent = true,
 })
+vim.opt_local.list = false

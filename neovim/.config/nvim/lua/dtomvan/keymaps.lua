@@ -1,3 +1,6 @@
+-- Testing to try to use a greek layout with builtin mappings
+require 'dtomvan.keymaps.greek'
+
 local tbl_extend_opt = function(tbl)
     return function(desc)
         return vim.tbl_extend('keep', tbl, { desc = desc })
