@@ -36,6 +36,9 @@ vim.keymap.set('n', '<leader>sn', function()
 end)
 
 local starter = require 'mini.starter'
+local logo_table = require 'dtomvan.ascii_art'.logo
+local logo_width = #logo_table[1]
+
 local started = false
 
 -- Launches the Starter after Lazy.nvim loaded all plugins and we can show what
@@ -106,6 +109,17 @@ local birthday_hl = function(content)
     return content
 end
 
+local logo_expla = logo_table[#logo_table]
+local logo_expla_hl = function(content)
+    local coords = MiniStarter.content_coords(content, 'header')
+    for _, c in ipairs(coords) do
+        if content[c.line][c.unit].string == logo_expla then
+            content[c.line][c.unit].hl = 'Comment'
+        end
+    end
+    return content
+end
+
 -- Removes the "Sessions" sections if there are none
 local remove_empty_sessions = function(content)
     local coords = MiniStarter.content_coords(content, 'item')
@@ -128,26 +142,42 @@ end
 local clean_recent_files = function(content)
     local coords = MiniStarter.content_coords(content, 'item')
     local longest = 0
+    local cols = vim.o.columns
+
     for _, c in ipairs(coords) do
         local item = content[c.line][c.unit].item
         if item.section ~= 'Recent files' then
             goto continue
         end
+
         local name = item.name:gsub('(.*)/(.*)%)', '%1)')
         local path_start = name:find '%('
         local filename = name:sub(1, path_start - 2)
         local path = name:sub(path_start + 1, name:find '%)' - 1), 4
+        local split = vim.split(filename, '.', { plain = true })
+        local icon, hl = require('nvim-web-devicons').get_icon(filename, split[#split],
+            { default = true })
+
+        if #icon ~= 0 then
+            icon = icon .. ' '
+        end
+
         item._len = #name
-        if #name > 80 then
+        item._icon = icon
+        item._hl = hl
+
+        if #name > math.min(cols, 80) then
             path = vim.fn.pathshorten(path, 4)
+            -- minus 2 for icons or bullets
+            local max_width = math.min(cols / 2 - 2, 40)
             local flen = #filename
             local plen = #path
 
-            local filename_ellipsis = flen - 37 > 2
-            local path_ellipsis = plen - 37 > 2
+            local filename_ellipsis = flen - max_width - 3 > 2
+            local path_ellipsis = plen - max_width - 3 > 2
 
-            filename = filename:sub(1, math.min(flen, 40))
-            path = path:sub(plen - math.min(plen, 40), plen)
+            filename = filename:sub(1, math.min(flen, max_width))
+            path = path:sub(plen - math.min(plen, max_width), plen)
 
             name = ('%s%s (%s%s)'):format(
                 filename,
@@ -156,11 +186,11 @@ local clean_recent_files = function(content)
                 path
             )
             local new_line = { { string = filename, type = 'item', item = item } }
-            if flen - 37 > 2 then
+            if filename_ellipsis then
                 table.insert(new_line, { string = '...', hl = 'Comment' })
             end
             table.insert(new_line, { string = ' (', hl = 'Comment' })
-            if plen - 37 > 2 then
+            if path_ellipsis then
                 table.insert(new_line, { string = '...', hl = 'Comment' })
             end
             table.insert(new_line, { string = path, hl = 'Italic' })
@@ -187,10 +217,43 @@ local clean_recent_files = function(content)
         if item.section ~= 'Recent files' then
             goto continue
         end
-        local pad = string.rep(' ', longest - item._len)
+        local pad = string.rep(' ', math.min(math.max(logo_width - item._len - 2, longest - item._len), cols - item._len))
 
         content[c.line][1].string = unit.string .. pad
         ::continue::
+    end
+    return content
+end
+
+-- modified version of MiniStarter.gen_hook.adding_bullet to add a filetype icon
+-- on recent files
+local function adding_bullet(place_cursor)
+    place_cursor = place_cursor == nil and true or place_cursor
+    return function(content)
+        local coords = MiniStarter.content_coords(content, 'item')
+        -- Go backwards to avoid conflict when inserting units
+        for i = #coords, 1, -1 do
+            local l_num, u_num = coords[i].line, coords[i].unit
+            local item = content[l_num][u_num].item
+            local bullet = item._icon or '░ '
+            local bullet_unit = {
+                string = bullet,
+                type = 'item_bullet',
+                hl = item._hl or 'MiniStarterItemBullet',
+                item = item,
+                _place_cursor = place_cursor,
+            }
+            table.insert(content[l_num], u_num, bullet_unit)
+        end
+
+        return content
+    end
+end
+
+local function nothing_if_too_small(content)
+    if vim.o.columns < 30 then
+        return { { { type = 'item', string = 'Window too small',
+            item = { name = '', action = 'enew', section = '' } } } }
     end
     return content
 end
@@ -203,20 +266,37 @@ starter.setup {
         local part_id = math.floor((hour + 4) / 8) + 1
         local day_part = ({ 'evening', 'morning', 'afternoon', 'evening' })[part_id]
         local username = vim.loop.os_get_passwd()['username'] or 'dtomvan'
+        local text = ('Good %s, %s%s'):format(day_part, username, get_startuptime())
+        local to_align = vim.split(text, '\n')
+        local cols = vim.o.columns
 
-        return ('Good %s, %s%s'):format(day_part, username, get_startuptime())
+        if cols > (logo_width + 10) then
+            local logo = table.concat(logo_table, '\n')
+
+            for i, line in ipairs(to_align) do
+                to_align[i] = string.rep(' ', (logo_width - #line) / 2) .. line
+            end
+            local header = table.concat(to_align, '\n')
+            return logo .. '\n\n' .. header
+        else
+            return text
+        end
     end,
-    footer = '',
+    footer = vim.fn.system('shuf -n1 ~/.config/nvim/inspirational_quotes.txt'):gsub('\\n', '\n'):gsub('\n$', ''),
     items = {
         birthday(),
         starter.sections.sessions(),
         starter.sections.recent_files(10),
     },
     content_hooks = {
+        nothing_if_too_small,
         remove_empty_sessions,
         birthday_hl,
+        logo_expla_hl,
         clean_recent_files,
-        starter.gen_hook.adding_bullet(),
+        adding_bullet(false),
         starter.gen_hook.aligning('center', 'center'),
     },
 }
+
+vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'MiniStarterSection'})
