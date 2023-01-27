@@ -1,9 +1,0 @@
-{
-	"general": {
-		"addTotalAmount": true,
-		"addFavorizedCategory": true,
-		"addHiddenCategory": true,
-		"addSortOptions": true,
-		"addMutualGuild": true
-	}
-}
