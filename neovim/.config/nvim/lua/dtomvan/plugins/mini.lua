@@ -8,9 +8,24 @@ return {
     },
     {
         'echasnovski/mini.starter',
-        dependencies = { 'echasnovski/mini.sessions' },
+        dependencies = {
+            'dtomvan/starter-birthday.nvim',
+            opts = {
+                username = 'Tom',
+                date = {
+                    day = 20,
+                    month = 12,
+                },
+            },
+        },
         config = function()
             require 'dtomvan.config.starter'
+        end,
+    },
+    {
+        'echasnovski/mini.sessions',
+        config = function()
+            require 'dtomvan.config.sessions'
         end,
     },
     {

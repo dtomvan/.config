@@ -8,14 +8,14 @@ vim.keymap.set('i', '<enter>', function()
     if string.find(line[1], '\t') and #line[1] ~= 0 then
         return '<enter>'
     else
-        return '<tab>'
+        return '<c-v><tab>'
     end
 end, { desc = 'Super enter', buffer = true, expr = true, remap = false })
 
 vim.b.autopairs_enabled = false
 vim.b.autopairs_loaded = true
-vim.bo.et = false
-vim.bo.ci = false
-vim.bo.si = false
-vim.bo.ai = false
-vim.wo.spell = true
+vim.opt_local.et = false
+vim.opt_local.ci = false
+vim.opt_local.si = false
+vim.opt_local.ai = false
+vim.opt_local.spell = true

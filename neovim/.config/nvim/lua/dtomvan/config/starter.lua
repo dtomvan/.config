@@ -1,40 +1,3 @@
-local util = require 'dtomvan.utils'
-local sessions = require 'mini.sessions'
-sessions.setup {}
-
-local function saction(a)
-    return function()
-        MiniSessions.select(a)
-    end
-end
-
-vim.keymap.set('n', '<leader>sr', saction 'read')
-vim.keymap.set('n', '<leader>sw', saction 'write')
-vim.keymap.set('n', '<leader>sd', saction 'delete')
-vim.keymap.set('n', '<leader>sn', function()
-    local split = vim.split(vim.fn.getcwd(), '/')
-    vim.ui.input({ prompt = 'Session name? ', default = split[#split] }, function(input)
-        if input == nil then
-            return
-        end
-        local existing = false
-        for session in ipairs(MiniSessions.detected) do
-            if session.name == input then
-                existing = true
-                util.yes_or_no('Do you want to overwrite the existing session', false, function(b)
-                    if b then
-                        MiniSessions.write(input, { force = true })
-                    end
-                end)
-            end
-        end
-        if existing then
-            return
-        end
-        MiniSessions.write(input, {})
-    end)
-end)
-
 local starter = require 'mini.starter'
 local logo_table = require 'dtomvan.ascii_art'.logo
 local logo_width = #logo_table[1]
@@ -61,52 +24,6 @@ local get_startuptime = function()
         local stats = require('lazy').stats()
         return ('\nLoaded %d packages in %dms'):format(stats.loaded, stats.startuptime)
     end
-end
-local bd_msg = 'Happy Birthday!'
-local birthday = function()
-    if os.date '%d%m' == '2012' then
-        return {
-            {
-                action = function()
-                    local bufnr = vim.api.nvim_create_buf(false, true)
-                    vim.cmd.b(bufnr)
-                    vim.api.nvim_buf_set_lines(0, 0, 0, false, require('dtomvan.ascii_art').birthday)
-                end,
-                name = bd_msg,
-                section = '20th of december!',
-            },
-        }
-    else
-        return {}
-    end
-end
-
--- Makes the happy birthday message rainbow (by using some weird builtin highlight groups)
-local birthday_hl = function(content)
-    local coords = MiniStarter.content_coords(content, 'item')
-    for _, c in ipairs(coords) do
-        local unit = content[c.line][c.unit]
-        local item = unit.item
-        local hl = {
-            'Error',
-            'Float',
-            'WarningMsg',
-            'String',
-            'Function',
-            'Exception',
-        }
-        if item.name == bd_msg then
-            table.remove(content[c.line], c.unit)
-            for i = #item.name, 1, -1 do
-                table.insert(content[c.line], c.unit, {
-                    string = item.name:sub(i, i),
-                    hl = hl[(i - 1) % #hl + 1],
-                })
-            end
-            table.insert(content[c.line], c.unit, { string = '', type = 'item', item = item })
-        end
-    end
-    return content
 end
 
 local logo_expla = logo_table[#logo_table]
@@ -150,23 +67,28 @@ local clean_recent_files = function(content)
             goto continue
         end
 
-        local name = item.name:gsub('(.*)/(.*)%)', '%1)')
-        local path_start = name:find '%('
-        local filename = name:sub(1, path_start - 2)
-        local path = name:sub(path_start + 1, name:find '%)' - 1), 4
+        local name = item.action:sub(6)
+        local filename = vim.fn.fnamemodify(name, ':~:.:t')
+        local path = vim.fn.fnamemodify(name, ':~:.:h')
         local split = vim.split(filename, '.', { plain = true })
         local icon, hl = require('nvim-web-devicons').get_icon(filename, split[#split],
             { default = true })
+        local do_path = path ~= '.'
 
         if #icon ~= 0 then
             icon = icon .. ' '
         end
 
-        item._len = #name
+        local len = #filename
+        if do_path then
+            len = len + 3 + #path
+        end
+
+        item._len = len
         item._icon = icon
         item._hl = hl
 
-        if #name > math.min(cols, 80) then
+        if len > math.min(cols, 80) then
             path = vim.fn.pathshorten(path, 4)
             -- minus 2 for icons or bullets
             local max_width = math.min(cols / 2 - 2, 40)
@@ -178,34 +100,37 @@ local clean_recent_files = function(content)
 
             filename = filename:sub(1, math.min(flen, max_width))
             path = path:sub(plen - math.min(plen, max_width), plen)
+            local path_c = string.format(' (%s%s)', path_ellipsis and '...' or '', path)
 
-            name = ('%s%s (%s%s)'):format(
+            name = ('%s%s%s'):format(
                 filename,
                 filename_ellipsis and '...' or '',
-                path_ellipsis and '...' or '',
-                path
+                do_path and path_c or ''
             )
             local new_line = { { string = filename, type = 'item', item = item } }
             if filename_ellipsis then
                 table.insert(new_line, { string = '...', hl = 'Comment' })
             end
-            table.insert(new_line, { string = ' (', hl = 'Comment' })
-            if path_ellipsis then
-                table.insert(new_line, { string = '...', hl = 'Comment' })
+            if do_path then
+                table.insert(new_line, { string = ' (', hl = 'Comment' })
+                if path_ellipsis then
+                    table.insert(new_line, { string = '...', hl = 'Comment' })
+                end
+                table.insert(new_line, { string = path, hl = 'Italic' })
+                table.insert(new_line, { string = ')', hl = 'Comment' })
             end
-            table.insert(new_line, { string = path, hl = 'Italic' })
-            table.insert(new_line, { string = ')', hl = 'Comment' })
             content[c.line] = new_line
         else
             local new_line = {
                 { string = filename, type = 'item', item = item },
-                { string = ' (', hl = 'Comment' },
-                { string = path },
-                { string = ')', hl = 'Comment' },
             }
+            if do_path then
+                table.insert(new_line, { string = ' (', hl = 'Comment' })
+                table.insert(new_line, { string = path })
+                table.insert(new_line, { string = ')', hl = 'Comment' })
+            end
             content[c.line] = new_line
         end
-        local len = #name
         if len > longest then
             longest = len
         end
@@ -258,6 +183,11 @@ local function nothing_if_too_small(content)
     return content
 end
 
+local function options(content)
+    vim.opt_local.cursorline = true
+    return content
+end
+
 starter.setup {
     autoopen = false,
     header = function()
@@ -282,16 +212,19 @@ starter.setup {
             return text
         end
     end,
-    footer = vim.fn.system('shuf -n1 ~/.config/nvim/inspirational_quotes.txt'):gsub('\\n', '\n'):gsub('\n$', ''),
+    footer = function()
+        return vim.fn.system('shuf -n1 ~/.config/nvim/inspirational_quotes.txt'):gsub('\\n', '\n'):gsub('\n$', '')
+    end,
     items = {
-        birthday(),
+        StarterBirthday.items['mini.starter'](),
         starter.sections.sessions(),
         starter.sections.recent_files(10),
     },
     content_hooks = {
+        options,
+        StarterBirthday.gen_hook['mini.starter'](),
         nothing_if_too_small,
         remove_empty_sessions,
-        birthday_hl,
         logo_expla_hl,
         clean_recent_files,
         adding_bullet(false),
@@ -299,4 +232,5 @@ starter.setup {
     },
 }
 
-vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'MiniStarterSection'})
+vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'MiniStarterSection' })
+vim.keymap.set('n', '<leader>gms', MiniStarter.open)

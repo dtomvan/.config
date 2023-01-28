@@ -112,17 +112,17 @@ return {
         'jay-babu/mason-null-ls.nvim',
         lazy = true,
         config = function()
-            require 'mason-null-ls'.setup {
+            require('mason-null-ls').setup {
                 automatic_setup = true,
             }
-            require 'null-ls'.setup {
+            require('null-ls').setup {
                 on_attach = require('dtomvan.lsp.opts').on_attach,
             }
-            require 'mason-null-ls'.setup_handlers()
+            require('mason-null-ls').setup_handlers()
             for _, source in ipairs(vim.api.nvim_get_runtime_file('lua/dtomvan/config/null-ls/*.lua', true)) do
                 loadfile(source)()
             end
-        end
+        end,
     },
     -- Snippets
     {
@@ -244,7 +244,7 @@ return {
     {
         'lervag/vimtex',
         cond = function()
-            return (not vim.g._no_vimtex) and (not vim.g.started_by_firenvim)
+            return (not vim.g._no_vimtex) and not vim.g.started_by_firenvim
         end,
         ft = 'tex',
         config = function()
@@ -299,6 +299,13 @@ return {
                     require('noice').enable()
                 end
             end,
+        },
+    },
+    {
+        'luukvbaal/statuscol.nvim',
+        event = 'UIEnter',
+        config = {
+            setopt = true,
         },
     },
 }

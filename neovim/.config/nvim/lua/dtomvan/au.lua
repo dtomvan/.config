@@ -1,12 +1,10 @@
-local buffer = { buffer = true, noremap = true }
 local au = vim.api.nvim_create_autocmd
 local group = function(name)
-    vim.api.nvim_create_augroup(name, { clear = true })
+    return vim.api.nvim_create_augroup(name, { clear = true })
 end
 
 local bp = '*.bin'
-local bin = 'Binary'
-group(bin)
+local bin = group 'Binary'
 
 au('BufReadPre', {
     group = bin,
@@ -55,9 +53,8 @@ au('TermOpen', {
     end,
 })
 
--- group('Formatting')
 -- au('BufWritePre', {
---     group = 'Formatting',
+--     group = group 'Formatting',
 --     callback = function()
 --         if not vim.tbl_isempty(vim.lsp.buf_get_clients()) then
 --             vim.lsp.buf.format { async = false }
@@ -65,10 +62,8 @@ au('TermOpen', {
 --     end,
 -- })
 
-local regels = 'Regels.md'
-group(regels)
 au('BufWritePre', {
-    group = regels,
+    group = group 'Regels.md',
     callback = function()
         if vim.fn.expand '%:p' == '/home/tomvd/regels.md' then
             local line = 'Laatst bijgewerkt op: ' .. os.date '%F %T'
@@ -77,9 +72,8 @@ au('BufWritePre', {
     end,
 })
 
-group 'TextYankHighlight'
 au('TextYankPost', {
-    group = 'TextYankHighlight',
+    group = group 'TextYankHighlight',
     callback = function()
         vim.highlight.on_yank { on_visual = false }
     end,
@@ -117,10 +111,8 @@ if vim.fn.has 'nvim-0.8' == 1 then
         'toggleterm',
         'Trouble',
     }
-    local winbar = 'UserWinbar'
-    group(winbar)
     au({ 'BufWinEnter', 'WinEnter' }, {
-        group = winbar,
+        group = group 'UserWinbar',
         callback = function()
             vim.schedule(function()
                 if vim.g._no_winbar or vim.g.started_by_firenvim then
@@ -139,9 +131,8 @@ if vim.fn.has 'nvim-0.8' == 1 then
     })
 end
 
-local lastplace = group 'LastPlace'
 au('BufReadPost', {
-    group = lastplace,
+    group = group 'LastPlace',
     callback = function()
         local mark = vim.api.nvim_buf_get_mark(0, '"')
         local lcount = vim.api.nvim_buf_line_count(0)
@@ -152,11 +143,17 @@ au('BufReadPost', {
 })
 
 if vim.g.started_by_firenvim then
-    local firenvimoldfiles = group 'FireNvimOldFiles'
     au('BufReadPost', {
-        group = firenvimoldfiles,
+        group = group 'FireNvimOldFiles',
         callback = function(ev)
             vim.fn.filter(vim.v.oldfiles, 'v:val !=# "' .. ev.file .. '"')
         end,
     })
 end
+
+au({ 'BufWritePre' }, {
+    group = group 'auto_create_dir',
+    callback = function(ev)
+        vim.fn.mkdir(vim.fn.fnamemodify(ev.file, ':p:h'), 'p')
+    end,
+})

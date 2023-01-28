@@ -12,6 +12,7 @@ o.conceallevel = 2
 o.copyindent = true
 o.cursorline = true
 o.expandtab = true
+o.foldcolumn = 'auto'
 o.hidden = true
 o.ignorecase = true
 o.listchars = 'trail:·,nbsp:~,tab:>-,multispace:---+'
