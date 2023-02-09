@@ -11,11 +11,11 @@ local ls = require 'luasnip'
 local sources = {
     { name = 'orgmode' },
     { name = 'nvim_lsp' },
+    { name = 'git' },
     { name = 'luasnip' },
     { name = 'nvim_lua' },
     { name = 'zsh' },
     { name = 'path' },
-    -- { name = 'spell' },
 }
 
 cmp.setup {

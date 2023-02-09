@@ -157,3 +157,14 @@ au({ 'BufWritePre' }, {
         vim.fn.mkdir(vim.fn.fnamemodify(ev.file, ':p:h'), 'p')
     end,
 })
+
+au('FileType', {
+    group = group 'jqfile',
+    pattern = 'jq',
+    callback = function(ev)
+        vim.schedule(function()
+            vim.api.nvim_buf_set_lines(ev.buf, 0, 0, false, { '# jq script' })
+            vim.api.nvim_buf_set_lines(ev.buf, -1, -1, false, { '# vim:ft=jq' })
+        end)
+    end,
+})

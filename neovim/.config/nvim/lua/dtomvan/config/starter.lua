@@ -73,7 +73,7 @@ local clean_recent_files = function(content)
         local split = vim.split(filename, '.', { plain = true })
         local icon, hl = require('nvim-web-devicons').get_icon(filename, split[#split],
             { default = true })
-        local do_path = path ~= '.'
+        local do_path = path ~= '.' and path ~= '~'
 
         if #icon ~= 0 then
             icon = icon .. ' '

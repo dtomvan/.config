@@ -127,7 +127,7 @@ zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*:functions' ignored-patterns '_*'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
-autoload -Uz compinit 
+autoload -Uz compinit
 if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
   compinit;
 else
@@ -318,6 +318,19 @@ bindkey '^[h' run-help
 tex() {
   pushd ~/projects/tex/
   cd $(fd --type d | sk --preview='ls -la {}' -1 -0 || echo .)
+}
+
+gcommit() {
+    gum confirm "Do you want to stage anything?" && git add -i
+    echo 'What change did you make?'
+    choose=`gum choose fix feat docs style refactor test chore`
+    echo 'Any scope?'
+    scope=`gum input --placeholder scope`
+    [ -n "$scope" ] && scope="($scope)"
+    summary=`gum input --placeholder "Describe what you changed in ~20 words" || return`
+
+    git status -s
+    gum confirm "Commit changes?" && git commit -m "$choose$scope: $summary" -e
 }
 
 # ALIASES

@@ -3,6 +3,15 @@ return {
     { 'nvim-lua/plenary.nvim', lazy = true },
     { 'nvim-lua/popup.nvim', lazy = true },
     {
+        'anuvyklack/hydra.nvim',
+        event = 'VeryLazy',
+        config = function()
+            for _, source in ipairs(vim.api.nvim_get_runtime_file('lua/dtomvan/config/hydra/*.lua', true)) do
+                loadfile(source)()
+            end
+        end,
+    },
+    {
         'rcarriga/nvim-notify',
         lazy = true,
     },
@@ -149,12 +158,9 @@ return {
         },
     },
     {
-        'tversteeg/registers.nvim',
-        cmd = 'Registers',
-        keys = {
-            { '"', mode = 'n' },
-            { '<c-r>', mode = 'i' },
-        },
+        'chentoast/marks.nvim',
+        event = 'BufReadPost',
+        opts = {},
     },
     {
         'junegunn/vim-easy-align',

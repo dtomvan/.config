@@ -143,17 +143,29 @@ cmd('Confusing', function()
     vim.cmd.vs()
     vim.cmd.buffer(bufnr)
     for k, v in pairs(_G.confusing_maps_set) do
-        vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, { string.format('%s: %s described as %s', k, v.map, v.desc or "nothing") })
+        vim.api.nvim_buf_set_lines(
+            bufnr,
+            -1,
+            -1,
+            false,
+            { string.format('%s: %s described as %s', k, v.map, v.desc or 'nothing') }
+        )
     end
 end, { desc = 'Show confusing mappings', force = true })
 
-cmd('Jq', function()
-    vim.ui.input({ prompt = "filename for jq script -> ", completion = 'files' }, function(input)
-        vim.cmd.edit(input)
-        vim.api.nvim_buf_set_lines(0, 0, 0, false, { "# jq script" })
-        vim.api.nvim_buf_set_lines(0, -1, -1, false, { "# vim:ft=jq" })
-    end)
-end, { desc = 'Make a JQ file', force = true })
-
 -- Weird abbreviation I got used to
 vim.cmd.noreabbrev('fcd', 'cd %:p:h')
+
+cmd('DiffOrig', function()
+    local start = vim.api.nvim_get_currentbuf()
+    vim.cmd 'vnew | set buftype=nofile | read ++edit # | 0d_ | diffthis'
+
+    local scratch = vim.api.nvim_get_current_buf()
+    vim.cmd 'wincmd p | diffthis'
+    for _, buf in ipairs { scratch, start } do
+        vim.keymap.set('n', 'q', function()
+            vim.api.nvim_buf_delete(scratch, { force = true })
+            vim.keymap.del('n', 'q', { buffer = start })
+        end, { buffer = buf })
+    end
+end, { desc = 'Diff current life with version before last save' })

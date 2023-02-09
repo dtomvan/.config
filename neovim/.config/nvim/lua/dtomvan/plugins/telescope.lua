@@ -18,6 +18,7 @@ return {
             '<leader>?',
             '<leader>/',
             '<leader>;',
+            '<leader>T',
         },
         cmd = 'Telescope',
         config = function()
@@ -30,7 +31,7 @@ return {
         lazy = true,
         keys = {
             {
-                '<leader>fb',
+                '<leader>pv',
                 function()
                     require('telescope').extensions.file_browser.file_browser()
                 end,
