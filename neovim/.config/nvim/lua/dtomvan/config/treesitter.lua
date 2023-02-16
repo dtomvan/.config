@@ -1,21 +1,36 @@
+local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+
+for _, name in ipairs(vim.api.nvim_get_runtime_file('parsers/*', true)) do
+    if vim.fn.isdirectory(name) then
+        parser_config[vim.fs.basename(name)] = {
+            install_info = {
+                url = name,
+                files = { 'src/parser.c' },
+                generate_requires_npm = false,
+                requires_generate_from_grammar = true,
+            },
+        }
+    end
+end
+
 require('nvim-treesitter.configs').setup {
     ensure_installed = {
-        "bash",
-        "c",
-        "kotlin",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "regex",
-        "rust",
-        "vim",
+        'bash',
+        'c',
+        'kotlin',
+        'lua',
+        'markdown',
+        'markdown_inline',
+        'regex',
+        'rust',
+        'vim',
     },
 
     matchup = {
-        enable = true
+        enable = true,
     },
     indent = {
-        enable = true
+        enable = true,
     },
     playground = {
         enable = true,
@@ -86,3 +101,10 @@ require('treesitter-context').setup {
     mode = 'topline',
     separator = nil,
 }
+
+-- local setft = require('nvim-treesitter.parsers').filetype_to_parsername
+--
+-- for ft, parser in pairs {
+-- } do
+--     setft[ft] = parser
+-- end

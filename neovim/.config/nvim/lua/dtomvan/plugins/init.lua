@@ -112,7 +112,7 @@ return {
                 'kotlin_language_server',
                 'pylsp',
                 'rust_analyzer',
-                'sumneko_lua',
+                'lua_ls',
             },
         },
     },

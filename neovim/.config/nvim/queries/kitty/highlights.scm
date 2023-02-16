@@ -1,0 +1,10 @@
+(argument) @field
+(color_code) @symbol
+(comment) @comment
+(font_command) @method
+(font_name) @string
+(identifier) @tag
+(include_file) @string
+"include" @tag
+(key_mapping) @symbol
+(mouse_mapping) @symbol

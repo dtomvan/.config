@@ -333,6 +333,10 @@ gcommit() {
     gum confirm "Commit changes?" && git commit -m "$choose$scope: $summary" -e
 }
 
+scronie() {
+    sudo EDITOR="$EDITOR" fcrontab -e
+}
+
 # ALIASES
 alias athenaeum '~/.local/share/flatpak/exports/bin/com.gitlab.librebob.Athenaeum'
 alias cargo="mold -run cargo"
@@ -494,3 +498,8 @@ plug "zsh-users/zsh-syntax-highlighting"
 alias ls="exa --icons"
 alias ll="ls -lah"
 alias la="ls -a"
+
+# pnpm
+export PNPM_HOME="/home/tomvd/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end

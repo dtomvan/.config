@@ -30,3 +30,8 @@ mpv/.config/mpv/watch_later
 mpd/.config/mpd/database
 visidata/.visidata/__pycache__
 visidata/.visidata/httpcache.sqlite
+neovim/.config/nvim/parsers/*/src
+neovim/.config/nvim/parsers/*/bindings
+neovim/.config/nvim/parsers/*/package.json
+neovim/.config/nvim/parsers/*/Cargo.toml
+neovim/.config/nvim/parsers/*/binding.gyp
