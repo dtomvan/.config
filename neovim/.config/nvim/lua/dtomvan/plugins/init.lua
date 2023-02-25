@@ -314,4 +314,14 @@ return {
             setopt = true,
         },
     },
+    {
+        'Wansmer/treesj',
+        dependencies = 'nvim-treesitter/nvim-treesitter',
+        keys = {
+            { '<leader>M', '<cmd>TSJToggle<cr>' },
+        },
+        opts = {
+            use_default_keymaps = false,
+        },
+    },
 }

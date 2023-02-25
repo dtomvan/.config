@@ -7,3 +7,4 @@ for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
 end
 
 vim.opt_local.suffixesadd:prepend '.lua'
+vim.treesitter.start()

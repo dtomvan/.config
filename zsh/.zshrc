@@ -337,6 +337,10 @@ scronie() {
     sudo EDITOR="$EDITOR" fcrontab -e
 }
 
+nvr() {
+    whence -vps nvim
+}
+
 # ALIASES
 alias athenaeum '~/.local/share/flatpak/exports/bin/com.gitlab.librebob.Athenaeum'
 alias cargo="mold -run cargo"

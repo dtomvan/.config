@@ -16,16 +16,12 @@ end
 require('nvim-treesitter.configs').setup {
     ensure_installed = {
         'bash',
-        'c',
         'kotlin',
-        'lua',
         'markdown',
         'markdown_inline',
         'regex',
         'rust',
-        'vim',
     },
-
     matchup = {
         enable = true,
     },
@@ -59,8 +55,8 @@ require('nvim-treesitter.configs').setup {
     ignore_install = {},
     highlight = {
         enable = true,
-        -- help highlighting is currently broken
-        disable = { 'vim', 'help', 'latex' },
+        -- handle builtin parsers with vim.treesitter
+        disable = { 'vim', 'help', 'lua', 'c' },
         additional_vim_regex_highlighting = false,
     },
     textobjects = {

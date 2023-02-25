@@ -7,6 +7,10 @@ require('noice').setup {
     },
     cmdline = {
         view = 'cmdline',
+        format = {
+            cmdline = { pattern = '^:', lang = 'vim', icon = '>' },
+            telescope = { pattern = '^:Telescope ', lang = '', icon = '󰭎' },
+        },
     },
     routes = {
         {
@@ -60,22 +64,25 @@ require('noice').setup {
             },
         },
     },
+    popupmenu = {
+        enabled = false,
+    },
     lsp = {
         progress = {
             format = {
                 {
-                    "{progress} ",
-                    key = "progress.percentage",
+                    '{progress} ',
+                    key = 'progress.percentage',
                     contents = {
                         -- { "{data.progress.message} " },
                     },
                 },
-                { "{spinner} ", hl_group = "NoiceLspProgressSpinner" },
-                { "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
+                { '{spinner} ', hl_group = 'NoiceLspProgressSpinner' },
+                { '{data.progress.client} ', hl_group = 'NoiceLspProgressClient' },
             },
             format_done = {
-                { "✔ ", hl_group = "NoiceLspProgressSpinner" },
-                { "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
+                { '✔ ', hl_group = 'NoiceLspProgressSpinner' },
+                { '{data.progress.client} ', hl_group = 'NoiceLspProgressClient' },
             },
         },
         override = {

@@ -1,5 +1,9 @@
 local M = {}
 
+function M.feedkey(key, mode)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+
 function M.is_buffer_empty()
     -- Check whether the current buffer is empty
     return vim.fn.empty(vim.fn.expand '%:t') == 1

@@ -1,3 +1,10 @@
 (empty_field) @comment
 (empty_spaces) @comment
 "/" @comment
+(piece_white) @struct
+(piece_black) @string
+(active_color) @label
+(castling_available) @keyword
+(square) @define
+(half_move_clock) @text.warning
+(full_move_number) @text.danger

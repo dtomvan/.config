@@ -9,18 +9,21 @@ local cmp = require 'cmp'
 local ls = require 'luasnip'
 
 local sources = {
-    { name = 'orgmode' },
     { name = 'nvim_lsp' },
+    { name = 'nvim_lsp_signature_help' },
+    { name = 'nvim_lua' },
     { name = 'git' },
     { name = 'luasnip' },
-    { name = 'nvim_lua' },
     { name = 'zsh' },
     { name = 'path' },
 }
 
 cmp.setup {
     window = {
-        completion = cmp.config.window.bordered(),
+        completion = {
+            col_offset = -3,
+            side_padding = 0,
+        },
         documentation = cmp.config.window.bordered(),
     },
     mapping = {
@@ -61,21 +64,53 @@ cmp.setup {
     },
 
     formatting = {
-        format = require('lspkind').cmp_format {
-            with_text = true,
-            menu = {
-                buffer = '[buf]',
-                nvim_lsp = '[LSP]',
-                nvim_lua = '[api]',
-                path = '[path]',
-                luasnip = '[snip]',
-            },
-        },
+        fields = { 'kind', 'abbr', 'menu' },
+        format = function(entry, vim_item)
+            local kind = require('lspkind').cmp_format {
+                mode = 'symbol_text',
+                maxwidth = 50,
+                menu = {
+                    buffer = '[buf]',
+                    nvim_lsp = '[lsp]',
+                    nvim_lua = '[api]',
+                    path = '[path]',
+                    luasnip = '[snip]',
+                },
+            } (entry, vim_item)
+            local strings = vim.split(kind.kind, '%s', { trimempty = true })
+            kind.kind = ' ' .. (strings[1] or '') .. ' '
+
+            return kind
+        end,
     },
 
     experimental = {
         ghost_text = true,
     },
 }
+
+cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+        { name = 'path' },
+    }, {
+        { name = 'cmdline' },
+    }),
+    formatting = {
+        format = function(entry, vim_item)
+            vim_item.kind = ({
+                cmdline = '[cmd]',
+                path = '[path]',
+            })[entry.source.name]
+            return vim_item
+        end,
+    },
+})
+
+cmp.setup.filetype('query', {
+    sources = {
+        { name = 'omni' },
+    },
+})
 
 return sources

@@ -6,7 +6,7 @@ return function(client, bufnr)
     right_click.set_lsp_rclick_menu()
     lsp_status.on_attach(client)
 
-    if vim.tbl_contains({ "lua", "rust", "python" }, vim.bo.ft) then
+    if vim.tbl_contains({ 'lua', 'rust', 'python' }, vim.bo.ft) then
         client.server_capabilities.semanticTokensProvider = nil
     end
     local caps = client.server_capabilities
@@ -25,6 +25,7 @@ return function(client, bufnr)
 
     -- Enable completion triggered by <c-x><c-o>
     buf_opt('omnifunc', 'v:lua.vim.lsp.omnifunc')
+    buf_opt('tagfunc', 'v:lua.vim.lsp.tagfunc')
 
     -- Mappings.
 
