@@ -1,6 +1,6 @@
 local starter = require 'mini.starter'
-local logo_table = require 'dtomvan.ascii_art'.logo
-local logo_width = #logo_table[1]
+local logo = require 'dtomvan.ascii_art'.logo
+local logo_width = #logo[1]
 
 local started = false
 
@@ -26,7 +26,7 @@ local get_startuptime = function()
     end
 end
 
-local logo_expla = logo_table[#logo_table]
+local logo_expla = logo[#logo]
 local logo_expla_hl = function(content)
     local coords = MiniStarter.content_coords(content, 'header')
     for _, c in ipairs(coords) do
@@ -147,6 +147,16 @@ local clean_recent_files = function(content)
         content[c.line][1].string = unit.string .. pad
         ::continue::
     end
+    local header = MiniStarter.content_coords(content, 'header')
+    for _, c in ipairs(header) do
+        local unit = content[c.line][1]
+        local lines = vim.split(unit.string, '\n')
+
+        for i, line in ipairs(lines) do
+            lines[i] = string.rep(' ', (longest - #line) / 2) .. line
+        end
+        content[c.line][1].string = table.concat(lines, '\n')
+    end
     return content
 end
 
@@ -196,20 +206,13 @@ starter.setup {
         local part_id = math.floor((hour + 4) / 8) + 1
         local day_part = ({ 'evening', 'morning', 'afternoon', 'evening' })[part_id]
         local username = vim.loop.os_get_passwd()['username'] or 'dtomvan'
-        local text = ('Good %s, %s%s'):format(day_part, username, get_startuptime())
-        local to_align = vim.split(text, '\n')
+        local header = ('Good %s, %s%s'):format(day_part, username, get_startuptime())
         local cols = vim.o.columns
 
         if cols > (logo_width + 10) then
-            local logo = table.concat(logo_table, '\n')
-
-            for i, line in ipairs(to_align) do
-                to_align[i] = string.rep(' ', (logo_width - #line) / 2) .. line
-            end
-            local header = table.concat(to_align, '\n')
-            return logo .. '\n\n' .. header
+            return table.concat(logo, '\n') .. '\n\n' .. header
         else
-            return text
+            return logo
         end
     end,
     footer = function()

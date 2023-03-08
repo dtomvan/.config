@@ -342,6 +342,8 @@ nvr() {
 }
 
 # ALIASES
+alias rat=bat
+alias matt=bat
 alias athenaeum '~/.local/share/flatpak/exports/bin/com.gitlab.librebob.Athenaeum'
 alias cargo="mold -run cargo"
 alias cat="bat"

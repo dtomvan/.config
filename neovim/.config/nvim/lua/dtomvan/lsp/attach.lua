@@ -1,3 +1,4 @@
+-- local st = vim.lsp.semantic_tokens
 local lsp_status = require 'lsp-status'
 local navic = require 'nvim-navic'
 local right_click = require 'dtomvan.lsp.right_click'
@@ -6,10 +7,31 @@ return function(client, bufnr)
     right_click.set_lsp_rclick_menu()
     lsp_status.on_attach(client)
 
-    if vim.tbl_contains({ 'lua', 'rust', 'python' }, vim.bo.ft) then
-        client.server_capabilities.semanticTokensProvider = nil
-    end
+    -- if vim.tbl_contains({ 'lua', 'rust', 'python' }, vim.bo.ft) then
+    --     client.server_capabilities.semanticTokensProvider = nil
+    -- end
+
+    --- Slow?
+    client.server_capabilities.semanticTokensProvider = nil
     local caps = client.server_capabilities
+    -- if caps.semanticTokensProvider then
+    --     vim.api.nvim_create_autocmd('LspTokenUpdate', {
+    --         buffer = 0,
+    --         callback = function(cb)
+    --             local tk = cb.data.token
+    --             if tk.type ~= 'variable' or tk.modifiers.readonly then
+    --                 return
+    --             end
+    --
+    --             local text = vim.api.nvim_buf_get_text(cb.buf, tk.line, tk.start_col, tk.line, tk.end_col, {})[1]
+    --             if text ~= string.upper(text) --[[ and not (vim.bo.ft == 'lua' and tk.modifiers.global) ]] then
+    --                 return
+    --             end
+    --
+    --             st.highlight_token(tk, cb.buf, cb.data.client_id, 'Error')
+    --         end,
+    --     })
+    -- end
 
     if caps.documentSymbolProvider then
         navic.attach(client, bufnr)

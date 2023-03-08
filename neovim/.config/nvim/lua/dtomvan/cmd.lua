@@ -134,6 +134,10 @@ end
 
 cmd('Hit', hi_there, { desc = 'Follow highlights automatically', nargs = 1, complete = 'highlight', force = true })
 
+cmd('Reconfuse', function()
+    _G.confusing_maps = true
+end, { desc = 'Remove confusing map', force = true })
+
 cmd('Unconfuse', function()
     _G.confusing_maps = false
 end, { desc = 'Remove confusing map', force = true })

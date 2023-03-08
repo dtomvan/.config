@@ -21,11 +21,10 @@ M.confusing = function(modes, k, v, opts)
         opts.desc = 'confusing: ' .. opts.desc
     end
     vim.keymap.set(modes, k, function()
-        -- can be nil
         if _G.confusing_maps ~= false then
             if type(v) == 'function' then
-                v()
-                return ''
+                local ok, val = pcall(v)
+                return opts.expr and ok and val or ''
             else
                 return v
             end
@@ -101,10 +100,42 @@ map('n', '<leader>n', ':noh<cr>', M.silent 'Disable search highlight')
 map('n', '<leader>s', '<cr>so<cr>', M.silent 'Source current file')
 map('n', '<leader>S', ':so ', M.noremap 'Source...')
 
-M.confusing('n', '<up>', function() require('jvim').prev_sibling() end, M.silent 'Previous sibling')
-M.confusing('n', '<down>', function() require('jvim').next_sibling() end, M.silent 'Next sibling')
-M.confusing('n', '<left>', function() require('jvim').to_parent() end, M.silent 'Goto parent')
-M.confusing('n', '<right>', function() require('jvim').descend() end, M.silent 'Goto child')
+M.confusing('n', '<up>', function()
+    require('jvim').prev_sibling()
+end, M.silent 'Previous sibling')
+M.confusing('n', '<down>', function()
+    require('jvim').next_sibling()
+end, M.silent 'Next sibling')
+M.confusing('n', '<left>', function()
+    require('jvim').to_parent()
+end, M.silent 'Goto parent')
+M.confusing('n', '<right>', function()
+    require('jvim').descend()
+end, M.silent 'Goto child')
+
+M.confusing('n', '~', function()
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    local row = cursor[1]
+    local col = cursor[2]
+    local char = vim.api.nvim_buf_get_text(0, row - 1, col, row - 1, col + 1, {})[1] or ''
+    for k, v in pairs {
+        [';'] = ':',
+        ['('] = ')',
+        ['['] = ']',
+        ['{'] = '}',
+        ["'"] = '"',
+        [","] = '.',
+        ["`"] = '~',
+        ["-"] = '_',
+    } do
+        if char == k then
+            return 'r' .. v .. 'l'
+        elseif char == v then
+            return 'r' .. k .. 'l'
+        end
+    end
+    return '~'
+end, M.norexpr 'Custom change case characters')
 
 map('v', '<leader>s', ':!sort<cr>', M.silent 'Sort visual selection')
 
@@ -163,7 +194,7 @@ spterm('n', '<leader>cx', 'sp')
 
 local aoc
 if vim.g._aoc == true then
-    aoc = string.format(' -p aoc_%s %s', os.date('%Y'), tonumber(os.date('%d')))
+    aoc = string.format(' -p aoc_%s %s', os.date '%Y', tonumber(os.date '%d'))
 else
     aoc = ''
 end
