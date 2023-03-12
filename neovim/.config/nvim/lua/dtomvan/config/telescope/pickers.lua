@@ -29,7 +29,10 @@ function M.configs()
     pickers
         .new({
             prompt_title = 'Fd hidden',
-            finder = finders.new_oneshot_job({ 'fd', '--type', 'd', '--hidden' }, {}),
+            finder = finders.new_oneshot_job(
+                { 'fd', '--type', 'd', '--hidden' },
+                {}
+            ),
             previewer = previewers.new_termopen_previewer {
                 get_command = preview_list,
             },

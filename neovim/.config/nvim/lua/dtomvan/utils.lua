@@ -1,7 +1,11 @@
 local M = {}
 
 function M.feedkey(key, mode)
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+    vim.api.nvim_feedkeys(
+        vim.api.nvim_replace_termcodes(key, true, true, true),
+        mode,
+        true
+    )
 end
 
 function M.is_buffer_empty()
@@ -25,34 +29,44 @@ function M.quick_fix_rename()
 
         position_params.newName = new_name
 
-        vim.lsp.buf_request(0, 'textDocument/rename', position_params, function(err, result, ...)
-            vim.lsp.handlers['textDocument/rename'](err, result, ...)
+        vim.lsp.buf_request(
+            0,
+            'textDocument/rename',
+            position_params,
+            function(err, result, ...)
+                vim.lsp.handlers['textDocument/rename'](err, result, ...)
 
-            if not result then
-                return
-            end
+                if not result then
+                    return
+                end
 
-            local entries = {}
-            if result.changes then
-                for uri, edits in pairs(result.changes) do
-                    local bufnr = vim.uri_to_bufnr(uri)
+                local entries = {}
+                if result.changes then
+                    for uri, edits in pairs(result.changes) do
+                        local bufnr = vim.uri_to_bufnr(uri)
 
-                    for _, edit in ipairs(edits) do
-                        local start_line = edit.range.start.line + 1
-                        local line = vim.api.nvim_buf_get_lines(bufnr, start_line - 1, start_line, false)[1]
+                        for _, edit in ipairs(edits) do
+                            local start_line = edit.range.start.line + 1
+                            local line = vim.api.nvim_buf_get_lines(
+                                bufnr,
+                                start_line - 1,
+                                start_line,
+                                false
+                            )[1]
 
-                        table.insert(entries, {
-                            bufnr = bufnr,
-                            lnum = start_line,
-                            col = edit.range.start.character + 1,
-                            text = line,
-                        })
+                            table.insert(entries, {
+                                bufnr = bufnr,
+                                lnum = start_line,
+                                col = edit.range.start.character + 1,
+                                text = line,
+                            })
+                        end
                     end
                 end
-            end
 
-            vim.fn.setqflist(entries, 'r')
-        end)
+                vim.fn.setqflist(entries, 'r')
+            end
+        )
     end)
 end
 
@@ -69,10 +83,13 @@ function M.winbar()
         return '%=%m %f'
     end
 
-    local char, hl = require('nvim-web-devicons').get_icon(filename, ft, { default = true })
+    local char, hl =
+        require('nvim-web-devicons').get_icon(filename, ft, { default = true })
     local icon = string.format('%%#%s#%s%%*', hl, char)
 
-    return '%m ' .. icon .. " %f > %{%v:lua.require'nvim-navic'.get_location()%}"
+    return '%m '
+        .. icon
+        .. " %f > %{%v:lua.require'nvim-navic'.get_location()%}"
 end
 
 local winbuf = function(ty)
@@ -96,15 +113,18 @@ function M.yes_or_no(prompt, default, cb)
         p = '[y/N]'
     end
 
-    vim.ui.input({ prompt = string.format('%s? %s ->', prompt, p) }, function(input)
-        if input == 'y' or input == 'Y' then
-            cb(true)
-        elseif input == 'n' or input == 'N' then
-            cb(false)
-        else
-            cb(default)
+    vim.ui.input(
+        { prompt = string.format('%s? %s ->', prompt, p) },
+        function(input)
+            if input == 'y' or input == 'Y' then
+                cb(true)
+            elseif input == 'n' or input == 'N' then
+                cb(false)
+            else
+                cb(default)
+            end
         end
-    end)
+    )
 end
 
 return M

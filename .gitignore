@@ -35,3 +35,5 @@ neovim/.config/nvim/parsers/*/bindings
 neovim/.config/nvim/parsers/*/package.json
 neovim/.config/nvim/parsers/*/Cargo.toml
 neovim/.config/nvim/parsers/*/binding.gyp
+# gets gpg'd
+rdp-connect.sh

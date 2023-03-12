@@ -5,4 +5,8 @@ vim.keymap.set('n', '<leader>0', function()
     end
     local date = os.date '%F'
     vim.api.nvim_buf_set_lines(0, 0, linenr - 1, true, { date })
-end, { desc = 'Replace commit message with current date', buffer = true, silent = true })
+end, {
+    desc = 'Replace commit message with current date',
+    buffer = true,
+    silent = true,
+})

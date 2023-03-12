@@ -40,7 +40,15 @@ end
 ---@param action string
 M.rclick_context_menu = function(menu, label, action)
     for _, m in ipairs(MODES) do
-        vim.cmd(m .. 'menu ' .. menu .. '.' .. M.format_menu_label(label) .. ' ' .. action)
+        vim.cmd(
+            m
+                .. 'menu '
+                .. menu
+                .. '.'
+                .. M.format_menu_label(label)
+                .. ' '
+                .. action
+        )
     end
 end
 
@@ -60,7 +68,11 @@ M.set_rclick_submenu = function(menu_name, submenu_label, items, bindif)
     for _, i in ipairs(items) do
         M.rclick_context_menu(menu_name, i[1], i[2])
     end
-    M.rclick_context_menu('PopUp', submenu_label, '<cmd>popup ' .. menu_name .. '<cr>')
+    M.rclick_context_menu(
+        'PopUp',
+        submenu_label,
+        '<cmd>popup ' .. menu_name .. '<cr>'
+    )
 end
 
 M.set_lsp_rclick_menu = function()

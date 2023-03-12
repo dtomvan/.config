@@ -60,10 +60,15 @@ local function get_cur_query(bufnr, cursor)
     if not tree then
         return
     end
-    for id, node, _ in query_q:iter_captures(tree:root(), bufnr, cursor.row, cursor.row) do
+    for id, node, _ in
+        query_q:iter_captures(tree:root(), bufnr, cursor.row, cursor.row)
+    do
         if query_q.captures[id] == 'sql' then
             local row1, col1, row2, col2 = node:range()
-            return { start = { row = row1, col = col1 }, ['end'] = { row = row2, col = col2 } }
+            return {
+                start = { row = row1, col = col1 },
+                ['end'] = { row = row2, col = col2 },
+            }
         end
     end
 end
@@ -101,7 +106,9 @@ source.complete = function(self, request, callback)
     local input = string.sub(cursor_before_line, request.offset - 1)
     local prefix = string.sub(cursor_before_line, 1, request.offset - 1)
     local start_select, end_select = string.find(prefix, 'SELECT ')
-    local after_fields = start_select < cursor and end_select <= cursor and start_select
+    local after_fields = start_select < cursor
+        and end_select <= cursor
+        and start_select
 
     return true
 end

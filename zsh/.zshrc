@@ -339,6 +339,21 @@ scronie() {
 
 nvr() {
     whence -vps nvim
+    echo
+    tr ":\n" "\\000" <<< "$PATH" | xargs -0r -I{} -n1 find {} -maxdepth 1 -executable -name 'nvim' 2>/dev/null | xargs -I{} sh -c 'echo "path: {}"; {} --version | head -n4'
+}
+
+# Dotfiles-commit
+dfc() {
+    git add -A && git commit -m "$(date +%F)"
+}
+
+deref() {
+    if [ -h "$1" ] ; then
+        target="$(readlink $1)"
+        rm "$1"
+        cp "$target" "$1"
+    fi
 }
 
 # ALIASES

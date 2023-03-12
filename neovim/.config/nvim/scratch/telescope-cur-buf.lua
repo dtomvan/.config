@@ -9,7 +9,10 @@ end
 local l = vim.api.nvim_buf_get_lines(0, 0, -1, false)
 
 if #l < 1 or vim.api.nvim_buf_get_name(0) ~= '' then
-    vim.notify('telescope-cur-buf: No input filenames, quitting', vim.log.levels.ERROR)
+    vim.notify(
+        'telescope-cur-buf: No input filenames, quitting',
+        vim.log.levels.ERROR
+    )
     return
 end
 

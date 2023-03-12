@@ -13,24 +13,31 @@ vim.keymap.set('n', '<leader>sw', saction 'write')
 vim.keymap.set('n', '<leader>sd', saction 'delete')
 vim.keymap.set('n', '<leader>sn', function()
     local split = vim.split(vim.fn.getcwd(), '/')
-    vim.ui.input({ prompt = 'Session name? ', default = split[#split] }, function(input)
-        if input == nil then
-            return
-        end
-        local existing = false
-        for session in ipairs(MiniSessions.detected) do
-            if session.name == input then
-                existing = true
-                util.yes_or_no('Do you want to overwrite the existing session', false, function(b)
-                    if b then
-                        MiniSessions.write(input, { force = true })
-                    end
-                end)
+    vim.ui.input(
+        { prompt = 'Session name? ', default = split[#split] },
+        function(input)
+            if input == nil then
+                return
             end
+            local existing = false
+            for session in ipairs(MiniSessions.detected) do
+                if session.name == input then
+                    existing = true
+                    util.yes_or_no(
+                        'Do you want to overwrite the existing session',
+                        false,
+                        function(b)
+                            if b then
+                                MiniSessions.write(input, { force = true })
+                            end
+                        end
+                    )
+                end
+            end
+            if existing then
+                return
+            end
+            MiniSessions.write(input, {})
         end
-        if existing then
-            return
-        end
-        MiniSessions.write(input, {})
-    end)
+    )
 end)

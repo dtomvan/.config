@@ -38,12 +38,28 @@ hydra {
         { 'O', cmd 'Telescope vim_options' },
         { 'r', cmd 'Telescope resume' },
         { 'p', cmd 'Telescope projects', { desc = 'projects' } },
-        { '/', cmd 'Telescope current_buffer_fuzzy_find', { desc = 'search in file' } },
+        {
+            '/',
+            cmd 'Telescope current_buffer_fuzzy_find',
+            { desc = 'search in file' },
+        },
         { '?', cmd 'Telescope search_history', { desc = 'search history' } },
-        { ';', cmd 'Telescope command_history', { desc = 'command-line history' } },
+        {
+            ';',
+            cmd 'Telescope command_history',
+            { desc = 'command-line history' },
+        },
         { 'c', cmd 'Telescope commands', { desc = 'execute command' } },
-        { 'u', cmd 'silent! %foldopen! | UndotreeToggle', { desc = 'undotree' } },
-        { '<Enter>', cmd 'Telescope', { exit = true, desc = 'list all pickers' } },
+        {
+            'u',
+            cmd 'silent! %foldopen! | UndotreeToggle',
+            { desc = 'undotree' },
+        },
+        {
+            '<Enter>',
+            cmd 'Telescope',
+            { exit = true, desc = 'list all pickers' },
+        },
         { '<Esc>', nil, { exit = true, nowait = true } },
     },
 }

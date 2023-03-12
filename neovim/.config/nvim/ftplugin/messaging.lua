@@ -1,5 +1,10 @@
 vim.cmd.start()
-vim.keymap.set('i', '<esc>', '<esc><cmd>wq<cr>', { buffer = true, silent = true })
+vim.keymap.set(
+    'i',
+    '<esc>',
+    '<esc><cmd>wq<cr>',
+    { buffer = true, silent = true }
+)
 vim.keymap.set(
     'i',
     '<cr>',

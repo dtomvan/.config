@@ -70,5 +70,15 @@ set_keymap('t', '<space>xc', '<Cmd>lua require"xplr".close()<CR>', opts)
 nvim_set_keymap('n', '<space>xv', '<Cmd>lua require"xplr".toggle()<CR>', opts)
 set_keymap('t', '<space>xv', '<Cmd>lua require"xplr".toggle()<CR>', opts)
 
-on_previewer_set_keymap('t', '<space>xb', '<Cmd>lua require"xplr.actions".scroll_previewer_up()<CR>', opts)
-on_previewer_set_keymap('t', '<space>xn', '<Cmd>lua require"xplr.actions".scroll_previewer_down()<CR>', opts)
+on_previewer_set_keymap(
+    't',
+    '<space>xb',
+    '<Cmd>lua require"xplr.actions".scroll_previewer_up()<CR>',
+    opts
+)
+on_previewer_set_keymap(
+    't',
+    '<space>xn',
+    '<Cmd>lua require"xplr.actions".scroll_previewer_down()<CR>',
+    opts
+)

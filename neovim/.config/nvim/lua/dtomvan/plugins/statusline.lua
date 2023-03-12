@@ -53,12 +53,16 @@ M.config = function()
 
             table.insert(
                 segs,
-                subscribe.buf_autocmd('el_git_branch', 'BufEnter', function(window, buffer)
-                    local branch = extensions.git_branch(window, buffer)
-                    if branch then
-                        return '  ' .. branch
+                subscribe.buf_autocmd(
+                    'el_git_branch',
+                    'BufEnter',
+                    function(window, buffer)
+                        local branch = extensions.git_branch(window, buffer)
+                        if branch then
+                            return '  ' .. branch
+                        end
                     end
-                end)
+                )
             )
         end
         table.insert(segs, '%*')

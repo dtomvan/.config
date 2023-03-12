@@ -40,7 +40,10 @@ M.run = function()
             if code == 0 then
                 cd(vim.trim(path))
             else
-                vim.notify('Error occured, not CD-ing. Code: ' .. string.format('%d', code))
+                vim.notify(
+                    'Error occured, not CD-ing. Code: '
+                        .. string.format('%d', code)
+                )
             end
             win('close', winnr, true)
             buf('delete', bufnr, { force = true })
@@ -53,7 +56,12 @@ M.setup = function(opts)
     opts = opts or {}
     opts = vim.tbl_extend('keep', opts, default_opts)
 
-    vim.keymap.set(opts.mode, opts.key, M.run, { silent = true, desc = 'Change directory' })
+    vim.keymap.set(
+        opts.mode,
+        opts.key,
+        M.run,
+        { silent = true, desc = 'Change directory' }
+    )
 end
 
 return M

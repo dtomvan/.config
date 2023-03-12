@@ -15,7 +15,7 @@ return {
             { '<c-s>', mode = 'i' },
             { '<c-g>s', mode = 'i' },
             { '<c-g>S', mode = 'i' },
-        }
+        },
     },
     'tpope/vim-eunuch',
     {

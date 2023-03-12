@@ -6,7 +6,14 @@ return {
         'anuvyklack/hydra.nvim',
         event = 'VeryLazy',
         config = function()
-            for _, source in ipairs(vim.api.nvim_get_runtime_file('lua/dtomvan/config/hydra/*.lua', true)) do
+            for _, source in
+                ipairs(
+                    vim.api.nvim_get_runtime_file(
+                        'lua/dtomvan/config/hydra/*.lua',
+                        true
+                    )
+                )
+            do
                 loadfile(source)()
             end
         end,
@@ -128,7 +135,14 @@ return {
                 on_attach = require('dtomvan.lsp.opts').on_attach,
             }
             require('mason-null-ls').setup_handlers()
-            for _, source in ipairs(vim.api.nvim_get_runtime_file('lua/dtomvan/config/null-ls/*.lua', true)) do
+            for _, source in
+                ipairs(
+                    vim.api.nvim_get_runtime_file(
+                        'lua/dtomvan/config/null-ls/*.lua',
+                        true
+                    )
+                )
+            do
                 loadfile(source)()
             end
         end,
@@ -166,7 +180,12 @@ return {
         'junegunn/vim-easy-align',
         keys = {
             { 'ga', '<plug>(EasyAlign)', mode = { 'n', 'x' }, remap = true },
-            { 'gA', '<plug>(LiveEasyAlign)', mode = { 'n', 'x' }, remap = true },
+            {
+                'gA',
+                '<plug>(LiveEasyAlign)',
+                mode = { 'n', 'x' },
+                remap = true,
+            },
         },
     },
     {
@@ -276,10 +295,12 @@ return {
     },
     {
         'folke/zen-mode.nvim',
-        dependencies = { {
-            'folke/twilight.nvim',
-            config = true,
-        } },
+        dependencies = {
+            {
+                'folke/twilight.nvim',
+                config = true,
+            },
+        },
         cmd = 'ZenMode',
         opts = {
             window = {

@@ -12,12 +12,15 @@ local function setup(ev)
         end
 
         local scratch_buf = vim.api.nvim_create_buf(false, true)
-        local wid = vim.api.nvim_open_win(
-            scratch_buf,
-            true,
-            { relative = 'editor', width = vim.o.columns, height = vim.o.lines, row = 0, col = 0 }
-        )
-        local selected_lines = vim.api.nvim_buf_get_lines(bufnr, fst - 1, snd, false)
+        local wid = vim.api.nvim_open_win(scratch_buf, true, {
+            relative = 'editor',
+            width = vim.o.columns,
+            height = vim.o.lines,
+            row = 0,
+            col = 0,
+        })
+        local selected_lines =
+            vim.api.nvim_buf_get_lines(bufnr, fst - 1, snd, false)
         vim.api.nvim_buf_set_lines(bufnr, fst - 1, snd, false, {})
         local jobid = vim.fn.termopen('vd -f markdown', {
             stdout_buffered = true,

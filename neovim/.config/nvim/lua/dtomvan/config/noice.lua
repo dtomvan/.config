@@ -18,7 +18,10 @@ require('noice').setup {
             opts = { skip = true },
         },
         {
-            filter = { event = 'msg_show', find = '<bs> go up one level <esc> close' },
+            filter = {
+                event = 'msg_show',
+                find = '<bs> go up one level <esc> close',
+            },
             opts = { skip = true },
         },
         {
@@ -60,7 +63,10 @@ require('noice').setup {
                 padding = { 0, 1 },
             },
             win_options = {
-                winhighlight = { Normal = 'Normal', FloatBorder = 'DiagnosticInfo' },
+                winhighlight = {
+                    Normal = 'Normal',
+                    FloatBorder = 'DiagnosticInfo',
+                },
             },
         },
     },
@@ -78,11 +84,17 @@ require('noice').setup {
                     },
                 },
                 { '{spinner} ', hl_group = 'NoiceLspProgressSpinner' },
-                { '{data.progress.client} ', hl_group = 'NoiceLspProgressClient' },
+                {
+                    '{data.progress.client} ',
+                    hl_group = 'NoiceLspProgressClient',
+                },
             },
             format_done = {
                 { '✔ ', hl_group = 'NoiceLspProgressSpinner' },
-                { '{data.progress.client} ', hl_group = 'NoiceLspProgressClient' },
+                {
+                    '{data.progress.client} ',
+                    hl_group = 'NoiceLspProgressClient',
+                },
             },
         },
         override = {

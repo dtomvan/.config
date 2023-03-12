@@ -1,5 +1,10 @@
 local buffer = require('dtomvan.keymaps').buffer
-vim.keymap.set('n', 'J', require('rust-tools.join_lines').join_lines, buffer 'Join lines')
+vim.keymap.set(
+    'n',
+    'J',
+    require('rust-tools.join_lines').join_lines,
+    buffer 'Join lines'
+)
 vim.keymap.set(
     'n',
     '<leader>l',

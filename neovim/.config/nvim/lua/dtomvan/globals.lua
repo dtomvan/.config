@@ -6,9 +6,9 @@ end
 local ok, reload = pcall(require, 'plenary.reload')
 RELOAD = function(...)
     if ok then
-	return require('plenary.reload').reload_module(...)
+        return require('plenary.reload').reload_module(...)
     else
-	return
+        return
     end
 end
 
@@ -27,7 +27,9 @@ EX = setmetatable({}, {
             f = vim.cmd[command]
         else
             f = function(...)
-                return vim.api.nvim_command(table.concat(vim.tbl_flatten { command, ... }, ' '))
+                return vim.api.nvim_command(
+                    table.concat(vim.tbl_flatten { command, ... }, ' ')
+                )
             end
         end
         rawset(t, k, f)

@@ -34,7 +34,10 @@ opt_choice = function(_, snip, old_state, ...)
         local eq = option.eq and '=' or ''
         local new_nodes = { t(comma .. option.name .. eq), i(1) }
         if #options > 1 then
-            table.insert(new_nodes, d(2, opt_choice, {}, { user_args = new_options }))
+            table.insert(
+                new_nodes,
+                d(2, opt_choice, {}, { user_args = new_options })
+            )
         end
         local new_snip = sn(nil, new_nodes)
         new_snip.old_state = vim.deepcopy(old_state)
@@ -88,17 +91,22 @@ local normal = {
     }),
     s(
         'beg',
-        fmta(
-            '\\begin{<>}<>\n<>\n\\end{<>}',
-            { i(1), c(2, { t '', sn(nil, { t '[', i(1), t ']' }) }), i(3), utils.ri(1) }
-        )
+        fmta('\\begin{<>}<>\n<>\n\\end{<>}', {
+            i(1),
+            c(2, { t '', sn(nil, { t '[', i(1), t ']' }) }),
+            i(3),
+            utils.ri(1),
+        })
     ),
     s({ trig = 'mk', wordTrig = true }, {
         t '$',
         i(1),
         t '$',
         f(function(args)
-            if string.find(args[1][1], '[,.?-]') or string.find(args[1][1], ' ') then
+            if
+                string.find(args[1][1], '[,.?-]')
+                or string.find(args[1][1], ' ')
+            then
                 return ''
             else
                 return ' '
@@ -126,7 +134,7 @@ local normal = {
 <>
 
 \end{document}
-]]           ,
+]],
             {
                 i(1, '\\documentclass[11pt,a4paper]{article}'),
                 i(2, 'Insert title here'),
@@ -145,7 +153,10 @@ local normal = {
     s('sympy', fmt('sympy {} sympy', { i(1) })),
     s({ trig = 'sympy(.*)sympy', regTrig = true, priority = 10000 }, {
         d(1, function(_, snip)
-            local nodes = vim.split(vim.fn.system { 'sympy-eval.py', snip.captures[1] }, '\n')
+            local nodes = vim.split(
+                vim.fn.system { 'sympy-eval.py', snip.captures[1] },
+                '\n'
+            )
             return sn(nil, { t(nodes) })
         end, {}),
     }),
@@ -160,16 +171,26 @@ local normal = {
         fmta('\\begin{lstlisting}<>\n<>\n\\end{lstlisting}', {
             c(1, {
                 t '',
-                sn(
-                    nil,
-                    { t '[', d(1, opt_choice, {}, { user_args = { opt_eq 'language', opt_eq 'caption' } }), t ']' }
-                ),
+                sn(nil, {
+                    t '[',
+                    d(1, opt_choice, {}, {
+                        user_args = {
+                            opt_eq 'language',
+                            opt_eq 'caption',
+                        },
+                    }),
+                    t ']',
+                }),
             }),
             i(2),
         })
     ),
     -- Imports for hyperref
-    package_opts('hyperref', { opt_eq 'colorlinks', opt 'hidelinks', opt 'linktocpage' }, 'hyper'),
+    package_opts(
+        'hyperref',
+        { opt_eq 'colorlinks', opt 'hidelinks', opt 'linktocpage' },
+        'hyper'
+    ),
     package_opts(
         'carlito',
         { opt 'sfdefault', opt 'lf' },
@@ -245,7 +266,13 @@ local normal = {
             })
         )
     ),
-    s('lang', fmta('\\usepackage[<>]{babel}', c(1, { i(nil, 'dutch'), i(nil, 'english') }))),
+    s(
+        'lang',
+        fmta(
+            '\\usepackage[<>]{babel}',
+            c(1, { i(nil, 'dutch'), i(nil, 'english') })
+        )
+    ),
 }
 
 local autotrig = {
@@ -257,7 +284,10 @@ local autotrig = {
     ),
     s({ trig = '([A-Za-z])_(%d%d)', regTrig = true }, {
         d(1, function(_, snip)
-            return sn(nil, { t(snip.captures[1] .. '_{' .. snip.captures[2]), i(1), t '}' })
+            return sn(
+                nil,
+                { t(snip.captures[1] .. '_{' .. snip.captures[2]), i(1), t '}' }
+            )
         end, {}),
     }),
     s(no_word 'sq', t '^2'),

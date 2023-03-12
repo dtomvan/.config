@@ -49,7 +49,12 @@ M.default_config = {
 local function make_float(bufnr, config)
     local height = config.height / 1000
     local width = config.width / 1000
-    float.percentage_range_window(height, width, { bufnr = bufnr, winblend = config.winblend }, {})
+    float.percentage_range_window(
+        height,
+        width,
+        { bufnr = bufnr, winblend = config.winblend },
+        {}
+    )
 end
 
 ---@param bufnr integer
@@ -65,7 +70,11 @@ local function make_split(bufnr, config)
         max = vim.o.columns
     end
     vim.cmd(prefix .. 'split')
-    vim.cmd(prefix .. 'resize ' .. tostring(math.floor(max * (config.percentage / 1000))))
+    vim.cmd(
+        prefix
+            .. 'resize '
+            .. tostring(math.floor(max * (config.percentage / 1000)))
+    )
     vim.cmd.buffer(bufnr)
 end
 
@@ -120,7 +129,11 @@ M.setup = function(config)
             end,
             'buf_select.buf_types',
         },
-        floating = { config.floating, 't', config.buf_type ~= M.buf_types.FLOATING },
+        floating = {
+            config.floating,
+            't',
+            config.buf_type ~= M.buf_types.FLOATING,
+        },
         split = { config.split, 't', config.buf_type ~= M.buf_types.SPLIT },
     }
 

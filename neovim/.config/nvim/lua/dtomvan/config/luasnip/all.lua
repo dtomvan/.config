@@ -43,12 +43,23 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
 IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ]],
-            { c(1, { f(function()
-                return os.date '%Y'
-            end), i(nil, 'Custom year here') }) }
+            {
+                c(1, {
+                    f(function()
+                        return os.date '%Y'
+                    end),
+                    i(nil, 'Custom year here'),
+                }),
+            }
         )
     ),
-    s('box', fmt('┌{}┐\n| {} |\n└{}┘', { f(utils.lenrep, { 1 }), i(1), f(utils.lenrep, { 1 }) })),
+    s(
+        'box',
+        fmt(
+            '┌{}┐\n| {} |\n└{}┘',
+            { f(utils.lenrep, { 1 }), i(1), f(utils.lenrep, { 1 }) }
+        )
+    ),
     s('bang', {
         t '#!/usr/bin/env ',
         c(1, {

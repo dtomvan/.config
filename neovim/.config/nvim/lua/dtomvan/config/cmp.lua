@@ -3,7 +3,12 @@ if vim.g._no_cmp then
 end
 local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
+    return col ~= 0
+        and vim.api
+                .nvim_buf_get_lines(0, line - 1, line, true)[1]
+                :sub(col, col)
+                :match '%s'
+            == nil
 end
 local cmp = require 'cmp'
 local ls = require 'luasnip'
@@ -76,7 +81,7 @@ cmp.setup {
                     path = '[path]',
                     luasnip = '[snip]',
                 },
-            } (entry, vim_item)
+            }(entry, vim_item)
             local strings = vim.split(kind.kind, '%s', { trimempty = true })
             kind.kind = ' ' .. (strings[1] or '') .. ' '
 

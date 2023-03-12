@@ -153,7 +153,8 @@ local clean_recent_files = function(content)
         local lines = vim.split(unit.string, '\n')
 
         for i, line in ipairs(lines) do
-            lines[i] = string.rep(' ', (longest - #line) / 2) .. line
+            lines[i] = string.rep(' ', math.min(math.max(logo_width - #line - 2, longest - #line), cols - #line) / 2) ..
+                line
         end
         content[c.line][1].string = table.concat(lines, '\n')
     end

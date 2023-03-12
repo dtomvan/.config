@@ -7,7 +7,9 @@ local opts = require 'dtomvan.lsp.opts'
 local M = {}
 
 for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
-    if not (server == 'rome' or server == 'rust_tools' or server == 'lua_ls') then
+    if
+        not (server == 'rome' or server == 'rust_tools' or server == 'lua_ls')
+    then
         require('lspconfig')[server].setup(opts)
     end
 end
@@ -133,7 +135,12 @@ local rust_tools_opts = {
     server = {
         on_attach = function(...)
             opts.on_attach(...)
-            vim.keymap.set('n', 'K', '<cmd>RustHoverActions<cr>', { buffer = true, desc = 'Rust hover actions' })
+            vim.keymap.set(
+                'n',
+                'K',
+                '<cmd>RustHoverActions<cr>',
+                { buffer = true, desc = 'Rust hover actions' }
+            )
         end,
         standalone = true,
         capabilities = opts.capabilities,

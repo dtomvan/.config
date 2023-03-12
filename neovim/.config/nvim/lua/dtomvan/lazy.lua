@@ -31,4 +31,3 @@ require('lazy').setup('dtomvan.plugins', {
         },
     },
 })
-

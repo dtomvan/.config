@@ -44,18 +44,33 @@ R('dtomvan.tere').setup()
 
 local breakpoints = { ',', '!', '.', '?', ';' }
 for _, point in ipairs(breakpoints) do
-    map('i', point, point .. '<c-g>u', M.silent 'Set undo point when typing punctuation')
+    map(
+        'i',
+        point,
+        point .. '<c-g>u',
+        M.silent 'Set undo point when typing punctuation'
+    )
 end
 
 -- Utils
 map('n', '<leader><CR>', '<C-w>w', M.silent 'Switch windows')
 map('n', '<leader><leader>', ':<up>', M.noremap 'Last command')
-map('i', '<C-l>', '<c-g>u<Esc>[s1z=`]a<c-g>u', M.noremap "Fix last 'spell' mistake")
+map(
+    'i',
+    '<C-l>',
+    '<c-g>u<Esc>[s1z=`]a<c-g>u',
+    M.noremap "Fix last 'spell' mistake"
+)
 
 -- Window management
 map('n', '<C-Down>', ':resize +2<CR>', M.silent 'Resize +2')
 map('n', '<C-Up>', ':resize -2<CR>', M.silent 'Resize -2')
-map('n', '<C-Right>', ':vertical resize +2<CR>', M.silent 'Vertically resize +2')
+map(
+    'n',
+    '<C-Right>',
+    ':vertical resize +2<CR>',
+    M.silent 'Vertically resize +2'
+)
 map('n', '<C-Left>', ':vertical resize -2<CR>', M.silent 'Vertically resize -2')
 map('n', '<C-S-Right>', '<C-w><C-L>', M.silent 'Winmove right')
 map('n', '<C-S-Up>', '<C-w><C-K>', M.silent 'Winmove up')
@@ -64,7 +79,12 @@ map('n', '<C-S-Left>', '<C-w><C-H>', M.silent 'Winmove left')
 
 -- Join lines correctly
 M.confusing('n', 'J', 'mzJ`z', M.norexpr "Join lines 'n stay where you are")
-M.confusing('n', 'gJ', 'mzJ`z', M.norexpr "Join lines 'n not stay where you are")
+M.confusing(
+    'n',
+    'gJ',
+    'mzJ`z',
+    M.norexpr "Join lines 'n not stay where you are"
+)
 
 -- copy entire file
 map('n', '<leader>y', 'mpggyG`p', M.silent 'Copy entire buffer')
@@ -83,7 +103,12 @@ local function nav(n)
 end
 
 for i in ipairs { 1, 2, 3, 4 } do
-    map('n', string.format('<leader>%d', i), nav(i), M.silent('Harpoon open file ' .. i))
+    map(
+        'n',
+        string.format('<leader>%d', i),
+        nav(i),
+        M.silent('Harpoon open file ' .. i)
+    )
 end
 
 map('n', '<leader>m', function()
@@ -93,7 +118,12 @@ map('n', '<F2>', function()
     require('harpoon.ui').toggle_quick_menu()
 end, M.silent 'Show harpoon UI')
 
-map('n', '<leader>xo', ':silent !chmod +x %<CR>', M.silent 'Make current file executable')
+map(
+    'n',
+    '<leader>xo',
+    ':silent !chmod +x %<CR>',
+    M.silent 'Make current file executable'
+)
 
 map('n', '<leader>n', ':noh<cr>', M.silent 'Disable search highlight')
 
@@ -117,16 +147,23 @@ M.confusing('n', '~', function()
     local cursor = vim.api.nvim_win_get_cursor(0)
     local row = cursor[1]
     local col = cursor[2]
-    local char = vim.api.nvim_buf_get_text(0, row - 1, col, row - 1, col + 1, {})[1] or ''
+    local char = vim.api.nvim_buf_get_text(
+        0,
+        row - 1,
+        col,
+        row - 1,
+        col + 1,
+        {}
+    )[1] or ''
     for k, v in pairs {
         [';'] = ':',
         ['('] = ')',
         ['['] = ']',
         ['{'] = '}',
         ["'"] = '"',
-        [","] = '.',
-        ["`"] = '~',
-        ["-"] = '_',
+        [','] = '.',
+        ['`'] = '~',
+        ['-'] = '_',
     } do
         if char == k then
             return 'r' .. v .. 'l'
@@ -186,7 +223,12 @@ local function termbind(bind, mode, cmd, tmode, bufnr, desc)
 end
 
 local function spterm(bind, mode, type)
-    return pcall(map, bind, mode, string.format('<cmd>%s term://%s<cr>', type, os.getenv 'SHELL'))
+    return pcall(
+        map,
+        bind,
+        mode,
+        string.format('<cmd>%s term://%s<cr>', type, os.getenv 'SHELL')
+    )
 end
 
 spterm('n', '<leader>cv', 'vs')

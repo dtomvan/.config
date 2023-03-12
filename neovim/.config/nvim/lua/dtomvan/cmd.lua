@@ -8,7 +8,8 @@ cmd('Rg', function(i)
     local result = system('rg -n --column ' .. args)
     local items = {}
     for res in vim.gsplit(result, '\n') do
-        local filename, lnum, col, text = string.match(res, '(.+):(%d+):(%d+):(.+)')
+        local filename, lnum, col, text =
+            string.match(res, '(.+):(%d+):(%d+):(.+)')
         -- check if the line isn't a context line
         if filename then
             local item = {
@@ -53,7 +54,10 @@ cmd('Scratch', function(_)
     for filename in vim.gsplit(system('fd --type f . ' .. scratch_dir), '\n') do
         if type(filename) == 'string' then
             if #filename > 0 then
-                table.insert(scratch_files, string.sub(filename, #scratch_dir + 1))
+                table.insert(
+                    scratch_files,
+                    string.sub(filename, #scratch_dir + 1)
+                )
             end
         end
     end
@@ -108,7 +112,12 @@ local function thisft()
 end
 
 cmd('GoFt', thisft, { desc = 'Open current ftplugin', force = true })
-vim.keymap.set('n', '<space>gft', thisft, noremap 'Open ftplugin for current :set filetype')
+vim.keymap.set(
+    'n',
+    '<space>gft',
+    thisft,
+    noremap 'Open ftplugin for current :set filetype'
+)
 
 cmd('Temple', function()
     vim.cmd [[colorscheme templeos]]
@@ -132,7 +141,12 @@ local function hi_there(i)
     end
 end
 
-cmd('Hit', hi_there, { desc = 'Follow highlights automatically', nargs = 1, complete = 'highlight', force = true })
+cmd('Hit', hi_there, {
+    desc = 'Follow highlights automatically',
+    nargs = 1,
+    complete = 'highlight',
+    force = true,
+})
 
 cmd('Reconfuse', function()
     _G.confusing_maps = true
@@ -147,13 +161,14 @@ cmd('Confusing', function()
     vim.cmd.vs()
     vim.cmd.buffer(bufnr)
     for k, v in pairs(_G.confusing_maps_set) do
-        vim.api.nvim_buf_set_lines(
-            bufnr,
-            -1,
-            -1,
-            false,
-            { string.format('%s: %s described as %s', k, v.map, v.desc or 'nothing') }
-        )
+        vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, {
+            string.format(
+                '%s: %s described as %s',
+                k,
+                v.map,
+                v.desc or 'nothing'
+            ),
+        })
     end
 end, { desc = 'Show confusing mappings', force = true })
 

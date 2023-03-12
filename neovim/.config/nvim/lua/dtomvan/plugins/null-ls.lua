@@ -4,7 +4,7 @@ return {
     dependencies = {
         'jay-babu/mason-null-ls.nvim',
         'nvim-lua/plenary.nvim',
-        'nvim-lua/lsp-status.nvim'
+        'nvim-lua/lsp-status.nvim',
     },
     cond = function()
         return not vim.g.started_by_firenvim
