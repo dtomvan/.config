@@ -1,18 +1,18 @@
 return {
     -- Plenary
     { 'nvim-lua/plenary.nvim', lazy = true },
-    { 'nvim-lua/popup.nvim', lazy = true },
+    { 'nvim-lua/popup.nvim',   lazy = true },
     {
         'anuvyklack/hydra.nvim',
         event = 'VeryLazy',
         config = function()
             for _, source in
-                ipairs(
-                    vim.api.nvim_get_runtime_file(
-                        'lua/dtomvan/config/hydra/*.lua',
-                        true
-                    )
+            ipairs(
+                vim.api.nvim_get_runtime_file(
+                    'lua/dtomvan/config/hydra/*.lua',
+                    true
                 )
+            )
             do
                 loadfile(source)()
             end
@@ -21,6 +21,11 @@ return {
     {
         'rcarriga/nvim-notify',
         lazy = true,
+        opts = {
+            fps = 40,
+            render = 'simple',
+            stages = 'slide',
+        },
     },
 
     {
@@ -59,7 +64,7 @@ return {
     },
     'ThePrimeagen/refactoring.nvim',
     { 'ThePrimeagen/vim-be-good', cmd = 'VimBeGood' },
-    { 'ThePrimeagen/jvim.nvim', ft = 'json' },
+    { 'ThePrimeagen/jvim.nvim',   ft = 'json' },
 
     -- Git signs
     {
@@ -88,7 +93,7 @@ return {
     },
 
     -- Rust or Bust
-    { 'ron-rs/ron.vim', ft = 'ron' },
+    { 'ron-rs/ron.vim',    ft = 'ron' },
     'simrat39/rust-tools.nvim',
 
     -- Lsp
@@ -136,12 +141,12 @@ return {
             }
             require('mason-null-ls').setup_handlers()
             for _, source in
-                ipairs(
-                    vim.api.nvim_get_runtime_file(
-                        'lua/dtomvan/config/null-ls/*.lua',
-                        true
-                    )
+            ipairs(
+                vim.api.nvim_get_runtime_file(
+                    'lua/dtomvan/config/null-ls/*.lua',
+                    true
                 )
+            )
             do
                 loadfile(source)()
             end
@@ -344,5 +349,12 @@ return {
         opts = {
             use_default_keymaps = false,
         },
+    },
+    {
+        'hrsh7th/nvim-insx',
+        event = 'VeryLazy',
+        config = function()
+            require('insx.preset.standard').setup()
+        end,
     },
 }

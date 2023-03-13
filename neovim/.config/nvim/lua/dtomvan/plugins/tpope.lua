@@ -10,9 +10,9 @@ return {
             { 'yss' },
             { 'ySs' },
             { 'ySS' },
-            { 'S', mode = 'x' },
-            { 'gS', mode = 'x' },
-            { '<c-s>', mode = 'i' },
+            { 'S',      mode = 'x' },
+            { 'gS',     mode = 'x' },
+            { '<c-s>',  mode = 'i' },
             { '<c-g>s', mode = 'i' },
             { '<c-g>S', mode = 'i' },
         },
@@ -30,6 +30,7 @@ return {
     },
     {
         'tpope/vim-endwise',
+        enabled = not (vim.fn.has 'nvim-0.8' == 1),
         event = 'BufReadPost',
     },
 }

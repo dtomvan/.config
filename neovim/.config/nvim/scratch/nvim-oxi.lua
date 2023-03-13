@@ -12,4 +12,4 @@ local fixed = mechanic.fix {
 
 assert(fixed.works)
 assert(fixed.problem == nil)
-vim.pretty_print(fixed)
+vim.print(fixed)

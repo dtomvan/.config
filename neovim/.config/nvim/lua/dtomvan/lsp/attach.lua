@@ -80,7 +80,7 @@ return function(client, bufnr)
         'Remove folder from workspace'
     )
     buf_map('n', '<space>wl', function()
-        vim.pretty_print(vim.lsp.buf.list_workspace_folders())
+        vim.print(vim.lsp.buf.list_workspace_folders())
     end, 'List workspace folders')
     buf_map(
         'n',

@@ -2,8 +2,8 @@
 require 'dtomvan.keymaps.greek'
 
 local tbl_extend_opt = function(tbl)
-    return function(desc)
-        return vim.tbl_extend('keep', tbl, { desc = desc })
+    return function(desc, opts)
+        return vim.tbl_extend('force', tbl, { desc = desc }, opts or {})
     end
 end
 
@@ -95,7 +95,6 @@ map('x', '<leader>p', '"_dP', M.silent "Paste, but don't copy original text")
 map('n', '<leader>j', ':cnext<CR>', M.silent 'Next quickfix entry')
 map('n', '<leader>k', ':cprev<CR>', M.silent 'Prev quickfix entry')
 
--- harpoon
 local function nav(n)
     return function()
         require('harpoon.ui').nav_file(n)

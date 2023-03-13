@@ -5,10 +5,10 @@ local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0
         and vim.api
-                .nvim_buf_get_lines(0, line - 1, line, true)[1]
-                :sub(col, col)
-                :match '%s'
-            == nil
+        .nvim_buf_get_lines(0, line - 1, line, true)[1]
+        :sub(col, col)
+        :match '%s'
+        == nil
 end
 local cmp = require 'cmp'
 local ls = require 'luasnip'
@@ -36,9 +36,7 @@ cmp.setup {
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-e>'] = cmp.mapping.close(),
         ['<c-y>'] = cmp.mapping.confirm { select = true },
-
         ['<c-space>'] = cmp.mapping.complete(),
-
         ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
@@ -81,7 +79,7 @@ cmp.setup {
                     path = '[path]',
                     luasnip = '[snip]',
                 },
-            }(entry, vim_item)
+            } (entry, vim_item)
             local strings = vim.split(kind.kind, '%s', { trimempty = true })
             kind.kind = ' ' .. (strings[1] or '') .. ' '
 
@@ -117,5 +115,26 @@ cmp.setup.filetype('query', {
         { name = 'omni' },
     },
 })
+
+-- nvim-autopairs setup
+local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+local handlers = require 'nvim-autopairs.completion.handlers'
+
+cmp.event:on(
+    'confirm_done',
+    cmp_autopairs.on_confirm_done {
+        filetypes = {
+            ['*'] = {
+                ['('] = {
+                    kind = {
+                        cmp.lsp.CompletionItemKind.Function,
+                        cmp.lsp.CompletionItemKind.Method,
+                    },
+                    handler = handlers['*'],
+                },
+            },
+        },
+    }
+)
 
 return sources

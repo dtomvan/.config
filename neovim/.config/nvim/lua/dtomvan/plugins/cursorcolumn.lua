@@ -3,6 +3,7 @@ return {
     event = 'BufReadPost',
     opts = {
         disabled_filetypes = {
+            'starter',
             'help',
             'lazy',
             'markdown',

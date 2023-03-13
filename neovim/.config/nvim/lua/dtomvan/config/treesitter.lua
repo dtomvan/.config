@@ -89,6 +89,9 @@ require('nvim-treesitter.configs').setup {
             },
         },
     },
+    endwise = {
+        enable = true,
+    },
 }
 
 require('treesitter-context').setup {

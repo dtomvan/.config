@@ -3,27 +3,33 @@ local system = vim.fn.system
 local flags = require 'dtomvan.rg_flags'
 local noremap = require('dtomvan.keymaps').noremap
 
-cmd('Rg', function(i)
-    local args = i.args
-    local result = system('rg -n --column ' .. args)
-    local items = {}
-    for res in vim.gsplit(result, '\n') do
-        local filename, lnum, col, text =
-            string.match(res, '(.+):(%d+):(%d+):(.+)')
-        -- check if the line isn't a context line
-        if filename then
-            local item = {
-                filename = filename,
-                lnum = lnum,
-                text = text,
-                col = col,
-            }
-            table.insert(items, item)
-        end
+cmd('Rg', function(params)
+    local overseer = require 'overseer'
+
+    local args = vim.fn.expandcmd(params.args)
+    local cmd, num_subs = vim.o.grepprg:gsub('%$%*', args)
+
+    if num_subs == 0 then
+        cmd = cmd .. ' ' .. args
     end
-    vim.fn.setqflist({}, ' ', { title = 'rg ' .. args, items = items })
-    vim.cmd.cope()
+    local task = overseer.new_task {
+        cmd = cmd,
+        name = 'grep ' .. args,
+        components = {
+            {
+                'on_output_quickfix',
+                errorformat = vim.o.grepformat,
+                open = not params.bang,
+                open_height = 8,
+                items_only = true,
+            },
+            { 'on_complete_dispose', timeout = 30 },
+            'default',
+        },
+    }
+    task:start()
 end, {
+    bang = true,
     nargs = '+',
     force = true,
     desc = 'Open ripgrep output in the quickfix list.',
@@ -83,6 +89,22 @@ cmd('Scratch', function(_)
         end
     end)
 end, { desc = 'Create new scratch file in ~/.config/nvim', force = true })
+
+vim.api.nvim_create_user_command('Make', function(params)
+    local task = require('overseer').new_task {
+        cmd = vim.split(vim.o.makeprg, '%s+'),
+        args = params.fargs,
+        components = {
+            { 'on_output_quickfix', open = not params.bang, open_height = 8 },
+            'default',
+        },
+    }
+    task:start()
+end, {
+    desc = '',
+    nargs = '*',
+    bang = true,
+})
 
 local function thisft()
     local home = os.getenv 'HOME'
@@ -188,3 +210,22 @@ cmd('DiffOrig', function()
         end, { buffer = buf })
     end
 end, { desc = 'Diff current life with version before last save' })
+
+cmd('Start', function()
+    if type(MiniStarter) == 'table' then
+        pcall(MiniStarter.open)
+    else
+        vim.notify('MiniStarter not found', vim.log.levels.ERROR)
+    end
+end, { desc = 'Open MiniStarter' })
+
+cmd('AutopairsToggle', function()
+    local npairs = require 'nvim-autopairs'
+    if npairs.state.disabled then
+        npairs.enable()
+        vim.notify 'Enabled autopairs'
+    else
+        npairs.disable()
+        vim.notify 'Disabled autopairs'
+    end
+end, { desc = 'Toggle auto pairs' })

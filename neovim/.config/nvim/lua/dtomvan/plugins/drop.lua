@@ -15,7 +15,7 @@ end
 -- Approximation of sunrise and sunset times in my local time and where I live
 -- Pasted and formatted from https://in-the-sky.org
 -- The data was originally calculated for the year 2023, but doesn't deviate
--- much in the next 10 years, so should be fine for the next ~50?
+-- much in the next 10 years, so should be good enough for the next ~50?
 local suntable = {
     [1] = { sunrise = { 8, 45 }, sunset = { 16, 26 } },
     [2] = { sunrise = { 8, 16 }, sunset = { 17, 16 } },
@@ -56,6 +56,28 @@ return {
         if date.month == 12 and (date.day == 25 or date.day == 26) then
             theme = 'xmas'
         end
+        if date.month == 20 and date.day == 12 then
+            theme = {
+                symbols = {
+                    '.',
+                    '*',
+                    '🎂',
+                    '🍰',
+                    '🎈',
+                    '🎈',
+                    '🎉',
+                    '🎁',
+                    '🕯️',
+                },
+                colors = {
+                    '#CC82DE',
+                    '#3BCE31',
+                    '#BF315E',
+                    '#2891A9',
+                    '#FF773D',
+                },
+            }
+        end
         -- If no theme for any reason, just bail and don't display the default
         -- leaves
         if theme then
@@ -64,6 +86,19 @@ return {
                 screensaver = false,
                 max = vim.o.columns / 4,
             }
+        end
+
+        -- Blend in so cursorline won't get blocked by the drops, getting rid of
+        -- any artifacts
+        local t = require('drop.config').get_theme()
+        for i, color in ipairs(t.colors) do
+            local hl_group = 'Drop' .. i
+            vim.api.nvim_set_hl(0, hl_group, { fg = color, blend = 100 })
+            vim.api.nvim_set_hl(
+                0,
+                hl_group .. 'Bold',
+                { fg = color, bold = true, blend = 100 }
+            )
         end
     end,
 }
