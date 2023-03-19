@@ -1,11 +1,6 @@
--- local st = vim.lsp.semantic_tokens
-local lsp_status = require 'lsp-status'
-local navic = require 'nvim-navic'
-local right_click = require 'dtomvan.lsp.right_click'
-
 return function(client, bufnr)
-    right_click.set_lsp_rclick_menu()
-    lsp_status.on_attach(client)
+    require('dtomvan.lsp.right_click').set_lsp_rclick_menu()
+    require('lsp-status').on_attach(client)
 
     -- if vim.tbl_contains({ 'lua', 'rust', 'python' }, vim.bo.ft) then
     --     client.server_capabilities.semanticTokensProvider = nil
@@ -14,27 +9,9 @@ return function(client, bufnr)
     --- Slow?
     client.server_capabilities.semanticTokensProvider = nil
     local caps = client.server_capabilities
-    -- if caps.semanticTokensProvider then
-    --     vim.api.nvim_create_autocmd('LspTokenUpdate', {
-    --         buffer = 0,
-    --         callback = function(cb)
-    --             local tk = cb.data.token
-    --             if tk.type ~= 'variable' or tk.modifiers.readonly then
-    --                 return
-    --             end
-    --
-    --             local text = vim.api.nvim_buf_get_text(cb.buf, tk.line, tk.start_col, tk.line, tk.end_col, {})[1]
-    --             if text ~= string.upper(text) --[[ and not (vim.bo.ft == 'lua' and tk.modifiers.global) ]] then
-    --                 return
-    --             end
-    --
-    --             st.highlight_token(tk, cb.buf, cb.data.client_id, 'Error')
-    --         end,
-    --     })
-    -- end
 
     if caps.documentSymbolProvider then
-        navic.attach(client, bufnr)
+        require('nvim-navic').attach(client, bufnr)
     end
 
     local function buf_map(mode, lhs, rhs, desc)
@@ -54,9 +31,6 @@ return function(client, bufnr)
     buf_opt('omnifunc', 'v:lua.vim.lsp.omnifunc')
     buf_opt('tagfunc', 'v:lua.vim.lsp.tagfunc')
 
-    -- Mappings.
-
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
     buf_map('n', 'gD', vim.lsp.buf.declaration, 'Goto declaration')
     buf_map('n', 'gd', vim.lsp.buf.definition, 'Goto definition')
     buf_map('n', 'K', vim.lsp.buf.hover, 'Open docs ("Hover" functionality)')

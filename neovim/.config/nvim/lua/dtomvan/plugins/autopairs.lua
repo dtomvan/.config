@@ -13,7 +13,7 @@ end
 
 return {
     'windwp/nvim-autopairs',
-    event = 'BufReadPost',
+    event = 'InsertEnter',
     opts = {
         disable_in_macro = true,
         disable_in_visualblock = true,

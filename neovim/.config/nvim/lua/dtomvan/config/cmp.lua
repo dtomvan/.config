@@ -11,7 +11,6 @@ local has_words_before = function()
         == nil
 end
 local cmp = require 'cmp'
-local ls = require 'luasnip'
 
 local sources = {
     { name = 'nvim_lsp' },
@@ -40,8 +39,8 @@ cmp.setup {
         ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
-            elseif ls.expand_or_jumpable() then
-                ls.expand_or_jump()
+            elseif require('luasnip').expand_or_jumpable() then
+                require('luasnip').expand_or_jump()
             elseif has_words_before() then
                 cmp.complete()
             else
@@ -51,8 +50,8 @@ cmp.setup {
         ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
-            elseif ls.jumpable(-1) then
-                ls.jump(-1)
+            elseif require('luasnip').jumpable(-1) then
+                require('luasnip').jump(-1)
             else
                 fallback()
             end
@@ -117,24 +116,27 @@ cmp.setup.filetype('query', {
 })
 
 -- nvim-autopairs setup
-local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
-local handlers = require 'nvim-autopairs.completion.handlers'
-
-cmp.event:on(
-    'confirm_done',
-    cmp_autopairs.on_confirm_done {
-        filetypes = {
-            ['*'] = {
-                ['('] = {
-                    kind = {
-                        cmp.lsp.CompletionItemKind.Function,
-                        cmp.lsp.CompletionItemKind.Method,
+local handler_confirm_done
+cmp.event:on('confirm_done', function(...)
+    if not handler_confirm_done then
+        handler_confirm_done =
+            require('nvim-autopairs.completion.cmp').on_confirm_done {
+                filetypes = {
+                    ['*'] = {
+                        ['('] = {
+                            kind = {
+                                cmp.lsp.CompletionItemKind.Function,
+                                cmp.lsp.CompletionItemKind.Method,
+                            },
+                            handler = require(
+                                'nvim-autopairs.completion.handlers'
+                            )['*'],
+                        },
                     },
-                    handler = handlers['*'],
                 },
-            },
-        },
-    }
-)
+            }
+    end
+    handler_confirm_done(...)
+end)
 
 return sources

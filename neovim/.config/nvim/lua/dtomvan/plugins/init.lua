@@ -1,18 +1,18 @@
 return {
     -- Plenary
     { 'nvim-lua/plenary.nvim', lazy = true },
-    { 'nvim-lua/popup.nvim',   lazy = true },
+    { 'nvim-lua/popup.nvim', lazy = true },
     {
         'anuvyklack/hydra.nvim',
         event = 'VeryLazy',
         config = function()
             for _, source in
-            ipairs(
-                vim.api.nvim_get_runtime_file(
-                    'lua/dtomvan/config/hydra/*.lua',
-                    true
+                ipairs(
+                    vim.api.nvim_get_runtime_file(
+                        'lua/dtomvan/config/hydra/*.lua',
+                        true
+                    )
                 )
-            )
             do
                 loadfile(source)()
             end
@@ -64,7 +64,7 @@ return {
     },
     'ThePrimeagen/refactoring.nvim',
     { 'ThePrimeagen/vim-be-good', cmd = 'VimBeGood' },
-    { 'ThePrimeagen/jvim.nvim',   ft = 'json' },
+    { 'ThePrimeagen/jvim.nvim', ft = 'json' },
 
     -- Git signs
     {
@@ -93,18 +93,22 @@ return {
     },
 
     -- Rust or Bust
-    { 'ron-rs/ron.vim',    ft = 'ron' },
+    { 'ron-rs/ron.vim', ft = 'ron' },
     'simrat39/rust-tools.nvim',
 
     -- Lsp
     {
         'williamboman/mason.nvim',
         lazy = true,
+        event = 'BufReadPost',
         dependencies = {
             'neovim/nvim-lspconfig',
             'nvim-lua/lsp_extensions.nvim',
         },
-        config = true,
+        config = function()
+            require('mason').setup()
+            require 'dtomvan.lsp'
+        end,
         build = function()
             require('mason.api.command').MasonInstall {
                 'black',
@@ -141,12 +145,12 @@ return {
             }
             require('mason-null-ls').setup_handlers()
             for _, source in
-            ipairs(
-                vim.api.nvim_get_runtime_file(
-                    'lua/dtomvan/config/null-ls/*.lua',
-                    true
+                ipairs(
+                    vim.api.nvim_get_runtime_file(
+                        'lua/dtomvan/config/null-ls/*.lua',
+                        true
+                    )
                 )
-            )
             do
                 loadfile(source)()
             end
