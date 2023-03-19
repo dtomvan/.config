@@ -41,7 +41,7 @@ export QT_QPA_PLATFORMTHEME=qt6ct
 export MOZ_ENABLE_WAYLAND=0
 export GDK_BACKEND=x11
 xsetroot -cursor_name left_ptr
-picom --experimental-backends --xrender-sync-fence --backend glx &
+picom &
 ~/i3lock.sh && xautolock -notify 10 -notifier 'notify-send "locking in 10 seconds..."' -locker "systemctl suspend" -nowlocker ./i3lock.sh &
 playerctld daemon &
 # echo "RUNNING VOLCTL" && sleep 1 && volctl &
