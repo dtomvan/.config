@@ -10,12 +10,8 @@ local function get_lua_runtime()
     return result
 end
 
-return {
-    'tjdevries/nlua.nvim',
-    ft = 'lua',
-    dependencies = 'L3MON4D3/LuaSnip',
-    config = function()
-        local runtime_path = vim.split(package.path, ';')
+local function config()
+            local runtime_path = vim.split(package.path, ';')
         table.insert(runtime_path, 'lua/?.lua')
         table.insert(runtime_path, 'lua/?/init.lua')
 
@@ -45,7 +41,6 @@ return {
 
         local opts = require 'dtomvan.lsp.opts'
         require('lspconfig').lua_ls.setup {
-            single_file_support = true,
             settings = {
                 Lua = {
                     format = {
@@ -54,10 +49,6 @@ return {
                             indent_style = 'space',
                             indent_size = '4',
                         },
-                    },
-                    runtime = {
-                        version = 'LuaJIT',
-                        path = runtime_path,
                     },
                     completion = {
                         keywordSnippet = 'Disable',
@@ -71,10 +62,6 @@ return {
                             'trailing-space',
                         },
                         globals = lua_globals,
-                        -- groupSeverity = {
-                        --     strong = "Warning",
-                        --     strict = "Warning",
-                        -- },
                         groupFileStatus = {
                             ['ambiguity'] = 'Opened',
                             ['await'] = 'Opened',
@@ -83,24 +70,11 @@ return {
                             ['global'] = 'Opened',
                             ['luadoc'] = 'Opened',
                             ['redefined'] = 'Opened',
-                            -- ["strict"] = "Opened",
-                            -- ["strong"] = "Opened",
                             ['type-check'] = 'Opened',
                             ['unbalanced'] = 'Opened',
                             ['unused'] = 'Opened',
                         },
                         unusedLocalExclude = { '_*' },
-                    },
-                    workspace = {
-                        library = get_lua_runtime(),
-                        maxPreload = 10000,
-                        preloadFileSize = 10000,
-                        checkThirdParty = false,
-                    },
-                    misc = {
-                        parameters = {
-                            '--log-level=trace',
-                        },
                     },
                 },
             },
@@ -109,5 +83,11 @@ return {
             capabilities = opts.capabilities,
             -- root_dir = require('lspconfig.util').find_git_ancestor,
         }
-    end,
+end
+
+return {
+    'tjdevries/nlua.nvim',
+    ft = 'lua',
+    dependencies = 'L3MON4D3/LuaSnip',
+    config = config,
 }

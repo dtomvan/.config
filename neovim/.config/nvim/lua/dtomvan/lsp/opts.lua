@@ -1,4 +1,4 @@
-local on_attach = require 'dtomvan.lsp.attach'
+local on_attach = require 'dtomvan.lsp.attach_handler'
 local lsp_status = require 'lsp-status'
 local ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not ok then

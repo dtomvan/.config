@@ -1,5 +1,5 @@
 ---@diagnostic disable-next-line: lowercase-global
-version = '0.20.1'
+version = '0.21.0'
 
 local home = os.getenv 'HOME'
 
@@ -106,3 +106,5 @@ require('xpm').setup {
 
 -- package.path = ';' .. os.getenv 'LUA_PATH' .. ';' .. package.path
 -- package.cpath = ';' .. os.getenv 'LUA_CPATH' .. ';' .. package.cpath
+
+require 'col_renderer_hotfix'

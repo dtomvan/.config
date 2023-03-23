@@ -71,7 +71,7 @@ require('noice').setup {
         },
     },
     popupmenu = {
-        enabled = false,
+        enabled = true,
     },
     lsp = {
         progress = {

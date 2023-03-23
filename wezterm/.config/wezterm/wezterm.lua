@@ -1,7 +1,5 @@
 local wezterm = require 'wezterm'
 
-local font = wezterm.font 'Iosevka Nerd Font'
-
 function scheme_for_appearance(appearance)
     if appearance:find 'Dark' then
         return 'Catppuccin Mocha'
@@ -16,8 +14,27 @@ end)
 
 return {
     color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
-    font = font,
-    font_size = 13,
+    font = wezterm.font_with_fallback {
+        {
+            stretch = 'Condensed',
+            weight = 'Regular',
+            family = 'Fira Code',
+            harfbuzz_features = {
+                'ccmp',
+                'clig',
+                'cv14',
+                'cv16',
+                'cv29',
+                'cv30',
+                'cv31',
+                'salt',
+                'ss03',
+                'ss04',
+            },
+        },
+        { family = 'Symbols Nerd Font Mono', scale = 0.9 },
+    },
+    font_size = 12,
     use_fancy_tab_bar = false,
     hide_tab_bar_if_only_one_tab = true,
     keys = {

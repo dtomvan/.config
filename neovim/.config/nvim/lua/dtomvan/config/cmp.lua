@@ -91,24 +91,6 @@ cmp.setup {
     },
 }
 
-cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-        { name = 'path' },
-    }, {
-        { name = 'cmdline' },
-    }),
-    formatting = {
-        format = function(entry, vim_item)
-            vim_item.kind = ({
-                cmdline = '[cmd]',
-                path = '[path]',
-            })[entry.source.name]
-            return vim_item
-        end,
-    },
-})
-
 cmp.setup.filetype('query', {
     sources = {
         { name = 'omni' },

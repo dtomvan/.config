@@ -6,16 +6,24 @@ local started = false
 
 -- Launches the Starter after Lazy.nvim loaded all plugins and we can show what
 -- our startuptime was
-local id = vim.api.nvim_create_augroup('LazyVimStats', { clear = true })
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'LazyVimStarted',
-    group = id,
-    callback = function()
-        started = true
-        starter.config.autoopen = true
-        starter.on_vimenter()
-    end,
-})
+local pre_cmd = not vim.tbl_isempty(
+    vim.tbl_filter(function(x)
+        return vim.startswith(x, '+')
+    end, vim.v.argv)
+)
+---@diagnostic disable-next-line: undefined-field
+if not _G.no_starter and not pre_cmd then
+    local id = vim.api.nvim_create_augroup('LazyVimStats', { clear = true })
+    vim.api.nvim_create_autocmd('User', {
+        pattern = 'LazyVimStarted',
+        group = id,
+        callback = function()
+            started = true
+            starter.config.autoopen = true
+            starter.on_vimenter()
+        end,
+    })
+end
 
 local get_startuptime = function()
     if not started then
@@ -188,8 +196,11 @@ end
 
 local function nothing_if_too_small(content)
     if vim.o.columns < 30 then
-        return { { { type = 'item', string = 'Window too small',
-            item = { name = '', action = 'enew', section = '' } } } }
+        return { { {
+            type = 'item',
+            string = 'Window too small',
+            item = { name = '', action = 'enew', section = '' }
+        } } }
     end
     return content
 end

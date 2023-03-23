@@ -19,8 +19,9 @@ return {
     },
     'tpope/vim-eunuch',
     {
-        'tpope/vim-unimpaired',
+        'tummetott/unimpaired.nvim',
         event = 'VeryLazy',
+        opts = {},
     },
     'tpope/vim-repeat',
     { 'tpope/vim-fugitive', cmd = 'G' },

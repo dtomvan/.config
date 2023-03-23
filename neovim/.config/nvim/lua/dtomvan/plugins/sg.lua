@@ -11,7 +11,7 @@ return {
         },
         opts = function()
             return {
-                on_attach = require 'dtomvan.lsp.attach',
+                on_attach = require 'dtomvan.lsp.attach_handler',
             }
         end,
     },

@@ -1,18 +1,18 @@
 return {
     -- Plenary
     { 'nvim-lua/plenary.nvim', lazy = true },
-    { 'nvim-lua/popup.nvim', lazy = true },
+    { 'nvim-lua/popup.nvim',   lazy = true },
     {
         'anuvyklack/hydra.nvim',
         event = 'VeryLazy',
         config = function()
             for _, source in
-                ipairs(
-                    vim.api.nvim_get_runtime_file(
-                        'lua/dtomvan/config/hydra/*.lua',
-                        true
-                    )
+            ipairs(
+                vim.api.nvim_get_runtime_file(
+                    'lua/dtomvan/config/hydra/*.lua',
+                    true
                 )
+            )
             do
                 loadfile(source)()
             end
@@ -64,7 +64,7 @@ return {
     },
     'ThePrimeagen/refactoring.nvim',
     { 'ThePrimeagen/vim-be-good', cmd = 'VimBeGood' },
-    { 'ThePrimeagen/jvim.nvim', ft = 'json' },
+    { 'ThePrimeagen/jvim.nvim',   ft = 'json' },
 
     -- Git signs
     {
@@ -93,68 +93,46 @@ return {
     },
 
     -- Rust or Bust
-    { 'ron-rs/ron.vim', ft = 'ron' },
+    { 'ron-rs/ron.vim',    ft = 'ron' },
     'simrat39/rust-tools.nvim',
 
     -- Lsp
     {
         'williamboman/mason.nvim',
-        lazy = true,
-        event = 'BufReadPost',
         dependencies = {
             'neovim/nvim-lspconfig',
             'nvim-lua/lsp_extensions.nvim',
+            'folke/neodev.nvim',
+            'folke/neoconf.nvim',
         },
         config = function()
+            require('neoconf').setup {}
+            require('neodev').setup {}
             require('mason').setup()
-            require 'dtomvan.lsp'
-        end,
-        build = function()
-            require('mason.api.command').MasonInstall {
-                'black',
-                'stylua',
-                'shellcheck',
-            }
+            local group =
+                vim.api.nvim_create_augroup('RequireUserLsp', { clear = true })
+            vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufReadPost' }, {
+                callback = function()
+                    require 'dtomvan.lsp'
+                end,
+                once = true,
+                group = group,
+            })
         end,
     },
 
     {
         'williamboman/mason-lspconfig.nvim',
         lazy = true,
-        opts = {
-            ensure_installed = {
-                'clangd',
-                'gopls',
-                'kotlin_language_server',
-                'pylsp',
-                'rust_analyzer',
-                'lua_ls',
-            },
-        },
+        opts = {},
     },
 
     {
         'jay-babu/mason-null-ls.nvim',
         lazy = true,
-        config = function()
-            require('mason-null-ls').setup {
-                automatic_setup = true,
-            }
-            require('null-ls').setup {
-                on_attach = require('dtomvan.lsp.opts').on_attach,
-            }
-            require('mason-null-ls').setup_handlers()
-            for _, source in
-                ipairs(
-                    vim.api.nvim_get_runtime_file(
-                        'lua/dtomvan/config/null-ls/*.lua',
-                        true
-                    )
-                )
-            do
-                loadfile(source)()
-            end
-        end,
+        opts = {
+            automatic_setup = true,
+        },
     },
     -- Snippets
     {
@@ -164,7 +142,15 @@ return {
             'rafamadriz/friendly-snippets',
         },
         config = function()
-            require 'dtomvan.config.luasnip'
+            local group =
+                vim.api.nvim_create_augroup('LuaSnipConf', { clear = true })
+            vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufReadPost' }, {
+                group = group,
+                once = true,
+                callback = function()
+                    require 'dtomvan.config.luasnip'
+                end,
+            })
         end,
     },
 

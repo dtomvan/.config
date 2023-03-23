@@ -30,4 +30,7 @@ require('lazy').setup('dtomvan.plugins', {
             'zipPlugin',
         },
     },
+    change_detection = {
+        notify = false,
+    },
 })

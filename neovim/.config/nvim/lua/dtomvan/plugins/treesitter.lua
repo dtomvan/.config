@@ -1,7 +1,10 @@
 return {
     'nvim-treesitter/nvim-treesitter',
     lazy = true,
-    event = 'BufReadPre',
+    event = {
+        'BufReadPre',
+        'BufNewFile',
+    },
     cmd = {
         'TSBufDisable',
         'TSBufEnable',
