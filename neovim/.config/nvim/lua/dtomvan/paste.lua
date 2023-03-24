@@ -23,24 +23,24 @@ M.add_paste_handler = function(name, desc, fn)
     vim.paste = (function(overridden)
         return function(lines, phase)
             if not M.handlers[name].enabled then
-                overridden(lines, phase)
-                return
+                return overridden(lines, phase)
             end
-            local ok, err = pcall(fn, lines, phase, function(...)
-                overridden(...)
+            local ok, result = pcall(fn, lines, phase, function(...)
+                return overridden(...)
             end)
             if not ok then
                 vim.notify(
                     ('Failed to run paste handler `%s`: %s. Disabling...'):format(
                         name,
-                        err
+                        result
                     ),
                     vim.log.levels.ERROR,
                     { title = 'nvim_paste()' }
                 )
                 M.disable_paste_handler(name)
-                overridden(lines, phase)
+                return overridden(lines, phase)
             end
+            return result
         end
     end)(vim.paste)
 end
@@ -98,6 +98,47 @@ for _, action in ipairs { 'disable', 'enable', 'toggle' } do
         complete = 'customlist,v:lua.paste_handler_comp',
     })
 end
+
+vim.api.nvim_create_user_command('PasteHandlers', function(o)
+    local handlers = M.handlers
+    if #o.args == 1 then
+        handlers = vim.tbl_filter(function(x)
+            vim.startswith(x, o.args[1])
+        end, handlers)
+    end
+    local res = {}
+    for i, h in pairs(handlers) do
+        table.insert(res, { '`' })
+        table.insert(res, {
+            tostring(i),
+            'Function'
+        })
+        table.insert(res, { '`: ' })
+        table.insert(res, { h.desc, 'Italic' })
+        table.insert(
+            res,
+            h.enabled and { ' (enabled)', 'String' }
+            or { ' (disabled)', 'Comment' }
+        )
+        table.insert(res, { '\n', 'Normal' })
+    end
+    vim.api.nvim_echo(res, true, {})
+end, {
+    desc = 'Lists all paste handlers (starting with given argument)',
+    nargs = '?',
+    complete = 'customlist,v:lua.paste_handler_comp',
+})
+
+M.add_paste_handler(
+    'scrub_ansi_colors',
+    'Remove ANSI escape color codes',
+    function(lines, phase, cb)
+        for i, line in ipairs(lines) do
+            lines[i] = line:gsub('\27%[[0-9;mK]+', '')
+        end
+        cb(lines, phase)
+    end
+)
 
 M.add_paste_handler(
     'markdown_links',

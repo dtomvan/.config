@@ -6,7 +6,6 @@ vim.g.firenvim_config = {
     localSettings = { ['.*'] = { takeover = 'never' } },
 }
 
-package.loaded['dtomvan.globals'] = nil
 require 'dtomvan.globals'
 require 'dtomvan.filetypes'
 require 'dtomvan.au'

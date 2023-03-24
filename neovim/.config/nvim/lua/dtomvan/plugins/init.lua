@@ -93,47 +93,8 @@ return {
     },
 
     -- Rust or Bust
-    { 'ron-rs/ron.vim',    ft = 'ron' },
-    'simrat39/rust-tools.nvim',
+    { 'simrat39/rust-tools.nvim', lazy = true },
 
-    -- Lsp
-    {
-        'williamboman/mason.nvim',
-        dependencies = {
-            'neovim/nvim-lspconfig',
-            'nvim-lua/lsp_extensions.nvim',
-            'folke/neodev.nvim',
-            'folke/neoconf.nvim',
-        },
-        config = function()
-            require('neoconf').setup {}
-            require('neodev').setup {}
-            require('mason').setup()
-            local group =
-                vim.api.nvim_create_augroup('RequireUserLsp', { clear = true })
-            vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufReadPost' }, {
-                callback = function()
-                    require 'dtomvan.lsp'
-                end,
-                once = true,
-                group = group,
-            })
-        end,
-    },
-
-    {
-        'williamboman/mason-lspconfig.nvim',
-        lazy = true,
-        opts = {},
-    },
-
-    {
-        'jay-babu/mason-null-ls.nvim',
-        lazy = true,
-        opts = {
-            automatic_setup = true,
-        },
-    },
     -- Snippets
     {
         'L3MON4D3/LuaSnip',
@@ -147,18 +108,11 @@ return {
             vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufReadPost' }, {
                 group = group,
                 once = true,
-                callback = function()
-                    require 'dtomvan.config.luasnip'
-                end,
+                callback = CONF.luasnip,
             })
         end,
     },
 
-    -- Kotlin
-    { 'udalov/kotlin-vim', ft = 'kotlin' },
-
-    -- Misc
-    'michaeljsmith/vim-indent-object',
     {
         'lukas-reineke/indent-blankline.nvim',
         opts = {
@@ -182,10 +136,6 @@ return {
                 remap = true,
             },
         },
-    },
-    {
-        'andymass/vim-matchup',
-        event = 'BufReadPost',
     },
     {
         'kevinhwang91/nvim-bqf',
@@ -242,11 +192,11 @@ return {
     {
         'gaoDean/autolist.nvim',
         config = true,
-        event = {
-            'FileType text',
-            'FileType markdown',
-            'FileType tex',
-            'FileType plaintex',
+        ft = {
+            'text',
+            'markdown',
+            'tex',
+            'plaintex',
         },
     },
 
@@ -263,9 +213,7 @@ return {
     -- LaTeX
     {
         'lervag/vimtex',
-        cond = function()
-            return (not vim.g._no_vimtex) and not vim.g.started_by_firenvim
-        end,
+        cond = not vim.g._no_vimtex and not vim.g.started_by_firenvim,
         ft = 'tex',
         config = function()
             vim.g.tex_conceal = 'abdmg'

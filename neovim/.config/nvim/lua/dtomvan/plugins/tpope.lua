@@ -17,13 +17,19 @@ return {
             { '<c-g>S', mode = 'i' },
         },
     },
-    'tpope/vim-eunuch',
+    {
+        'tpope/vim-eunuch',
+        event = 'VeryLazy',
+    },
+    {
+        'tpope/vim-repeat',
+        event = 'VeryLazy',
+    },
     {
         'tummetott/unimpaired.nvim',
         event = 'VeryLazy',
         opts = {},
     },
-    'tpope/vim-repeat',
     { 'tpope/vim-fugitive', cmd = 'G' },
     {
         'tpope/vim-sleuth',

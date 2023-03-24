@@ -1,23 +1,25 @@
-P = function(v)
+local M = {}
+
+M.P = function(v)
     print(vim.inspect(v))
     return v
 end
 
-local ok, reload = pcall(require, 'plenary.reload')
-RELOAD = function(...)
+M.RELOAD = function(...)
+    local ok, reload = pcall(require, 'plenary.reload')
     if ok then
-        return require('plenary.reload').reload_module(...)
+        return reload.reload_module(...)
     else
-        return
+        error('Plenary not available')
     end
 end
 
-R = function(name)
-    RELOAD(name)
+M.R = function(name)
+    M.RELOAD(name)
     return require(name)
 end
 
-EX = setmetatable({}, {
+M.EX = setmetatable({}, {
     __index = function(t, k)
         local command = k:gsub('_$', '!')
         ---@type function
@@ -37,10 +39,17 @@ EX = setmetatable({}, {
     end,
 })
 
+M.CONF = setmetatable({}, {
+    __index = function(_, k)
+        return function()
+            require('dtomvan.config.' .. k)
+        end
+    end
+})
+
+for k, v in pairs(M) do
+    _G[k] = v
+end
+
 -- Access the globals through a module as well
-local M = {}
-M.R = R
-M.RELOAD = RELOAD
-M.P = P
-M.EX = EX
 return M

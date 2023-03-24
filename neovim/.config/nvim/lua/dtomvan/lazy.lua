@@ -12,6 +12,9 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require('lazy').setup('dtomvan.plugins', {
+    dev = {
+        fallback = true,
+    },
     install = {
         colorscheme = {
             'catppuccin-mocha',

@@ -8,8 +8,6 @@ return {
         'petertriho/cmp-git',
         'saadparwaiz1/cmp_luasnip',
     },
-    config = function()
-        require 'dtomvan.config.cmp'
-    end,
-    event = { 'InsertEnter', 'CmdlineEnter' },
+    config = CONF.cmp,
+    event = 'InsertEnter',
 }

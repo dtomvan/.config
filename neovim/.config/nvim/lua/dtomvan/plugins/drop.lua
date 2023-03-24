@@ -84,12 +84,12 @@ return {
             require('drop').setup {
                 theme = theme,
                 screensaver = false,
-                max = vim.o.columns / 4,
+                max = vim.o.columns / 6,
             }
         end
 
         -- Blend in so cursorline won't get blocked by the drops, getting rid of
-        -- any artifacts
+        -- some artifacts
         local t = require('drop.config').get_theme()
         for i, color in ipairs(t.colors) do
             local hl_group = 'Drop' .. i

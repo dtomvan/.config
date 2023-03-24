@@ -17,7 +17,7 @@ end
 ---@param lang string
 ---@param query string
 local function parse(is_ok, lang, query, ...)
-    local new_ok, parsed = pcall(vim.treesitter.parse_query, lang, query, ...)
+    local new_ok, parsed = pcall(vim.treesitter.query.parse, lang, query, ...)
     return is_ok and new_ok, parsed
 end
 
@@ -61,7 +61,7 @@ local function get_cur_query(bufnr, cursor)
         return
     end
     for id, node, _ in
-        query_q:iter_captures(tree:root(), bufnr, cursor.row, cursor.row)
+    query_q:iter_captures(tree:root(), bufnr, cursor.row, cursor.row)
     do
         if query_q.captures[id] == 'sql' then
             local row1, col1, row2, col2 = node:range()

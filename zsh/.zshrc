@@ -7,7 +7,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export BROWSER=waterfox-current
+export BROWSER=firefox
 export EDITOR=nvim
 export NPM_CONFIG_PREFIX=~/.npm-global
 export PATH=/opt/ce-toolchain/bin/:$NPM_CONFIG_PREFIX/bin:~/.local/bin/neovim/:~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin:~/go/bin:~/.yarn/bin

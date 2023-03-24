@@ -55,8 +55,9 @@ require('nvim-treesitter.configs').setup {
     ignore_install = {},
     highlight = {
         enable = true,
-        -- handle builtin parsers with vim.treesitter
-        disable = { 'vim', 'help', 'lua', 'c' },
+        disable = function(_, bufnr)
+            return vim.api.nvim_buf_line_count(bufnr) > 10000
+        end,
         additional_vim_regex_highlighting = false,
     },
     textobjects = {

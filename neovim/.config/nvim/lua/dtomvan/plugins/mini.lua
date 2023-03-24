@@ -18,15 +18,11 @@ return {
                 },
             },
         },
-        config = function()
-            require 'dtomvan.config.starter'
-        end,
+        config = CONF.starter,
     },
     {
         'echasnovski/mini.sessions',
-        config = function()
-            require 'dtomvan.config.sessions'
-        end,
+        config = CONF.sessions,
     },
     {
         'echasnovski/mini.bufremove',

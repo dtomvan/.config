@@ -67,7 +67,7 @@ local package_opts = function(pkgname, opts, abbr, fix)
 end
 
 local parse_ok, font_query = pcall(
-    vim.treesitter.parse_query,
+    vim.treesitter.query.parse,
     'latex',
     [[
 (package_include

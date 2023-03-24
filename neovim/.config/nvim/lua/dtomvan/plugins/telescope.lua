@@ -1,5 +1,4 @@
 return {
-    -- TJ telescope Johnson
     {
         'nvim-telescope/telescope.nvim',
         keys = {
@@ -21,11 +20,13 @@ return {
             '<leader>T',
         },
         cmd = 'Telescope',
-        config = function()
-            require 'dtomvan.config.telescope'
-        end,
+        config = CONF.telescope,
     },
-    'nvim-telescope/telescope-fzy-native.nvim',
+    'nvim-telescope/telescope-symbols.nvim',
+    {
+        'nvim-telescope/telescope-fzy-native.nvim',
+        lazy = true,
+    },
     {
         'nvim-telescope/telescope-file-browser.nvim',
         lazy = true,
@@ -38,4 +39,4 @@ return {
             },
         },
     },
-}
+ }
