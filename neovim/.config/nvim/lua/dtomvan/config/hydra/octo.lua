@@ -1,9 +1,5 @@
-local hydra = require 'hydra'
-local key = require 'hydra.keymap-util'
-
-local function o(map, cmd)
-    return { map, ':' .. cmd .. ' ', { exit = true, desc = cmd } }
-end
+local hydra = require 'dtomvan.config.hydra'
+local o = hydra.o
 
 local hint = [[
 ^ ^ Search:
@@ -39,7 +35,7 @@ local hint = [[
 ^ ^ _<enter>_: Neogit    _<space>_: Octo...     _<esc>_ _q_ ^ ^
 ]]
 
-hydra {
+return {
     name = 'Octo',
     hint = hint,
     config = {
@@ -118,7 +114,7 @@ hydra {
 
         o('/<space>', 'Octo search'),
         o('<space>', 'Octo'),
-        { '<enter>', key.cmd 'Neogit', { exit = true, desc = 'Neogit' } },
+        { '<enter>', hydra.key_cmd 'Neogit', { exit = true, desc = 'Neogit' } },
         { '<esc>', nil, { exit = true, nowait = true, desc = 'exit' } },
         { 'q', nil, { exit = true, nowait = true, desc = 'exit' } },
     },

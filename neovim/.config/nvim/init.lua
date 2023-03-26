@@ -1,3 +1,7 @@
+if vim.loader then
+    pcall(vim.loader.enable)
+end
+
 ---@diagnostic disable: no-unknown
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0

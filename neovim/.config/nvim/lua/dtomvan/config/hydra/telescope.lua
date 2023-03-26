@@ -1,6 +1,5 @@
 -- https://github.com/anuvyklack/hydra.nvim/wiki/Telescope
-local hydra = require 'hydra'
-local cmd = require('hydra.keymap-util').cmd
+local cmd = require 'dtomvan.config.hydra'.key_cmd
 
 local hint = [[
                  _f_: files       _m_: marks
@@ -15,7 +14,7 @@ local hint = [[
                  _<Enter>_: Telescope           _<Esc>_
 ]]
 
-hydra {
+return {
     name = 'Telescope',
     hint = hint,
     config = {

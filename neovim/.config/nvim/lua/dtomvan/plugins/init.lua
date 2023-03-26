@@ -4,8 +4,9 @@ return {
     { 'nvim-lua/popup.nvim',   lazy = true },
     {
         'anuvyklack/hydra.nvim',
-        event = 'VeryLazy',
-        config = function()
+        lazy = true,
+        init = function()
+            local hydra = require 'dtomvan.config.hydra'
             for _, source in
             ipairs(
                 vim.api.nvim_get_runtime_file(
@@ -14,7 +15,15 @@ return {
                 )
             )
             do
-                loadfile(source)()
+                local ok, err = pcall(hydra.setup, loadfile(source)())
+                if not ok then
+                    vim.notify(
+                        ('Invalid hydra in file `%s`: %s'):format(
+                            vim.fn.fnamemodify(source, ':~:.'),
+                            err
+                        )
+                    )
+                end
             end
         end,
     },
@@ -115,6 +124,7 @@ return {
 
     {
         'lukas-reineke/indent-blankline.nvim',
+        event = 'FileType',
         opts = {
             show_current_context = true,
             show_current_context_start = true,
@@ -171,6 +181,7 @@ return {
     {
         'prichrd/netrw.nvim',
         config = true,
+        event = 'FileType netrw',
     },
 
     {

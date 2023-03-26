@@ -3,6 +3,8 @@ local group = function(name)
     return vim.api.nvim_create_augroup(name, { clear = true })
 end
 
+local formatter = require 'dtomvan.formatter'
+
 local bp = '*.bin'
 local bin = group 'Binary'
 
@@ -53,14 +55,17 @@ au('TermOpen', {
     end,
 })
 
--- au('BufWritePre', {
---     group = group 'Formatting',
---     callback = function()
---         if not vim.tbl_isempty(vim.lsp.buf_get_clients()) then
---             vim.lsp.buf.format { async = false }
---         end
---     end,
--- })
+au('BufWritePre', {
+    group = group 'Formatting',
+    callback = function(o)
+        if not vim.api.nvim_buf_get_option(o.buf, 'modified') then
+            return
+        end
+        if formatter.do_format_on_save(o.buf) then
+            formatter.format_buf(o.buf)
+        end
+    end,
+})
 
 au('BufWritePre', {
     group = group 'Regels.md',
@@ -164,7 +169,15 @@ au('FileType', {
     callback = function(ev)
         vim.schedule(function()
             vim.api.nvim_buf_set_lines(ev.buf, 0, 0, false, { '# jq script' })
-            vim.api.nvim_buf_set_lines(ev.buf, -1, -1, false, { '# vim:ft=jq' })
+            vim.api.nvim_buf_set_lines(
+                ev.buf,
+                -1,
+                -1,
+                false,
+                -- Hehe, otherwise vim actually reads the modeline
+                -- it sets `filetype` to `jq`
+                { '\x23\x20\x76\x69\x6d\x3a\x66\x74\x3d\x6a\x71' }
+            )
         end)
     end,
 })

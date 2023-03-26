@@ -26,7 +26,6 @@ return {
             'TSInstallSync',
             'TSModuleInfo',
             'TSNodeUnderCursor',
-            'TSPlaygroundToggle',
             'TSTextobjectGotoNextEnd',
             'TSTextobjectGotoNextStart',
             'TSTextobjectGotoPreviousEnd',
@@ -53,7 +52,9 @@ return {
     },
     {
         'nvim-treesitter/playground',
-        lazy = true,
+        cmd = {
+            'TSPlaygroundToggle',
+        },
     },
     {
         'nvim-treesitter/nvim-treesitter-refactor',
@@ -66,6 +67,5 @@ return {
     {
         'andymass/vim-matchup',
         event = { 'BufReadPost', 'BufNewFile' },
-        dev = true,
     },
 }

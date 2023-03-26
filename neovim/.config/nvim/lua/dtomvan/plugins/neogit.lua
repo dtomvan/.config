@@ -12,14 +12,8 @@ return {
         {
             '<leader>gh',
             function()
-                local xdg = os.getenv 'XDG_CONFIG_HOME'
-                    or string.format(
-                        '%s/.config/',
-                        os.getenv 'HOME'
-                            or string.format('/home/%s/', os.getenv 'USER')
-                    )
                 vim.cmd.vnew()
-                vim.cmd.vie(xdg .. '/nvim/help/neogit.md')
+                vim.cmd.vie(vim.fn.stdpath 'config' .. '/help/neogit.md')
                 vim.opt_local.buftype = 'nofile'
                 vim.opt_local.bufhidden = 'hide'
                 vim.opt_local.swapfile = false

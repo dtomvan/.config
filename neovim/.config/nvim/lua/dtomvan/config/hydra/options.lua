@@ -1,5 +1,3 @@
-local hydra = require 'hydra'
-
 local function flip(map, opt)
     return {
         map,
@@ -40,7 +38,7 @@ local hint = [[
        ^^^^                _<Esc>_
 ]]
 
-hydra {
+return {
     name = 'Options',
     hint = hint,
     config = {

@@ -1,16 +1,11 @@
 local url = require 'net.url'
+local utils = require 'dtomvan.utils'
 
 local M = {}
 M.handlers = {}
 
-_G.paste_handler_comp = function(lead)
-    local possible = {}
-    for i in pairs(M.handlers) do
-        if vim.startswith(i, lead) then
-            table.insert(possible, i)
-        end
-    end
-    return possible
+M.paste_handler_comp = function(lead)
+    return utils.filter_starts(M.handlers, lead)
 end
 
 -- WARNING: When added, paste handlers cannot be removed and can only be toggled
@@ -95,15 +90,15 @@ for _, action in ipairs { 'disable', 'enable', 'toggle' } do
     end, {
         desc = ("`%s`'s the given paste handler"):format(action),
         nargs = 1,
-        complete = 'customlist,v:lua.paste_handler_comp',
+        complete = M.paste_handler_comp,
     })
 end
 
 vim.api.nvim_create_user_command('PasteHandlers', function(o)
     local handlers = M.handlers
-    if #o.args == 1 then
+    if #o.fargs == 1 then
         handlers = vim.tbl_filter(function(x)
-            vim.startswith(x, o.args[1])
+            return vim.startswith(x, o.args)
         end, handlers)
     end
     local res = {}
@@ -111,14 +106,14 @@ vim.api.nvim_create_user_command('PasteHandlers', function(o)
         table.insert(res, { '`' })
         table.insert(res, {
             tostring(i),
-            'Function'
+            'Function',
         })
         table.insert(res, { '`: ' })
         table.insert(res, { h.desc, 'Italic' })
         table.insert(
             res,
             h.enabled and { ' (enabled)', 'String' }
-            or { ' (disabled)', 'Comment' }
+                or { ' (disabled)', 'Comment' }
         )
         table.insert(res, { '\n', 'Normal' })
     end
@@ -126,7 +121,7 @@ vim.api.nvim_create_user_command('PasteHandlers', function(o)
 end, {
     desc = 'Lists all paste handlers (starting with given argument)',
     nargs = '?',
-    complete = 'customlist,v:lua.paste_handler_comp',
+    complete = M.paste_handler_comp,
 })
 
 M.add_paste_handler(

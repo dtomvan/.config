@@ -1,19 +1,22 @@
-local cmd = vim.api.nvim_create_user_command
-local system = vim.fn.system
+local utils = require 'dtomvan.utils.tables'
+local formatter = require 'dtomvan.formatter'
 local flags = require 'dtomvan.rg_flags'
 local noremap = require('dtomvan.keymaps').noremap
+
+local cmd = vim.api.nvim_create_user_command
+local system = vim.fn.system
 
 cmd('Rg', function(params)
     local overseer = require 'overseer'
 
     local args = vim.fn.expandcmd(params.args)
-    local cmd, num_subs = vim.o.grepprg:gsub('%$%*', args)
+    local command, num_subs = vim.o.grepprg:gsub('%$%*', args)
 
     if num_subs == 0 then
-        cmd = cmd .. ' ' .. args
+        command = command .. ' ' .. args
     end
     local task = overseer.new_task {
-        cmd = cmd,
+        cmd = command,
         name = 'grep ' .. args,
         components = {
             {
@@ -69,19 +72,13 @@ cmd('Scratch', function(_)
     end
     table.sort(scratch_files)
 
-    _G.scratch_comp = function(lead, _, _)
-        local possible = {}
-        for _, file in ipairs(scratch_files) do
-            if vim.startswith(file, lead) then
-                table.insert(possible, file)
-            end
-        end
-        return possible
-    end
-
     vim.ui.input({
         prompt = 'Scratch filename -> ',
-        completion = 'customlist,v:lua.scratch_comp',
+        completion = function(lead)
+            return vim.tbl_filter(function(x)
+                return vim.startswith(x, lead)
+            end, scratch_files)
+        end,
     }, function(a)
         if a then
             vim.cmd.edit(string.format('%s%s', scratch_dir, a))
@@ -229,3 +226,96 @@ cmd('AutopairsToggle', function()
         vim.notify 'Disabled autopairs'
     end
 end, { desc = 'Toggle auto pairs' })
+
+local function clients_comp(lead)
+    return utils.get_filter_startswith(
+        formatter.get_formatting_clients {
+            bufnr = vim.api.nvim_get_current_buf(),
+        },
+        'name',
+        lead
+    )
+end
+
+cmd('Formatter', function(o)
+    local cl, multiple = formatter.buf_get_server(
+        tonumber(o.args) or vim.api.nvim_get_current_buf()
+    )
+    if not cl then
+        return vim.notify 'no formatter for this buffer'
+    end
+    if multiple then
+        vim.notify(vim.inspect(utils.map_get(cl, 'name')))
+    else
+        vim.notify(cl.name)
+    end
+end, { desc = 'Get current formatter for buffer', nargs = '?' })
+
+cmd('SetFormatter', function(o)
+    local bufnr = vim.api.nvim_get_current_buf()
+    local name = o.args
+    local clients =
+        formatter.get_formatting_clients { bufnr = bufnr, name = name }
+    if not vim.tbl_isempty(clients) or o.bang then
+        formatter.set_server(bufnr, name)
+    else
+        vim.notify('No such client attached: ' .. name, vim.log.levels.ERROR)
+    end
+end, {
+    desc = 'Set formatter for current buffer',
+    nargs = 1,
+    bang = true,
+    complete = clients_comp,
+})
+
+cmd('SaveFormatter', function(o)
+    local bufnr = vim.api.nvim_get_current_buf()
+    local ok, err = pcall(formatter.save_ft_server, bufnr, o.fargs[1], true)
+    if not ok then
+        vim.notify(
+            ("Couldn't save formatter: %s"):format(err),
+            vim.log.levels.ERROR
+        )
+    end
+end, {
+    desc = 'Save formatter for current filetype to config file',
+    nargs = 1,
+    complete = clients_comp,
+})
+
+cmd('ReloadFormatters', function()
+    local ok, err = pcall(formatter.load_ft_servers)
+    if not ok then
+        vim.notify(
+            ("Couldn't load formatters: %s"):format(err),
+            vim.log.levels.ERROR
+        )
+    end
+end, { desc = 'Reload formatters from config file' })
+
+for _, action in ipairs { 'disable', 'enable', 'toggle' } do
+    local name = action:gsub('^%l', string.upper) .. 'FormatOnSave'
+    cmd(name, function(o)
+        local bufnr = tonumber(o.args) or vim.api.nvim_get_current_buf()
+        local ok, err = pcall(
+            formatter[action .. '_fmt_on_save'],
+            o.bang and 'global' or bufnr
+        )
+        if ok then
+            local bufname = vim.api.nvim_buf_get_name(bufnr)
+            vim.notify(
+                ("`%s`'d format-on-save for `%s`. It is now %s."):format(
+                    action,
+                    o.bang and 'global' or bufname,
+                    err
+                )
+            )
+        else
+            vim.notify(err)
+        end
+    end, {
+        desc = ("`%s`'s format-on-save for buffer."):format(action),
+        bang = true,
+        nargs = '?',
+    })
+end

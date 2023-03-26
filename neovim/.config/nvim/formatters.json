@@ -1,0 +1,6 @@
+{
+    "lua": "null-ls",
+    "json": "null-ls",
+    "rust": "rust_analyzer",
+    "python": "null-ls"
+}

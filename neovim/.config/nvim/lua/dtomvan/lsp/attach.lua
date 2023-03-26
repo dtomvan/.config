@@ -19,7 +19,7 @@ return function(client, bufnr)
             mode,
             lhs,
             rhs,
-            { silent = true, buffer = bufnr, noremap = true, desc = desc }
+            { buffer = bufnr, noremap = true, desc = desc }
         )
     end
 
@@ -84,7 +84,10 @@ return function(client, bufnr)
     )
     buf_map('n', '[d', vim.diagnostic.goto_prev, 'Go to previous diagnostic')
     buf_map('n', ']d', vim.diagnostic.goto_next, 'Go to next diagnostic')
-    buf_map('n', '<C-f>', function()
-        vim.lsp.buf.format { async = true }
-    end, 'Format buffer')
+    buf_map(
+        'n',
+        '<C-f>',
+        require('dtomvan.formatter').format_buf,
+        'Format buffer'
+    )
 end

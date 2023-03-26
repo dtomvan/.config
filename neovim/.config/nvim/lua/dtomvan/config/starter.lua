@@ -224,7 +224,7 @@ starter.setup {
         if cols > (logo_width + 10) then
             return table.concat(logo, '\n') .. '\n\n' .. header
         else
-            return logo
+            return header
         end
     end,
     footer = function()
@@ -249,3 +249,13 @@ starter.setup {
 
 vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'MiniStarterSection' })
 vim.keymap.set('n', '<leader>gms', MiniStarter.open)
+
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'MiniStarterOpened',
+    callback = function(o)
+        vim.api.nvim_create_autocmd('CursorMoved', {
+            callback = require 'drop'.hide,
+            buffer = o.buf,
+        })
+    end,
+})
