@@ -253,7 +253,7 @@ vim.keymap.set('n', '<leader>gms', MiniStarter.open)
 vim.api.nvim_create_autocmd('User', {
     pattern = 'MiniStarterOpened',
     callback = function(o)
-        vim.api.nvim_create_autocmd('CursorMoved', {
+        vim.api.nvim_create_autocmd({'CursorMoved', 'CmdlineEnter'}, {
             callback = require 'drop'.hide,
             buffer = o.buf,
         })

@@ -21,6 +21,7 @@ require('nvim-treesitter.configs').setup {
         'markdown_inline',
         'regex',
         'rust',
+        'vimdoc',
     },
     matchup = {
         enable = true,

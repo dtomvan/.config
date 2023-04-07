@@ -104,7 +104,7 @@ setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt EXTENDED_HISTORY
 
-[[ $(fgconsole 2>/dev/null) == 1 ]] && exec startx -- vt1 &> /dev/null || true
+# [[ $(fgconsole 2>/dev/null) == 1 ]] && exec startx -- vt1 &> /dev/null || true
 
 setopt autocd extendedglob notify globdots noflowcontrol
 unsetopt beep
@@ -202,7 +202,11 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-# Stuff from DT's fish shell vid https://www.youtube.com/watch?v=8GN9D-OnG-A
+alias :w="cowsay 'You are not in vim anymore.'"
+alias :q="cowsay 'You are not in vim anymore.'"
+alias :wq="cowsay 'You are not in vim anymore.'"
+alias :x="cowsay 'You are not in vim anymore.'"
+
 alias cd='pushd -q'
 
 DIR_STACK=()

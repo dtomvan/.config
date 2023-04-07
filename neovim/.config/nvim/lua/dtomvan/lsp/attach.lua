@@ -12,6 +12,7 @@ return function(client, bufnr)
 
     if caps.documentSymbolProvider then
         require('nvim-navic').attach(client, bufnr)
+        require('nvim-navbuddy').attach(client, bufnr)
     end
 
     local function buf_map(mode, lhs, rhs, desc)
@@ -90,4 +91,5 @@ return function(client, bufnr)
         require('dtomvan.formatter').format_buf,
         'Format buffer'
     )
+    buf_map('n', '<leader>ff', require('nvim-navbuddy').open, 'open navbuddy')
 end

@@ -101,4 +101,29 @@ for _, fn in ipairs { 'startswith', 'endswith', 'eq' } do
     end
 end
 
+function M.fold(tbl, init, predicate)
+    local accumulator = init
+    for _, i in ipairs(tbl) do
+        accumulator = predicate(accumulator, i)
+    end
+end
+
+function M.any(tbl, predicate)
+    for _, i in ipairs(tbl) do
+        if predicate(i) then
+            return true
+        end
+    end
+    return false
+end
+
+function M.all(tbl, predicate)
+    for _, i in ipairs(tbl) do
+        if not predicate(i) then
+            return false
+        end
+    end
+    return true
+end
+
 return M

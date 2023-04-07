@@ -33,6 +33,7 @@ hsetroot
 htop
 hwdetect
 hyperfine
+i3lock
 i3lock-color
 intel-ucode
 jq
@@ -40,6 +41,7 @@ lxappearance
 lxsession-gtk3
 maim
 man-pages
+mantablockscreen
 mcfly
 mold
 newsboat

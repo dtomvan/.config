@@ -1,19 +1,19 @@
 return {
     -- Plenary
     { 'nvim-lua/plenary.nvim', lazy = true },
-    { 'nvim-lua/popup.nvim',   lazy = true },
+    { 'nvim-lua/popup.nvim', lazy = true },
     {
         'anuvyklack/hydra.nvim',
         lazy = true,
         init = function()
             local hydra = require 'dtomvan.config.hydra'
             for _, source in
-            ipairs(
-                vim.api.nvim_get_runtime_file(
-                    'lua/dtomvan/config/hydra/*.lua',
-                    true
+                ipairs(
+                    vim.api.nvim_get_runtime_file(
+                        'lua/dtomvan/config/hydra/*.lua',
+                        true
+                    )
                 )
-            )
             do
                 local ok, err = pcall(hydra.setup, loadfile(source)())
                 if not ok then
@@ -73,7 +73,7 @@ return {
     },
     'ThePrimeagen/refactoring.nvim',
     { 'ThePrimeagen/vim-be-good', cmd = 'VimBeGood' },
-    { 'ThePrimeagen/jvim.nvim',   ft = 'json' },
+    { 'ThePrimeagen/jvim.nvim', ft = 'json' },
 
     -- Git signs
     {
@@ -305,5 +305,15 @@ return {
         config = function()
             require('insx.preset.standard').setup()
         end,
+    },
+
+    {
+        'SmiteshP/nvim-navbuddy',
+        lazy = true,
+        dependencies = {
+            'neovim/nvim-lspconfig',
+            'SmiteshP/nvim-navic',
+            'MunifTanjim/nui.nvim',
+        },
     },
 }

@@ -127,4 +127,16 @@ function M.yes_or_no(prompt, default, cb)
     )
 end
 
+function M.pred_and(p1, p2)
+    return function(input)
+        return p1(input) and p2(input)
+    end
+end
+
+function M.pred_or(p1, p2)
+    return function(input)
+        return p1(input) or p2(input)
+    end
+end
+
 return M

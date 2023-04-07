@@ -70,7 +70,9 @@ return {
     },
     {
         'levouh/tint.nvim',
-        cond = vim.fn.has 'nvim-0.8',
+        -- Let's disable this, since it may sometimes bug out and leave the
+        -- current window tinted.
+        cond = vim.fn.has 'nvim-0.8' and false,
         opts = {
             tint = -23,
             saturation = 0.6,
