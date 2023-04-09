@@ -10,7 +10,8 @@ local pickers = require 'dtomvan.config.telescope.pickers'
 
 telescope.setup {
     defaults = {
-        winblend = 10,
+        winblend = require('catppuccin').options.transparent_background and 0
+            or 10,
         mappings = {
             i = { ['<c-s-t>'] = trouble },
             n = { ['<c-s-t>'] = trouble },

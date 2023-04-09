@@ -1,16 +1,16 @@
+local function install(plug)
+    vim.g.started_by_firenvim = 1
+    plug.wait = true
+    require('lazy').load(plug)
+    vim.fn['firenvim#install'](0)
+end
+
 return {
     'glacambre/firenvim',
-    build = function()
-        vim.g.started_by_firenvim = 1
-        require('lazy').load 'firenvim'
-        vim.fn['firenvim#install'](0)
-    end,
-    init = function()
+    build = install,
+    init = function(plug)
         vim.api.nvim_create_user_command('FireNvim', function()
-            vim.g.started_by_firenvim = 1
-            -- WARN: require'lazy'.load(...) doesn't work
-            vim.cmd.Lazy 'load firenvim'
-            return vim.fn['firenvim#install'](0)
+            install(plug)
         end, { desc = 'Install FireNvim dependencies and extension' })
     end,
     config = function()

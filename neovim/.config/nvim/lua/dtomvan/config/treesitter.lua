@@ -56,7 +56,12 @@ require('nvim-treesitter.configs').setup {
     ignore_install = {},
     highlight = {
         enable = true,
-        disable = function(_, bufnr)
+        disable = function(lang, bufnr)
+            for _, i in ipairs { 'latex' } do
+                if i == lang then
+                    return true
+                end
+            end
             return vim.api.nvim_buf_line_count(bufnr) > 10000
         end,
         additional_vim_regex_highlighting = false,

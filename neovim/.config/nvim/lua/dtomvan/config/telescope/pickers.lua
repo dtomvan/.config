@@ -80,8 +80,6 @@ function M.diagnostics()
     builtin.diagnostics {
         ---@diagnostic disable-next-line: unused-local
         attach_mappings = function(_, map)
-            -- BUG: doesn't refresh
-            -- map('i', '<C-t>', trouble.open_with_trouble)
             return true
         end,
     }

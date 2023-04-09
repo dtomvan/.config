@@ -1,43 +1,36 @@
 #!/bin/bash
 
-pushd ~/.minecraft
-mkdir -p $HOME/.lunarclient/logs/
+die() {
+    echo "$@"
+    exit 1
+}
+
+pushd ~/.minecraft || die "no .minecraft"
+mkdir -p "$HOME"/.lunarclient/logs/ || die "no access to .lunarclient dir"
 
 DATE=$(date +%F)
-AMOUNT=$(ls ~/.lunarclient/logs/1.8*.log -1 | wc -l)
+AMOUNT=$(find ~/.lunarclient/logs/ -name '1.8*.log' | wc -l)
+
+LUNAR_HOME="$HOME/.lunarclient/solartweaks/"
+
+[ -d "$LUNAR_HOME" ] || die "Solar tweaks not installed!"
 
 java \
--javaagent:"$HOME/solar-patcher.jar=$HOME/config.example.json" \
--Xms3072m -Xmx3072m \
--Djava.library.path="$HOME/.lunarclient/offline/1.8/natives" \
--cp ~/lunar-util.jar \
-com.grappenmaker.solarpatcher.util.LunarLauncher \
-~/.lunarclient/offline/1.8/1.8-remapped.jar \
-1.8 \
---version 1.8 \
---accessToken 0 \
---assetIndex 1.8 \
---userProperties {} \
---gameDir "$HOME/.minecraft" \
---texturesDir "$HOME/.lunarclient/textures" \
---assetsDir "$HOME/.minecraft/assets" \
---width 1904 \
---height 1033 2>&1 | tee ~/.lunarclient/logs/1.8-$DATE-$AMOUNT.log
+    -javaagent:"$LUNAR_HOME/solar-patcher.jar=$LUNAR_HOME/config.json" \
+    -Xms3072m -Xmx3072m \
+    -Djava.library.path="$HOME/.lunarclient/offline/1.8/natives" \
+    -cp ~/lunar-util.jar \
+    com.grappenmaker.solarpatcher.util.LunarLauncher \
+    ~/.lunarclient/offline/1.8/1.8-remapped.jar \
+    1.8 \
+    --version 1.8 \
+    --accessToken 0 \
+    --assetIndex 1.8 \
+    --userProperties {} \
+    --gameDir "$HOME/.minecraft" \
+    --texturesDir "$HOME/.lunarclient/textures" \
+    --assetsDir "$HOME/.minecraft/assets" \
+    --width 1904 \
+    --height 1033 2>&1 | tee ~/.lunarclient/logs/1.8-"$DATE"-"$AMOUNT".log || die 'couldnt launch'
 
-TOOK="$SECONDS"
-EPOCH='jan 1 1970'
-FILE=~/gamin.txt
-
-calc_date() {
-    a=( $(date -u -d "$*" +"%j days %H:%M:%S") )
-    a[0]=$((10#${a[0]}-1)); echo "${a[@]}"
-}
-
-minify_date() {
-    date -u -d "$EPOCH $* seconds" +%s
-}
-
-OLD_TIME_STAMP=$(minify_date $(cat "$FILE"))
-
-calc_date "$EPOCH + $TOOK seconds + $OLD_TIME_STAMP seconds" > $FILE
-popd
+popd || exit

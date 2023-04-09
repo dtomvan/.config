@@ -1,7 +1,7 @@
 -- local norexpr = require('dtomvan.keymaps').norexpr
 local noremap = require('dtomvan.keymaps').noremap
 vim.opt_local.cole = 1
-vim.opt_local.spell = true
+vim.opt_local.spell = false
 
 vim.keymap.set('i', '<c-f>', function()
     local name = vim.fn.getline '.'

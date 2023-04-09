@@ -260,19 +260,6 @@ map('n', '<c-s>', function()
     end
 end, M.expr 'Write and source')
 
--- local wk = require'which-key'
--- wk.register({
---     c = { name = 'Terminal' },
---     d = { name = 'Dot' },
---     f = { name = 'Find' },
---     g = { name = 'Goto', f = 'File' },
---     r = { name = 'Re...' },
---     t = { name = 'Transpose/Term' },
---     w = { name = 'LSP Workspace' },
--- }, { prefix = '<leader>' })
--- wk.register({}, { prefix = '\\' })
-
--- map('n', 'q:', '<nop>', M.silent "Don't trigger history, bug in noice.nvim")
 map('n', 'ZZ', '<cmd>update<cr>')
 
 return M

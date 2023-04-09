@@ -16,7 +16,6 @@ return {
         )) do
             loadfile(source)()
         end
-        require('mason-null-ls').setup_handlers {}
     end,
     cond = function()
         return not vim.g.started_by_firenvim

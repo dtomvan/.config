@@ -8,11 +8,11 @@ local function flip(map, opt)
     }
 end
 
-local function toggles(t)
+local function toggles(t, comp)
     local ret = {}
     for _, i in ipairs(t) do
         ret[i] = function()
-            if vim.o[i] == true then
+            if vim.o[i] == (comp or true) then
                 return '[x]'
             else
                 return '[ ]'
@@ -25,6 +25,7 @@ end
 local hint = [[
   ^ ^        Options
   ^
+  _C_ %{conceallevel} conceal
   _c_ %{cul} cursorline
   _i_ %{list} listchars
   _n_ %{nu} number
@@ -47,7 +48,11 @@ return {
         hint = {
             border = 'rounded',
             position = 'middle',
-            funcs = toggles { 'et', 'title' },
+            funcs = vim.tbl_extend(
+                'force',
+                toggles { 'et', 'title' },
+                toggles({ 'conceallevel' }, 2)
+            ),
         },
     },
     mode = { 'n', 'x' },
@@ -72,6 +77,17 @@ return {
         flip('c', 'cursorline'),
         flip('t', 'expandtab'),
         flip('T', 'title'),
+        {
+            'C',
+            function()
+                if vim.o.conceallevel ~= 2 then
+                    vim.o.conceallevel = 2
+                else
+                    vim.o.conceallevel = 0
+                end
+            end,
+            { desc = 'conceallevel' },
+        },
         { '<Esc>', nil, { exit = true } },
     },
 }

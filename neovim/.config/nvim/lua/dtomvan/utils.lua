@@ -22,9 +22,11 @@ end
 -- Does not nessecarily :copen
 -- After https://www.youtube.com/watch?v=tAVxxdFFYMU
 function M.quick_fix_rename()
-    -- NOTE: This way is kind of naive
     local old = vim.fn.expand '<cword>'
     vim.ui.input({ prompt = 'New Name > ', default = old }, function(new_name)
+        if #new_name <= 0 then
+            return
+        end
         local position_params = vim.lsp.util.make_position_params()
 
         position_params.newName = new_name
@@ -136,6 +138,17 @@ end
 function M.pred_or(p1, p2)
     return function(input)
         return p1(input) or p2(input)
+    end
+end
+
+function M.reset_options(opts, cb)
+    local old = {}
+    for _, i in ipairs(opts) do
+        old[i] = vim.o[i]
+    end
+    cb()
+    for _, i in ipairs(opts) do
+        vim.o[i] = old[i]
     end
 end
 
