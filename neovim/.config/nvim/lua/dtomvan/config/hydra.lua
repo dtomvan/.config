@@ -11,7 +11,7 @@ M.setup = function(config)
     ---@cast key string
     vim.keymap.set(mode, key, function()
         require 'hydra' (config):activate()
-    end)
+    end, { desc = config.name .. ' Hydra' })
 end
 
 -- Don't want to do more lazy-loading shenanigans for this eensy function

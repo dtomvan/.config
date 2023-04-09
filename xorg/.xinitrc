@@ -54,7 +54,7 @@ lxsession &
 eww daemon &
 sleep 10 && ~/bg.sh bg.gif &
 deadd-notification-center &
-sleep 10 && DISCOCSS_DISCORD_BIN=/usr/bin/discord discocss \
+sleep 10 && discord \
     --ignore-gpu-blocklist \
     --disable-features=UseOzonePlatform \
     --enable-features=VaapiVideoDecoder \

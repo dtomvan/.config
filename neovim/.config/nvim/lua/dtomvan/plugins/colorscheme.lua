@@ -64,6 +64,7 @@ return {
         },
         config = function(_, opts)
             require('catppuccin').setup(opts)
+            require 'catppuccin'.flavours.nightfly = 5
 
             vim.cmd.colorscheme 'catppuccin'
         end,

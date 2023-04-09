@@ -1,7 +1,7 @@
 return {
     -- Plenary
     { 'nvim-lua/plenary.nvim', lazy = true },
-    { 'nvim-lua/popup.nvim', lazy = true },
+    { 'nvim-lua/popup.nvim',   lazy = true },
     {
         'folke/which-key.nvim',
         config = function()
@@ -28,12 +28,12 @@ return {
         init = function()
             local hydra = require 'dtomvan.config.hydra'
             for _, source in
-                ipairs(
-                    vim.api.nvim_get_runtime_file(
-                        'lua/dtomvan/config/hydra/*.lua',
-                        true
-                    )
+            ipairs(
+                vim.api.nvim_get_runtime_file(
+                    'lua/dtomvan/config/hydra/*.lua',
+                    true
                 )
+            )
             do
                 local ok, err = pcall(hydra.setup, loadfile(source)())
                 if not ok then
@@ -94,7 +94,7 @@ return {
     },
     'ThePrimeagen/refactoring.nvim',
     { 'ThePrimeagen/vim-be-good', cmd = 'VimBeGood' },
-    { 'ThePrimeagen/jvim.nvim', ft = 'json' },
+    { 'ThePrimeagen/jvim.nvim',   ft = 'json' },
 
     -- Git signs
     {
@@ -223,7 +223,21 @@ return {
 
     {
         'gaoDean/autolist.nvim',
-        config = true,
+        priority = 1,
+        event = 'InsertEnter',
+        config = function()
+            local autolist = require("autolist")
+            autolist.setup()
+            autolist.create_mapping_hook("i", "<CR>", autolist.new)
+            autolist.create_mapping_hook("i", "<Tab>", autolist.indent)
+            autolist.create_mapping_hook("i", "<S-Tab>", autolist.indent, "<C-D>")
+            autolist.create_mapping_hook("n", "o", autolist.new)
+            autolist.create_mapping_hook("n", "O", autolist.new_before)
+            autolist.create_mapping_hook("n", ">>", autolist.indent)
+            autolist.create_mapping_hook("n", "<<", autolist.indent)
+            autolist.create_mapping_hook("n", "<C-r>", autolist.force_recalculate)
+            autolist.create_mapping_hook("n", "<leader>x", autolist.invert_entry, "")
+        end,
         ft = {
             'text',
             'markdown',
@@ -319,13 +333,6 @@ return {
         opts = {
             use_default_keymaps = false,
         },
-    },
-    {
-        'hrsh7th/nvim-insx',
-        event = 'VeryLazy',
-        config = function()
-            require('insx.preset.standard').setup()
-        end,
     },
 
     {

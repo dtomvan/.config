@@ -184,7 +184,7 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 fi
 
 autoload edit-command-line; zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
+bindkey -M vicmd '^v' edit-command-line
 
 function my-expand-alias() { zle _expand_alias }
 zle -N my-expand-alias
@@ -318,6 +318,13 @@ alt-s () {
 zle -N alt-s
 bindkey '^[s' alt-s
 bindkey '^[h' run-help
+
+run-tmux() {
+  BUFFER="tmux"
+  zle accept-line -w
+}
+zle -N run-tmux
+bindkey '^[t' run-tmux
 
 tex() {
   pushd ~/projects/tex/
@@ -515,8 +522,8 @@ plug "romkatv/powerlevel10k"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-plug "zsh-users/zsh-autosuggestions"
-plug "zsh-users/zsh-syntax-highlighting"
+plug "jeffreytse/zsh-vi-mode"
+plug "zdharma-continuum/fast-syntax-highlighting"
 
 [ -z "$ZPROF" ] || zprof
 
