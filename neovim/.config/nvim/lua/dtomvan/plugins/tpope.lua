@@ -25,11 +25,6 @@ return {
         'tpope/vim-repeat',
         event = 'VeryLazy',
     },
-    {
-        'tummetott/unimpaired.nvim',
-        event = 'VeryLazy',
-        opts = {},
-    },
     { 'tpope/vim-fugitive', cmd = 'G' },
     {
         'tpope/vim-sleuth',

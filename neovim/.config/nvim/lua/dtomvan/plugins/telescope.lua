@@ -20,7 +20,47 @@ return {
             '<leader>T',
         },
         cmd = 'Telescope',
-        config = CONF.telescope,
+        opts = function(_, opts)
+            local tr
+            local function trouble(...)
+                if not tr then
+                    tr = require('trouble.providers.telescope').open_with_trouble
+                end
+                return tr(...)
+            end
+            return vim.tbl_deep_extend("force", opts, {
+                defaults = {
+                    winblend = require('catppuccin').options.transparent_background and 0
+                        or 10,
+                    mappings = {
+                        i = { ['<c-s-t>'] = trouble },
+                        n = { ['<c-s-t>'] = trouble },
+                    },
+                    vimgrep_arguments = {
+                        'rg',
+                        '--color=never',
+                        '--no-heading',
+                        '--with-filename',
+                        '--line-number',
+                        '--column',
+                        '--multiline',
+                        '--vimgrep',
+                        '--pcre2',
+                        '--smart-case',
+                    },
+                },
+                extensions = {
+                    fzy_native = {
+                        override_generic_sorter = true,
+                        override_file_sorter = true,
+                    },
+                },
+            })
+        end,
+        config = function(_, opts)
+            require 'telescope'.setup(opts)
+            CONF.telescope()
+        end
     },
     'nvim-telescope/telescope-symbols.nvim',
     {
@@ -39,4 +79,4 @@ return {
             },
         },
     },
- }
+}

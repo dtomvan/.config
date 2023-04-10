@@ -1,1 +1,1 @@
-lua require 'catpuccin'.load 'nightfly'
+lua require 'catppuccin'.load 'nightfly'

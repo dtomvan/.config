@@ -208,6 +208,10 @@ alias :wq="cowsay 'You are not in vim anymore.'"
 alias :x="cowsay 'You are not in vim anymore.'"
 
 alias cd='pushd -q'
+cx () {
+    pushd -q $1
+    exa -lab --git --no-user || /bin/ls -la
+}
 
 DIR_STACK=()
 prevd () {
@@ -524,6 +528,7 @@ plug "romkatv/powerlevel10k"
 
 plug "jeffreytse/zsh-vi-mode"
 plug "zdharma-continuum/fast-syntax-highlighting"
+plug "zsh-users/zsh-autosuggestions"
 
 [ -z "$ZPROF" ] || zprof
 
@@ -535,3 +540,5 @@ alias la="ls -a"
 export PNPM_HOME="/home/tomvd/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
+
+source /home/tomvd/.config/broot/launcher/bash/br

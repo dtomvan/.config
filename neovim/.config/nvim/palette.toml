@@ -1,0 +1,8 @@
+[File]
+'Browse...' = ":Telescope file_browser"
+'Find...' = ":Telescope find_files"
+'Find git file' = ":Telescope git_files"
+'Browse tree' = ':Neotree float reveal'
+'Save' = ':w'
+'Save as' = ':lua require"dtomvan.config.telescope.pickers".save_as()'
+'Delete' = ":Delete"

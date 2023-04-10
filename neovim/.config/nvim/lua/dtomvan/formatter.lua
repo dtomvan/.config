@@ -65,11 +65,15 @@ M.do_format_on_save = function(bufnr)
 end
 
 M.get_formatting_clients = function(filter)
-    return tbl.multi_peek_filter_eq(
+    return vim.tbl_filter(function(cl)
+        -- TODO: Check wether the client is done loading, especially since there
+        -- is a FoS bug with lua_ls when it hasn't loaded yet: neovim/neovim#22254
+        return true
+    end, tbl.multi_peek_filter_eq(
         vim.lsp.get_active_clients(filter),
         { 'server_capabilities', 'documentFormattingProvider' },
         true
-    )
+    ))
 end
 
 M.set_bufnr_server = function(bufnr, name)
@@ -173,11 +177,16 @@ M.get_only_server = function(_, available)
     end
 end
 
----@param bufnr integer|nil
-M.format_buf = function(bufnr)
-    bufnr = bufnr or vim.api.nvim_get_current_buf()
+---@param b integer|nil
+M.format_buf = function(b)
+    local bufnr = b or vim.api.nvim_get_current_buf()
     local cl, multiple = M.buf_get_server(bufnr)
     if not cl then
+        if not b and not M.bufnr_server[bufnr] then
+            -- Assume interactive use when no bufnr is given
+            vim.notify('no available server for formatting')
+            M.bufnr_server[bufnr] = 'NONE'
+        end
         return
     end
 

@@ -3,39 +3,8 @@ local load = telescope.load_extension
 local builtin = require 'telescope.builtin'
 local ivy = require('telescope.themes').get_ivy {}
 
-local trouble = require('trouble.providers.telescope').open_with_trouble
-
 local noremap = require('dtomvan.keymaps').noremap
 local pickers = require 'dtomvan.config.telescope.pickers'
-
-telescope.setup {
-    defaults = {
-        winblend = require('catppuccin').options.transparent_background and 0
-            or 10,
-        mappings = {
-            i = { ['<c-s-t>'] = trouble },
-            n = { ['<c-s-t>'] = trouble },
-        },
-        vimgrep_arguments = {
-            'rg',
-            '--color=never',
-            '--no-heading',
-            '--with-filename',
-            '--line-number',
-            '--column',
-            '--multiline',
-            '--vimgrep',
-            '--pcre2',
-            '--smart-case',
-        },
-    },
-    extensions = {
-        fzy_native = {
-            override_generic_sorter = true,
-            override_file_sorter = true,
-        },
-    },
-}
 
 load 'fzy_native'
 load 'file_browser'
@@ -74,7 +43,9 @@ vim.keymap.set(
     noremap 'Search through (LSP) diagnostics'
 )
 
+
 -- Builtin pickers
+
 vim.keymap.set('n', '<leader>:', function()
     builtin.command_history(ivy)
 end, noremap 'Command history')

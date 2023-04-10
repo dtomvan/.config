@@ -57,14 +57,12 @@ return {
             navic = {
                 enabled = true,
             },
-            indent_blankline = {
-                enabled = true,
-                colored_indent_levels = false,
-            },
         },
         config = function(_, opts)
             require('catppuccin').setup(opts)
-            require 'catppuccin'.flavours.nightfly = 5
+            for i, flav in ipairs { 'nightfly' } do
+                require 'catppuccin'.flavours[flav] = i + 4
+            end
 
             vim.cmd.colorscheme 'catppuccin'
         end,

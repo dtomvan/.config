@@ -1,18 +1,36 @@
-local function flip(map, opt)
+local formatter = require 'dtomvan.formatter'
+
+local function flip(map, opt, t, f, tbl, src_func, dest_func)
     return {
         map,
         function()
-            vim.o[opt] = not vim.o[opt]
+            if type(src_func) ~= 'function' then
+                return flip(map, opt, t, f, tbl, function(key)
+                    return (tbl or vim.o)[key]
+                end)
+            end
+            if type(dest_func) ~= 'function' then
+                return flip(map, opt, t, f, tbl, src_func, function(res)
+                    (tbl or vim.o)[opt] = res
+                end)
+            end
+
+            local t1 = t or true
+            if src_func(opt) == t1 then
+                dest_func(f or false)
+            else
+                dest_func(t1)
+            end
         end,
         { desc = opt },
     }
 end
 
-local function toggles(t, comp)
+local function toggles(t, comp, tbl)
     local ret = {}
     for _, i in ipairs(t) do
         ret[i] = function()
-            if vim.o[i] == (comp or true) then
+            if (tbl or vim.o)[i] == (comp or true) then
                 return '[x]'
             else
                 return '[ ]'
@@ -27,6 +45,8 @@ local hint = [[
   ^
   _C_ %{conceallevel} conceal
   _c_ %{cul} cursorline
+  _f_ %{fos} format-on-save
+  _F_ %{global_on_save_enabled} global format-on-save
   _i_ %{list} listchars
   _n_ %{nu} number
   _r_ %{rnu} relative number
@@ -51,43 +71,36 @@ return {
             funcs = vim.tbl_extend(
                 'force',
                 toggles { 'et', 'title' },
-                toggles({ 'conceallevel' }, 2)
+                toggles({ 'conceallevel' }, 2),
+                {
+                    fos = function()
+                        if formatter.do_format_on_save(vim.api.nvim_get_current_buf()) then
+                            return '[X]'
+                        else
+                            return '[ ]'
+                        end
+                    end
+                },
+                toggles({ 'global_on_save_enabled' }, nil, formatter)
             ),
         },
     },
     mode = { 'n', 'x' },
     body = '<leader>o',
     heads = {
+        flip('C', 'conceallevel', 2, 0),
+        flip('c', 'cursorline'),
+        flip('f', nil, nil, nil, nil, function()
+        end, function() formatter.toggle_fmt_on_save(vim.api.nvim_get_current_buf()) end),
+        flip('F', 'global_on_save_enabled', nil, nil, formatter),
+        flip('i', 'list'),
         flip('n', 'number'),
         flip('r', 'relativenumber'),
-        {
-            'v',
-            function()
-                if vim.o.virtualedit == 'all' then
-                    vim.o.virtualedit = 'block'
-                else
-                    vim.o.virtualedit = 'all'
-                end
-            end,
-            { desc = 'virtualedit' },
-        },
-        flip('i', 'list'),
         flip('s', 'spell'),
-        flip('w', 'wrap'),
-        flip('c', 'cursorline'),
         flip('t', 'expandtab'),
         flip('T', 'title'),
-        {
-            'C',
-            function()
-                if vim.o.conceallevel ~= 2 then
-                    vim.o.conceallevel = 2
-                else
-                    vim.o.conceallevel = 0
-                end
-            end,
-            { desc = 'conceallevel' },
-        },
+        flip('v', 'virtualedit', 'all', 'block'),
+        flip('w', 'wrap'),
         { '<Esc>', nil, { exit = true } },
     },
 }
