@@ -38,7 +38,11 @@ local function bufline_generator(win, buf)
             table.insert(segs, '%#Normal#')
         end
     end
-    return table.concat(segs, '')
+    local s = table.concat(segs, '')
+    if #s > (vim.o.columns - 10) then
+        return ''
+    end
+    return s
 end
 
 local M = {

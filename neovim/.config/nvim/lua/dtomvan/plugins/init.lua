@@ -326,14 +326,4 @@ return {
             use_default_keymaps = false,
         },
     },
-
-    {
-        'SmiteshP/nvim-navbuddy',
-        lazy = true,
-        dependencies = {
-            'neovim/nvim-lspconfig',
-            'SmiteshP/nvim-navic',
-            'MunifTanjim/nui.nvim',
-        },
-    },
 }

@@ -35,7 +35,9 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
     unset f
 fi
 
-# /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --auto
+
 export AWT_TOOLKIT=MToolkit
 export QT_QPA_PLATFORMTHEME=qt6ct
 export MOZ_ENABLE_WAYLAND=0

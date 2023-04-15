@@ -262,4 +262,14 @@ end, M.expr 'Write and source')
 
 map('n', 'ZZ', '<cmd>update<cr>')
 
+map('n', '[<space>', function()
+    local row = vim.api.nvim_win_get_cursor(0)[1]
+    vim.api.nvim_buf_set_lines(0, row - 1, row - 1, false, { "" })
+end)
+
+map('n', ']<space>', function()
+    local mark = vim.api.nvim_win_get_cursor(0)
+    vim.api.nvim_buf_set_lines(0, mark[1], mark[1], false, { "" })
+end)
+
 return M
