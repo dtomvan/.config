@@ -21,6 +21,9 @@ cmd('Lazygit', function(params)
         },
         strategy = {
             'toggleterm',
+            on_create = function(term)
+                vim.wo[term.window].winblend = 30
+            end,
             direction = 'float',
             close_on_exit = true,
         },
