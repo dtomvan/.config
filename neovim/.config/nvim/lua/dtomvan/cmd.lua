@@ -6,6 +6,40 @@ local noremap = require('dtomvan.keymaps').noremap
 local cmd = vim.api.nvim_create_user_command
 local system = vim.fn.system
 
+cmd('Lazygit', function(params)
+    local overseer = require 'overseer'
+
+    local args = 'lazygit ' .. vim.fn.expandcmd(params.args)
+
+    local task = overseer.new_task {
+        cmd = args,
+        name = args,
+        components = {
+            { 'on_complete_notify',  statuses = { 'FAILURE' } },
+            { 'on_complete_dispose', timeout = 30 },
+            'default',
+        },
+        strategy = {
+            'toggleterm',
+            direction = 'float',
+            close_on_exit = true,
+        },
+    }
+    task:start()
+end, {
+    nargs = '*',
+    force = true,
+    desc = 'Open Lazygit with arguments.',
+    complete = function(lead)
+        return utils.filter_startswith({
+            'branch',
+            'log',
+            'stash',
+            'status',
+        }, lead)
+    end,
+})
+
 cmd('Rg', function(params)
     local overseer = require 'overseer'
 

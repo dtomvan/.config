@@ -133,14 +133,22 @@ return {
             'rafamadriz/friendly-snippets',
         },
         config = function()
+            -- DOUBLE EVENT CONDITION?
             local group =
                 vim.api.nvim_create_augroup('LuaSnipConf', { clear = true })
-            vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufReadPost' }, {
+            vim.api.nvim_create_autocmd({ 'InsertEnter' }, {
                 group = group,
                 once = true,
                 callback = CONF.luasnip,
             })
         end,
+    },
+
+    {
+        'akinsho/toggleterm.nvim',
+        lazy = true,
+        version = "*",
+        opts = {},
     },
 
     {
@@ -325,5 +333,11 @@ return {
         opts = {
             use_default_keymaps = false,
         },
+    },
+    {
+        'sQVe/bufignore.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        opts = {
+        }
     },
 }

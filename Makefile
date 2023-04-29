@@ -1,9 +1,10 @@
 dirs = backgrounds bat bins bspwm cursors deadd discord emacs git gtk i3lock       \
        inkscape minecraft mpd mpv ncmpcpp neovim picom polybar prismlauncher sxhkd \
        tmux visidata wezterm xmonad xonotic xorg xplr zathura zsh
+usrdirs = plymouth
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 
-all: pkgs rust $(dirs) install-st ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~/.local/bin/xwinwrap
+all: pkgs rust $(dirs) $(usrdirs) install-st ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~/.local/bin/xwinwrap
 	mkdir -p ~/projects/ ~/repos/
 	pip install sqlparse inkscape-figures
 	localectl set-x11-keymap us,gr "" "" compose:ralt
@@ -18,6 +19,9 @@ all: pkgs rust $(dirs) install-st ~/.cargo/bin/dmenu_drun /usr/local/bin/dmenu ~
 
 $(dirs):
 	stow $@
+
+$(usrdirs):
+	sudo stow -t /usr/ $@
 
 $(submodules):
 	git submodule update --init --recursive
@@ -39,4 +43,4 @@ rust:
 vdplus:
 	pip install -r ~/.visidata/vdplus/requirements.txt
 
-.PHONY: pkgs rust $(dirs) /usr/local/bin/dmenu ~/.cargo/bin/dmenu_drun vdplus
+.PHONY: pkgs rust $(dirs) $(usrdirs) /usr/local/bin/dmenu ~/.cargo/bin/dmenu_drun vdplus

@@ -57,6 +57,14 @@ eww daemon &
 sleep 10 && ~/bg.sh bg.gif &
 deadd-notification-center &
 sleep 10 && discord \
+    --ignore-gpu-blocklist \
+    --disable-features=UseOzonePlatform \
+    --enable-features=VaapiVideoDecoder \
+    --use-gl=desktop \
+    --enable-gpu-rasterization \
+    --enable-zero-copy \
+    --enable-features=VaapiIgnoreDriverChecks \
+    --disable-features=UseChromeOSDirectVideoDecoder \
     --start-minimized &
 XINIT=1 bash ~/.profile || true &
 ~/obs-sinks.sh &

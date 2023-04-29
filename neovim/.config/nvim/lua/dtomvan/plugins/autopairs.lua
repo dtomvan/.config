@@ -13,6 +13,8 @@ end
 
 return {
     'windwp/nvim-autopairs',
+    version = '7566a86f44bb',
+    pin = true,
     priority = 2,
     opts = {
         disable_in_macro = true,

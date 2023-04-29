@@ -1,3 +1,46 @@
+--- @class TableUtils
+--- @field filter_endswith function
+--- @field filter_eq function
+--- @field filter_startswith function
+--- @field get_filter_endswith fun(table:table,idx:any,what:any): table
+--- @field get_filter_eq fun(table:table,idx:any,what:any): table
+--- @field get_filter_startswith fun(table:table,idx:any,what:any): table
+--- @field iter_all function
+--- @field iter_any function
+--- @field iter_filter_endswith function
+--- @field iter_filter_eq function
+--- @field iter_filter_startswith function
+--- @field iter_fold function
+--- @field iter_get_filter_endswith fun(iter:Iter,idx:any,what:any): table
+--- @field iter_get_filter_eq fun(iter:Iter,idx:any,what:any): table
+--- @field iter_get_filter_startswith fun(iter:Iter,idx:any,what:any): table
+--- @field iter_map_filter_endswith function
+--- @field iter_map_filter_eq function
+--- @field iter_map_filter_startswith function
+--- @field iter_map_get function
+--- @field iter_multi_get_filter_endswith fun(iter:Iter,idx:any,what:any): table
+--- @field iter_multi_get_filter_eq fun(iter:Iter,idx:any,what:any): table
+--- @field iter_multi_get_filter_startswith fun(iter:Iter,idx:any,what:any): table
+--- @field iter_multi_get function
+--- @field iter_multi_map_get function
+--- @field iter_multi_peek_filter_endswith fun(iter:Iter,idx:any,what:any): table
+--- @field iter_multi_peek_filter_eq fun(iter:Iter,idx:any,what:any): table
+--- @field iter_multi_peek_filter_startswith fun(iter:Iter,idx:any,what:any): table
+--- @field iter_peek_filter_endswith fun(iter:Iter,idx:any,what:any): table
+--- @field iter_peek_filter_eq fun(iter:Iter,idx:any,what:any): table
+--- @field iter_peek_filter_startswith fun(iter:Iter,idx:any,what:any): table
+--- @field map_filter_endswith function
+--- @field map_filter_eq function
+--- @field map_filter_startswith function
+--- @field multi_get_filter_endswith fun(table:table,idx:any,what:any): table
+--- @field multi_get_filter_eq fun(table:table,idx:any,what:any): table
+--- @field multi_get_filter_startswith fun(table:table,idx:any,what:any): table
+--- @field multi_peek_filter_endswith fun(table:table,idx:any,what:any): table
+--- @field multi_peek_filter_eq fun(table:table,idx:any,what:any): table
+--- @field multi_peek_filter_startswith fun(table:table,idx:any,what:any): table
+--- @field peek_filter_endswith fun(table:table,idx:any,what:any): table
+--- @field peek_filter_eq fun(table:table,idx:any,what:any): table
+--- @field peek_filter_startswith fun(table:table,idx:any,what:any): table
 local M = {}
 
 ---@param tbl table
@@ -29,24 +72,6 @@ function M.multi_map_get(tbl, idx)
     end, tbl)
 end
 
--- filter_endswith
--- filter_eq
--- filter_startswith
--- get_filter_endswith
--- get_filter_eq
--- get_filter_startswith
--- map_filter_endswith
--- map_filter_eq
--- map_filter_startswith
--- multi_get_filter_endswith
--- multi_get_filter_eq
--- multi_get_filter_startswith
--- multi_peek_filter_endswith
--- multi_peek_filter_eq
--- multi_peek_filter_startswith
--- peek_filter_endswith
--- peek_filter_eq
--- peek_filter_startswith
 for _, fn in ipairs { 'startswith', 'endswith', 'eq' } do
     local use = vim[fn]
     if fn == 'eq' then
@@ -126,4 +151,13 @@ function M.all(tbl, predicate)
     return true
 end
 
-return M
+local iter_funcs = {}
+for k, v in pairs(M) do
+    iter_funcs['iter_' .. k] = function(iter, ...)
+        local item = v(iter:totable() or {}, ...)
+        return type(item) == 'table' and vim.iter(item) or item
+    end
+end
+
+---@return TableUtils
+return vim.tbl_extend('error', M, iter_funcs)

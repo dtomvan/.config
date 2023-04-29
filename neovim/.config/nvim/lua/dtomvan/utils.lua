@@ -152,4 +152,17 @@ function M.reset_options(opts, cb)
     end
 end
 
+M.is_something_shown = function()
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
+    if #lines > 1 or (#lines == 1 and lines[1]:len() > 0) then return true end
+    local listed_buffers = vim.tbl_filter(
+        function(buf_id) return vim.fn.buflisted(buf_id) == 1 end,
+        vim.api.nvim_list_bufs()
+    )
+    if #listed_buffers > 1 then return true end
+    if vim.fn.argc() > 0 then return true end
+
+    return false
+end
+
 return M

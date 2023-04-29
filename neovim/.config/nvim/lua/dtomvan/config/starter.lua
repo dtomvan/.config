@@ -1,3 +1,4 @@
+local utils = require 'dtomvan.utils'
 local starter = require 'mini.starter'
 local logo = require 'dtomvan.ascii_art'.logo
 local logo_width = #logo[1]
@@ -18,9 +19,9 @@ if not _G.no_starter and not pre_cmd then
         pattern = 'LazyVimStarted',
         group = id,
         callback = function()
+            if utils.is_something_shown() then return end
             started = true
-            starter.config.autoopen = true
-            starter.on_vimenter()
+            starter.open()
         end,
     })
 end
@@ -245,6 +246,7 @@ starter.setup {
         adding_bullet(false),
         starter.gen_hook.aligning('center', 'center'),
     },
+    silent = true,
 }
 
 vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'MiniStarterSection' })
@@ -253,7 +255,7 @@ vim.keymap.set('n', '<leader>gms', MiniStarter.open)
 vim.api.nvim_create_autocmd('User', {
     pattern = 'MiniStarterOpened',
     callback = function(o)
-        vim.api.nvim_create_autocmd({'CursorMoved', 'CmdlineEnter'}, {
+        vim.api.nvim_create_autocmd({ 'CursorMoved', 'CmdlineEnter' }, {
             callback = require 'drop'.hide,
             buffer = o.buf,
         })
