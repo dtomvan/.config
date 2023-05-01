@@ -17,6 +17,7 @@ require('nvim-treesitter.configs').setup {
     ensure_installed = {
         'bash',
         'kotlin',
+        'lua',
         'markdown',
         'markdown_inline',
         'regex',
@@ -77,6 +78,8 @@ require('nvim-treesitter.configs').setup {
                 ['aP'] = '@parameter.outer',
                 ['iP'] = '@parameter.inner',
                 ['if'] = '@function.inner',
+                ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+                ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
             },
             selection_modes = {
                 ['@function.outer'] = 'V', -- linewise
@@ -107,6 +110,8 @@ require('treesitter-context').setup {
     mode = 'topline',
     separator = nil,
 }
+
+require 'nvim-treesitter-sort'.init()
 
 -- local setft = require('nvim-treesitter.parsers').filetype_to_parsername
 --

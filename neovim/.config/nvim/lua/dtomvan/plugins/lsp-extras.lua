@@ -1,5 +1,11 @@
 return {
     {
+        'tjdevries/nlua.nvim',
+        ft = 'lua',
+        dependencies = 'L3MON4D3/LuaSnip',
+        config = CONF.lua_ls,
+    },
+    {
         'SmiteshP/nvim-navbuddy',
         event = 'LspAttach',
         dependencies = {

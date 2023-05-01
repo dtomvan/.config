@@ -175,10 +175,6 @@ vim.keymap.set(
     noremap 'Open ftplugin for current :set filetype'
 )
 
-cmd('Temple', function()
-    vim.cmd [[colorscheme templeos]]
-end, { desc = 'Reboot into TempleOS', force = true })
-
 cmd('Loc', function(args)
     if args.bang then
         vim.cmd.vsp 'term://loc --files'
@@ -243,7 +239,7 @@ cmd('DiffOrig', function()
             vim.keymap.del('n', 'q', { buffer = start })
         end, { buffer = buf })
     end
-end, { desc = 'Diff current life with version before last save' })
+end, { desc = 'Diff current file with version before last save' })
 
 cmd('Start', function()
     if type(MiniStarter) == 'table' then

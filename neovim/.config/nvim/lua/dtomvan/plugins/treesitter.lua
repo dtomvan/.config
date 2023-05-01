@@ -1,6 +1,12 @@
 return {
     {
         'nvim-treesitter/nvim-treesitter',
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter-textobjects',
+            'nvim-treesitter/nvim-treesitter-context',
+            'nvim-treesitter/nvim-treesitter-refactor',
+            'RRethy/nvim-treesitter-endwise',
+        },
         event = {
             'VeryLazy',
             'BufReadPre',
@@ -43,26 +49,11 @@ return {
         config = CONF.treesitter,
     },
     {
-        'nvim-treesitter/nvim-treesitter-context',
-        lazy = true,
-    },
-    {
-        'nvim-treesitter/nvim-treesitter-textobjects',
-        lazy = true,
-    },
-    {
         'nvim-treesitter/playground',
+        dependencies = 'nvim-treesitter/nvim-treesitter',
         cmd = {
             'TSPlaygroundToggle',
         },
-    },
-    {
-        'nvim-treesitter/nvim-treesitter-refactor',
-        lazy = true,
-    },
-    {
-        'RRethy/nvim-treesitter-endwise',
-        lazy = true,
     },
     {
         'andymass/vim-matchup',

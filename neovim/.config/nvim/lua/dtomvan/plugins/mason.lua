@@ -29,7 +29,6 @@ return {
 
     {
         'jay-babu/mason-null-ls.nvim',
-        lazy = true,
         opts = {
             automatic_setup = true,
         },
