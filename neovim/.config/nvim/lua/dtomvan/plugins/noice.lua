@@ -3,5 +3,5 @@ return {
     event = 'VimEnter',
     config = CONF.noice,
     dependencies = 'nvim-lua/lsp-status.nvim',
-    cond = vim.g.started_by_firenvim == nil,
+    cond = vim.g.started_by_firenvim == nil and vim.g.neovide == nil,
 }

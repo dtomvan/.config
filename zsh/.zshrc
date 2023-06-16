@@ -208,6 +208,7 @@ alias :wq="cowsay 'You are not in vim anymore.'"
 alias :x="cowsay 'You are not in vim anymore.'"
 
 alias cd='pushd -q'
+alias tldrf='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tldr'
 cx () {
     pushd -q $1
     exa -lab --git --no-user || /bin/ls -la
@@ -541,4 +542,5 @@ export PNPM_HOME="/home/tomvd/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
 
+source <(cultura init zsh)
 source /home/tomvd/.config/broot/launcher/bash/br

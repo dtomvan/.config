@@ -141,10 +141,10 @@ M.add_paste_handler(
     function(lines, phase, cb)
         local mode = vim.api.nvim_get_mode().mode
         if
-            vim.o.filetype ~= 'markdown'
-            and mode ~= 'i'
-            and mode ~= 'n'
-            and mode ~= 'niI'
+            not (vim.o.filetype == 'markdown'
+            and mode == 'i'
+            and mode == 'n'
+            and mode == 'niI')
         then
             return cb(lines, phase)
         end

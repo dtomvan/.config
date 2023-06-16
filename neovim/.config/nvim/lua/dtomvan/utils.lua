@@ -86,7 +86,7 @@ function M.winbar()
     end
 
     local char, hl =
-        require('nvim-web-devicons').get_icon(filename, ft, { default = true })
+        require('nvim-web-devicons').get_icon(filename, nil, { default = true })
     local icon = string.format('%%#%s#%s%%*', hl, char)
 
     return '%m '

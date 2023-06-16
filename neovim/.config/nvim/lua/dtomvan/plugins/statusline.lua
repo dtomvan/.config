@@ -24,7 +24,7 @@ local function bufline_generator(win, buf)
         local char, hl =
             require('nvim-web-devicons').get_icon(
                 name,
-                vim.api.nvim_buf_get_option(b, 'ft'),
+                nil,
                 { default = true }
             )
         local icon = string.format('%%#%s#%s%%*', hl, char)

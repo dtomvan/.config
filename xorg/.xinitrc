@@ -71,4 +71,5 @@ XINIT=1 bash ~/.profile || true &
 sh -c 'pactl unload-module module-switch-on-connect; pactl load-module module-switch-on-connect;' &
 birdtray &
 mpd-rpc &
+aplay ~/startup.wav &
 exec dbus-launch $HOME/.local/bin/bspwm-start

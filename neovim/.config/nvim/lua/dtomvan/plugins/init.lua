@@ -244,6 +244,14 @@ return {
         },
     },
 
+    {
+        'lambdalisue/suda.vim',
+        cmd = {
+            'SudaRead',
+            'SudaWrite',
+        },
+    },
+
     -- Only when using on specific machine,
     -- since I don't want to get prompted on others.
     {

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+notify-send "Het is week nummer $(date +%W)!"
