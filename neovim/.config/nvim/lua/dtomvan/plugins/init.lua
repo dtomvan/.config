@@ -225,19 +225,32 @@ return {
         'gaoDean/autolist.nvim',
         priority = 1,
         event = 'InsertEnter',
-        config = function()
-            local autolist = require("autolist")
-            autolist.setup()
-            autolist.create_mapping_hook("i", "<F1><CR>", autolist.new)
-            autolist.create_mapping_hook("i", "<Tab>", autolist.indent)
-            autolist.create_mapping_hook("i", "<S-Tab>", autolist.indent, "<C-D>")
-            autolist.create_mapping_hook("n", "o", autolist.new)
-            autolist.create_mapping_hook("n", "O", autolist.new_before)
-            autolist.create_mapping_hook("n", ">>", autolist.indent)
-            autolist.create_mapping_hook("n", "<<", autolist.indent)
-            autolist.create_mapping_hook("n", "<C-r>", autolist.force_recalculate)
-            autolist.create_mapping_hook("n", "<leader>x", autolist.invert_entry, "")
-        end,
+        opts = {},
+        keys = {
+            { '<tab>',   '<cmd>AutolistTab<cr>',                mode = 'i' },
+            { '<s-tab>', '<cmd>AutolistShiftTab<cr>',           mode = 'i' },
+            { '<CR>',    '<CR><cmd>AutolistNewBullet<cr>',      mode = 'i' },
+            { 'o',       'o<cmd>AutolistNewBullet<cr>',         mode = 'n' },
+            { 'O',       'O<cmd>AutolistNewBulletBefore<cr>',   mode = 'n' },
+            { '<CR>',    '<cmd>AutolistToggleCheckbox<cr><CR>', mode = 'n' },
+            { '<C-r>',   '<cmd>AutolistRecalculate<cr>',        mode = 'n' },
+            { '>>',      '>><cmd>AutolistRecalculate<cr>',      mode = 'n' },
+            { '<<',      '<<<cmd>AutolistRecalculate<cr>',      mode = 'n' },
+            { 'dd',      'dd<cmd>AutolistRecalculate<cr>',      mode = 'n' },
+            { 'd',       'd<cmd>AutolistRecalculate<cr>',       mode = 'v' },
+            {
+                mode = "n",
+                "<leader>cn",
+                function() require("autolist").cycle_next_dr() end,
+                expr = true
+            },
+            {
+                mode = "n",
+                "<leader>cp",
+                function() require("autolist").cycle_prev_dr() end,
+                expr = true
+            },
+        },
         ft = {
             'tex',
             'plaintex',

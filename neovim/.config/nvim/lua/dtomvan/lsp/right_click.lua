@@ -1,11 +1,19 @@
 -- From: Gabmus' nvpunk
 local M = {}
 
+local has_dap
+
+local function get_dap()
+    if not has_dap then
+        has_dap = pcall(require, 'dap')
+    end
+    return has_dap
+end
+
 --- Checks if current buf has DAP support
 ---@return boolean
 M.buf_has_dap = function()
-    -- TODO
-    return true
+    return get_dap() and true -- TODO
 end
 
 --- Create a context menu
@@ -42,12 +50,12 @@ M.rclick_context_menu = function(menu, label, action)
     for _, m in ipairs(MODES) do
         vim.cmd(
             m
-                .. 'menu '
-                .. menu
-                .. '.'
-                .. M.format_menu_label(label)
-                .. ' '
-                .. action
+            .. 'menu '
+            .. menu
+            .. '.'
+            .. M.format_menu_label(label)
+            .. ' '
+            .. action
         )
     end
 end
@@ -77,15 +85,15 @@ end
 
 M.set_lsp_rclick_menu = function()
     M.set_rclick_submenu('LspMenu', 'LSP         ', {
-        { 'Code Actions', '<leader>a' },
-        { 'Go to Declaration', 'gD' },
-        { 'Go to Definition', 'gd' },
+        { 'Code Actions',         '<leader>a' },
+        { 'Go to Declaration',    'gD' },
+        { 'Go to Definition',     'gd' },
         { 'Go to Implementation', 'gi' },
-        { 'Signature Help', '<C-k>' },
-        { 'Rename', '<space>rn' },
-        { 'Find References', 'gr' },
-        { 'Expand Diagnostics', '<space>e' },
-        { 'Format Buffer', '<c-f>' },
+        { 'Signature Help',       '<C-k>' },
+        { 'Rename',               '<space>rn' },
+        { 'Find References',      'gr' },
+        { 'Expand Diagnostics',   '<space>e' },
+        { 'Format Buffer',        '<c-f>' },
     }, function()
         return true
     end)
@@ -93,17 +101,17 @@ end
 
 M.set_dap_rclick_menu = function()
     M.set_rclick_submenu('DapMenu', 'Debug       ', {
-        { 'Show DAP UI', '<space>bu' },
+        { 'Show DAP UI',       '<space>bu' },
         { 'Toggle Breakpoint', '<space>bb' },
-        { 'Continue', '<space>bc' },
-        { 'Terminate', '<space>bk' },
+        { 'Continue',          '<space>bc' },
+        { 'Terminate',         '<space>bk' },
     }, M.buf_has_dap)
 end
 
 M.set_filetree_rclick_menu = function()
     M.set_rclick_submenu('FileTreeMenu', 'File        ', {
         { 'New File', '<space>fn' },
-        { 'Rename', '<F2>' },
+        { 'Rename',   '<F2>' },
     }, function()
         return vim.bo.ft == 'NvimTree' or vim.bo.ft == 'CHADTree'
     end)

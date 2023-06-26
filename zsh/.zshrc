@@ -111,6 +111,13 @@ unsetopt beep
 bindkey -v
 source ~/.profile
 
+# if [[ -f ~/pacman@*.log(#qN) ]]; then
+#     read -q "REVIEW?You have remaining pacman logs, review them?"
+#     if [[ "$REVIEW" == "y" ]]; then
+#         nvim ~/pacman*.log
+#     fi
+# fi
+
 zstyle ':completion:*' completer _expand _complete _ignored _match _approximate _prefix
 zstyle ':completion:*' file-sort name
 zstyle ':completion:*' format 'Completing %d'
@@ -542,5 +549,4 @@ export PNPM_HOME="/home/tomvd/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
 
-source <(cultura init zsh)
 source /home/tomvd/.config/broot/launcher/bash/br
