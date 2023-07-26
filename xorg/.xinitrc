@@ -39,7 +39,6 @@ xrandr --setprovideroutputsource modesetting NVIDIA-0
 xrandr --auto
 
 export AWT_TOOLKIT=MToolkit
-export QT_QPA_PLATFORMTHEME=qt6ct
 export MOZ_ENABLE_WAYLAND=0
 export GDK_BACKEND=x11
 xsetroot -cursor_name left_ptr

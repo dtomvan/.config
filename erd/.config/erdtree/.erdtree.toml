@@ -1,0 +1,32 @@
+icons = true
+human = true
+
+# Compute file sizes like `du`
+# e.g. `erd --config du`
+[du]
+disk_usage = "block"
+icons = true
+layout = "flat"
+no-ignore = true
+no-git = true
+hidden = true
+level = 1
+
+# Do as `ls -l`
+# e.g. `erd --config ls`
+[ls]
+icons = true
+human = true
+level = 1
+suppress-size = true
+long = true
+sort = "name"
+
+[la]
+icons = true
+human = true
+level = 1
+suppress-size = true
+long = true
+sort = "name"
+hidden = true

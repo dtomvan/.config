@@ -102,6 +102,9 @@ require('xpm').setup {
             key['enter'] = xplr.config.modes.custom.nuke.key_bindings.on_key.o
         end,
     },
+    {
+        'sayanarijit/tree-view.xplr',
+    },
 }
 
 -- package.path = ';' .. os.getenv 'LUA_PATH' .. ';' .. package.path

@@ -169,12 +169,6 @@ xplr.config.modes.builtin.default = {
                     },
                 },
             },
-            T = {
-                help = 'tere nav',
-                messages = {
-                    { BashExec = [[echo ChangeDirectory: "'"$(tere)"'" >> "$XPLR_PIPE_MSG_IN"]] },
-                },
-            },
         },
         on_alphabet = nil,
         on_number = {

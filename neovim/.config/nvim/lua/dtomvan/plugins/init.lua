@@ -223,6 +223,7 @@ return {
 
     {
         'gaoDean/autolist.nvim',
+        enabled = false,
         priority = 1,
         event = 'InsertEnter',
         opts = {},
