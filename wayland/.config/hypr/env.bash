@@ -30,5 +30,28 @@ hint() {
 }
 
 getworkspace() {
-    eval $1="$(hyprctl activeworkspace -j | jq -r '.name')"
+    eval $1=\""$(hyprctl activeworkspace -j | jq -r '.name')"\"
+}
+
+getworkspacebyid() {
+    eval $2=\""$(hyprctl clients -j | jq -r '. | map(select(.address == "'$1'") | .workspace.name)[0]')"\"
+}
+
+getwindow() {
+    eval $1=\""$(hyprctl activewindow -j | jq -r '.address')"\"
+}
+
+getwsclients() {
+    getwindow cl
+    wsclientsbyid "$cl" res
+    eval $1=\""$res"\"
+}
+
+wsclientsbyid() {
+    getworkspacebyid "$1" ws
+    eval $2=\""$(hyprctl clients -j | jq -r '. | map(select(.workspace.name == "'$ws'") | .address) | join(" ")')"\"
+}
+
+wsclients() {
+    eval $2=\""$(hyprctl clients -j | jq -r '. | map(select(.workspace.name == "'$1'") | .address) | join(" ")')"\"
 }
