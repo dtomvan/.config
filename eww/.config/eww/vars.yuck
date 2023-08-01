@@ -1,0 +1,14 @@
+;; JSON MODULES
+
+(defpoll date :interval "1s"
+    :initial '{"hour":"00","min":"00","sec":"00"}'
+    `date +'{"hour":"%H","min":"%M","sec":"%S"}'`)
+
+(defpoll wifi :interval "100s"
+  :initial `{}`
+  `scripts/wifistrength`)
+
+;; SETTINGS
+(defpoll wallpaper
+    :interval "86400s"
+    `scripts/wallpaper`)

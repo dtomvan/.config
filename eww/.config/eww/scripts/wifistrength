@@ -1,0 +1,26 @@
+#!/bin/bash
+
+interface=$(ip addr | awk '/state UP/ {gsub(":","");print $2}')
+dbm=$(iw dev "$interface" link | awk '/signal/ {print $2}')
+
+max() {
+    echo "$(( $1 > $2 ? $1 : $2))"
+}
+
+min() {
+    echo "$(( $1 > $2 ? $1 : $2))"
+}
+
+# pct = min(max(2 * (dbm + 100), 0), 100)
+strength=$(($(min $(($(max $((2 * (dbm + 100))) 0))) 100)))
+stage=$((strength / 25))
+
+declare -A lookup
+lookup[1]="f091f"
+lookup[2]="f0922"
+lookup[3]="f0925"
+lookup[4]="f0928"
+
+icon="$(echo -en "\U${lookup[$stage]}")"
+
+printf '{"interface":"%s","dbm":%d,"strength":"%s","stage":%d,"icon":"%s"}\n' "$interface" "$dbm" "$strength" "$stage" "$icon"

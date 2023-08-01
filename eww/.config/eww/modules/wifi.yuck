@@ -1,0 +1,7 @@
+(defwidget wifi []
+  (box
+    :class "wifi"
+    (label
+      :class "wifi-label"
+      :tooltip "${wifi.dbm} dBm"
+      :text "${wifi.icon}")))

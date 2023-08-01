@@ -1,0 +1,2 @@
+(defwidget separator []
+  (label :text "|" :class "sep"))

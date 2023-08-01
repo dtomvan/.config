@@ -1,9 +1,33 @@
-@define-color color_bg #2d2d2d;
-@define-color color_bg_dark #1c1c1c;
-@define-color color_border #424242;
-@define-color color_border_active #6699cc;
-@define-color color_text #ffffff;
-@define-color color_urgent #8f0a0a;
+@define-color base   #1e1e2e;
+@define-color mantle #181825;
+@define-color crust  #11111b;
+
+@define-color text     #cdd6f4;
+@define-color subtext0 #a6adc8;
+@define-color subtext1 #bac2de;
+
+@define-color surface0 #313244;
+@define-color surface1 #45475a;
+@define-color surface2 #585b70;
+
+@define-color overlay0 #6c7086;
+@define-color overlay1 #7f849c;
+@define-color overlay2 #9399b2;
+
+@define-color blue      #89b4fa;
+@define-color lavender  #b4befe;
+@define-color sapphire  #74c7ec;
+@define-color sky       #89dceb;
+@define-color teal      #94e2d5;
+@define-color green     #a6e3a1;
+@define-color yellow    #f9e2af;
+@define-color peach     #fab387;
+@define-color maroon    #eba0ac;
+@define-color red       #f38ba8;
+@define-color mauve     #cba6f7;
+@define-color pink      #f5c2e7;
+@define-color flamingo  #f2cdcd;
+@define-color rosewater #f5e0dc;
 
 /* -- base styles -- */
 
@@ -19,15 +43,15 @@
 }
 
 button, label {
-    color: @color_text;
+    color: @text;
 }
 
 button:hover {
-    background-color: @color_bg_dark;
+    background-color: @crust;
 }
 
 .popup {
-    border: 1px solid @color_border;
+    border: 1px solid @subtext0;
     padding: 1em;
 }
 
@@ -40,7 +64,7 @@ button:hover {
 
 .popup-clipboard .item {
     padding-bottom: 0.3em;
-    border-bottom: 1px solid @color_border;
+    border-bottom: 1px solid @subtext0;
 }
 
 
@@ -52,24 +76,24 @@ button:hover {
 }
 
 .popup-clock .calendar-clock {
-    color: @color_text;
+    color: @text;
     font-size: 2.5em;
     padding-bottom: 0.1em;
 }
 
 .popup-clock .calendar {
-    background-color: @color_bg;
-    color: @color_text;
+    background-color: @base;
+    color: @text;
 }
 
 .popup-clock .calendar .header {
     padding-top: 1em;
-    border-top: 1px solid @color_border;
+    border-top: 1px solid @subtext0;
     font-size: 1.5em;
 }
 
 .popup-clock .calendar:selected {
-    background-color: @color_border_active;
+    background-color: @subtext1;
 }
 
 
@@ -80,19 +104,19 @@ button:hover {
 }
 
 .launcher .item:not(.focused):hover {
-    background-color: @color_bg_dark;
+    background-color: @crust;
 }
 
 .launcher .open {
-    border-bottom: 1px solid @color_text;
+    border-bottom: 1px solid @text;
 }
 
 .launcher .focused {
-    border-bottom: 2px solid @color_border_active;
+    border-bottom: 2px solid @subtext1;
 }
 
 .launcher .urgent {
-    border-bottom-color: @color_urgent;
+    border-bottom-color: @maroon;
 }
 
 .popup-launcher {
@@ -100,7 +124,7 @@ button:hover {
 }
 
 .popup-launcher .popup-item:not(:first-child) {
-    border-top: 1px solid @color_border;
+    border-top: 1px solid @subtext0;
 }
 
 .launcher {
@@ -111,7 +135,7 @@ button:hover {
 /* -- music -- */
 
 .music:hover * {
-    background-color: @color_bg_dark;
+    background-color: @crust;
 }
 
 .popup-music .album-art {
@@ -127,7 +151,7 @@ button:hover {
 }
 
 .popup-music .controls *:disabled {
-    color: @color_border;
+    color: @subtext0;
 }
 
 .popup-music .volume .slider slider {
@@ -163,7 +187,7 @@ button:hover {
 /* -- tray -- */
 
 .tray {
-    background: @color_bg;
+    background: @base;
     margin-left: 10px;
 }
 
@@ -172,7 +196,7 @@ button:hover {
 
 .workspaces .item.focused {
     box-shadow: inset 0 -3px;
-    background-color: @color_bg_dark;
+    background-color: @crust;
 }
 
 .workspaces .item:hover {
@@ -186,11 +210,11 @@ button:hover {
     font-size: 1.4em;
     padding-bottom: 0.4em;
     margin-bottom: 0.6em;
-    border-bottom: 1px solid @color_border;
+    border-bottom: 1px solid @subtext0;
 }
 
 .popup-power-menu .power-btn {
-    border: 1px solid @color_border;
+    border: 1px solid @subtext0;
     padding: 0.6em 1em;
 }
 

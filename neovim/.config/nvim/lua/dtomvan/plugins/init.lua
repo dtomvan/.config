@@ -360,4 +360,5 @@ return {
         opts = {
         }
     },
+    { 'gpanders/nvim-parinfer' },
 }

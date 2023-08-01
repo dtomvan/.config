@@ -7,6 +7,7 @@ return {
         dependencies = 'levouh/tint.nvim',
         build = ':CatppuccinCompile',
         opts = {
+            transparent_background = true,
             integrations = {
                 cmp = true,
                 gitsigns = true,
@@ -31,8 +32,6 @@ return {
             flavour = 'mocha',
             custom_highlights = function(colors)
                 return {
-                    NormalFloat = { bg = colors.base1 },
-                    CursorLine = { bg = colors.surface0 },
                     WinSeparator = { bg = 'none' },
                     LspComment = { link = 'Comment' },
                     CybuBackground = { link = 'Normal' },

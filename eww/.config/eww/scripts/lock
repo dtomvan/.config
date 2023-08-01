@@ -1,0 +1,4 @@
+#!/bin/bash
+
+~/.config/hypr/lock.sh &
+sleep 2 && eww close powermenu &

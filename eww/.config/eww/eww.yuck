@@ -1,16 +1,31 @@
-(defwindow bar
-           :monitor 0
-           :geometry (geometry :x "0px"
-                               :y "0px"
-                               :width "100%"
-                               :height "24px"
-                               :anchor "bottom center")
-           :reserve (struts :distance "24px" :side "bottom")
-           :windowtype "dock"
-  (rock))
+(include "./vars.yuck")
 
+(include "./modules/date.yuck")
+(include "./modules/powerbuttons.yuck")
+(include "./modules/separator.yuck")
+(include "./modules/wifi.yuck")
 
-(defwidget rock []
-  (literal :content rock_listen))
+(defwindow powermenu
+ :monitor 0
+ :stacking "fg"
+ :geometry (geometry
+             :width "100%"
+             :height "100%")
+ (powermenu_layout))
 
-(deflisten rock_listen `./drive`)
+(defwidget powermenu_layout []
+  (box :class "layout-box" :space-evenly false :orientation "vertical"
+       :style 'background-image: url("${wallpaper}")'
+    (box :halign "end" :valign "start" :space-evenly true :spacing 5 :class "left-box"
+      (wifi)
+      (separator)
+      (button :onclick "eww close powermenu" :class "close-btn" ""))
+    (box :space-evenly false :hexpand true :vexpand true
+      (box :spacing 15 :class "tm-box" :space-evenly false
+            :valign "end" :halign "start"
+        (label :text "")
+        (date))
+      (power_buttons :shutdown "systemctl poweroff" :reboot "systemctl reboot"
+                :logout "scripts/lock"
+                :shutdown_icon "⏻" :reboot_icon ""
+                :logout_icon ""))))
