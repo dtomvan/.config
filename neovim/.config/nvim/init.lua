@@ -18,3 +18,7 @@ require 'dtomvan.lazy'
 require 'dtomvan.keymaps'
 require 'dtomvan.cmd'
 require 'dtomvan.paste'
+
+-- My rendition of the result of
+-- `opam user-setup install`
+require 'opam'

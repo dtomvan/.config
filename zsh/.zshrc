@@ -528,6 +528,7 @@ export BUN_INSTALL="/home/tomvd/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 [ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh" || return
+[[ ! -r /home/tomvd/.opam/opam-init/init.zsh ]] || source /home/tomvd/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
 plug "zap-zsh/supercharge"
 plug "romkatv/powerlevel10k"
@@ -549,4 +550,3 @@ export PNPM_HOME="/home/tomvd/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
 
-source /home/tomvd/.config/broot/launcher/bash/br
