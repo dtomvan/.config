@@ -1,10 +1,5 @@
 return function(client, bufnr)
-    require('dtomvan.lsp.right_click').set_lsp_rclick_menu()
     require('lsp-status').on_attach(client)
-
-    -- if vim.tbl_contains({ 'lua', 'rust', 'python' }, vim.bo.ft) then
-    --     client.server_capabilities.semanticTokensProvider = nil
-    -- end
 
     --- Slow?
     client.server_capabilities.semanticTokensProvider = nil

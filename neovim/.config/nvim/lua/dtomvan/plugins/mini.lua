@@ -55,5 +55,8 @@ return {
         version = '*',
         event = 'VeryLazy',
         config = mini_req,
+        opts = {
+            buffer = { suffix = '' },
+        },
     },
 }

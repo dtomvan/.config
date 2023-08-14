@@ -165,4 +165,13 @@ M.is_something_shown = function()
     return false
 end
 
+M.source_dir = function(target)
+    vim.tbl_map(function(source)
+        loadfile(source)()
+    end, vim.api.nvim_get_runtime_file(
+        target,
+        true
+    ))
+end
+
 return M

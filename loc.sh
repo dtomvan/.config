@@ -40,6 +40,7 @@ fd -H --type f |
     ack -v '^(st|dmenu)\/(?!config.def.h)|^.git|discord|cursors|mpv/.config/mpv/scripts/uosc.lua' |
     ack -v "$(get_submodules)" |
     xargs tokei -C -o json -- |
+    jq '.Markdown.code += .Markdown.comments | .["Plain Text"].code += .["Plain Text"].comments' |
     jq 'to_entries | map({Language: .key, "Lines Of Code": .value.code})' |
-    jq -r '(.[0] | keys_unsorted) as $keys | $keys, map([.[ $keys[] ]])[] | @tsv' |
-    column -s$'\t' -t
+    jq -r 'sort_by(.["Lines Of Code"]) | (.[0] | keys_unsorted) as $keys | $keys, map([.[ $keys[] ]])[] | @tsv' |
+    column -s$'\t' -t -o $'\t'

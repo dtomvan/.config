@@ -1,7 +1,10 @@
+-- This file is meant as a very general listing of common "dependency" plugins.
+-- Plugins with actual features will be included in separate files.
 return {
-    -- Plenary
     { 'nvim-lua/plenary.nvim', lazy = true },
+
     { 'nvim-lua/popup.nvim',   lazy = true },
+
     {
         'folke/which-key.nvim',
         config = function()
@@ -22,6 +25,7 @@ return {
             wk.register({}, { prefix = '\\' })
         end,
     },
+
     {
         'anuvyklack/hydra.nvim',
         lazy = true,
@@ -47,6 +51,7 @@ return {
             end
         end,
     },
+
     {
         'rcarriga/nvim-notify',
         lazy = true,
@@ -59,206 +64,6 @@ return {
     },
 
     {
-        'numToStr/Comment.nvim',
-        config = true,
-        keys = {
-            'gcc',
-            'gbc',
-            { 'gc', mode = { 'n', 'v' } },
-            { 'gb', mode = { 'n', 'v' } },
-            'gcO',
-            'gco',
-            'gcA',
-        },
-    },
-    {
-        'numToStr/Navigator.nvim',
-        config = true,
-        keys = {
-            { '<A-h>', '<cmd>NavigatorLeft<cr>' },
-            { '<A-j>', '<cmd>NavigatorDown<cr>' },
-            { '<A-k>', '<cmd>NavigatorUp<cr>' },
-            { '<A-l>', '<cmd>NavigatorRight<cr>' },
-            { '<A-p>', '<cmd>NavigatorPrevious<cr>' },
-        },
-    },
-    {
-        'mg979/vim-visual-multi',
-        event = 'BufReadPost',
-    },
-
-    -- Prime goodness
-    {
-        'ThePrimeagen/harpoon',
-        lazy = true,
-    },
-    'ThePrimeagen/refactoring.nvim',
-    { 'ThePrimeagen/vim-be-good', cmd = 'VimBeGood' },
-    { 'ThePrimeagen/jvim.nvim',   ft = 'json' },
-
-    -- Git signs
-    {
-        'lewis6991/gitsigns.nvim',
-        event = 'BufReadPost',
-        config = true,
-    },
-
-    -- Use Telescope as vim.ui.select
-    -- and a fancy prompt for vim.ui.input
-    {
-        'stevearc/dressing.nvim',
-        event = 'VeryLazy',
-        init = function()
-            ---@diagnostic disable-next-line: duplicate-set-field
-            vim.ui.select = function(...)
-                require('lazy').load { plugins = { 'dressing.nvim' } }
-                return vim.ui.select(...)
-            end
-            ---@diagnostic disable-next-line: duplicate-set-field
-            vim.ui.input = function(...)
-                require('lazy').load { plugins = { 'dressing.nvim' } }
-                return vim.ui.input(...)
-            end
-        end,
-    },
-
-    -- Rust or Bust
-    { 'simrat39/rust-tools.nvim', lazy = true },
-
-    -- Snippets
-    {
-        'L3MON4D3/LuaSnip',
-        event = 'BufReadPost',
-        dependencies = {
-            'rafamadriz/friendly-snippets',
-        },
-        config = function()
-            -- DOUBLE EVENT CONDITION?
-            local group =
-                vim.api.nvim_create_augroup('LuaSnipConf', { clear = true })
-            vim.api.nvim_create_autocmd({ 'InsertEnter' }, {
-                group = group,
-                once = true,
-                callback = CONF.luasnip,
-            })
-        end,
-    },
-
-    {
-        'akinsho/toggleterm.nvim',
-        lazy = true,
-        version = "*",
-        opts = {},
-    },
-
-    {
-        'chentoast/marks.nvim',
-        event = 'BufReadPost',
-        opts = {},
-    },
-    {
-        'junegunn/vim-easy-align',
-        keys = {
-            { 'ga', '<plug>(EasyAlign)', mode = { 'n', 'x' }, remap = true },
-            {
-                'gA',
-                '<plug>(LiveEasyAlign)',
-                mode = { 'n', 'x' },
-                remap = true,
-            },
-        },
-    },
-    {
-        'kevinhwang91/nvim-bqf',
-        ft = 'qf',
-        config = true,
-    },
-    {
-        'Raimondi/vim-transpose-words',
-        cmd = 'TransposeWords',
-    },
-    {
-        'numToStr/FTerm.nvim',
-        opts = {
-            border = 'rounded',
-            dimensions = {
-                height = 0.9,
-                width = 0.9,
-            },
-            blend = 20,
-        },
-        keys = {
-            {
-                '<A-i>',
-                function()
-                    require('FTerm').toggle()
-                end,
-                mode = { 'n', 't' },
-                desc = 'Toggle terminal',
-            },
-        },
-    },
-
-    {
-        'prichrd/netrw.nvim',
-        config = true,
-        event = 'FileType netrw',
-    },
-
-    {
-        'j-morano/buffer_manager.nvim',
-        config = function()
-            vim.g.buffer_manager_log_level = 'fatal'
-        end,
-        keys = {
-            {
-                '<c-b>',
-                function()
-                    require('buffer_manager.ui').toggle_quick_menu()
-                end,
-                desc = 'Buffer manager',
-            },
-        },
-    },
-
-    {
-        'gaoDean/autolist.nvim',
-        enabled = false,
-        priority = 1,
-        event = 'InsertEnter',
-        opts = {},
-        keys = {
-            { '<tab>',   '<cmd>AutolistTab<cr>',                mode = 'i' },
-            { '<s-tab>', '<cmd>AutolistShiftTab<cr>',           mode = 'i' },
-            { '<CR>',    '<CR><cmd>AutolistNewBullet<cr>',      mode = 'i' },
-            { 'o',       'o<cmd>AutolistNewBullet<cr>',         mode = 'n' },
-            { 'O',       'O<cmd>AutolistNewBulletBefore<cr>',   mode = 'n' },
-            { '<CR>',    '<cmd>AutolistToggleCheckbox<cr><CR>', mode = 'n' },
-            { '<C-r>',   '<cmd>AutolistRecalculate<cr>',        mode = 'n' },
-            { '>>',      '>><cmd>AutolistRecalculate<cr>',      mode = 'n' },
-            { '<<',      '<<<cmd>AutolistRecalculate<cr>',      mode = 'n' },
-            { 'dd',      'dd<cmd>AutolistRecalculate<cr>',      mode = 'n' },
-            { 'd',       'd<cmd>AutolistRecalculate<cr>',       mode = 'v' },
-            {
-                mode = "n",
-                "<leader>cn",
-                function() require("autolist").cycle_next_dr() end,
-                expr = true
-            },
-            {
-                mode = "n",
-                "<leader>cp",
-                function() require("autolist").cycle_prev_dr() end,
-                expr = true
-            },
-        },
-        ft = {
-            'tex',
-            'plaintex',
-        },
-    },
-
-    {
         'lambdalisue/suda.vim',
         cmd = {
             'SudaRead',
@@ -266,8 +71,6 @@ return {
         },
     },
 
-    -- Only when using on specific machine,
-    -- since I don't want to get prompted on others.
     {
         'wakatime/vim-wakatime',
         event = 'VeryLazy',
@@ -290,75 +93,16 @@ return {
     },
 
     {
-        'stevearc/oil.nvim',
-        config = true,
-        keys = {
-            {
-                '-',
-                function()
-                    require('oil').open()
-                end,
-                { desc = 'Open parent directory' },
-            },
-        },
-    },
-    {
-        'folke/zen-mode.nvim',
-        dependencies = {
-            {
-                'folke/twilight.nvim',
-                config = true,
-            },
-        },
-        cmd = 'ZenMode',
-        opts = {
-            window = {
-                options = {
-                    concealcursor = 'n',
-                    conceallevel = 3,
-                    cursorcolumn = false,
-                    cursorline = false,
-                    foldcolumn = '0',
-                    list = false,
-                    number = false,
-                    relativenumber = false,
-                    signcolumn = 'no',
-                    statusline = ' ',
-                },
-            },
-            on_open = function()
-                _G.rerun_noice = require('noice.config').is_running()
-                require('noice').disable()
-            end,
-            on_close = function()
-                if _G.rerun_noice then
-                    require('noice').enable()
-                end
-            end,
-        },
-    },
-    {
         'luukvbaal/statuscol.nvim',
         event = 'UIEnter',
         config = {
             setopt = true,
         },
     },
-    {
-        'Wansmer/treesj',
-        dependencies = 'nvim-treesitter/nvim-treesitter',
-        keys = {
-            { '<leader>M', '<cmd>TSJToggle<cr>' },
-        },
-        opts = {
-            use_default_keymaps = false,
-        },
-    },
+
     {
         'sQVe/bufignore.nvim',
         dependencies = { 'nvim-lua/plenary.nvim' },
-        opts = {
-        }
+        opts = {},
     },
-    { 'gpanders/nvim-parinfer' },
 }

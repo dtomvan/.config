@@ -37,8 +37,6 @@ local map = vim.keymap.set
 M.confusing({ 'n', 'v' }, ';', ':', M.norexpr 'swapped with :')
 M.confusing({ 'n', 'v' }, ':', ';', M.norexpr 'swapped with ;')
 
-require('dtomvan.tere').setup()
-
 local breakpoints = { ',', '!', '.', '?', ';' }
 for _, point in ipairs(breakpoints) do
     map(
@@ -98,7 +96,7 @@ local function nav(n)
     end
 end
 
-for i in ipairs { 1, 2, 3, 4 } do
+for i = 1, 9 do
     map(
         'n',
         ('<leader>%d'):format(i),
@@ -144,13 +142,13 @@ M.confusing('n', '~', function()
     local row = cursor[1]
     local col = cursor[2]
     local char = vim.api.nvim_buf_get_text(
-            0,
-            row - 1,
-            col,
-            row - 1,
-            col + 1,
-            {}
-        )[1] or ''
+        0,
+        row - 1,
+        col,
+        row - 1,
+        col + 1,
+        {}
+    )[1] or ''
     for k, v in pairs {
         [';'] = ':',
         ['('] = ')',

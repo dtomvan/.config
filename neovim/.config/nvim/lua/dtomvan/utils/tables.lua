@@ -1,3 +1,5 @@
+-- BEWARE: This is a major hack and just meant as an easy but inperformant
+-- solution to all your lua list-shaped table shenanigans
 local M = {}
 
 function M.multi_get(tbl, idx)
@@ -79,6 +81,27 @@ for _, fn in ipairs { 'tbl_contains', 'startswith', 'endswith', 'eq' } do
         end
         return iter:totable()
     end
+    for _, i in ipairs {
+        '',
+        'map_',
+        'get_',
+        'multi_get_',
+        'peek_',
+        'multi_peek_',
+        'map_peek_',
+        'multi_map_peek_',
+    } do
+        M[i .. 'filter_not_' .. fn] = function(tbl, x, y)
+            -- FIXME: This is the relevant hacky imperformant code I mentioned before.
+            local remove = M[i .. filter](tbl, x, y)
+            return vim.tbl_filter(
+                function(el)
+                    return not vim.tbl_contains(remove, el)
+                end,
+                tbl
+            )
+        end
+    end
 end
 
 function M.fold(tbl, init, predicate)
@@ -106,14 +129,5 @@ function M.all(tbl, predicate)
     return true
 end
 
--- TODO: Actually use iterator pipeline correctly (filters using :filter(...))
-local iter_funcs = {}
-for k, v in pairs(M) do
-    iter_funcs['iter_' .. k] = function(iter, ...)
-        local item = v(iter:totable() or {}, ...)
-        return type(item) == 'table' and vim.iter(item) or item
-    end
-end
-
 ---@return TableUtils
-return vim.tbl_extend('error', M, iter_funcs)
+return M

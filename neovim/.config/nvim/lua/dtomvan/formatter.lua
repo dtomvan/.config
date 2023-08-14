@@ -1,3 +1,5 @@
+-- FIXME: Use guard.nvim or alike to also incoporate linting and fulfill all
+-- null-ls needs. This is fine for now, though.
 local tbl = require 'dtomvan.utils.tables'
 
 local M = {}
@@ -213,9 +215,10 @@ M.format_buf = function(b)
                 filter = function(x)
                     return x == item
                 end,
+                async = true,
             })
         then
-            vim.lsp.buf.format()
+            vim.lsp.buf.format { async = true }
         end
     end)
 end

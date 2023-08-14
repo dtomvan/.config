@@ -67,16 +67,23 @@ return {
         'nvim-telescope/telescope-fzy-native.nvim',
         lazy = true,
     },
+    -- Use Telescope as vim.ui.select
+    -- and a fancy prompt for vim.ui.input
     {
-        'nvim-telescope/telescope-file-browser.nvim',
-        lazy = true,
-        keys = {
-            {
-                '<leader>pv',
-                function()
-                    require('telescope').extensions.file_browser.file_browser()
-                end,
-            },
-        },
+        'stevearc/dressing.nvim',
+        event = 'VeryLazy',
+        init = function()
+            ---@diagnostic disable-next-line: duplicate-set-field
+            vim.ui.select = function(...)
+                require('lazy').load { plugins = { 'dressing.nvim' } }
+                return vim.ui.select(...)
+            end
+            ---@diagnostic disable-next-line: duplicate-set-field
+            vim.ui.input = function(...)
+                require('lazy').load { plugins = { 'dressing.nvim' } }
+                return vim.ui.input(...)
+            end
+        end,
     },
+
 }

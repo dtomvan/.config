@@ -88,18 +88,5 @@ return {
                 max = vim.o.columns / 6,
             }
         end
-
-        -- Blend in so cursorline won't get blocked by the drops, getting rid of
-        -- some artifacts
-        local t = require('drop.config').get_theme()
-        for i, color in ipairs(t.colors) do
-            local hl_group = 'Drop' .. i
-            vim.api.nvim_set_hl(0, hl_group, { fg = color, blend = 100 })
-            vim.api.nvim_set_hl(
-                0,
-                hl_group .. 'Bold',
-                { fg = color, bold = true, blend = 100 }
-            )
-        end
     end,
 }

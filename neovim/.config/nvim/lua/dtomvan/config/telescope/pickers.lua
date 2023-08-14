@@ -7,7 +7,6 @@ local tactions = require 'telescope.actions'
 local action_state = require 'telescope.actions.state'
 
 local actions = require 'dtomvan.config.telescope.actions'
-local browser = require 'telescope._extensions.file_browser.picker'
 
 local function preview_list(entry)
     return { 'ls', entry.value }
@@ -84,19 +83,6 @@ function M.diagnostics()
     builtin.diagnostics {
         ---@diagnostic disable-next-line: unused-local
         attach_mappings = function(_, map)
-            return true
-        end,
-    }
-end
-
-function M.save_as()
-    browser {
-        attach_mappings = function(prompt_bufnr)
-            tactions.select_default:replace(function()
-                tactions.close(prompt_bufnr)
-                local selection = action_state.get_selected_entry() or action_state.get_current_line()
-                vim.cmd.w(selection)
-            end)
             return true
         end,
     }

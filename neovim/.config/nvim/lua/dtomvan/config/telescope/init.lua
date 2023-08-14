@@ -7,8 +7,6 @@ local noremap = require('dtomvan.keymaps').noremap
 local pickers = require 'dtomvan.config.telescope.pickers'
 
 load 'fzy_native'
-load 'file_browser'
-
 -- Custom pickers
 vim.keymap.set('n', '<C-p>', pickers.grep, noremap 'Grep over CWD files')
 vim.keymap.set('n', '<leader>B', pickers.buffers, noremap 'Select a buffer')

@@ -1,14 +1,18 @@
 return {
     'nvim-neo-tree/neo-tree.nvim',
-    version = 'v2.x',
+    version = 'v3.x',
     dependencies = {
         'nvim-lua/plenary.nvim',
         { 'nvim-tree/nvim-web-devicons', name = 'nvim-tree-devicons' },
         'MunifTanjim/nui.nvim',
         {
             's1n7ax/nvim-window-picker',
-            version = 'v1.*',
-            opts = {},
+            event = 'VeryLazy',
+            name = 'window-picker',
+            version = '2.*',
+            opts = {
+                hint = 'floating-big-letter',
+            },
         },
     },
     cmd = 'Neotree',
@@ -16,6 +20,7 @@ return {
         { '<leader>bl',  '<cmd>Neotree toggle float show buffers<cr>', silent = true },
         { '<leader>gss', '<cmd>Neotree toggle float git_status<cr>',   silent = true },
         { '<f1>',        '<cmd>Neotree toggle reveal right<cr>',       silent = true },
+        { '<leader>pv',  '<cmd>Neotree focus reveal right<cr>',        silent = true },
         { '<leader>nt',  ':Neotree toggle reveal right ' },
     },
     init = function()

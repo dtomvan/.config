@@ -1,6 +1,7 @@
 return {
     {
         'williamboman/mason.nvim',
+        event = 'VeryLazy',
         dependencies = {
             'neovim/nvim-lspconfig',
             'nvim-lua/lsp_extensions.nvim',
@@ -9,15 +10,7 @@ return {
         },
         config = function()
             require('mason').setup()
-            local group =
-                vim.api.nvim_create_augroup('RequireUserLsp', { clear = true })
-            vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufReadPost' }, {
-                callback = function()
-                    require 'dtomvan.lsp'
-                end,
-                once = true,
-                group = group,
-            })
+            require 'dtomvan.lsp'
         end,
     },
 
@@ -26,11 +19,5 @@ return {
         lazy = true,
         opts = {},
     },
-
-    {
-        'jay-babu/mason-null-ls.nvim',
-        opts = {
-            automatic_setup = true,
-        },
-    },
+    { 'simrat39/rust-tools.nvim', lazy = true },
 }
