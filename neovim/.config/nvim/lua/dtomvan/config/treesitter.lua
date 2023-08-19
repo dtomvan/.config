@@ -2,7 +2,13 @@ local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
 
 for _, name in ipairs(vim.api.nvim_get_runtime_file('parsers/*', true)) do
     if vim.fn.isdirectory(name) then
-        parser_config[vim.fs.basename(name)] = {
+        local ft = vim.fs.basename(name)
+        if not ft then goto continue end
+        parser_config[ft] = {
+            filetype = ft,
+            maintainers = {
+                'Tom van Dijk <18gatenmaker6 at gmail dot com>'
+            },
             install_info = {
                 url = name,
                 files = { 'src/parser.c' },
@@ -11,8 +17,11 @@ for _, name in ipairs(vim.api.nvim_get_runtime_file('parsers/*', true)) do
             },
         }
     end
+    ::continue::
 end
 
+-- FIXME:
+---@diagnostic disable-next-line: missing-fields
 require('nvim-treesitter.configs').setup {
     ensure_installed = {
         'bash',
@@ -72,7 +81,6 @@ require('nvim-treesitter.configs').setup {
             enable = true,
             lookahead = true,
             keymaps = {
-                ['ic'] = '@call.inner',
                 ['ac'] = '@call.outer',
                 ['af'] = '@function.outer',
                 ['aP'] = '@parameter.outer',
@@ -101,6 +109,10 @@ require('nvim-treesitter.configs').setup {
     },
     endwise = {
         enable = true,
+    },
+    context_commentstring = {
+        enable = true,
+        enable_autocmd = false,
     },
 }
 

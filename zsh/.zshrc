@@ -214,10 +214,16 @@ alias :q="cowsay 'You are not in vim anymore.'"
 alias :wq="cowsay 'You are not in vim anymore.'"
 alias :x="cowsay 'You are not in vim anymore.'"
 
-alias cd='pushd -q'
+cd () {
+    if [ "$1" = '~' ]; then
+        pushd -q ~
+    else
+        pushd -q "$@"
+    fi
+}
 alias tldrf='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tldr'
 cx () {
-    pushd -q $1
+    cd $1
     exa -lab --git --no-user || /bin/ls -la
 }
 

@@ -57,7 +57,20 @@ return {
     },
     {
         'andymass/vim-matchup',
+        keys = { '%' },
         event = { 'BufReadPost', 'BufNewFile' },
+        init = function()
+            vim.g.loaded_matchit = 1
+        end,
+        config = function()
+            for _, mod in ipairs { 'loader', 'matchparen' } do
+                if _G['matchup_' .. mod .. '_enabled'] == 1 then
+                    vim.schedule(function()
+                        vim.fn['matchup#' .. mod .. '#init_module']()
+                    end)
+                end
+            end
+        end,
     },
     { 'ThePrimeagen/jvim.nvim', ft = 'json' },
     {

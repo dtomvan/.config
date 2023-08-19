@@ -60,7 +60,7 @@ return {
         config = function(_, opts)
             require 'telescope'.setup(opts)
             CONF.telescope()
-        end
+        end,
     },
     'nvim-telescope/telescope-symbols.nvim',
     {

@@ -16,6 +16,11 @@ local capabilities = vim.tbl_extend(
     lsp_status.capabilities
 )
 
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
+
 return {
     on_attach = on_attach,
     capabilities = capabilities,

@@ -5,8 +5,6 @@ return {
         dependencies = {
             'neovim/nvim-lspconfig',
             'nvim-lua/lsp_extensions.nvim',
-            { 'folke/neodev.nvim',  opts = {} },
-            { 'folke/neoconf.nvim', opts = {} },
         },
         config = function()
             require('mason').setup()
@@ -20,4 +18,6 @@ return {
         opts = {},
     },
     { 'simrat39/rust-tools.nvim', lazy = true },
+    { 'folke/neodev.nvim',  opts = {} },
+    { 'folke/neoconf.nvim', opts = {} },
 }

@@ -1,0 +1,4 @@
+#!/bin/bash
+efibootmgr --disk /dev/nvme0n1 --part 1 --create --label "SteamOS 6.5" --loader /vmlinuz-linux65-tkg-bore-llvm --unicode 'rw root=/dev/nvme0n1p3 initrd=\amd-ucode.img initrd=\initramfs-linux65-tkg-bore-llvm.img nvidia-drm.modeset=1 systemd.unit=steamos.target'
+efibootmgr --disk /dev/nvme0n1 --part 1 --create --label "Arch Linux 6.5" --loader /vmlinuz-linux65-tkg-bore-llvm --unicode 'rw root=/dev/nvme0n1p3 initrd=\amd-ucode.img initrd=\initramfs-linux65-tkg-bore-llvm.img quiet splash nvidia-drm.modeset=1 loglevel=3 udev.log_level=3 vt.global_cursor_default=0 fbcon=nodefer'
+exit 0

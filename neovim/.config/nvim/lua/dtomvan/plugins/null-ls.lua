@@ -2,6 +2,8 @@ local utils = require 'dtomvan.utils'
 
 return {
     'jose-elias-alvarez/null-ls.nvim',
+    -- archived
+    enabled = false,
     event = 'BufReadPost',
     dependencies = {
         'nvim-lua/plenary.nvim',

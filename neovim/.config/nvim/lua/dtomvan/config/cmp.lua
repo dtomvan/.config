@@ -97,6 +97,10 @@ cmp.setup.filetype('query', {
     },
 })
 
+cmp.setup.filetype("DressingInput", {
+    sources = cmp.config.sources { { name = "omni" } },
+})
+
 -- nvim-autopairs setup
 local handler_confirm_done
 cmp.event:on('confirm_done', function(...)

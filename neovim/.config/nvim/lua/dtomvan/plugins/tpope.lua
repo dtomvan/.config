@@ -18,10 +18,6 @@ return {
         },
     },
     {
-        'tpope/vim-eunuch',
-        event = 'VeryLazy',
-    },
-    {
         'tpope/vim-repeat',
         event = 'VeryLazy',
     },

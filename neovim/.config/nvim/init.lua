@@ -21,4 +21,14 @@ require 'dtomvan.paste'
 
 -- My rendition of the result of
 -- `opam user-setup install`
-require 'opam'
+require 'dtomvan.opam'
+
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'VeryLazy',
+    callback = function()
+        vim.schedule_wrap(function()
+            require 'dtomvan.skip_backwards_range'
+        end)
+    end,
+    once = true,
+})
