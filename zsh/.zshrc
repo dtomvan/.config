@@ -385,6 +385,10 @@ deref() {
     fi
 }
 
+dragfile() {
+    sk -c fd -m "$SKIM_ARGS" | xargs -r ripdrag "$DRAG_ARGS"
+}
+
 # ALIASES
 alias rat=bat
 alias matt=bat

@@ -1,9 +1,8 @@
 return {
     {
         'tjdevries/nlua.nvim',
-        ft = 'lua',
+        lazy = true,
         dependencies = 'L3MON4D3/LuaSnip',
-        config = CONF.lua_ls,
     },
     {
         'SmiteshP/nvim-navbuddy',

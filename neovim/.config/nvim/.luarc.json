@@ -110,5 +110,6 @@
         "xplr",
         "package",
         "CONF"
-    ]
+    ],
+    "workspace.checkThirdParty": false
 }

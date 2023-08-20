@@ -10,6 +10,13 @@ return {
             require('mason').setup()
             require 'dtomvan.lsp'
         end,
+        init = function()
+            for k, v in pairs(require 'mason.api.command') do
+                vim.api.nvim_create_user_command(k, function(opts)
+                    v(opts.fargs or {})
+                end, { nargs = '*' })
+            end
+        end
     },
 
     {
@@ -18,6 +25,6 @@ return {
         opts = {},
     },
     { 'simrat39/rust-tools.nvim', lazy = true },
-    { 'folke/neodev.nvim',  opts = {} },
-    { 'folke/neoconf.nvim', opts = {} },
+    { 'folke/neodev.nvim',        lazy = true, opts = {} },
+    { 'folke/neoconf.nvim',       lazy = true, config = false },
 }

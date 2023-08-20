@@ -1,42 +1,6 @@
--- local function get_lua_runtime()
---     local result = {}
---     for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
---         local lua_path = path .. '/lua/'
---         if vim.fn.isdirectory(lua_path) then
---             result[lua_path] = true
---         end
---     end
---
---     return result
--- end
-
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
-
-local snip_env = require('luasnip').session.config.snip_env
-local lua_globals = {
-    'vim',
-    'describe',
-    'it',
-    'before_each',
-    'after_each',
-    'teardown',
-    'pending',
-    'clear',
-    'Color',
-    'c',
-    'Group',
-    'g',
-    's',
-    'use',
-    'xplr',
-    'package',
-}
-
-for k, _ in pairs(snip_env) do
-    table.insert(lua_globals, k)
-end
 
 local opts = require 'dtomvan.lsp.opts'
 require('lspconfig').lua_ls.setup {
@@ -60,7 +24,24 @@ require('lspconfig').lua_ls.setup {
                 disable = {
                     'trailing-space',
                 },
-                globals = lua_globals,
+                globals = {
+                    'vim',
+                    'describe',
+                    'it',
+                    'before_each',
+                    'after_each',
+                    'teardown',
+                    'pending',
+                    'clear',
+                    'Color',
+                    'c',
+                    'Group',
+                    'g',
+                    's',
+                    'use',
+                    'xplr',
+                    'package',
+                },
                 groupFileStatus = {
                     ['ambiguity'] = 'Opened',
                     ['await'] = 'Opened',
@@ -78,6 +59,11 @@ require('lspconfig').lua_ls.setup {
         },
     },
     filetypes = { 'lua' },
-    on_attach = opts.on_attach,
+    on_attach = function(cl, buf)
+        opts.on_attach(cl, buf)
+        for k, _ in pairs(require('luasnip').session.config.snip_env) do
+            table.insert(cl.config.settings.Lua.diagnostics.globals, k)
+        end
+    end,
     capabilities = opts.capabilities,
 }

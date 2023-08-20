@@ -1,35 +1,12 @@
 if vim.g.started_by_firenvim then
     return
 end
+
+require 'neoconf'.setup {}
+require 'neodev'.setup {}
+
 local mason_lspconfig = require 'mason-lspconfig'
 local opts = require 'dtomvan.lsp.opts'
-
-local M = {}
-
-for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
-    if server == 'ltex' then
-        require 'lspconfig'[server].setup(vim.tbl_deep_extend('force', opts, { filetypes = { "tex" }, }))
-    elseif
-        not (server == 'rome' or server == 'rust_tools' or server == 'lua_ls')
-    then
-        require('lspconfig')[server].setup(opts)
-    end
-end
-
-opts.filetypes = {
-    'javascript',
-    'javascriptreact',
-    'typescript',
-    'typescript.tsx',
-    'typescriptreact',
-}
-
-require('lspconfig').rome.setup(opts)
-
-local rust_tools, _ = pcall(require, 'rust-tools')
-if not rust_tools then
-    return
-end
 
 -- Rust
 local rust_tools_opts = {
@@ -39,7 +16,9 @@ local rust_tools_opts = {
 
         -- how to execute terminal commands
         -- options right now: termopen / quickfix
-        executor = require('rust-tools/executors').termopen,
+        executor = function(...)
+            require('rust-tools/executors').termopen(...)
+        end,
 
         runnables = {
             -- whether to use telescope for selection menu or not
@@ -129,11 +108,6 @@ local rust_tools_opts = {
             full = true,
         },
     },
-
-    -- all the opts to send to nvim-lspconfig
-    -- these override the defaults set by rust-tools.nvim
-    -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
-    -- rust-analyer options
     server = {
         on_attach = function(...)
             opts.on_attach(...)
@@ -154,8 +128,29 @@ local rust_tools_opts = {
     },
 }
 
-require('rust-tools').setup(rust_tools_opts)
-
-require('ufo').setup()
-
-return M
+mason_lspconfig.setup_handlers {
+    function(server_name)
+        require("lspconfig")[server_name].setup(opts)
+        if not package.loaded.ufo then
+            require('ufo').setup()
+        end
+    end,
+    lua_ls = CONF.lua_ls,
+    ["rust_analyzer"] = function()
+        require('rust-tools').setup(rust_tools_opts)
+    end,
+    ltex = function()
+        require 'lspconfig'.ltex.setup(vim.tbl_deep_extend('force', opts, { filetypes = { "tex" }, }))
+    end,
+    rome = function()
+        require 'lspconfig'.rome.setup(vim.tbl_deep_extend('force', opts, {
+            filetypes = {
+                'javascript',
+                'javascriptreact',
+                'typescript',
+                'typescript.tsx',
+                'typescriptreact',
+            },
+        }))
+    end
+}
