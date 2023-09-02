@@ -62,3 +62,5 @@
 
 [diff "sentences"]
 	textconv = breaksentences
+[color]
+	ui = auto

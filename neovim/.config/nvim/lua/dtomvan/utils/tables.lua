@@ -91,6 +91,12 @@ for _, fn in ipairs { 'tbl_contains', 'startswith', 'endswith', 'eq' } do
         'map_peek_',
         'multi_map_peek_',
     } do
+        M[i .. 'find_' .. fn] = function(...)
+            return M[i .. filter](...)[1]
+        end
+        M[i .. 'count_' .. fn] = function(...)
+            return #M[i .. filter](...)
+        end
         M[i .. 'filter_not_' .. fn] = function(tbl, x, y)
             -- FIXME: This is the relevant hacky imperformant code I mentioned before.
             local remove = M[i .. filter](tbl, x, y)
@@ -100,6 +106,12 @@ for _, fn in ipairs { 'tbl_contains', 'startswith', 'endswith', 'eq' } do
                 end,
                 tbl
             )
+        end
+        M[i .. 'find_not_' .. fn] = function(...)
+            return M[i .. 'filter_not_' .. fn](...)[1]
+        end
+        M[i .. 'count_not_' .. fn] = function(...)
+            return #M[i .. 'filter_not_' .. fn](...)
         end
     end
 end

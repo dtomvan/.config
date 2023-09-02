@@ -71,10 +71,6 @@ function M.dotfiles()
     }
 end
 
-function M.grep()
-    builtin.live_grep()
-end
-
 function M.current_buffer()
     builtin.current_buffer_fuzzy_find()
 end

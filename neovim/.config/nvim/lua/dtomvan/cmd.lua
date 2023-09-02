@@ -1,4 +1,4 @@
-local utils = require 'dtomvan.utils.tables'
+local tbl = require 'dtomvan.utils.tables'
 local formatter = require 'dtomvan.formatter'
 local flags = require 'dtomvan.rg_flags'
 local noremap = require('dtomvan.keymaps').noremap
@@ -34,7 +34,7 @@ end, {
     force = true,
     desc = 'Open Lazygit with arguments.',
     complete = function(lead)
-        return utils.filter_startswith({
+        return tbl.filter_startswith({
             'branch',
             'log',
             'stash',
@@ -261,7 +261,7 @@ cmd('AutopairsToggle', function()
 end, { desc = 'Toggle auto pairs' })
 
 local function clients_comp(lead)
-    return utils.get_filter_startswith(
+    return tbl.get_filter_startswith(
         formatter.get_formatting_clients {
             bufnr = vim.api.nvim_get_current_buf(),
         },
@@ -278,7 +278,7 @@ cmd('Formatter', function(o)
         return vim.notify 'no formatter for this buffer'
     end
     if multiple then
-        vim.notify(vim.inspect(utils.map_get(cl, 'name')))
+        vim.notify(vim.inspect(tbl.map_get(cl, 'name')))
     else
         vim.notify(cl.name)
     end
@@ -352,3 +352,51 @@ for _, action in ipairs { 'disable', 'enable', 'toggle' } do
         nargs = '?',
     })
 end
+cmd('QBuffers', function()
+    vim.fn.setqflist(vim.tbl_map(
+        function(x) return { bufnr = x } end,
+        vim.tbl_filter(
+            function(x) return vim.fn.buflisted(x) == 1 end,
+            vim.api.nvim_list_bufs()
+        ))
+    )
+end, {
+    desc = 'Put all buffers as entries in the quickfixlist',
+    force = true,
+    nargs = 0,
+})
+
+cmd('Dym', function(o)
+    local word
+    if o.bang then
+        word = vim.fn.expand '<cword>'
+    else
+        word = vim.fn.expand '<cWORD>'
+    end
+    ---@cast word string
+    local buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_open_win(buf, true, {
+        row = 0,
+        col = 0,
+        width = 60,
+        height = 10,
+        relative = 'cursor',
+        anchor = 'SW',
+        border = 'single',
+    })
+    vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = buf })
+    vim.system({ 'dym', word }, {
+        text = true,
+        stdout = function(err, data)
+            if err or not data then return end
+            vim.schedule(function()
+                vim.api.nvim_buf_set_lines(buf, -1, -1, false, vim.split(data, '\n', { trimempty = true }))
+            end)
+        end
+    })
+end, {
+    desc = 'Executes `dym` on current word under cursor, with bang WORD under cursor',
+    force = true,
+    nargs = 0,
+    bang = true,
+})

@@ -1,23 +1,36 @@
+local ivy = setmetatable({}, {
+    __index = function(_, k)
+        return '<cmd>Telescope ' .. k .. ' theme=ivy<cr>'
+    end
+})
+
+local t = setmetatable({}, {
+    __index = function(_, k)
+        return '<cmd>Telescope ' .. k .. '<cr>'
+    end
+})
+
 return {
     {
         'nvim-telescope/telescope.nvim',
         keys = {
-            '<c-p>',
+            { '<leader>u', '<cmd>Telescope undo<cr>' },
+            { '<c-p>',     t.live_grep },
             '<leader>B',
             '<leader>dd',
             '<leader>fb',
             '<leader>fp',
             '<leader>q',
-            '<leader>:',
-            '<m-x>',
-            '<leader>ft',
-            '<C-e>',
-            '<leader>h',
-            '<leader>h',
-            '<leader>?',
-            '<leader>/',
-            '<leader>;',
             '<leader>T',
+            { '<leader>:',   t.command_history },
+            { '<m-x>',       ivy.commands },
+            { '<leader>ft',  t.lsp_workspace_symbols },
+            { '<C-e>',       t.fd },
+            { '<leader>h',   ivy.help_tags },
+            { '<leader>?',   t.oldfiles },
+            { '<leader>/',   ivy.current_buffer_fuzzy_find },
+            { '<leader>;',   t.resume },
+            { '<leader>fds', ivy.lsp_document_symbols },
         },
         cmd = 'Telescope',
         opts = function(_, opts)
@@ -50,6 +63,7 @@ return {
                     },
                 },
                 extensions = {
+                    undo = {},
                     fzy_native = {
                         override_generic_sorter = true,
                         override_file_sorter = true,
@@ -62,6 +76,7 @@ return {
             CONF.telescope()
         end,
     },
+    'debugloop/telescope-undo.nvim',
     'nvim-telescope/telescope-symbols.nvim',
     {
         'nvim-telescope/telescope-fzy-native.nvim',

@@ -6,27 +6,6 @@ return {
     { 'nvim-lua/popup.nvim',   lazy = true },
 
     {
-        'folke/which-key.nvim',
-        config = function()
-            vim.o.timeout = true
-            vim.o.timeoutlen = 500
-            local wk = require 'which-key'
-
-            wk.setup {}
-            wk.register({
-                c = { name = 'Terminal' },
-                d = { name = 'Dot' },
-                f = { name = 'Find' },
-                g = { name = 'Goto', f = 'File' },
-                r = { name = 'Re...' },
-                t = { name = 'Transpose/Term' },
-                w = { name = 'LSP Workspace' },
-            }, { prefix = '<leader>' })
-            wk.register({}, { prefix = '\\' })
-        end,
-    },
-
-    {
         'anuvyklack/hydra.nvim',
         lazy = true,
         init = function()

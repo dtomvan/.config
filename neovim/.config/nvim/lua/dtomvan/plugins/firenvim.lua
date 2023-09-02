@@ -1,7 +1,6 @@
 local function install(plug)
     vim.g.started_by_firenvim = 1
     plug.wait = true
-    require('lazy').load(plug)
     vim.fn['firenvim#install'](0)
 end
 

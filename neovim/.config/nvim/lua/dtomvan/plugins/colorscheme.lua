@@ -7,7 +7,9 @@ return {
         dependencies = 'levouh/tint.nvim',
         build = ':CatppuccinCompile',
         opts = {
-            transparent_background = true,
+            -- When started in firenvim, transparent is black so we don't really
+            -- want that.
+            transparent_background = not vim.g.started_by_firenvim,
             integrations = {
                 cmp = true,
                 gitsigns = true,

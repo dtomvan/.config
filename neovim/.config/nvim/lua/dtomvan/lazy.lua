@@ -11,7 +11,10 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-require('lazy').setup('dtomvan.plugins', {
+require('lazy').setup({
+    spec = {
+        { import = 'dtomvan.plugins' },
+    },
     dev = {
         fallback = true,
     },

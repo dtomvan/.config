@@ -3,9 +3,9 @@ return {
     opts = {
         slots = { 'a', 'b', 'c', 'd' },
         mapping = {
-            startStopRecording = 'q',
-            playMacro = 'Q',
-            switchSlot = '<C-q>',
+            startStopRecording = 'Q',
+            playMacro = 'qq',
+            switchSlot = 'QQ',
             editMacro = 'cq',
             yankMacro = 'yq',
             addBreakPoint = '[;',
