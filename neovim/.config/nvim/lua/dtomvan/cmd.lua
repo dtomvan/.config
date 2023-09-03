@@ -369,9 +369,9 @@ end, {
 cmd('Dym', function(o)
     local word
     if o.bang then
-        word = vim.fn.expand '<cword>'
-    else
         word = vim.fn.expand '<cWORD>'
+    else
+        word = vim.fn.expand '<cword>'
     end
     ---@cast word string
     local buf = vim.api.nvim_create_buf(false, true)
