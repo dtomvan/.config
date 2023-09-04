@@ -119,7 +119,6 @@ cmd('Scratch', function(_)
     }, function(a)
         if a then
             vim.cmd.edit(string.format('%s%s', scratch_dir, a))
-            vim.cmd.Mkdir()
         end
     end)
 end, { desc = 'Create new scratch file in ~/.config/nvim', force = true })
@@ -164,7 +163,6 @@ local function thisft()
         return
     end
     vim.cmd.edit(string.format('%s/%s.lua', ftplugindir, cur_ft))
-    vim.cmd.Mkdir()
 end
 
 cmd('GoFt', thisft, { desc = 'Open current ftplugin', force = true })
