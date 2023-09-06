@@ -1,19 +1,20 @@
 return {
-    'numToStr/FTerm.nvim',
+    'akinsho/toggleterm.nvim',
+    version = "*",
     opts = {
-        border = 'rounded',
-        dimensions = {
-            height = 0.9,
-            width = 0.9,
-        },
-        blend = 20,
+        size = function(term)
+            if term.direction == "horizontal" then
+                return 15
+            elseif term.direction == "vertical" then
+                return vim.o.columns * 0.4
+            end
+        end,
     },
+    cmd = 'ToggleTerm',
     keys = {
         {
             '<A-i>',
-            function()
-                require('FTerm').toggle()
-            end,
+            vim.cmd.ToggleTerm,
             mode = { 'n', 't' },
             desc = 'Toggle terminal',
         },

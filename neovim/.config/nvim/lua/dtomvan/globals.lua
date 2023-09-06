@@ -42,7 +42,7 @@ M.EX = setmetatable({}, {
 M.CONF = setmetatable({}, {
     __index = function(_, k)
         return function()
-            require('dtomvan.config.' .. k)
+            return require('dtomvan.config.' .. k)
         end
     end
 })
