@@ -4,6 +4,7 @@ return {
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
     opts = {
         disabled_filetypes = {
+            'crates.nvim',
             'qf',
             'netrw',
             'NvimTree',

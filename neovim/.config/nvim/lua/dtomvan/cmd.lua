@@ -1,88 +1,9 @@
 local tbl = require 'dtomvan.utils.tables'
 local formatter = require 'dtomvan.formatter'
-local flags = require 'dtomvan.rg_flags'
 local noremap = require('dtomvan.keymaps').noremap
 
 local cmd = vim.api.nvim_create_user_command
 local system = vim.fn.system
-
-cmd('Lazygit', function(params)
-    local overseer = require 'overseer'
-
-    local args = 'lazygit ' .. vim.fn.expandcmd(params.args)
-
-    local task = overseer.new_task {
-        cmd = args,
-        name = args,
-        components = {
-            { 'on_complete_notify',  statuses = { 'FAILURE' } },
-            { 'on_complete_dispose', timeout = 30 },
-            'default',
-        },
-        strategy = {
-            'toggleterm',
-            on_create = function(term)
-                vim.wo[term.window].winblend = 30
-            end,
-            direction = 'float',
-            close_on_exit = true,
-        },
-    }
-    task:start()
-end, {
-    nargs = '*',
-    force = true,
-    desc = 'Open Lazygit with arguments.',
-    complete = function(lead)
-        return tbl.filter_startswith({
-            'branch',
-            'log',
-            'stash',
-            'status',
-        }, lead)
-    end,
-})
-
-cmd('Rg', function(params)
-    local overseer = require 'overseer'
-
-    local args = vim.fn.expandcmd(params.args)
-    local command, num_subs = vim.o.grepprg:gsub('%$%*', args)
-
-    if num_subs == 0 then
-        command = command .. ' ' .. args
-    end
-    local task = overseer.new_task {
-        cmd = command,
-        name = 'grep ' .. args,
-        components = {
-            {
-                'on_output_quickfix',
-                errorformat = vim.o.grepformat,
-                open = not params.bang,
-                open_height = 8,
-                items_only = true,
-            },
-            { 'on_complete_dispose', timeout = 30 },
-            'default',
-        },
-    }
-    task:start()
-end, {
-    bang = true,
-    nargs = '+',
-    force = true,
-    desc = 'Open ripgrep output in the quickfix list.',
-    complete = function(lead, _, _)
-        local possible = {}
-        for _, flag in ipairs(flags) do
-            if vim.startswith(flag, lead) then
-                table.insert(possible, flag)
-            end
-        end
-        return possible
-    end,
-})
 
 local function bail(msg)
     vim.notify(msg, vim.log.levels.ERROR)
@@ -122,22 +43,6 @@ cmd('Scratch', function(_)
         end
     end)
 end, { desc = 'Create new scratch file in ~/.config/nvim', force = true })
-
-vim.api.nvim_create_user_command('Make', function(params)
-    local task = require('overseer').new_task {
-        cmd = vim.split(vim.o.makeprg, '%s+'),
-        args = params.fargs,
-        components = {
-            { 'on_output_quickfix', open = not params.bang, open_height = 8 },
-            'default',
-        },
-    }
-    task:start()
-end, {
-    desc = '',
-    nargs = '*',
-    bang = true,
-})
 
 local function thisft()
     local home = os.getenv 'HOME'
@@ -226,7 +131,7 @@ end, { desc = 'Show confusing mappings', force = true })
 vim.cmd.noreabbrev('fcd', 'cd %:p:h')
 
 cmd('DiffOrig', function()
-    local start = vim.api.nvim_get_currentbuf()
+    local start = vim.api.nvim_get_current_buf()
     vim.cmd 'vnew | set buftype=nofile | read ++edit # | 0d_ | diffthis'
 
     local scratch = vim.api.nvim_get_current_buf()

@@ -48,6 +48,21 @@ for _, point in ipairs(breakpoints) do
 end
 
 -- Utils
+--- Documentation
+local function show_documentation()
+    local filetype = vim.bo.filetype
+    if vim.tbl_contains({ 'vim', 'help' }, filetype) then
+        vim.cmd('h ' .. vim.fn.expand('<cword>'))
+    elseif 'man' == filetype then
+        vim.cmd('Man ' .. vim.fn.expand('<cword>'))
+    elseif vim.fn.expand('%:t') == 'Cargo.toml' and require('crates').popup_available() then
+        require('crates').show_popup()
+    else
+        vim.lsp.buf.hover()
+    end
+end
+vim.keymap.set('n', 'K', show_documentation, { silent = true })
+
 map('n', '<leader><CR>', '<C-w>w', M.silent 'Switch windows')
 map('n', '<leader><leader>', ':<up>', M.noremap 'Last command')
 map(
