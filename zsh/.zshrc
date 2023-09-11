@@ -560,3 +560,6 @@ export PNPM_HOME="/home/tomvd/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
 
+
+# bun completions
+[ -s "/home/tomvd/.bun/_bun" ] && source "/home/tomvd/.bun/_bun"
