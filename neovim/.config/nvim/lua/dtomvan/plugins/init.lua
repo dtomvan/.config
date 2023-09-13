@@ -1,3 +1,5 @@
+local utils = require 'dtomvan.utils'
+
 -- This file is meant as a very general listing of common "dependency" plugins.
 -- Plugins with actual features will be included in separate files.
 return {
@@ -53,9 +55,15 @@ return {
     {
         'wakatime/vim-wakatime',
         event = 'VeryLazy',
-        enabled = function()
-            return vim.fn.hostname() == 'tom-pc'
-        end,
+        enabled = utils.is_personal,
+    },
+
+    {
+        "stefanlogue/hydrate.nvim",
+        version = "*",
+        opts = {
+            minute_interval = 10,
+        },
     },
 
     -- LaTeX

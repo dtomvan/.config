@@ -2,6 +2,7 @@ return {
     {
         "nvim-neorg/neorg",
         build = ":Neorg sync-parsers",
+        cmd = 'Neorg',
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-neorg/neorg-telescope",

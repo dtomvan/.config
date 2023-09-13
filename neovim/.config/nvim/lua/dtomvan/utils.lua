@@ -78,11 +78,11 @@ end
 
 function M.winbar()
     local filename = vim.api.nvim_buf_get_name(0)
-    local ft = vim.bo.filetype
+    local fd = vim.api.nvim_buf_get_option(0, 'buftype') == 'nofile' and '%y' or '%f'
 
     local ok, _ = pcall(require, 'nvim-web-devicons')
     if not ok then
-        return '%=%m %f'
+        return '%=%m ' .. fd
     end
 
     local char, hl =
@@ -91,7 +91,9 @@ function M.winbar()
 
     return '%m '
         .. icon
-        .. " %f > %{%v:lua.require'nvim-navic'.get_location()%}"
+        .. ' '
+        .. fd
+        .. " > %{%v:lua.require'nvim-navic'.get_location()%}"
 end
 
 local winbuf = function(ty)
@@ -172,6 +174,14 @@ M.source_dir = function(target)
         target,
         true
     ))
+end
+
+M.is_personal = function(extra)
+    return vim.tbl_contains(
+        vim.list_extend(
+            extra or {},
+            { 'tom-pc' }
+        ), vim.fn.hostname())
 end
 
 return M
