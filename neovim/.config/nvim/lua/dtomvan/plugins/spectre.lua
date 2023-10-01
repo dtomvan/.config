@@ -3,7 +3,8 @@ local tables = require 'dtomvan.utils.tables'
 
 return {
     'nvim-pack/nvim-spectre',
-    build = './build.sh',
+    enabled = false,
+    -- build = './build.sh',
     keys = {
         {
             '<leader>gS',

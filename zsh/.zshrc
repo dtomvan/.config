@@ -214,6 +214,9 @@ alias :q="cowsay 'You are not in vim anymore.'"
 alias :wq="cowsay 'You are not in vim anymore.'"
 alias :x="cowsay 'You are not in vim anymore.'"
 
+exa() {
+    eza "$@" || command exa "$@"
+}
 cd () {
     if [ "$1" = '~' ]; then
         pushd -q ~

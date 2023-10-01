@@ -1,5 +1,6 @@
 return {
     "m4xshen/hardtime.nvim",
+    cond = vim.g.started_by_firenvim == nil,
     event = 'UIEnter',
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
     opts = {
