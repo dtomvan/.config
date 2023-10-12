@@ -104,7 +104,10 @@ return {
             },
         },
     },
-    dependencies = 'nvim-lua/lsp-status.nvim',
+    dependencies = {
+        'nvim-lua/lsp-status.nvim',
+        'MunifTanjim/nui.nvim',
+    },
     cond = vim.g.started_by_firenvim == nil
         and vim.g.neovide == nil
         and not vim.g._no_noice

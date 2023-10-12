@@ -1,11 +1,14 @@
+local func = require 'dtomvan.utils.func'
+local tables = require 'dtomvan.utils.tables'
+local tbl = require 'dtomvan.utils.tables'
+
 local url = require 'net.url'
-local utils = require 'dtomvan.utils'
 
 local M = {}
 M.handlers = {}
 
 M.paste_handler_comp = function(lead)
-    return utils.filter_starts(M.handlers, lead)
+    return tbl.filter_startswith(vim.tbl_keys(M.handlers), lead or '')
 end
 
 -- WARNING: When added, paste handlers cannot be removed and can only be toggled
@@ -113,7 +116,7 @@ vim.api.nvim_create_user_command('PasteHandlers', function(o)
         table.insert(
             res,
             h.enabled and { ' (enabled)', 'String' }
-                or { ' (disabled)', 'Comment' }
+            or { ' (disabled)', 'Comment' }
         )
         table.insert(res, { '\n', 'Normal' })
     end
@@ -123,6 +126,23 @@ end, {
     nargs = '?',
     complete = M.paste_handler_comp,
 })
+
+if vim.g.is_rwds then
+    M.add_paste_handler(
+        'csv_to_tsv',
+        'If the pasted contents are ALL csv, then convert it to TSV.',
+        function(lines, phase, cb)
+            for _, i in ipairs { ',', ';' } do
+                if tables.all(lines, func.set_nth(string.match, i, 2)) then
+                    for j, line in ipairs(lines) do
+                        lines[j] = line:gsub(i, '\t')
+                    end
+                    return cb(lines, phase)
+                end
+            end
+        end
+    )
+end
 
 M.add_paste_handler(
     'scrub_ansi_colors',
@@ -142,9 +162,9 @@ M.add_paste_handler(
         local mode = vim.api.nvim_get_mode().mode
         if
             not (vim.o.filetype == 'markdown'
-            and mode == 'i'
-            and mode == 'n'
-            and mode == 'niI')
+                and mode == 'i'
+                and mode == 'n'
+                and mode == 'niI')
         then
             return cb(lines, phase)
         end

@@ -1,3 +1,5 @@
+local func = require 'dtomvan.utils.func'
+
 -- BEWARE: This is a major hack and just meant as an easy but inperformant
 -- solution to all your lua list-shaped table shenanigans
 local M = {}
@@ -35,9 +37,7 @@ for _, fn in ipairs { 'tbl_contains', 'startswith', 'endswith', 'eq' } do
     local filter = 'filter_' .. fn
 
     M[filter] = function(tbl, what)
-        return vim.tbl_filter(function(x)
-            return use(x, what)
-        end, tbl)
+        return vim.tbl_filter(func.set_nth(use, what, 2), tbl)
     end
 
     M['map_' .. filter] = function(tbl, map, what)

@@ -17,6 +17,7 @@ vim.g.firenvim_config = {
 
 require 'dtomvan.globals'
 require 'dtomvan.filetypes'
+require 'dtomvan.rwds'
 require 'dtomvan.au'
 require 'dtomvan.opts'
 require 'dtomvan.lazy'
