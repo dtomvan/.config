@@ -4,7 +4,24 @@ return {
     ---@type Flash.Config
     opts = {},
     keys = {
-        { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end,   desc = "Flash" },
+        {
+            "<cr>",
+            mode = { "n", "x", "o" },
+            function() require("flash").jump() end,
+            desc = "Flash",
+        },
+        {
+            ',<cr>',
+            '<cr>',
+            remap = false,
+            desc = '<cr>',
+        },
+        {
+            ',s',
+            's',
+            remap = false,
+            desc = 's',
+        },
         {
             "S",
             mode = { "n", "o", "x" },
@@ -12,7 +29,7 @@ return {
             desc =
             "Flash Treesitter"
         },
-        { "r", mode = "o",               function() require("flash").remote() end, desc = "Remote Flash" },
+        { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
         {
             "R",
             mode = { "o", "x" },
@@ -26,6 +43,16 @@ return {
             function() require("flash").toggle() end,
             desc =
             "Toggle Flash Search"
+        },
+        {
+            '*',
+            function() require("flash").jump({ pattern = vim.fn.expand("<cword>") }) end,
+            desc = 'Flash jump to word',
+        },
+        {
+            ',*',
+            '*',
+            remap = false,
         },
     },
 }

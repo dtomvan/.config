@@ -63,6 +63,18 @@ return {
         },
     },
     {
+        'echasnovski/mini.surround',
+        version = '*',
+        config = mini_req,
+        opts = {
+            mappings = {
+                add = "ys",
+                delete = "ds",
+                replace = "cs",
+            },
+        },
+    },
+    {
         'echasnovski/mini.clue',
         version = '*',
         event = 'UIEnter',

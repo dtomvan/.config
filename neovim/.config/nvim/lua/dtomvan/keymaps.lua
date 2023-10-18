@@ -264,15 +264,15 @@ map('n', '<C-j>', '<C-w>l', M.silent 'Winmove right')
 map('n', 'k', "v:count == 0 ? 'gk' : 'k'", M.expr 'gk')
 map('n', 'j', "v:count == 0 ? 'gj' : 'j'", M.expr 'gj')
 
-map('n', '<c-s>', function()
-    local ft = vim.bo.filetype
-    if ft == 'lua' or ft == 'vim' then
-        return '<cmd>w<cr><cmd>so<cr>'
-    else
-        return ''
-    end
-end, M.expr 'Write and source')
-
+-- map('n', '<c-s>', function()
+--     local ft = vim.bo.filetype
+--     if ft == 'lua' or ft == 'vim' then
+--         return '<cmd>w<cr><cmd>so<cr>'
+--     else
+--         return ''
+--     end
+-- end, M.expr 'Write and source')
+--
 map('n', 'ZZ', '<cmd>update<cr>')
 
 map('n', '[<space>', function()

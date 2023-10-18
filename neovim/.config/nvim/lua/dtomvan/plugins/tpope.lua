@@ -1,23 +1,5 @@
 return {
     {
-        'tpope/vim-surround',
-        keys = {
-            { 'ds' },
-            { 'cs' },
-            { 'cS' },
-            { 'ys' },
-            { 'yS' },
-            { 'yss' },
-            { 'ySs' },
-            { 'ySS' },
-            { 'S',      mode = 'x' },
-            { 'gS',     mode = 'x' },
-            { '<c-s>',  mode = 'i' },
-            { '<c-g>s', mode = 'i' },
-            { '<c-g>S', mode = 'i' },
-        },
-    },
-    {
         'tpope/vim-repeat',
         event = 'VeryLazy',
     },

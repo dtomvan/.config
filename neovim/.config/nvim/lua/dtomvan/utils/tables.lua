@@ -27,6 +27,12 @@ function M.multi_map_get(tbl, idx)
     end, tbl)
 end
 
+function M.map_idx(tbl, tbl_2)
+    return vim.tbl_map(function(x)
+        return tbl_2[x]
+    end, tbl)
+end
+
 for _, fn in ipairs { 'tbl_contains', 'startswith', 'endswith', 'eq' } do
     local use = vim[fn]
     if fn == 'eq' then

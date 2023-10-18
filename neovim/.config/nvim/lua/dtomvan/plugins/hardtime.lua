@@ -4,15 +4,19 @@ return {
     event = 'UIEnter',
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
     opts = {
+        restricted_keys = {
+            ['<CR>'] = {},
+        },
         disabled_filetypes = {
             'crates.nvim',
-            'qf',
-            'netrw',
-            'NvimTree',
+            'harpoon',
             'lazy',
             'mason',
-            'oil',
             'neo-tree',
+            'netrw',
+            'NvimTree',
+            'oil',
+            'qf',
         },
         disable_mouse = false,
         hints = {

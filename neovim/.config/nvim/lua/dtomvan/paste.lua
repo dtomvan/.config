@@ -5,10 +5,25 @@ local tbl = require 'dtomvan.utils.tables'
 local url = require 'net.url'
 
 local M = {}
+---@class dtomvan.PasteHandler
+---@field desc string
+---@field enabled boolean
+---@alias dtomvan.PasteHandlers dtomvan.PasteHandler[]
+---@type dtomvan.PasteHandlers
 M.handlers = {}
 
-M.paste_handler_comp = function(lead)
-    return tbl.filter_startswith(vim.tbl_keys(M.handlers), lead or '')
+M.paste_handler_comp = function(lead, cmdline)
+    local is_enable = vim.startswith(cmdline, 'Enable')
+    local is_disable = vim.startswith(cmdline, 'Disable')
+    local filtered = vim.tbl_keys(vim.tbl_filter(function(x)
+        return (is_enable and not x.enabled)
+            or (is_disable and x.enabled)
+            or (not is_enable and not is_disable)
+    end, M.handlers))
+    return tbl.filter_startswith(
+        tables.map_idx(filtered, vim.tbl_keys(M.handlers)),
+        lead or ''
+    )
 end
 
 -- WARNING: When added, paste handlers cannot be removed and can only be toggled
