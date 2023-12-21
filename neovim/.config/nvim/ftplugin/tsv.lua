@@ -6,7 +6,7 @@ vim.keymap.set('i', '<enter>', function()
         return '<enter>'
     end
     if string.find(line[1], '\t') and #line[1] ~= 0 then
-        return '<enter>'
+        return '<enter><esc>zzi'
     else
         return '<c-v><tab>'
     end

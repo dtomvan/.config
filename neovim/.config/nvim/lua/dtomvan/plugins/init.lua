@@ -58,14 +58,6 @@ return {
         enabled = utils.is_personal,
     },
 
-    {
-        "stefanlogue/hydrate.nvim",
-        version = "*",
-        opts = {
-            minute_interval = 10,
-        },
-    },
-
     -- LaTeX
     {
         'lervag/vimtex',

@@ -214,9 +214,6 @@ alias :q="cowsay 'You are not in vim anymore.'"
 alias :wq="cowsay 'You are not in vim anymore.'"
 alias :x="cowsay 'You are not in vim anymore.'"
 
-exa() {
-    eza "$@" || command exa "$@"
-}
 cd () {
     if [ "$1" = '~' ]; then
         pushd -q ~
@@ -227,7 +224,7 @@ cd () {
 alias tldrf='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tldr'
 cx () {
     cd $1
-    exa -lab --git --no-user || /bin/ls -la
+    eza -lab --git --no-user || /bin/ls -la
 }
 
 DIR_STACK=()
@@ -532,6 +529,13 @@ alias x='cd "$(xplr --print-pwd-as-result)"'
 
 alias templeos="printf '\\33]50;%s\\007' 'xft:TempleOS-12,Iosevka Nerd Font-18' && nvim +Temple && printf '\\33]50;%s\\007' 'xft:Iosevka Nerd Font-15'"
 
+rwds_export() {
+    for var in $@
+    do
+    rwds-cli show -p "$var" | awk -F'\t' '/^\s*$/ { p=1;next }p {print $1, "\t",$2}'
+    done
+}
+
 eval "$(antidot init)"
 eval "$(zoxide init zsh --cmd d)"
 eval "$(mcfly init zsh)"
@@ -554,9 +558,17 @@ plug "zsh-users/zsh-autosuggestions"
 
 [ -z "$ZPROF" ] || zprof
 
-alias ls="exa --icons"
+alias ls="eza --icons"
 alias ll="ls -lah"
 alias la="ls -a"
+
+_exa() {
+    _eza "$@"
+}
+
+xon() {
+    exec $(fd -HiLt x -d 2 'xonotic-linux-sdl' | head -n1)
+}
 
 # pnpm
 export PNPM_HOME="/home/tomvd/.local/share/pnpm"

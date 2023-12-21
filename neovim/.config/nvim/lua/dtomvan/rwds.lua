@@ -7,24 +7,6 @@ vim.g.is_rwds = rwds and true or false
 
 if not vim.g.is_rwds then return end
 
-local lasttime
-vim.api.nvim_create_autocmd({ 'BufAdd', 'BufLeave' }, {
-    group = vim.api.nvim_create_augroup('RwdsStayInCorrectBuffer', { clear = true }),
-    callback = function(ev)
-        if lasttime then
-            if vim.uv.now - lasttime < 500 then
-                return
-            end
-        end
-        vim.notify('Do not open different buffers in a RWDS session', vim.log.levels.WARN)
-        if ev.event == 'BufAdd' then
-            vim.api.nvim_buf_delete(ev.buf, { force = true })
-        end
-        vim.cmd [[ only | if tabpagenr('$') > 1 | then | tabonly | endif | b ~/.local/share/rusty-words/temp.tsv ]]
-        lasttime = vim.uv.now()
-    end
-})
-
 vim.api.nvim_create_user_command('Swap', function()
     local res = {}
     for _, line in ipairs(vim.api.nvim_buf_get_lines(0, 0, -1, false)) do
@@ -56,3 +38,32 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 vim.keymap.set('n', '<c-q>', vim.cmd.wqall, { buffer = true })
+
+local function setops(bufid, winid)
+    if (bufid and winid) or (not bufid and not winid) then error('invalid args') end
+    local o = { buf = bufid, win = winid }
+    if o.win then
+        vim.api.nvim_set_option_value('scrolloff', 10, o)
+    end
+    if o.buf then
+        vim.api.nvim_set_option_value('tabstop', 20, o)
+    end
+end
+
+for _, bufid in ipairs(vim.api.nvim_list_bufs()) do
+    setops(bufid)
+end
+
+for _, winid in ipairs(vim.api.nvim_list_wins()) do
+    setops(nil, winid)
+end
+
+vim.api.nvim_create_autocmd('BufAdd', {
+    callback = function(o)
+        setops(o.buf)
+    end
+})
+
+for _, i in ipairs { 'j', 'k' } do
+    vim.keymap.set('n', i, i .. 'zz')
+end

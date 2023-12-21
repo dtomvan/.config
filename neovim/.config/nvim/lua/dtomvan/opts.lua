@@ -34,7 +34,6 @@ o.signcolumn = 'yes'
 o.smartcase = true
 o.softtabstop = 4
 -- o.spelllang = 'en_us,nl'
-o.statusline = ' '
 o.swapfile = true
 o.tabstop = 4
 o.termguicolors = true

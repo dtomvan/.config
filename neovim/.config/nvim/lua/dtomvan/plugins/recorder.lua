@@ -1,5 +1,6 @@
 return {
     'chrisgrieser/nvim-recorder',
+    enabled = false,
     opts = {
         slots = { 'a', 'b', 'c', 'd' },
         mapping = {

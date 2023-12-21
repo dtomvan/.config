@@ -36,11 +36,15 @@ local get_startuptime = function()
 end
 
 local logo_expla = logo[#logo]
-local logo_expla_hl = function(content)
+local logo_hl = function(content)
     local coords = MiniStarter.content_coords(content, 'header')
-    for _, c in ipairs(coords) do
+    for i, c in ipairs(coords) do
         if content[c.line][c.unit].string == logo_expla then
             content[c.line][c.unit].hl = 'Comment'
+        else
+            if i < #logo then
+                content[c.line][c.unit].hl = 'NvimString'
+            end
         end
     end
     return content
@@ -241,7 +245,7 @@ starter.setup {
         StarterBirthday.gen_hook['mini.starter'](),
         nothing_if_too_small,
         remove_empty_sessions,
-        logo_expla_hl,
+        logo_hl,
         clean_recent_files,
         adding_bullet(false),
         starter.gen_hook.aligning('center', 'center'),

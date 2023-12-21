@@ -2,6 +2,8 @@ return {
     {
         'catppuccin/nvim',
         name = 'catppuccin',
+        -- let's go with the new default colorscheme.
+        enabled = false,
         lazy = false,
         priority = 1000,
         dependencies = 'levouh/tint.nvim',

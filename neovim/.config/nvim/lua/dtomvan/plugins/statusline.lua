@@ -47,6 +47,8 @@ end
 
 local M = {
     'tjdevries/express_line.nvim',
+    -- Let's go full "default experience"
+    enabled = false,
     event = 'UIEnter',
     dependencies = {
         'kyazdani42/nvim-web-devicons',

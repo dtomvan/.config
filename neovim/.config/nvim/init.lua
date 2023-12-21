@@ -29,3 +29,5 @@ if vim.g.started_by_firenvim then return end
 -- My rendition of the result of
 -- `opam user-setup install`
 require 'dtomvan.opam'
+
+vim.cmd [[ hi! StatusLine guibg=NvimDarkGrey3 | hi! StatusLineNC guibg=NvimDarkGrey1 ]]

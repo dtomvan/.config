@@ -1,7 +1,7 @@
 # /home/tomvd/.config/tmuxinator/aoc.yml
 
 name: aoc
-root: ~/projects/aoc/2022/
+root: ~/projects/00-code/aoc/2023/
 
 # Optional tmux socket
 # socket_name: foo
@@ -12,7 +12,7 @@ root: ~/projects/aoc/2022/
 # Project hooks
 
 # Runs on project start, always
-# on_project_start: command
+on_project_start: cargo check; YEAR=$(gum input --placeholder year); DAY=$(gum input --placeholder day)
 
 # Run on project start, the first time
 # on_project_first_start: command
@@ -45,8 +45,8 @@ startup_window: run
 # attach: false
 
 windows:
-  - editor: nvim --cmd 'lua vim.g._no_noice = true' --cmd 'lua vim.g._aoc = true' --listen /run/user/1000/nvim-aoc src/*.rs
-  - run: cargo b && cargo b --release && echo "sleep 10 && cargo day && nvim --server /run/user/1000/nvim-aoc --remote src/days/day$(date +%d | bc).rs && nvim --server /run/user/1000/nvim-aoc-input --remote inputs/day-$(date +%d | bc).txt && tmux selectw -t 1 && cargo r$(date +%Y) $(date +%d | bc)" | xsel -b
+  - editor: nvim --cmd 'lua vim.g._no_noice = true' --cmd "lua vim.g._aoc = '$YEAR $DAY'" --listen /run/user/1000/nvim-aoc src/*.rs
+  - run: sleep 10 && cargo day && nvim --server /run/user/1000/nvim-aoc --remote src/days/day$(date +%d | bc).rs && nvim --server /run/user/1000/nvim-aoc-input --remote inputs/day-$(date +%d | bc).txt && tmux selectw -t 1 && cargo r$(date +%Y) $(date +%d | bc)" | xsel -b
   - test:
   - input: nvim --listen /run/user/1000/nvim-aoc-input
   - test-input: nvim inputs/day-$(date +%d | bc).test

@@ -244,8 +244,8 @@ spterm('n', '<leader>cv', 'vs')
 spterm('n', '<leader>cx', 'sp')
 
 local aoc
-if vim.g._aoc == true then
-    aoc = string.format(' -p aoc_%s %s', os.date '%Y', tonumber(os.date '%d'))
+if vim.g._aoc and #vim.g._aoc > 0 then
+    aoc = string.format(' -p aoc_%s', vim.g._aoc)
 else
     aoc = ''
 end
@@ -261,8 +261,10 @@ map('n', '<C-h>', '<C-w>h', M.silent 'Winmove left')
 map('n', '<C-j>', '<C-w>j', M.silent 'Winmove down')
 map('n', '<C-h>', '<C-w>k', M.silent 'Winmove up')
 map('n', '<C-j>', '<C-w>l', M.silent 'Winmove right')
-map('n', 'k', "v:count == 0 ? 'gk' : 'k'", M.expr 'gk')
-map('n', 'j', "v:count == 0 ? 'gj' : 'j'", M.expr 'gj')
+if not vim.g.is_rwds then
+    map('n', 'k', "v:count == 0 ? 'gk' : 'k'", M.expr 'gk')
+    map('n', 'j', "v:count == 0 ? 'gj' : 'j'", M.expr 'gj')
+end
 
 -- map('n', '<c-s>', function()
 --     local ft = vim.bo.filetype

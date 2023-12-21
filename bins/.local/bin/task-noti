@@ -1,0 +1,12 @@
+#!/bin/bash
+
+while true; do
+    tasks="$(task +READY -ACTIVE export | \
+        jq --raw-output \
+        'map("Scheduled for now: \(.description) with urgency \(.urgency)") |
+        join("\n")')"
+    for task in "$tasks"; do
+        notify-send "$task"
+    done
+    sleep 60
+done

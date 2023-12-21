@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -euo pipefail
+
+echo "REGELS LADEN"
+pushd ~ > /dev/null
+pandoc regels.md -o regels-SNAPSHOT.pdf --template eisvogel
+zathura regels-SNAPSHOT.pdf --mode=fullscreen &
+disown
+popd > /dev/null
+echo "SUCCES MET HET LEZEN VAN DE HEILIGE REGELS"

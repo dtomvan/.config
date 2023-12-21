@@ -303,3 +303,13 @@ end, {
     nargs = 0,
     bang = true,
 })
+
+cmd('Sdo', function(o)
+    local last_search = vim.fn.getreg "/"
+    vim.cmd.vimgrep(last_search, "%")
+    vim.cmd.cdo(o.args)
+end, {
+    desc = "Like `cdo` but for the search results.",
+    force = true,
+    nargs = '+',
+})

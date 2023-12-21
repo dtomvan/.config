@@ -6,6 +6,10 @@ return {
     opts = {
         restricted_keys = {
             ['<CR>'] = {},
+            ['h'] = {},
+            ['j'] = {},
+            ['k'] = {},
+            ['l'] = {},
         },
         disabled_filetypes = {
             'crates.nvim',

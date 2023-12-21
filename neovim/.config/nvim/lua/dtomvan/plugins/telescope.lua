@@ -43,8 +43,9 @@ return {
             end
             return vim.tbl_deep_extend("force", opts, {
                 defaults = {
-                    winblend = require('catppuccin').options.transparent_background and 0
-                        or 10,
+                    winblend = 10,
+                    -- winblend = require('catppuccin').options.transparent_background and 0
+                    --     or 10,
                     mappings = {
                         i = { ['<c-s-t>'] = trouble },
                         n = { ['<c-s-t>'] = trouble },
