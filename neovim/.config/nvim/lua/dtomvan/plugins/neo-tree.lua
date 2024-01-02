@@ -43,6 +43,15 @@ return {
         )
     end,
     opts = {
+        event_handlers = {
+            {
+                event = "vim_buffer_changed",
+                handler = function(arg)
+                    -- TODO: if last window, just DELETE the neo-tree buffer, do
+                    -- not exit out of vim entirely.
+                end,
+            }
+        },
         open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy" },
         use_libuv_file_watcher = true,
         follow_current_file = true,

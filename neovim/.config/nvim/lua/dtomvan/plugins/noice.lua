@@ -14,17 +14,6 @@ return {
         },
         routes = {
             {
-                filter = { event = 'msg_show', find = '(mini.starter)' },
-                opts = { skip = true },
-            },
-            {
-                filter = {
-                    event = 'msg_show',
-                    find = '<bs> go up one level <esc> close',
-                },
-                opts = { skip = true },
-            },
-            {
                 view = 'split',
                 filter = { event = 'msg_show', min_height = 10 },
             },
@@ -35,6 +24,28 @@ return {
                     kind = '',
                     find = 'written',
                 },
+            },
+            -- FIXME: for some reason this displays the message both as a notify
+            -- and as a mini...
+            -- {
+            --     filter = {
+            --         event = 'msg_show',
+            --         kind = '',
+            --         max_height = 2,
+            --         max_length = 60,
+            --     },
+            --     view = 'mini',
+            -- },
+            {
+                filter = { event = 'msg_show', find = '(mini.starter)' },
+                opts = { skip = true },
+            },
+            {
+                filter = {
+                    event = 'msg_show',
+                    find = '<bs> go up one level <esc> close',
+                },
+                opts = { skip = true },
             },
         },
         views = {

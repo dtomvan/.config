@@ -16,7 +16,7 @@ end
 
 -- Don't want to do more lazy-loading shenanigans for this eensy function
 M.key_cmd = function(cmd)
-    return table.concat { '<cmd>', cmd, '<cr>' }
+    return ('<cmd>%s<cr>'):format(cmd)
 end
 
 M.o = function(map, cmd)

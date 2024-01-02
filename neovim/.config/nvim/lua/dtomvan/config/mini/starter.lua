@@ -97,10 +97,10 @@ local clean_recent_files = function(content)
             len = len + 3 + #path
         end
 
-        item._len = len
         item._icon = icon
         item._hl = hl
 
+        local new_line
         if len > math.min(cols, 80) then
             path = vim.fn.pathshorten(path, 4)
             -- minus 2 for icons or bullets
@@ -120,7 +120,7 @@ local clean_recent_files = function(content)
                 filename_ellipsis and '...' or '',
                 do_path and path_c or ''
             )
-            local new_line = { { string = filename, type = 'item', item = item } }
+            new_line = { { string = filename, type = 'item', item = item } }
             if filename_ellipsis then
                 table.insert(new_line, { string = '...', hl = 'Comment' })
             end
@@ -132,9 +132,8 @@ local clean_recent_files = function(content)
                 table.insert(new_line, { string = path, hl = 'Italic' })
                 table.insert(new_line, { string = ')', hl = 'Comment' })
             end
-            content[c.line] = new_line
         else
-            local new_line = {
+            new_line = {
                 { string = filename, type = 'item', item = item },
             }
             if do_path then
@@ -142,22 +141,33 @@ local clean_recent_files = function(content)
                 table.insert(new_line, { string = path })
                 table.insert(new_line, { string = ')', hl = 'Comment' })
             end
-            content[c.line] = new_line
         end
-        if len > longest then
-            longest = len
+        content[c.line] = new_line
+        item._len = #MiniStarter.content_to_lines { new_line }[1]
+        if item._len > longest then
+            longest = item._len
         end
         ::continue::
     end
     for _, c in ipairs(coords) do
         local unit = content[c.line][1]
         local item = unit.item
+        local len = item._len
         if item.section ~= 'Recent files' then
             goto continue
         end
-        local pad = string.rep(' ', math.min(math.max(logo_width - item._len - 2, longest - item._len), cols - item._len))
+        local pad = string.rep(
+            ' ',
+            math.min(
+                math.max(
+                    logo_width - len - 2,
+                    longest - len
+                ),
+                cols - len
+            )
+        )
 
-        content[c.line][1].string = unit.string .. pad
+        table.insert(content[c.line], 2, { string = pad })
         ::continue::
     end
     local header = MiniStarter.content_coords(content, 'header')
@@ -166,7 +176,16 @@ local clean_recent_files = function(content)
         local lines = vim.split(unit.string, '\n')
 
         for i, line in ipairs(lines) do
-            lines[i] = string.rep(' ', math.min(math.max(logo_width - #line - 2, longest - #line), cols - #line) / 2) ..
+            lines[i] = string.rep(
+                    ' ',
+                    math.min(
+                        math.max(
+                            logo_width - #line - 2,
+                            longest - #line
+                        ),
+                        cols - #line
+                    ) / 2
+                ) ..
                 line
         end
         content[c.line][1].string = table.concat(lines, '\n')
@@ -253,6 +272,7 @@ starter.setup {
     silent = true,
 }
 
+vim.api.nvim_set_hl(0, 'MiniStarterCurrent', { link = 'CursorLine' })
 vim.api.nvim_set_hl(0, 'MiniStarterFooter', { link = 'MiniStarterSection' })
 vim.keymap.set('n', '<leader>gms', MiniStarter.open)
 

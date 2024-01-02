@@ -13,7 +13,6 @@ vim.filetype.add {
         fen = 'fen',
     },
     pattern = {
-        ['${HOME}/.config/kitty/.*%.conf'] = 'kitty',
         ['web.whatsapp.com_.*.txt'] = firenvim_ft 'messaging',
         ['web.telegram.org.*.txt'] = firenvim_ft 'messaging',
         ['github.com_.*.txt'] = firenvim_ft 'markdown',
