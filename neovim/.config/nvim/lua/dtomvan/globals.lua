@@ -5,6 +5,8 @@ M.P = function(v)
     return v
 end
 
+M.dbg = M.P
+
 M.RELOAD = function(...)
     local ok, reload = pcall(require, 'plenary.reload')
     if ok then

@@ -110,11 +110,9 @@ require('nvim-treesitter.configs').setup {
     endwise = {
         enable = true,
     },
-    context_commentstring = {
-        enable = true,
-        enable_autocmd = false,
-    },
 }
+
+require('ts_context_commentstring').setup {}
 
 require('treesitter-context').setup {
     max_lines = 5,

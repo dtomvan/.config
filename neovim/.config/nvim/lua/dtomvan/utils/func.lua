@@ -79,18 +79,28 @@ M.set_args = function(func, ...)
     end
 end
 
-M.set_first = function(func, first)
-    return function(...)
-        return func(first, ...)
-    end
-end
-
 M.set_nth = function(func, arg, n)
     return function(...)
         local args = { ... }
         table.insert(args, n, arg)
         return func(unpack(args))
     end
+end
+
+M.replace_nth = function(func, arg, n)
+    return function(...)
+        local args = { ... }
+        args[n] = arg
+        return func(unpack(args))
+    end
+end
+
+M.replace_first = function(func, first)
+    return M.replace_nth(func, first, 1)
+end
+
+M.set_first = function(func, first)
+    return M.set_nth(func, first, 1)
 end
 
 M.set_multiple = function(func, argv)

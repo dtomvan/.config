@@ -5,6 +5,7 @@ end
 ---@diagnostic disable: no-unknown
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
+vim.g.skip_ts_context_commentstring_module = true
 
 vim.g.firenvim_config = {
     localSettings = {

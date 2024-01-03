@@ -1,3 +1,17 @@
+local buf = require 'dtomvan.utils.buf'
+local utils = require 'dtomvan.utils'
+
+local function autoremove()
+    local cur = buf:from_current()
+    if #vim.tbl_filter(function(win)
+            return vim.api.nvim_win_get_config(win).relative == ""
+        end, vim.api.nvim_tabpage_list_wins(0)) == 1
+        and cur.bo.ft == 'neo-tree' then
+        cur:delete()
+        buf:create { scratch = true, listed = true }:goto()
+    end
+end
+
 return {
     'nvim-neo-tree/neo-tree.nvim',
     version = 'v3.x',
@@ -45,11 +59,8 @@ return {
     opts = {
         event_handlers = {
             {
-                event = "vim_buffer_changed",
-                handler = function(arg)
-                    -- TODO: if last window, just DELETE the neo-tree buffer, do
-                    -- not exit out of vim entirely.
-                end,
+                event = "vim_win_closed",
+                handler = autoremove,
             }
         },
         open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy" },

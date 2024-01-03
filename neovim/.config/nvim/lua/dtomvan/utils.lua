@@ -184,4 +184,73 @@ M.is_personal = function(extra)
         ), vim.fn.hostname())
 end
 
+for _, i in ipairs { 'buf', 'win', 'filetype' } do
+    for _, j in ipairs { 'get', 'set' } do
+        local f = ('%s_%s'):format(i, j)
+        if f == 'filetype_set' then goto continue end
+        M[f] = function(thing, opt, value)
+            local c = vim.api[('nvim_%s_option_value'):format(j)]
+            local params = { [i] = thing or 0 }
+            if j == 'get' then
+                return c(opt, params)
+            else
+                return c(opt, value, params)
+            end
+        end
+        ::continue::
+    end
+end
+
+M.validate_and_set_def = function(validate, subject, optional, subject_name)
+    vim.validate {
+        [subject_name or 'subject'] = { subject, 't', optional },
+    }
+    validate = vim.deepcopy(validate)
+    for k, v in pairs(validate) do
+        table.insert(v, 1, subject[k])
+    end
+    vim.validate(validate)
+    for k, v in pairs(validate) do
+        if not subject[k] and v[3] == true then
+            subject[k] = v[4]
+        end
+    end
+    return subject
+end
+
+local function _or_nils(t)
+    local res = {}
+    for k, v in pairs(t) do
+        if type(v) == 'table' then
+            res[k] = _or_nils(v)
+        end
+        res[k] = v or 'nil'
+    end
+    return res
+end
+
+---@param t table<string, any?>
+---@return nil
+M.print_nils = function(t)
+    vim.print(_or_nils(t))
+end
+
+M.debug = function(...)
+    local res = {}
+    local args = { ... }
+    for _, name in ipairs(args) do
+        local value = _G[name]
+        for i = 1, math.huge do
+            local localname, localvalue = debug.getlocal(2, i, 1)
+            if not localname then
+                break
+            elseif localname == name then
+                value = localvalue
+            end
+        end
+        res[name] = value or '<<nil>>'
+    end
+    vim.print(res)
+end
+
 return M

@@ -1,3 +1,5 @@
+local utils = require 'dtomvan.utils'
+
 return function(client, bufnr)
     require('lsp-status').on_attach(client)
 
@@ -19,11 +21,10 @@ return function(client, bufnr)
         )
     end
 
-    local function buf_opt(...)
-        vim.api.nvim_buf_set_option(bufnr, ...)
-    end
-
     -- Enable completion triggered by <c-x><c-o>
+    local function buf_opt(k, v)
+        return utils.buf_set(bufnr, k, v)
+    end
     buf_opt('omnifunc', 'v:lua.vim.lsp.omnifunc')
     buf_opt('tagfunc', 'v:lua.vim.lsp.tagfunc')
 

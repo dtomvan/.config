@@ -15,6 +15,8 @@ return {
     },
     {
         "Fildo7525/pretty_hover",
+        -- bugs out
+        enabled = false,
         event = "LspAttach",
         opts = {},
         config = function(_, opts)

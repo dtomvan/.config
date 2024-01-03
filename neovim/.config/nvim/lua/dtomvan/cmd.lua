@@ -1,3 +1,4 @@
+local buf = require 'dtomvan.utils.buf'
 local tbl = require 'dtomvan.utils.tables'
 local formatter = require 'dtomvan.formatter'
 local noremap = require('dtomvan.keymaps').noremap
@@ -131,16 +132,16 @@ end, { desc = 'Show confusing mappings', force = true })
 vim.cmd.noreabbrev('fcd', 'cd %:p:h')
 
 cmd('DiffOrig', function()
-    local start = vim.api.nvim_get_current_buf()
+    local start = buf:current()
     vim.cmd 'vnew | set buftype=nofile | read ++edit # | 0d_ | diffthis'
 
-    local scratch = vim.api.nvim_get_current_buf()
+    local scratch = buf:current()
     vim.cmd 'wincmd p | diffthis'
-    for _, buf in ipairs { scratch, start } do
+    for _, b in ipairs { scratch, start } do
         vim.keymap.set('n', 'q', function()
             vim.api.nvim_buf_delete(scratch, { force = true })
             vim.keymap.del('n', 'q', { buffer = start })
-        end, { buffer = buf })
+        end, { buffer = b })
     end
 end, { desc = 'Diff current file with version before last save' })
 
@@ -166,7 +167,7 @@ end, { desc = 'Toggle auto pairs' })
 local function clients_comp(lead)
     return tbl.get_filter_startswith(
         formatter.get_formatting_clients {
-            bufnr = vim.api.nvim_get_current_buf(),
+            bufnr = buf:current(),
         },
         'name',
         lead
@@ -175,7 +176,7 @@ end
 
 cmd('Formatter', function(o)
     local cl, multiple = formatter.buf_get_server(
-        tonumber(o.args) or vim.api.nvim_get_current_buf()
+        tonumber(o.args) or buf:current()
     )
     if not cl then
         return vim.notify 'no formatter for this buffer'
@@ -188,7 +189,7 @@ cmd('Formatter', function(o)
 end, { desc = 'Get current formatter for buffer', nargs = '?' })
 
 cmd('SetFormatter', function(o)
-    local bufnr = vim.api.nvim_get_current_buf()
+    local bufnr = buf:current()
     local name = o.args
     local clients =
         formatter.get_formatting_clients { bufnr = bufnr, name = name }
@@ -205,7 +206,7 @@ end, {
 })
 
 cmd('SaveFormatter', function(o)
-    local bufnr = vim.api.nvim_get_current_buf()
+    local bufnr = buf:current()
     local ok, err = pcall(formatter.save_ft_server, bufnr, o.fargs[1], true)
     if not ok then
         vim.notify(
@@ -232,7 +233,7 @@ end, { desc = 'Reload formatters from config file' })
 for _, action in ipairs { 'disable', 'enable', 'toggle' } do
     local name = action:gsub('^%l', string.upper) .. 'FormatOnSave'
     cmd(name, function(o)
-        local bufnr = tonumber(o.args) or vim.api.nvim_get_current_buf()
+        local bufnr = tonumber(o.args) or buf:current()
         local ok, err = pcall(
             formatter[action .. '_fmt_on_save'],
             o.bang and 'global' or bufnr
