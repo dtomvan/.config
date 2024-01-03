@@ -14,7 +14,7 @@ return {
             },
         },
     }),
-    mini 'pairs',
+    -- mini 'pairs',
     mini('sessions', { config = true }),
     mini('bufremove', {
         keys = {

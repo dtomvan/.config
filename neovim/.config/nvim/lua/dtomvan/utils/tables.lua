@@ -1,7 +1,8 @@
 local func = require 'dtomvan.utils.func'
 
--- BEWARE: This is a major hack and just meant as an easy but inperformant
--- solution to all your lua list-shaped table shenanigans
+-- BEWARE: This is a major hack and just meant as an easy but imperformant
+-- solution to all your lua list-shaped table shenanigans. My config is
+-- endelessly unoptimized anyways.
 local M = {}
 
 function M.multi_get(tbl, idx)

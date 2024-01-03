@@ -8,11 +8,20 @@ return {
         cmdline = {
             view = 'cmdline',
             format = {
-                cmdline = { pattern = '^:', lang = 'vim', icon = '>' },
-                telescope = { pattern = '^:Telescope ', lang = '', icon = '󰭎' },
+                cmdline = { conceal = true, icon = 'Noice >' },
+                filter = false,
+                lua = false,
+                help = false,
             },
         },
         routes = {
+            {
+                view = 'mini',
+                filter = {
+                    event = "msg_showmode",
+                    find = 'recording',
+                },
+            },
             {
                 view = 'split',
                 filter = { event = 'msg_show', min_height = 10 },
@@ -94,7 +103,7 @@ return {
                             -- { "{data.progress.message} " },
                         },
                     },
-                    { '{spinner} ', hl_group = 'NoiceLspProgressSpinner' },
+                    -- { '{spinner} ', hl_group = 'NoiceLspProgressSpinner' },
                     {
                         '{data.progress.client} ',
                         hl_group = 'NoiceLspProgressClient',

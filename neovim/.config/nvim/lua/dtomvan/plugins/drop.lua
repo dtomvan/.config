@@ -33,7 +33,6 @@ local suntable = {
 
 return {
     'folke/drop.nvim',
-    enabled = false,
     event = 'VimEnter',
     config = function()
         local date = os.date '*t'

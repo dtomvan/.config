@@ -1,5 +1,12 @@
 local M = {}
 
+---does the "inverse" of the function by applying a `not` to the result.
+M.nott = function(f)
+    return function(...)
+        return not f(...)
+    end
+end
+
 ---executes both functions in sequence with the same arguments, if any
 ---collect both results as a table
 ---@param a function

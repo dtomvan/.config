@@ -4,7 +4,6 @@ local uv = vim.uv
 
 local M = {}
 
-
 ---@param pid integer
 ---@return string
 M.procpath = function(pid)

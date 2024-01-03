@@ -1,36 +1,30 @@
-local ivy = setmetatable({}, {
-    __index = function(_, k)
-        return '<cmd>Telescope ' .. k .. ' theme=ivy<cr>'
-    end
-})
+local t = function(k, e)
+    return ('<cmd>Telescope %s %s<cr>'):format(k, e or '')
+end
 
-local t = setmetatable({}, {
-    __index = function(_, k)
-        return '<cmd>Telescope ' .. k .. '<cr>'
-    end
-})
+local ivy = require('dtomvan.utils.func').set_nth(t, 'theme=ivy', 2)
 
 return {
     {
         'nvim-telescope/telescope.nvim',
         keys = {
-            { '<leader>u', '<cmd>Telescope undo<cr>' },
-            { '<c-p>',     t.live_grep },
             '<leader>B',
             '<leader>dd',
             '<leader>fb',
             '<leader>fp',
             '<leader>q',
             '<leader>T',
-            { '<leader>:',   t.command_history },
-            { '<m-x>',       ivy.commands },
-            { '<leader>ft',  t.lsp_workspace_symbols },
-            { '<C-e>',       t.fd },
-            { '<leader>h',   ivy.help_tags },
-            { '<leader>?',   t.oldfiles },
-            { '<leader>/',   ivy.current_buffer_fuzzy_find },
-            { '<leader>;',   t.resume },
-            { '<leader>fds', ivy.lsp_document_symbols },
+            { '<leader>u',   t 'undo' },
+            { '<c-p>',       t 'live_grep' },
+            { '<leader>:',   t 'command_history' },
+            { '<m-x>',       ivy 'commands' },
+            { '<leader>ft',  t 'lsp_workspace_symbols' },
+            { '<C-e>',       t 'fd' },
+            { '<leader>h',   ivy 'help_tags' },
+            { '<leader>?',   t 'oldfiles' },
+            { '<leader>/',   ivy 'current_buffer_fuzzy_find' },
+            { '<leader>;',   t 'resume' },
+            { '<leader>fds', ivy 'lsp_document_symbols' },
         },
         cmd = 'Telescope',
         opts = function(_, opts)
@@ -44,8 +38,6 @@ return {
             return vim.tbl_deep_extend("force", opts, {
                 defaults = {
                     winblend = 10,
-                    -- winblend = require('catppuccin').options.transparent_background and 0
-                    --     or 10,
                     mappings = {
                         i = { ['<c-s-t>'] = trouble },
                         n = { ['<c-s-t>'] = trouble },

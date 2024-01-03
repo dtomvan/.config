@@ -1,6 +1,7 @@
 return {
     {
         'tjdevries/sg.nvim',
+        enabled = false,
         build = 'cargo build --workspace',
         dependencies = { 'nvim-lua/plenary.nvim' },
         keys = {

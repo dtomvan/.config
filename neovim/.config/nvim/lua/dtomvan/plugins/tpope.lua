@@ -3,7 +3,6 @@ return {
         'tpope/vim-repeat',
         event = 'VeryLazy',
     },
-    { 'tpope/vim-fugitive', cmd = 'G' },
     'tpope/vim-sleuth',
     {
         'tpope/vim-endwise',

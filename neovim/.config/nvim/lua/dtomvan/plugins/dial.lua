@@ -12,6 +12,7 @@ return {
                     augend.integer.alias.decimal,
                     augend.integer.alias.hex,
                     augend.date.alias["%Y/%m/%d"],
+                    augend.date.alias["%Y-%m-%d"],
                 },
                 typescript = {
                     augend.integer.alias.decimal,
@@ -22,6 +23,7 @@ return {
                     augend.integer.alias.decimal,
                     augend.integer.alias.hex,
                     augend.date.alias["%Y/%m/%d"],
+                    augend.date.alias["%Y-%m-%d"],
                     augend.constant.alias.alpha,
                     augend.constant.alias.Alpha,
                 },

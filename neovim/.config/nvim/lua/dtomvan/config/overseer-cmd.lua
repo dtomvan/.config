@@ -85,7 +85,6 @@ cmd('Rg', function(params)
                 open_height = 8,
                 items_only = true,
             },
-            { 'on_complete_dispose', timeout = 30 },
             'default',
         },
     }

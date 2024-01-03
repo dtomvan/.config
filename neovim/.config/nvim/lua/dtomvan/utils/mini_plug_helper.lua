@@ -2,6 +2,8 @@
 ---mini module, or to use `dtomvan.config.mini.<plug>`
 ---if not exactly `true`, don't just require `mini.<plug>` and move on.
 
+local utils = require 'dtomvan.utils'
+
 local M = {}
 
 function M.mini_req(plug, opts)
@@ -15,11 +17,13 @@ end
 function M.mini(plug, opts)
     opts = (opts or {})
     vim.validate {
-        plug = { plug, 'string' },
-        opts = { opts, 'table' },
-        ['opts[1]'] = { opts[1], 'nil', 'plugin name is specified by this helper function, not the caller!' },
-        ['opts.config'] = { opts.config, 'b', true },
+        plug = { plug, 's' },
+        opts = { opts, 't' },
     }
+    opts = utils.validate_and_set_def({
+        { 'nil', 'plugin name is specified by this helper function, not the caller!' },
+        config = { 'b', true },
+    }, opts)
     ---@type function
     local config
     if opts.config ~= true then
