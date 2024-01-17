@@ -160,4 +160,42 @@ function Buffer:goto()
     vim.cmd.b(self.id)
 end
 
+function Buffer:gettext(...)
+    local args = { ... }
+    if #args < 5 then
+        table.insert(args, {})
+    end
+    return vim.api.nvim_buf_get_text(self.id, unpack(args))
+end
+
+function Buffer:getlines(...)
+    local args = { ... }
+    if #args < 3 then
+        table.insert(args, false)
+    end
+    return vim.api.nvim_buf_get_text(self.id, unpack(args))
+end
+
+--- row,col are cursor values and thus {1,0} indexed
+function Buffer:get_char(row, col)
+    return self:gettext(row - 1, col, row - 1, col + 1)[1]
+end
+
+function Buffer:get_cursor_char()
+    return self:get_char(unpack(self:get_cursor()))
+end
+
+function Buffer:get_window()
+    return vim.iter(vim.api.nvim_list_wins()):find(function(x)
+        return vim.api.nvim_win_get_buf(x) == self.id
+    end)
+end
+
+function Buffer:get_cursor()
+    self:require_loaded()
+    local win = self:get_window()
+    if not win then return { 0, 0 } end
+    return vim.api.nvim_win_get_cursor(win)
+end
+
 return Buffer

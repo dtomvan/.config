@@ -13,7 +13,6 @@ vim.opt.runtimepath:prepend(lazypath)
 
 local spec = vim.g.is_rwds
     and {
-        { import = 'dtomvan.plugins.colorscheme' },
         { import = 'dtomvan.plugins.noice' },
     }
     or { { import = 'dtomvan.plugins' } }

@@ -575,6 +575,10 @@ export PNPM_HOME="/home/tomvd/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
 
+if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    export MOZ_ENABLE_WAYLAND=0
+fi
+
 
 # bun completions
 [ -s "/home/tomvd/.bun/_bun" ] && source "/home/tomvd/.bun/_bun"

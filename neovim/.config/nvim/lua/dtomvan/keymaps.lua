@@ -1,3 +1,5 @@
+local buf = require 'dtomvan.utils.buf'
+
 local tbl_extend_opt = function(tbl)
     return function(desc, opts)
         return vim.tbl_extend('force', tbl, { desc = desc }, opts or {})
@@ -153,17 +155,8 @@ M.confusing('n', '<right>', function()
 end, M.silent 'Goto child')
 
 M.confusing('n', '~', function()
-    local cursor = vim.api.nvim_win_get_cursor(0)
-    local row = cursor[1]
-    local col = cursor[2]
-    local char = vim.api.nvim_buf_get_text(
-        0,
-        row - 1,
-        col,
-        row - 1,
-        col + 1,
-        {}
-    )[1] or ''
+    local b = buf:from_current()
+    local char = b:get_cursor_char() or ''
     for k, v in pairs {
         [';'] = ':',
         ['('] = ')',
@@ -173,6 +166,7 @@ M.confusing('n', '~', function()
         [','] = '.',
         ['`'] = '~',
         ['-'] = '_',
+        ['!'] = '?',
     } do
         if char == k then
             return 'r' .. v .. 'l'

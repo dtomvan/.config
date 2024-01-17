@@ -1,6 +1,6 @@
 anchor_to_edges = true
 icon_theme = 'ePapirus-Dark'
-position = 'bottom'
+position = 'top'
 
 [[end]]
 music_dir = '/home/tomvd/Music'
@@ -31,4 +31,4 @@ type = 'workspaces'
 show_icons = true
 show_names = false
 type = 'launcher'
-favorites = ['firefox', 'discord', 'steam']
+favorites = ['firefox', 'discord', 'steam-native']

@@ -102,28 +102,4 @@ cmp.setup.filetype("DressingInput", {
     sources = cmp.config.sources { { name = "omni" } },
 })
 
--- nvim-autopairs setup
-local handler_confirm_done
-cmp.event:on('confirm_done', function(...)
-    if not handler_confirm_done then
-        handler_confirm_done =
-            require('nvim-autopairs.completion.cmp').on_confirm_done {
-                filetypes = {
-                    ['*'] = {
-                        ['('] = {
-                            kind = {
-                                cmp.lsp.CompletionItemKind.Function,
-                                cmp.lsp.CompletionItemKind.Method,
-                            },
-                            handler = require(
-                                'nvim-autopairs.completion.handlers'
-                            )['*'],
-                        },
-                    },
-                },
-            }
-    end
-    handler_confirm_done(...)
-end)
-
 return sources

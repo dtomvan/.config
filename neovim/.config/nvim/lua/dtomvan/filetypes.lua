@@ -11,6 +11,7 @@ vim.filetype.add {
         jq = 'jq',
         bf = 'brainfuck',
         fen = 'fen',
+        wsv = 'rtxt',
     },
     pattern = {
         ['web.whatsapp.com_.*.txt'] = firenvim_ft 'messaging',
