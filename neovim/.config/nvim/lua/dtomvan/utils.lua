@@ -93,7 +93,7 @@ function M.winbar()
         .. icon
         .. ' '
         .. fd
-        .. " > %{%v:lua.require'nvim-navic'.get_location()%}"
+        .. " > %{%v:lua.require'dtomvan.utils'.navic_location()%}"
 end
 
 local winbuf = function(ty)
@@ -251,6 +251,12 @@ M.debug = function(...)
         res[name] = value or '<<nil>>'
     end
     vim.print(res)
+end
+
+M.navic_location = function(...)
+    local ok, navic = pcall(require, 'nvim-navic')
+    if not ok then return '' end
+    return navic.get_location(...)
 end
 
 return M

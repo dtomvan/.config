@@ -36,12 +36,12 @@ return {
     },
     font_size = 12,
     use_fancy_tab_bar = false,
-    hide_tab_bar_if_only_one_tab = true,
+    -- hide_tab_bar_if_only_one_tab = true,
     keys = {
         { key = '9', mods = 'ALT', action = wezterm.action { ShowLauncherArgs = { flags = 'FUZZY|WORKSPACES' } } },
         { key = 'n', mods = 'ALT', action = wezterm.action { SwitchWorkspaceRelative = 1 } },
         { key = 'p', mods = 'ALT', action = wezterm.action { SwitchWorkspaceRelative = -1 } },
     },
-    window_background_opacity = 1,
+    -- window_background_opacity = 1,
     check_for_updates = false,
 }

@@ -162,22 +162,22 @@ au({ 'BufWritePre' }, {
         vim.fn.mkdir(vim.fn.fnamemodify(ev.file, ':p:h'), 'p')
     end,
 })
-
-au('FileType', {
-    group = group 'jqfile',
-    pattern = 'jq',
-    callback = function(ev)
-        vim.schedule(function()
-            vim.api.nvim_buf_set_lines(ev.buf, 0, 0, false, { '# jq script' })
-            vim.api.nvim_buf_set_lines(
-                ev.buf,
-                -1,
-                -1,
-                false,
-                -- Hehe, otherwise vim actually reads the modeline
-                -- it sets `filetype` to `jq`
-                { '\x23\x20\x76\x69\x6d\x3a\x66\x74\x3d\x6a\x71' }
-            )
-        end)
-    end,
-})
+--
+-- au('FileType', {
+--     group = group 'jqfile',
+--     pattern = 'jq',
+--     callback = function(ev)
+--         vim.schedule(function()
+--             vim.api.nvim_buf_set_lines(ev.buf, 0, 0, false, { '# jq script' })
+--             vim.api.nvim_buf_set_lines(
+--                 ev.buf,
+--                 -1,
+--                 -1,
+--                 false,
+--                 -- Hehe, otherwise vim actually reads the modeline
+--                 -- it sets `filetype` to `jq`
+--                 { '\x23\x20\x76\x69\x6d\x3a\x66\x74\x3d\x6a\x71' }
+--             )
+--         end)
+--     end,
+-- })

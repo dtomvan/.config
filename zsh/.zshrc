@@ -214,6 +214,17 @@ alias :q="cowsay 'You are not in vim anymore.'"
 alias :wq="cowsay 'You are not in vim anymore.'"
 alias :x="cowsay 'You are not in vim anymore.'"
 
+alias v='nvim'
+alias vi='nvim'
+alias nvi='nvim'
+alias nv='nvim'
+alias vim='nvim'
+alias vimm='nvim'
+alias nvimm='nvim'
+alias j='just'
+
+alias sl='ls'
+
 cd () {
     if [ "$1" = '~' ]; then
         pushd -q ~
@@ -537,7 +548,7 @@ rwds_export() {
 }
 
 eval "$(antidot init)"
-eval "$(zoxide init zsh --cmd d)"
+eval "$(zoxide init zsh --cmd cd)"
 eval "$(mcfly init zsh)"
 
 # Bun
@@ -582,3 +593,5 @@ fi
 
 # bun completions
 [ -s "/home/tomvd/.bun/_bun" ] && source "/home/tomvd/.bun/_bun"
+alias dt="rlwrap dt"
+eval "$(/home/tomvd/.local/bin/mise activate zsh)"

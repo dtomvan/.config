@@ -8,8 +8,11 @@ return function(client, bufnr)
     local caps = client.server_capabilities
 
     if caps.documentSymbolProvider then
-        require('nvim-navic').attach(client, bufnr)
-        require('nvim-navbuddy').attach(client, bufnr)
+        local ok, navic = pcall(require, 'nvim-navic')
+        if ok then
+            navic.attach(client, bufnr)
+            require('nvim-navbuddy').attach(client, bufnr)
+        end
     end
 
     local function buf_map(mode, lhs, rhs, desc)

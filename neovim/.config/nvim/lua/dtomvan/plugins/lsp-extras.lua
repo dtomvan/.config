@@ -6,10 +6,12 @@ return {
     },
     {
         'SmiteshP/nvim-navbuddy',
+        cond = function()
+            return pcall(require, 'nvim-navic')
+        end,
         event = 'LspAttach',
         dependencies = {
             'neovim/nvim-lspconfig',
-            'SmiteshP/nvim-navic',
             'MunifTanjim/nui.nvim',
         },
     },

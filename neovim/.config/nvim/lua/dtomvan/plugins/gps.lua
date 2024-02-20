@@ -1,5 +1,6 @@
-local M = {
+return {
     'SmiteshP/nvim-navic',
+    enabled = false,
     lazy = true,
     dependencies = 'neovim/nvim-lspconfig',
     opts = {
@@ -35,5 +36,3 @@ local M = {
         highlight = true,
     },
 }
-
-return M

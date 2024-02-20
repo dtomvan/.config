@@ -9,4 +9,5 @@ return {
         enabled = not (vim.fn.has 'nvim-0.8' == 1),
         event = 'BufReadPost',
     },
+    'tpope/vim-abolish',
 }

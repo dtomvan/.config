@@ -20,6 +20,8 @@ for _, name in ipairs(vim.api.nvim_get_runtime_file('parsers/*', true)) do
     ::continue::
 end
 
+require('tree-sitter-just').setup({})
+
 -- FIXME:
 ---@diagnostic disable-next-line: missing-fields
 require('nvim-treesitter.configs').setup {

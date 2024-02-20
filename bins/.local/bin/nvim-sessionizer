@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+dirs=(
+    ~/projects/00-code/
+    ~/IdeaProjects/
+)
+
+while [ $# -gt 0 ]; do
+    if [ -d $1 ]; then
+        dirs+=$1
+    fi
+    shift
+done
+
+search() {
+    fd -t d -d 2 '.' $@
+}
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+nvim_modifydirs() {
+    # Yes, I am assuming nvim is installed, so we can use it's fnamemodify()!!
+    for dir in $(nvim -l "$SCRIPT_DIR/nvim-sessionizer.lua"); do
+        if ! [ $dir -ef $PWD ]; then
+            echo $dir
+        fi
+    done
+}
+
+process() {
+   cat <(echo "${dirs[@]}") <(search ${dirs[@]}) \
+       | nvim_modifydirs                         \
+       | sk --no-multi
+}
+
+selected="$(process)"
+
+if [ -n $selected ]; then
+    tmux new-session -c "$selected" -n nvim 'bash -c "nvim; $SHELL"'
+else
+    echo "Nothing selected, exiting"
+    exit 1
+fi
