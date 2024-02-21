@@ -1,0 +1,5 @@
+#!/usr/bin/env dt
+
+args deq swap drop " " join \append:
+
+rls [ p append pl ] each

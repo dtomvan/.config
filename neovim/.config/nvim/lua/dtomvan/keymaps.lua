@@ -179,12 +179,6 @@ end, M.norexpr 'Custom change case characters')
 
 map('v', '<leader>s', ':!sort<cr>', M.silent 'Sort visual selection')
 
--- Move lines
-map('v', 'J', ":m '>+1<CR>gv=gv", M.silent 'Move selection down')
-map('v', 'K', ":m '<-2<CR>gv=gv", M.silent 'Move selection up')
-map('v', '<leader>k', ':m-2<CR>gv=gv', M.silent 'Move line up')
-map('v', '<leader>j', ":m'>+<CR>gv=gv", M.silent 'Move line down')
-
 -- TODO: Use toggleterm
 -- Quick terminals
 local term_win_id = 0

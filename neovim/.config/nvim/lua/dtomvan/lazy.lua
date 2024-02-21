@@ -12,22 +12,12 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 local spec = vim.g.is_rwds
-    and {
-        { import = 'dtomvan.plugins.noice' },
-    }
+    and { { import = 'dtomvan.plugins.noice' }, }
     or { { import = 'dtomvan.plugins' } }
 
 require('lazy').setup({
     spec = spec,
-    dev = {
-        fallback = true,
-    },
-    install = {
-        colorscheme = {
-            'catppuccin-mocha',
-            'habamax',
-        },
-    },
+    dev = { fallback = true },
     rtp = {
         disabled_plugins = {
             'gzip',

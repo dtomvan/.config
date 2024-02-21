@@ -1,0 +1,23 @@
+#!/usr/bin/env dt
+args pop to-int \n:
+
+# Bounds check
+[red pop p drop ": Cannot fib any higher than 91." epl norm 1 exit]
+n 92 gte? do?
+
+# The calculation
+0 1
+[[a b]: a b a b + ] \fib def
+\fib n times
+quote-all
+deq
+
+# Printing it as json
+"[" pl
+## We pop the last value to handle it differently (no trailing comma)
+pop swap
+["    " p p "," pl] each
+"    " p pl
+"]" pl
+drop
+quit

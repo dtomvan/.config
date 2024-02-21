@@ -14,7 +14,6 @@ return {
             },
         },
     }),
-    -- mini 'pairs',
     mini('sessions', { config = true }),
     mini('bufremove', {
         keys = {
@@ -62,4 +61,37 @@ return {
         config = true,
         event = 'UIEnter',
     }),
+    mini('tabline', {
+        opts = {
+            tabpage_section = 'right',
+        }
+    }),
+    mini('align'),
+    mini('files', {
+        opts = {
+            options = {
+                permanent_delete = false,
+            },
+            windows = {
+                max_number = 3
+            },
+        },
+        keys = {
+            { "-", function() MiniFiles.open() end },
+        }
+    }),
+    mini('hipatterns', {
+        config = true,
+    }),
+    mini('move', {
+        event = 'InsertEnter',
+        keys = {
+            { mode = 'v', '<M-h>' },
+            { mode = 'v', '<M-j>' },
+            { mode = 'v', '<M-k>' },
+            { mode = 'v', '<M-l>' },
+        },
+        config = true,
+    }),
+    mini('splitjoin'),
 }

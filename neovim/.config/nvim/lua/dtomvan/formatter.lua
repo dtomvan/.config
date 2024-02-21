@@ -1,5 +1,3 @@
--- FIXME: Use guard.nvim or alike to also incoporate linting and fulfill all
--- null-ls needs. This is fine for now, though.
 local tbl = require 'dtomvan.utils.tables'
 
 local M = {}

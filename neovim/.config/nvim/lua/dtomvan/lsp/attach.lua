@@ -33,7 +33,7 @@ return function(client, bufnr)
 
     buf_map('n', 'gD', vim.lsp.buf.declaration, 'Goto declaration')
     buf_map('n', 'gd', vim.lsp.buf.definition, 'Goto definition')
-    buf_map('n', 'K', vim.lsp.buf.hover, 'Open docs ("Hover" functionality)')
+    -- buf_map('n', 'K', vim.lsp.buf.hover, 'Open docs ("Hover" functionality)')
     buf_map('n', 'gi', vim.lsp.buf.implementation, 'Goto implementation')
     buf_map(
         'n',
@@ -90,5 +90,7 @@ return function(client, bufnr)
         require('dtomvan.formatter').format_buf,
         'Format buffer'
     )
-    buf_map('n', '<leader>ff', require('nvim-navbuddy').open, 'open navbuddy')
+    local ok, navbuddy = pcall(require, 'nvim-navbuddy')
+    if not ok then return end
+    buf_map('n', '<leader>ff', navbuddy.open, 'open navbuddy')
 end

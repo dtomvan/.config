@@ -8,12 +8,6 @@ return {
     { 'nvim-lua/popup.nvim',   lazy = true },
 
     {
-        'folke/todo-comments.nvim',
-        event = 'BufReadPost',
-        opts = {},
-    },
-
-    {
         'anuvyklack/hydra.nvim',
         lazy = true,
         init = function()

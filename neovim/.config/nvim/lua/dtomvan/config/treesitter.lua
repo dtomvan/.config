@@ -1,24 +1,24 @@
 local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
 
-for _, name in ipairs(vim.api.nvim_get_runtime_file('parsers/*', true)) do
-    if vim.fn.isdirectory(name) then
-        local ft = vim.fs.basename(name)
-        if not ft then goto continue end
-        parser_config[ft] = {
-            filetype = ft,
-            maintainers = {
-                'Tom van Dijk <18gatenmaker6 at gmail dot com>'
-            },
-            install_info = {
-                url = name,
-                files = { 'src/parser.c' },
-                generate_requires_npm = false,
-                requires_generate_from_grammar = true,
-            },
-        }
-    end
-    ::continue::
-end
+-- for _, name in ipairs(vim.api.nvim_get_runtime_file('parsers/*', true)) do
+--     if vim.fn.isdirectory(name) then
+--         local ft = vim.fs.basename(name)
+--         if not ft then goto continue end
+--         parser_config[ft] = {
+--             filetype = ft,
+--             maintainers = {
+--                 'Tom van Dijk <18gatenmaker6 at gmail dot com>'
+--             },
+--             install_info = {
+--                 url = name,
+--                 files = { 'src/parser.c' },
+--                 generate_requires_npm = false,
+--                 requires_generate_from_grammar = true,
+--             },
+--         }
+--     end
+--     ::continue::
+-- end
 
 require('tree-sitter-just').setup({})
 

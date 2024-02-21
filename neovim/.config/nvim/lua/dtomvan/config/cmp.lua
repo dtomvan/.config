@@ -1,15 +1,7 @@
 if vim.g._no_cmp then
     return
 end
-local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0
-        and vim.api
-        .nvim_buf_get_lines(0, line - 1, line, true)[1]
-        :sub(col, col)
-        :match '%s'
-        == nil
-end
+
 local cmp = require 'cmp'
 
 local sources = {
@@ -24,12 +16,32 @@ local sources = {
 }
 
 cmp.setup {
+    -- Don't go crazy on me, now
+    -- Limits the amount of times we refresh, as well as how much lag I want
+    -- Also just outputs 20 results, because who needs more anyways
+    performance = {
+        debounce = 200,
+        throttle = 100,
+        confirm_resolve_timeout = 80,
+        fetching_timeout = 300,
+        async_budget = 1,
+        max_view_entries = 20,
+    },
+    preselect = cmp.PreselectMode.None,
+    enabled = function()
+        local context = require 'cmp.config.context'
+        if vim.api.nvim_get_mode().mode == 'c' then
+            return true
+        else
+            return not context.in_treesitter_capture("comment")
+                and not context.in_syntax_group("Comment")
+        end
+    end,
     window = {
         completion = {
             col_offset = -3,
             side_padding = 0,
         },
-        documentation = cmp.config.window.bordered(),
     },
     mapping = {
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -37,26 +49,8 @@ cmp.setup {
         ['<C-e>'] = cmp.mapping.close(),
         ['<c-y>'] = cmp.mapping.confirm { select = true },
         ['<c-space>'] = cmp.mapping.complete(),
-        ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif require('luasnip').expand_or_jumpable() then
-                require('luasnip').expand_or_jump()
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                fallback()
-            end
-        end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif require('luasnip').jumpable(-1) then
-                require('luasnip').jump(-1)
-            else
-                fallback()
-            end
-        end, { 'i', 's' }),
+        ['<c-n>'] = cmp.mapping.select_next_item(),
+        ['<c-p>'] = cmp.mapping.select_prev_item(),
     },
     sources = cmp.config.sources(sources, { name = 'buffer' }),
 
@@ -85,10 +79,6 @@ cmp.setup {
 
             return kind
         end,
-    },
-
-    experimental = {
-        ghost_text = true,
     },
 }
 

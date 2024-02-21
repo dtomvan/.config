@@ -1,0 +1,144 @@
+#!/usr/bin/env dt
+
+[
+    pop \n: drop
+    do
+    quote
+    [enq] n 1 - times
+]
+\don def
+
+[
+    pop \n: drop
+    pop \separator: drop
+    n don
+    separator join
+]
+"( ...any ...string separator len -- ...any string ) Concatenates n items from a (lazy) quote into a single string by separator"
+\sconcat define
+
+[
+    "" swap sconcat
+]
+\sjoin def
+
+[
+     [ quote "    " swap enq "" join ] map ...
+]
+\indent def
+
+# Print usage
+[
+    [
+        # We need this because we cannot know the length of a nested (and thus,
+        # lazy) quote
+        [ args first ": get the nth field from a separated input file" ] 2 sjoin
+        "USAGE: [OPTIONS...]"
+        "List of options:"
+        [
+            "-s FS"
+            "-f FIELD"
+            "[FILE]"
+            "    if no file is given stdin will be assumed"
+        ] indent
+    ] do quote-all pls
+    1 exit
+] args last dup "--help" eq? swap "--usage" eq? or do?
+
+# get argc, argv[1..]
+args len 1 - \argc:
+args deq swap drop
+
+# Defaults
+[
+    " " # FS
+    0   # FIELD
+    "-" # FILE
+]
+
+# i=0
+0
+# Parse a flag
+# This loop is really weird:
+#   - Let's keep track of an I
+#   - Which decides wether to continue the loop or not
+#   - But doesn't index at all
+#   - We just keep chopping args along with the incrementation of I
+# Stack from now on:
+# [ARGS_REST], [FS, FIELD, FILE], I
+[[
+    rot
+    # get arg[next]
+    swap deq rot \arg:
+    arg "-s" eq? \sep:
+    arg "-f" eq? \nr:
+
+    sep [
+        # get FS
+        swap deq rot
+
+        # Replace 1st field
+        swap enq
+        [ rot rot drop ] doin
+
+        # Cleanup
+        rot rot
+        1 +
+        rot
+    ] swap do?
+
+    nr [
+        # get FIELD
+        swap deq rot to-int
+
+        # Replace 2nd field
+        push
+        [ rot rot drop swap ] doin
+
+        # Cleanup
+        rot rot
+        1 +
+        rot
+    ] swap do?
+
+    sep nr or not [
+        # Replace 3rd field
+        [ drop arg ] doin
+    ] swap do?
+
+    rot rot
+    1 +
+] swap dup argc lt? swap rot do? ] argc times
+
+drop swap drop
+
+# Parsing done, now we can use the parameters
+...
+pop \file: drop
+pop \field: drop
+pop \fs: drop
+file "-" eq? \isstdin:
+
+[ rls ] isstdin do?
+[
+    file readf lines
+    # Get rid of trailing line
+    pop "" eq? not [ push ] swap do?
+] isstdin not do?
+
+[ unlines pl quit ] field 0 eq? do?
+
+[
+    fs split
+    # Make multiple instances of the same whitespace possible like in actual
+    # AWK, so let's loop and remove any indices with solely FS
+    [
+        \it:
+        [it] it fs eq? it "" eq? or not do?
+    ] map
+
+    [ deq swap drop ] field 1 - times
+    deq drop pl
+] each
+
+quit

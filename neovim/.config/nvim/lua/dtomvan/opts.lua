@@ -1,6 +1,10 @@
 local o = vim.o
 local g = vim.g
 
+-- Experiment: we try to reduce visual clutter. Now we just show the tabbar (at
+-- all times) and we have a winbar. Now we don't need to pingpong, I hope.
+o.laststatus = 0
+
 o.autoindent = true
 o.background = 'dark'
 o.backup = false
@@ -54,10 +58,6 @@ _G.include_expr = function(fname)
         f = vim.v.fname
     end
     return string.gsub(f, '%.', '/')
-end
-
-if vim.fn.has 'nvim-0.7' == 1 then
-    o.ls = 3
 end
 
 if g.neovide ~= nil then

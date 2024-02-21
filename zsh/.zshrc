@@ -10,7 +10,7 @@ fi
 export BROWSER=firefox
 export EDITOR=nvim
 export NPM_CONFIG_PREFIX=~/.npm-global
-export PATH=/opt/ce-toolchain/bin/:$NPM_CONFIG_PREFIX/bin:~/.local/bin/neovim/:~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin:~/go/bin:~/.yarn/bin
+export PATH=~/.local/bin/dt/:/opt/ce-toolchain/bin/:$NPM_CONFIG_PREFIX/bin:~/.local/bin/neovim/:~/.cargo/bin:~/.local/bin:$PATH:$DENO_INSTALL/bin:~/.local/share/gem/ruby/3.0.0/bin:~/go/bin:~/.yarn/bin
 export DENO_INSTALL="$HOME/.deno"
 export RUSTC_WRAPPER=sccache
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive

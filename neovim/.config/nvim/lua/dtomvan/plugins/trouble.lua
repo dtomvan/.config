@@ -2,44 +2,6 @@ local opts = { skip_groups = true, jump = true }
 
 return {
     {
-        'folke/todo-comments.nvim',
-        dependencies = 'nvim-lua/plenary.nvim',
-        event = 'BufReadPost',
-        lazy = true,
-        cmd = {
-            'TodoQuickFix',
-            'TodoTrouble',
-            'TodoTelescope',
-            'TodoLocList',
-        },
-        keys = {
-            {
-                '<leader>gt',
-                '<cmd>TodoTelescope<cr>',
-                desc = 'Open todo comments in Telescope',
-            },
-            {
-                '<leader>gT',
-                '<cmd>TodoTrouble<cr>',
-                desc = 'Open todo comments in Trouble',
-            },
-            {
-                ']t',
-                function()
-                    require('todo-comments').jump_next()
-                end,
-                desc = 'Next todo comment',
-            },
-            {
-                '[t',
-                function()
-                    require('todo-comments').jump_prev()
-                end,
-                desc = 'Previous todo comment',
-            },
-        },
-    },
-    {
         'folke/trouble.nvim',
         dependencies = 'kyazdani42/nvim-web-devicons',
         config = true,
