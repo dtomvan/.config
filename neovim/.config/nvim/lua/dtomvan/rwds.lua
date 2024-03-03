@@ -1,9 +1,6 @@
-local Process = require 'dtomvan.utils.proc'.Process
-local rwds = vim.iter(Process:new(vim.fn.getpid() or 1):parents())
-    :find(function(x)
-        return vim.fs.basename(x:resolved_cmdline()[1]) == 'rwds-cli'
-    end)
-vim.g.is_rwds = rwds and true or false
+local utils = require 'dtomvan.utils'
+local rwds = utils.our_parents('rwds-cli')
+vim.g.is_rwds = #rwds > 0
 
 if not vim.g.is_rwds then return end
 

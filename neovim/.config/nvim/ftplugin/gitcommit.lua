@@ -10,3 +10,17 @@ end, {
     buffer = true,
     silent = true,
 })
+
+local g = vim.api.nvim_create_augroup('GitCommitOpenDiffview', {})
+
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'VeryLazy',
+    once = true,
+    group = g,
+    callback = function()
+        local ok, dv = pcall(require, 'diffview')
+        if not ok then return end
+        dv.open()
+        vim.cmd.tabfirst()
+    end
+})

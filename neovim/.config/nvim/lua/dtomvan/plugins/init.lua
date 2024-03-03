@@ -37,7 +37,7 @@ return {
         'rcarriga/nvim-notify',
         lazy = true,
         opts = {
-            background_colour = '#00000000',
+            -- background_colour = '#00000000',
             fps = 40,
             render = 'simple',
             stages = 'slide',

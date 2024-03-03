@@ -3,15 +3,32 @@ return {
     event = 'VimEnter',
     opts = {
         presets = {
-            bottom_search = true,
+            command_palette = true,
+        },
+        notify = {
+            view = 'mini',
         },
         cmdline = {
-            view = 'cmdline',
+            view = 'cmdline_popup',
             format = {
-                cmdline = { conceal = true, icon = 'Noice >' },
+                cmdline = {
+                    conceal = true,
+                    icon = '->',
+                    title = '',
+                },
                 filter = false,
                 lua = false,
                 help = false,
+                search_down = {
+                    view = "cmdline_popup",
+                    icon = '/',
+                    title = '',
+                },
+                search_up = {
+                    view = "cmdline_popup",
+                    icon = '/',
+                    title = '',
+                },
             },
         },
         routes = {
@@ -19,32 +36,37 @@ return {
                 view = 'mini',
                 filter = {
                     event = "msg_showmode",
-                    find = 'recording',
                 },
             },
             {
                 view = 'split',
-                filter = { event = 'msg_show', min_height = 10 },
+                filter = { event = 'msg_show', min_height = 5 },
             },
             {
                 view = 'mini',
                 filter = {
                     event = 'msg_show',
-                    kind = '',
-                    find = 'written',
+                    any = {
+                        { find = "%d+L, %d+B" },
+                        { find = "; after #%d+" },
+                        { find = "; before #%d+" },
+                        { find = "fewer lines" },
+                        {
+                            kind = '',
+                            find = 'written',
+                        },
+                    },
                 },
             },
-            -- FIXME: for some reason this displays the message both as a notify
-            -- and as a mini...
-            -- {
-            --     filter = {
-            --         event = 'msg_show',
-            --         kind = '',
-            --         max_height = 2,
-            --         max_length = 60,
-            --     },
-            --     view = 'mini',
-            -- },
+            {
+                filter = {
+                    event = 'msg_show',
+                    kind = '',
+                    max_height = 5,
+                    max_length = 60,
+                },
+                view = 'mini',
+            },
             {
                 filter = { event = 'msg_show', find = '(mini.starter)' },
                 opts = { skip = true },
@@ -66,6 +88,30 @@ return {
                 size = {
                     width = 69,
                     height = 'auto',
+                },
+                border = {
+                    style = "none",
+                    padding = { 1, 1 },
+                },
+                win_options = {
+                    winhighlight = {
+                        NormalFloat = "NormalFloat",
+                        FloatBorder = "FloatBorder"
+                    },
+                    winblend = 30,
+                },
+            },
+            cmdline_popupmenu = {
+                border = {
+                    style = "none",
+                    padding = { 0, 1 },
+                },
+                win_options = {
+                    winhighlight = {
+                        NormalFloat = "NormalFloat",
+                        FloatBorder = "NoiceCmdlinePopupBorder"
+                    },
+                    winblend = 30,
                 },
             },
             popupmenu = {
@@ -99,11 +145,8 @@ return {
                     {
                         '{progress} ',
                         key = 'progress.percentage',
-                        contents = {
-                            -- { "{data.progress.message} " },
-                        },
+                        contents = {},
                     },
-                    -- { '{spinner} ', hl_group = 'NoiceLspProgressSpinner' },
                     {
                         '{data.progress.client} ',
                         hl_group = 'NoiceLspProgressClient',

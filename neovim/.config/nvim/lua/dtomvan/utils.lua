@@ -259,4 +259,14 @@ M.navic_location = function(...)
     return navic.get_location(...)
 end
 
+M.our_parents = function(name)
+    local Process = require('dtomvan.utils.proc').Process
+    return vim.iter(Process:new(vim.fn.getpid() or 1):parents())
+        :filter(function(x)
+            if not name then return true end
+            return vim.fs.basename(x:resolved_cmdline()[1]) == name
+        end)
+        :totable()
+end
+
 return M

@@ -563,6 +563,7 @@ plug "romkatv/powerlevel10k"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+zvm_after_init_commands+=(eval "$(atuin init zsh --disable-up-arrow)")
 plug "jeffreytse/zsh-vi-mode"
 plug "zdharma-continuum/fast-syntax-highlighting"
 plug "zsh-users/zsh-autosuggestions"
@@ -595,3 +596,4 @@ fi
 [ -s "/home/tomvd/.bun/_bun" ] && source "/home/tomvd/.bun/_bun"
 alias dt="rlwrap dt"
 eval "$(/home/tomvd/.local/bin/mise activate zsh)"
+eval "$(navi widget zsh | sed -Ee 's|--print|\0 --finder skim|g')"

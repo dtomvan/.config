@@ -2,6 +2,11 @@ if vim.g.started_by_firenvim then
     return
 end
 
+local utils = require 'dtomvan.utils'
+if #utils.our_parents('git') > 0 then
+    return
+end
+
 require 'neoconf'.setup {}
 require 'neodev'.setup {}
 
