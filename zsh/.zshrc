@@ -408,6 +408,7 @@ alias cargo="mold -run cargo"
 alias cat="bat"
 alias c="clear"
 alias e="nvim"
+alias g=git
 alias gaa="git add --all"
 alias ga="git add"
 alias gapa="git add --patch"
@@ -597,3 +598,9 @@ fi
 alias dt="rlwrap dt"
 eval "$(/home/tomvd/.local/bin/mise activate zsh)"
 eval "$(navi widget zsh | sed -Ee 's|--print|\0 --finder skim|g')"
+
+PATH="/home/tomvd/.raku/bin:/home/tomvd/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/tomvd/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/tomvd/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/tomvd/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/tomvd/perl5"; export PERL_MM_OPT;

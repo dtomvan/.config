@@ -1,0 +1,99 @@
+#!/usr/bin/env rakudo
+
+my %*SUB-MAIN-OPTS =
+  :bundling,                   # allow bundling of named arguments
+  :numeric-suffix-as-value,    # allow -j2 as alternative to --j=2
+  :allow-no,                   # allow --no-foo as alternative to --/foo
+;
+
+# I dislike the titlecase `True` in the usage description
+# Yes, I know GENERATE-USAGE exists, but this seems "easier" to maintain.
+my constant true = True but 'true';
+my constant false = False but 'false';
+
+subset Matcher where Str|Callable;
+my Matcher constant ws = *.words but 'any whitespace';
+
+subset ColNr of UInt where * > 0;
+
+# Prints a string differently than intended. We can get the original back with
+# .actual
+class R {
+    has Str $.actual is required;
+
+    multi method new(Str $s) {
+        return self.bless(:actual($s));
+    }
+
+    multi method new(Pair $p) {
+        return self.bless(:actual($p.key)) but $p.value;
+    }
+}
+
+my constant stdin = R.new("-" => "STDIN");
+my constant tab = R.new("\t" => '\t');
+
+subset File of R;
+subset OFS of R;
+
+proto MAIN(
+    # INPUT CONTROL
+    File :i(:input($i)) = stdin,
+|) {*}
+
+#|(get column by name or id)
+multi MAIN (
+    File :i(:input($i))               = stdin,  #= the file to act on
+    # FIELDS (FS, OFS)
+    Matcher :F(:field-separator($fs)) =  ws,    #= the field separator regex
+    OFS :o(:output-separator($o))     =  tab,   #= the output field separator
+
+    # PARSING FLAGS
+    Bool :f(:first($first))           =  true,  #= return column `1` always
+    Bool :h(:header($header))         =  true,  #= return the header
+    Bool :I(:ignore-pre($ignore))     =  true,  #= ignore the rows where we haven't found any column yet
+    Bool :s(:strict($strict))         =  false, #= die when we haven't found all queried columns in the 1st row
+    *@cols,                                     #= columns to act on; is alphanumeric, can be 1-indexed colnr. If starts with `.`, then never interpret as an index.
+) is default {
+    # Expand the R's
+    my $input = $i.actual;
+    my $ofs = $o.actual;
+
+    @cols.prepend: 1 if $first;
+
+    @cols = @cols.map: -> $name {
+        ($name.starts-with: '.')
+        ?? $name.substr(1) but role {
+            # Return something out of bounds for literal colnames
+            # I know, hacky
+            method Numeric { -1 }
+        } !! $name;
+    }
+
+    say "Invalid column `$_`" for @cols.grep(/\W/);
+    die "Columns are alphanumeric! Got ({@cols})" unless @cols.all ~~ /\w/;
+
+    for open($input).lines {
+        my @w = $fs ~~ Callable ?? $fs($_) !! .split(/$fs/);
+        state @colnrs = (loop {0})[^@cols.end];
+
+        @colnrs[$++] ||=                                    # Fill our column numbers...
+        $_ ~~ 1..@w ?? $_                                   # ...with any provided indexes...
+        !! @w.first($_, :k).duckmap(-> UInt $n { $n+1 })[0] # ...or what we found in the header...
+        for @colnrs.any ?? () !! @cols;                     # ...if we don't have any yet!
+
+        # When we pass -i and we haven't found any col yet, just skip this row.
+        next if @colnrs.none ~~ ColNr && $ignore;
+
+        # When we pass -s and we haven't found all columns, die out.
+        if $strict && !(@colnrs.all ~~ UInt & ColNr) {
+            say "Couldn't find column `$_`"
+            for @colnrs.kv.grep(-> $_, $v {$v!~~ColNr}).map({@cols[.[0]]});
+            die "Couldn't find all columns with strict mode enabled.";
+        }
+
+        # We can now safely assume that we found all columns that we wanted and
+        # from here we are looking at the data rows.
+        say @colnrs.map({@w[$^i-1]}).join($ofs);
+    }
+}

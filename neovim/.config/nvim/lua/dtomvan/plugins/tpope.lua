@@ -1,4 +1,5 @@
 return {
+    'tpope/vim-fugitive',
     {
         'tpope/vim-repeat',
         event = 'VeryLazy',

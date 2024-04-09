@@ -1,0 +1,44 @@
+#!/usr/bin/env rakudo
+
+#|(calculate pace and kmph from Garmin Connect's splits export)
+multi MAIN(
+    Str $fname where *.IO.f | '-' = '-', #= path to activity.csv, if - or not provided, use STDIN
+    Bool :p($porcelain) = False,         #= wether to return machine-readable TSV
+) is default {
+    say $porcelain
+      ?? "interval\tkmph\tminkm"
+      !! "Starting {$*PROGRAM-NAME.IO.basename} at: \qx<date +%F>";
+    my $f = open($fname);
+
+    lazy for ($f ~~ $*IN ?? lines() !! $f.IO.lines)
+        # Let's cleanup the CSV mess! We don't need any of it, practically.
+        ==> map({ S:g/\"// })
+        ==> map(*.split(',')[1..*])
+        ==> grep(*[0].chars > 0) {
+            # First row is equal to the header in CSV, which denotes field names
+            # Let's find the field we are interested in:
+            my $col = once .first('Avg Pace', :k);
+            # Let's not treat the header as data.
+            once next;
+
+            my $lap = .first;
+            my $pace = .[$col];
+            my $speed = ($pace.split(':', :limit1)
+                ==> -> ($mins, $secs) { 3600/($mins * 60 + $secs) }());
+
+            my constant common = ": %02.2f km/h of %s min/km\n";
+            my @args = (
+                $lap.Int || 0,
+                $speed,
+                $pace
+            );
+            if $lap eq "Summary" && not $porcelain {
+                "Summary  {common}".printf(|@args[1..*]);
+                next;
+            }
+
+            ($porcelain ?? "%d\t%f\t%s\n"
+                        !! "Sprint %02d{common}")
+            .printf(|@args);
+        }
+}

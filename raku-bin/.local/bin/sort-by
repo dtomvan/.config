@@ -1,0 +1,45 @@
+#!/usr/bin/rakudo
+
+proto MAIN(|) {
+    .say for (lines()
+        ==> map({S:g/<[\"\']>//})
+        ==> map({ die("$_: no such file or directory") unless .IO.f||.IO.d; $_ })
+        ==> sort({*}))
+}
+
+#|(default: by date)
+multi MAIN() { MAIN('mtime') }
+
+#|(by filename (why not use sort(1)??))
+multi MAIN('name') { ~ * }
+
+#|(by all extension parts)
+multi MAIN('extension') { *.IO.extension(:parts(1..*)) }
+
+#|(by n extension parts)
+multi MAIN('extension', UInt $n where * >= 1) { *.IO.extension(:parts(1..$n)) }
+
+#|(by file size)
+multi MAIN('size') { *.IO.s }
+
+#|(by date modified)
+multi MAIN('mtime') { *.IO.changed }
+
+#|(by date accessed)
+multi MAIN('atime') { *.IO.accessed }
+
+#|(by date created)
+multi MAIN('ctime') { *.IO.created }
+
+#|(by number associated with the file's inode)
+multi MAIN('inode') { *.IO.inode }
+
+#|(by file type: [dirs..., files..., links...])
+multi MAIN('type') { *.IO.&{.l,.f,.d} }
+
+sub GENERATE-USAGE(&main, |capture) {
+    "{$*PROGRAM-NAME.IO.basename}: Sorts files by...\n"
+    ~ &*GENERATE-USAGE(&main, |capture).indent: 2
+}
+
+# vim:ft=raku

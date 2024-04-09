@@ -4,6 +4,11 @@
             "Lua.diagnostics.globals": [
                 "CONF"
             ]
+        },
+        "raku_navigator": {
+            "raku.includePaths": [
+                "./lib/"
+            ]
         }
     }
 }
