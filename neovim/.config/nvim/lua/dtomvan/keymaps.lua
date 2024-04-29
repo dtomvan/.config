@@ -1,4 +1,5 @@
 local buf = require 'dtomvan.utils.buf'
+local harpoon = require 'harpoon'
 
 local tbl_extend_opt = function(tbl)
     return function(desc, opts)
@@ -109,7 +110,7 @@ map('n', '<leader>k', ':cprev<CR>', M.silent 'Prev quickfix entry')
 
 local function nav(n)
     return function()
-        require('harpoon.ui').nav_file(n)
+        harpoon:list():select(n)
     end
 end
 
@@ -123,10 +124,10 @@ for i = 1, 9 do
 end
 
 map('n', '<leader>m', function()
-    require('harpoon.mark').add_file()
+    harpoon:list():add()
 end, M.silent 'Add file to harpoon')
 map('n', '<F2>', function()
-    require('harpoon.ui').toggle_quick_menu()
+    harpoon.ui:toggle_quick_menu(harpoon:list())
 end, M.silent 'Show harpoon UI')
 
 map(
