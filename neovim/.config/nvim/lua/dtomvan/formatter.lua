@@ -70,7 +70,7 @@ M.get_formatting_clients = function(filter)
         -- is a FoS bug with lua_ls when it hasn't loaded yet: neovim/neovim#22254
         return true
     end, tbl.multi_peek_filter_eq(
-        vim.lsp.get_active_clients(filter),
+        vim.lsp.get_clients(filter),
         { 'server_capabilities', 'documentFormattingProvider' },
         true
     ))
@@ -132,7 +132,7 @@ end
 ---@param name string
 ---@param persist boolean
 M.save_ft_server = function(bufnr, name, persist)
-    local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+    local ft = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
     local possible = M.get_formatting_clients { bufnr = bufnr, name = name }
 
     if #possible == 1 then
@@ -149,7 +149,7 @@ end
 ---@param available lsp.Client[]
 ---@return lsp.Client | nil
 M.get_ft_server = function(bufnr, available)
-    local ok, ft = pcall(vim.api.nvim_buf_get_option, bufnr, 'filetype')
+    local ok, ft = pcall(vim.api.nvim_get_option_value, 'filetype', { buf = bufnr })
     if ok then
         local possible = tbl.peek_filter_eq(available, 'name', M.ft_servers[ft])
         if #possible == 1 then

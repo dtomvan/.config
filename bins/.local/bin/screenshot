@@ -5,7 +5,7 @@ filename="$HOME/screenshots/screenshot.$(date +%Y%m%d_%H%M%S).png"
 
 if [[ $XDG_SESSION_TYPE == wayland ]]; then
     ~/.config/hypr/grimblast \
-        --notify --cursor --freeze \
+        --notify --freeze \
         copysave area "$filename"
     # slurp | grim -g - - | wl-copy -t image/png && wl-paste > "$filename"
 else

@@ -66,7 +66,9 @@ return {
             tabpage_section = 'right',
         }
     }),
-    mini('align'),
+    mini('align', {
+        commit = '68a8d3205f0e7ce1bded057f4a851f42ef8fc584',
+    }),
     mini('files', {
         opts = {
             options = {
@@ -81,6 +83,7 @@ return {
         }
     }),
     mini('hipatterns', {
+        commit = '427712c754bfdccd8da7073576cd8e2586c0fe93',
         config = true,
     }),
     mini('move', {

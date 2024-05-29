@@ -78,25 +78,25 @@ require('nvim-treesitter.configs').setup {
         end,
         additional_vim_regex_highlighting = false,
     },
-    textobjects = {
-        select = {
-            enable = true,
-            lookahead = true,
-            keymaps = {
-                ['ac'] = '@call.outer',
-                ['af'] = '@function.outer',
-                ['aP'] = '@parameter.outer',
-                ['iP'] = '@parameter.inner',
-                ['if'] = '@function.inner',
-                ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-                ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
-            },
-            selection_modes = {
-                ['@function.outer'] = 'V', -- linewise
-            },
-            include_surrounding_whitespace = true,
-        },
-    },
+    -- textobjects = {
+    --     select = {
+    --         enable = true,
+    --         lookahead = true,
+    --         keymaps = {
+    --             ['ac'] = '@call.outer',
+    --             ['af'] = '@function.outer',
+    --             ['aP'] = '@parameter.outer',
+    --             ['iP'] = '@parameter.inner',
+    --             ['if'] = '@function.inner',
+    --             ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+    --             ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+    --         },
+    --         selection_modes = {
+    --             ['@function.outer'] = 'V', -- linewise
+    --         },
+    --         include_surrounding_whitespace = true,
+    --     },
+    -- },
     refactor = {
         navigation = {
             enable = true,

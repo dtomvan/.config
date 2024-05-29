@@ -100,4 +100,5 @@ return {
         dependencies = { 'nvim-lua/plenary.nvim' },
         opts = {},
     },
+    { 'catppuccin/nvim', name = 'catppuccin' },
 }

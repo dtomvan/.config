@@ -3,7 +3,7 @@ return {
         'nvim-treesitter/nvim-treesitter',
         dependencies = {
             'IndianBoy42/tree-sitter-just',
-            'nvim-treesitter/nvim-treesitter-textobjects',
+            -- 'nvim-treesitter/nvim-treesitter-textobjects',
             'nvim-treesitter/nvim-treesitter-context',
             'nvim-treesitter/nvim-treesitter-refactor',
             'RRethy/nvim-treesitter-endwise',

@@ -1,0 +1,3 @@
+#!/bin/bash
+efibootmgr --disk /dev/nvme0n1 --part 1 --create --label "Arch Linux 6.8 EEVDF" --loader /vmlinuz-linux68-tkg-eevdf --unicode 'rw root=/dev/nvme0n1p3 initrd=\amd-ucode.img initrd=\initramfs-linux68-tkg-eevdf.img nvidia-drm.modeset=1 nvidia.NVreg_PreserveVideoMemoryAllocations=1'
+exit 0

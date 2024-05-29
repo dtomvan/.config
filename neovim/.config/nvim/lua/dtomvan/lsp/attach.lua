@@ -4,7 +4,9 @@ return function(client, bufnr)
     require('lsp-status').on_attach(client)
 
     --- Slow?
-    client.server_capabilities.semanticTokensProvider = nil
+    if client.name ~= 'coach' then
+        client.server_capabilities.semanticTokensProvider = nil
+    end
     local caps = client.server_capabilities
 
     if caps.documentSymbolProvider then

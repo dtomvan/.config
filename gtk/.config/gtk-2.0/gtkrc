@@ -1,4 +1,4 @@
-# DO NOT EDIT! This file will be overwritten by nwg-look.
+# DO NOT EDIT! This file will be overwritten by LXAppearance.
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "/home/tomvd/.gtkrc-2.0.mine"
@@ -15,5 +15,5 @@ gtk-enable-event-sounds=1
 gtk-enable-input-feedback-sounds=0
 gtk-xft-antialias=1
 gtk-xft-hinting=1
-gtk-xft-hintstyle="hintmedium"
+gtk-xft-hintstyle="hintfull"
 gtk-xft-rgba="rgb"
