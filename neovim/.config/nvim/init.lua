@@ -32,3 +32,13 @@ if vim.g.started_by_firenvim then return end
 require 'dtomvan.opam'
 
 vim.cmd [[ hi! StatusLine guibg=NvimDarkGrey3 | hi! StatusLineNC guibg=NvimDarkGrey1 ]]
+
+-- Prepend mise shims to PATH
+vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
+
+vim.cmd [[
+  highlight Normal guibg=none
+  highlight NonText guibg=none
+  highlight Normal ctermbg=none
+  highlight NonText ctermbg=none
+]]

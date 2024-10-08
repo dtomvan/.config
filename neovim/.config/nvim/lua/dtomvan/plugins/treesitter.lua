@@ -1,12 +1,13 @@
 return {
     {
         'nvim-treesitter/nvim-treesitter',
+        event = { 'BufReadPost', 'BufNewFile' },
         dependencies = {
-            'IndianBoy42/tree-sitter-just',
+            -- 'IndianBoy42/tree-sitter-just',
             -- 'nvim-treesitter/nvim-treesitter-textobjects',
             'nvim-treesitter/nvim-treesitter-context',
-            'nvim-treesitter/nvim-treesitter-refactor',
-            'RRethy/nvim-treesitter-endwise',
+            -- 'nvim-treesitter/nvim-treesitter-refactor',
+            -- 'RRethy/nvim-treesitter-endwise',
         },
         build = ':TSUpdate',
         config = CONF.treesitter,

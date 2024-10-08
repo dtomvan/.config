@@ -55,18 +55,18 @@ au('TermOpen', {
     end,
 })
 
-au('BufWritePre', {
-    group = group 'Formatting',
-    callback = function(o)
-        if not vim.api.nvim_buf_get_option(o.buf, 'modified') then
-            return
-        end
-        if formatter.do_format_on_save(o.buf) then
-            formatter.format_buf(o.buf)
-        end
-    end,
-})
-
+-- au('BufWritePre', {
+--     group = group 'Formatting',
+--     callback = function(o)
+--         if not vim.api.nvim_buf_get_option(o.buf, 'modified') then
+--             return
+--         end
+--         if formatter.do_format_on_save(o.buf) then
+--             formatter.format_buf(o.buf)
+--         end
+--     end,
+-- })
+--
 au('BufWritePre', {
     group = group 'Regels.md',
     callback = function()
@@ -120,6 +120,7 @@ if vim.fn.has 'nvim-0.8' == 1 then
         group = group 'UserWinbar',
         callback = function()
             vim.schedule(function()
+                vim.g._no_winbar = true
                 if vim.g._no_winbar or vim.g.started_by_firenvim then
                     return
                 end

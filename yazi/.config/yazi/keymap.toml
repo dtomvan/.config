@@ -1,0 +1,11 @@
+[[manager.prepend_keymap]]
+on = [ "g", "n", "v" ]
+run = "cd ~/.config/nvim/"
+desc = "cd to nvim"
+
+[[manager.prepend_keymap]]
+on = ["z"]
+run = "plugin zoxide2"
+desc = "jump with zoxide2"
+
+

@@ -35,3 +35,11 @@ vim.keymap.set('n', '\\lf', function()
         vim.b.vimtex.root .. '/figures/',
     }
 end, noremap 'Edit figure...')
+
+vim.g.vimtex_compiler_method = 'generic'
+vim.g.vimtex_compiler_generic = {
+    command = [[
+        tectonic -X watch
+    ]]
+}
+vim.g.vimtex_view_method = 'zathura_simple'

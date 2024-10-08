@@ -14,6 +14,7 @@ export PATH=~/.local/bin/dt/:/opt/ce-toolchain/bin/:$NPM_CONFIG_PREFIX/bin:~/.lo
 export DENO_INSTALL="$HOME/.deno"
 export RUSTC_WRAPPER=sccache
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
+eval "$(mise activate zsh)"
 
 fire() {
     cd "$(git rev-parse --show-toplevel)"
@@ -118,28 +119,16 @@ source ~/.profile
 #     fi
 # fi
 
-zstyle ':completion:*' completer _expand _complete _ignored _match _approximate _prefix
-zstyle ':completion:*' file-sort name
-zstyle ':completion:*' format 'Completing %d'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' 'r:|[._-]=** r:|=**'
-zstyle ':completion:*' max-errors 10 numeric
-zstyle ':completion:*' verbose true
-zstyle :compinstall filename '/home/tomvd/.zshrc'
-zstyle ':completion:*:cd:*' ignore-parents parent pwd
-zstyle ':completion:*:*:kill:*' menu yes select
-zstyle ':completion:*:kill:*'   force-list always
-zstyle ':completion:*' squeeze-slashes true
-zstyle ':completion:*:functions' ignored-patterns '_*'
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
-autoload -Uz compinit
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-  compinit;
-else
-  compinit -C;
-fi;
+eval "$(zoxide init zsh --cmd z)"
+
+autoload -U compinit # promptinit
+
+# promptinit
+# prompt pure
+
+compinit
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+fpath=(/usr/local/share/zsh-completions $fpath)
 
 rationalise-dot() {
 if [[ $LBUFFER = *.. ]]; then
@@ -221,83 +210,19 @@ alias nv='nvim'
 alias vim='nvim'
 alias vimm='nvim'
 alias nvimm='nvim'
-alias j='just'
+
+j() {
+    mise x just -- just $@ 
+}
+alias mr="mise run"
 
 alias sl='ls'
 
-cd () {
-    if [ "$1" = '~' ]; then
-        pushd -q ~
-    else
-        pushd -q "$@"
-    fi
-}
 alias tldrf='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tldr'
 cx () {
     cd $1
     eza -lab --git --no-user || /bin/ls -la
 }
-
-DIR_STACK=()
-prevd () {
-  length=${#DIR_STACK[@]}
-  next=$(($length + 1))
-
-  if [[ `dirs -lp | wc -l` -ne 1 ]]; then
-    DIR_STACK[$next]=`dirs -lp | head -n1`
-    popd -q
-  else
-    echo "\nNo previous directory"
-  fi
-}
-nextd () {
-  length=${#DIR_STACK[@]}
-
-  if [[ $length -ne 0 ]]; then
-    pushd -q $DIR_STACK[$length]
-    DIR_STACK[$length]=()
-  else
-    echo "\nNo next directory"
-  fi
-}
-showhist() {
-  echo
-  length=${#DIR_STACK[@]}
-
-  if [[ $length -ne 0 ]]; then
-    echo 'Stack:'
-  fi
-  for i ("$DIR_STACK[@]"); do
-    echo "$i" | sed "s/^${HOME//\//\\/}/~/"
-  done
-  echo 'You are here:'
-  dirs -p
-}
-upd () {
-  pushd -q ..
-  showhist
-}
-
-wrapd () {
-  $@
-  zle push-line
-  zle accept-line
-}
-
-wrap-prevd () { wrapd prevd }
-wrap-nextd () { wrapd nextd }
-wrap-upd () { wrapd upd }
-wrap-downd () { wrapd showhist }
-
-zle -N wrapd
-zle -N wrap-prevd
-zle -N wrap-nextd
-zle -N wrap-upd
-zle -N wrap-downd
-bindkey '^[[1;3D' 'wrap-prevd'
-bindkey '^[[1;3C' 'wrap-nextd'
-bindkey '^[[1;3A' 'wrap-upd'
-bindkey '^[[1;3B' 'wrap-downd'
 
 alt-l () {
   if [[ $#BUFFER -eq 0 ]]; then
@@ -400,13 +325,20 @@ dragfile() {
     sk -c fd -m "$SKIM_ARGS" | xargs -r ripdrag "$DRAG_ARGS"
 }
 
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
 # ALIASES
 alias rat=bat
 alias matt=bat
 alias athenaeum '~/.local/share/flatpak/exports/bin/com.gitlab.librebob.Athenaeum'
-alias cargo="mold -run cargo"
+# alias cargo="mold -run cargo"
 alias cat="bat"
-alias c="clear"
 alias e="nvim"
 alias g=git
 alias gaa="git add --all"
@@ -548,9 +480,8 @@ rwds_export() {
     done
 }
 
-eval "$(antidot init)"
-eval "$(zoxide init zsh --cmd cd)"
-eval "$(mcfly init zsh)"
+#eval "$(antidot init)"
+#eval "$(mcfly init zsh)"
 
 # Bun
 export BUN_INSTALL="/home/tomvd/.bun"
@@ -559,10 +490,11 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh" || return
 [[ ! -r /home/tomvd/.opam/opam-init/init.zsh ]] || source /home/tomvd/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
+eval "$($(mise which starship) init zsh)"
 plug "zap-zsh/supercharge"
-plug "romkatv/powerlevel10k"
+# plug "romkatv/powerlevel10k"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 zvm_after_init_commands+=(eval "$(atuin init zsh --disable-up-arrow)")
 plug "jeffreytse/zsh-vi-mode"
@@ -577,6 +509,10 @@ alias la="ls -a"
 
 _exa() {
     _eza "$@"
+}
+
+c() {
+  echo "$@" | rink
 }
 
 xon() {
@@ -596,11 +532,12 @@ fi
 # bun completions
 [ -s "/home/tomvd/.bun/_bun" ] && source "/home/tomvd/.bun/_bun"
 alias dt="rlwrap dt"
-eval "$(/home/tomvd/.local/bin/mise activate zsh)"
-eval "$(navi widget zsh | sed -Ee 's|--print|\0 --finder skim|g')"
+# eval "$(navi widget zsh | sed -Ee 's|--print|\0 --finder skim|g')"
 
 PATH="/home/tomvd/.raku/bin:/home/tomvd/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/home/tomvd/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="/home/tomvd/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
 PERL_MB_OPT="--install_base \"/home/tomvd/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/tomvd/perl5"; export PERL_MM_OPT;
+
+. "$HOME/.atuin/bin/env"

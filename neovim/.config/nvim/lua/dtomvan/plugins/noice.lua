@@ -1,5 +1,6 @@
 return {
     'folke/noice.nvim',
+    enabled = false,
     event = 'VimEnter',
     opts = {
         presets = {

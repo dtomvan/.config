@@ -1,7 +1,10 @@
 local utils = require 'dtomvan.utils'
 
 return function(client, bufnr)
-    require('lsp-status').on_attach(client)
+    local ok_stat, lsp_status = pcall(require, 'lsp-status')
+    if ok_stat then
+        lsp_status.on_attach(client)
+    end
 
     --- Slow?
     if client.name ~= 'coach' then

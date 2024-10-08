@@ -2,6 +2,7 @@ local mini = require 'dtomvan.utils.mini_plug_helper'.mini
 
 return {
     mini('starter', {
+        enabled = false,
         config = true,
         dependencies = {
             'dtomvan/starter-birthday.nvim',
@@ -63,6 +64,7 @@ return {
     }),
     mini('tabline', {
         opts = {
+            set_vim_settings = false,
             tabpage_section = 'right',
         }
     }),

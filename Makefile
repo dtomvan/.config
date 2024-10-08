@@ -1,6 +1,6 @@
 dirs = backgrounds bat bins bspwm cursors deadd discord emacs erd git gtk i3lock    \
      inkscape minecraft mpd mpv ncmpcpp neovim picom polybar prismlauncher raku-bin \
-     sxhkd tmux visidata wezterm xmonad xonotic xorg xplr zathura zsh
+     sxhkd tmux visidata wezterm xmonad xonotic xorg xplr yazi zathura zsh
 usrdirs = plymouth
 submodules = $(shell git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
 

@@ -1,6 +1,6 @@
 return {
     'saecki/crates.nvim',
-    event = "BufRead Cargo.toml",
+    ft = 'toml',
     dependencies = {
         'nvim-lua/plenary.nvim',
     },
@@ -9,7 +9,7 @@ return {
         vim.api.nvim_create_autocmd("BufRead", {
             group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
             pattern = "Cargo.toml",
-            callback = CONF.crates().cb,
+            callback = function(...) CONF.crates().cb(...) end,
         })
     end,
 }

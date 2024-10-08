@@ -20,7 +20,7 @@ local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
 --     ::continue::
 -- end
 
-require('tree-sitter-just').setup({})
+-- require('tree-sitter-just').setup({})
 
 -- FIXME:
 ---@diagnostic disable-next-line: missing-fields
@@ -67,7 +67,7 @@ require('nvim-treesitter.configs').setup {
     sync_install = false,
     ignore_install = {},
     highlight = {
-        enable = true,
+        enable = false,
         disable = function(lang, bufnr)
             for _, i in ipairs { 'latex' } do
                 if i == lang then
@@ -110,7 +110,7 @@ require('nvim-treesitter.configs').setup {
         },
     },
     endwise = {
-        enable = true,
+        enable = false,
     },
 }
 

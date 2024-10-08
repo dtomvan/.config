@@ -1,9 +1,9 @@
 ; extends
 ;; Keywords
-(("function" @keyword) (#set! conceal ""))
+; (("function" @keyword) (#set! conceal ""))
 
 ;; Function names
-((function_call name: (identifier) @TSNote (#eq? @TSNote "require")) (#set! conceal ""))
+; ((function_call name: (identifier) @TSNote (#eq? @TSNote "require")) (#set! conceal ""))
 ((function_call name: (identifier) @TSNote (#eq? @TSNote "print"  )) (#set! conceal ""))
 ((function_call name: (identifier) @TSNote (#eq? @TSNote "pairs"  )) (#set! conceal "P"))
 ((function_call name: (identifier) @TSNote (#eq? @TSNote "ipairs" )) (#set! conceal "I"))

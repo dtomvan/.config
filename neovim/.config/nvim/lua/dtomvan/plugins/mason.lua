@@ -3,6 +3,7 @@ return {
         'williamboman/mason.nvim',
         event = 'VeryLazy',
         dependencies = {
+            'nvim-lua/lsp-status.nvim',
             'neovim/nvim-lspconfig',
             'nvim-lua/lsp_extensions.nvim',
         },

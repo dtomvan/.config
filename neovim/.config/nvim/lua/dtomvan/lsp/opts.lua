@@ -1,11 +1,15 @@
 local on_attach = require 'dtomvan.lsp.attach_handler'
-local lsp_status = require 'lsp-status'
-local ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-if not ok then
+local ok_stat, lsp_status = pcall(require, 'lsp-status')
+local ok_cmp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+if not ok_cmp then
     cmp_nvim_lsp = {}
     cmp_nvim_lsp.default_capabilities = function(input)
         return input
     end
+end
+if not ok_stat then
+    lsp_status = {}
+    lsp_status.capabilities = {}
 end
 
 local capabilities = vim.tbl_extend(
