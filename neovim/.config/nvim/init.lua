@@ -42,3 +42,5 @@ vim.cmd [[
   highlight Normal ctermbg=none
   highlight NonText ctermbg=none
 ]]
+
+vim.cmd [[ syntax on ]]

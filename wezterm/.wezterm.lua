@@ -121,6 +121,7 @@ leader('$', act.ShowTabNavigator, { mods = 'SHIFT' })
 leader('[', act.ActivateCopyMode)
 leader(']', act.QuickSelect)
 leader('z', act.TogglePaneZoomState)
+leader('C', act.SpawnCommandInNewTab { args = { 'nvim', wezterm.home_dir .. '/.wezterm.lua' } })
 
 leader('!', act.PromptInputLine {
     description = 'launch command in tab...',
@@ -134,7 +135,8 @@ leader('!', act.PromptInputLine {
 }, { mods = 'SHIFT' })
 
 leader('r', mode 'resize')
-leader('a', mode 'activate')
+-- leader('a', mode 'activate')
+k:insert { action = act.SendKey(M.leader), key = 'a', mods = "LEADER" }
 
 k.insert = nil
 M.keys = k
